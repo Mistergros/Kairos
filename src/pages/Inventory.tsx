@@ -4,6 +4,7 @@ import { PriorityBadge } from "../components/Badge";
 import { useDuerpStore } from "../state/store";
 import { Assessment, Priority } from "../types";
 import { getQuestionsForCategory, ScoringQuestion } from "../data/scoringQuestions";
+import { getNafHints } from "../data/nafMappingLoader";
 
 type Filters = {
   search: string;
@@ -38,6 +39,7 @@ export const Inventory = () => {
   const [sectorInput, setSectorInput] = useState(currentEstablishment?.codeNaf || currentEstablishment?.sector || "");
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
   const [questionAnswers, setQuestionAnswers] = useState<Record<string, Record<string, string>>>({});
+  const nafHints = useMemo(() => getNafHints(currentEstablishment?.codeNaf || sectorInput), [currentEstablishment?.codeNaf, sectorInput]);
 
   useEffect(() => {
     setSectorInput(currentEstablishment?.codeNaf || currentEstablishment?.sector || "");
@@ -250,6 +252,23 @@ export const Inventory = () => {
                                 </label>
                               ))}
                             </div>
+                            {nafHints.length > 0 && (
+                              <div className="rounded-xl bg-white/60 p-3 text-xs text-slate/70">
+                                <p className="font-semibold text-slate mb-1">Pistes NAF {sectorInput || currentEstablishment?.codeNaf}</p>
+                                <div className="grid gap-2 md:grid-cols-2">
+                                  {nafHints.slice(0, 6).map((hint) => (
+                                    <div key={`${hint.category}-${hint.label}`} className="space-y-1">
+                                      <p className="text-slate font-semibold text-sm">{hint.label}</p>
+                                      <ul className="list-disc space-y-0.5 pl-4">
+                                        {hint.items.slice(0, 4).map((item) => (
+                                          <li key={item}>{item}</li>
+                                        ))}
+                                      </ul>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
                           </div>
                         </td>
                       </tr>
