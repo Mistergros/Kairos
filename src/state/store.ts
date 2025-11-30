@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { riskLibrary } from "../data/riskLibrary";
+import { nafPresets, NafPreset } from "../data/nafPresets";
 import { ActionItem, Assessment, Establishment, Hazard, Priority, WorkUnit, VersionEntry } from "../types";
 import { computePriority } from "../utils/score";
 import { fetchHazardsFromSources } from "../utils/api";
@@ -99,26 +100,9 @@ const hazardByNafPrefix: Record<string, Hazard[]> = {
 };
 
 type PresetHazard = Hazard & { gravity?: number; frequency?: number; control?: number };
-type NafPreset = { label: string; hazards: PresetHazard[] };
 
-let nafPresetCache: Record<string, NafPreset> | null = null;
-
-const loadNafPresets = async (): Promise<Record<string, NafPreset>> => {
-  if (nafPresetCache) return nafPresetCache;
-  if (typeof window === "undefined") {
-    nafPresetCache = {};
-    return nafPresetCache;
-  }
-  try {
-    const res = await fetch("/naf-presets.json");
-    if (!res.ok) throw new Error("preset fetch failed");
-    nafPresetCache = (await res.json()) as Record<string, NafPreset>;
-    return nafPresetCache;
-  } catch (_) {
-    nafPresetCache = {};
-    return nafPresetCache;
-  }
-};
+// Lecture synchronisée (plus fiable que fetch côté client)
+const loadNafPresets = async (): Promise<Record<string, NafPreset>> => nafPresets;
 
 const uid = () =>
   typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : `id-${Math.random().toString(36).slice(2, 9)}`;
