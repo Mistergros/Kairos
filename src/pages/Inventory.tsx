@@ -1,0 +1,248 @@
+﻿import { useEffect, useMemo, useState } from 'react';
+import { Card } from '../components/Card';
+import { PriorityBadge } from '../components/Badge';
+import { useDuerpStore } from '../state/store';
+import { Assessment, Priority } from '../types';
+
+type Filters = {
+  search: string;
+  category: string;
+  priority?: Priority;
+};
+
+export const Inventory = () => {
+  const {
+    assessments,
+    selectedWorkUnitId,
+    addAssessment,
+    updateAssessment,
+    hazardLibrary,
+    prefillFromSector,
+    loadingHazards,
+    establishments,
+    selectedEstablishmentId,
+  } = useDuerpStore();
+  const currentEstablishment = establishments.find((e) => e.id === selectedEstablishmentId);
+  const [filters, setFilters] = useState<Filters>({ search: '', category: '' });
+  const [form, setForm] = useState({
+    hazardId: hazardLibrary[0]?.id || '',
+    gravity: 7,
+    frequency: 3,
+    control: 0.5,
+    existingMeasures: '',
+    proposedMeasures: '',
+  });
+  const [sectorInput, setSectorInput] = useState(currentEstablishment?.codeNaf || currentEstablishment?.sector || '');
+
+  useEffect(() => {
+    setSectorInput(currentEstablishment?.codeNaf || currentEstablishment?.sector || '');
+  }, [currentEstablishment?.sector, currentEstablishment?.codeNaf]);
+
+  useEffect(() => {
+    if (hazardLibrary.length && !form.hazardId) {
+      setForm((f) => ({ ...f, hazardId: hazardLibrary[0].id }));
+    }
+  }, [hazardLibrary, form.hazardId]);
+
+  const categories = Array.from(new Set(hazardLibrary.map((h) => h.category)));
+
+  const filtered = useMemo(() => {
+    const current = assessments.filter((a) => a.workUnitId === selectedWorkUnitId);
+    return current
+      .filter((a) => (filters.category ? a.hazardCategory === filters.category : true))
+      .filter((a) => (filters.priority ? a.priority === filters.priority : true))
+      .filter((a) =>
+        filters.search
+          ? `${a.riskLabel} ${a.hazardCategory}`.toLowerCase().includes(filters.search.toLowerCase())
+          : true
+      );
+  }, [assessments, selectedWorkUnitId, filters]);
+
+  const addRisk = () => {
+    if (!selectedWorkUnitId || !form.hazardId) return;
+    addAssessment({
+      ...form,
+      workUnitId: selectedWorkUnitId,
+    });
+    setForm((v) => ({ ...v, existingMeasures: '', proposedMeasures: '' }));
+  };
+
+  const onChangeScore = (assessment: Assessment, field: 'gravity' | 'frequency' | 'control', value: number) => {
+    updateAssessment(assessment.id, { [field]: value });
+  };
+
+  return (
+    <div className="space-y-5">
+      <Card
+        title="Inventaire des risques"
+        subtitle="Grille des risques, cotations et priorisation"
+        corner={
+          <input
+            className="rounded-xl border border-slate/20 px-3 py-2 text-sm"
+            placeholder="Recherche..."
+            value={filters.search}
+            onChange={(e) => setFilters((f) => ({ ...f, search: e.target.value }))}
+          />
+        }
+      >
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="flex items-center gap-2">
+            <input
+              className="rounded-xl border border-slate/20 px-3 py-2 text-sm"
+              placeholder="Code NAF ou secteur (ex: 62.01Z, BTP...)"
+              value={sectorInput}
+              onChange={(e) => setSectorInput(e.target.value)}
+            />
+            <button
+              className="rounded-xl bg-ocean px-3 py-2 text-sm font-semibold text-white shadow-sm disabled:opacity-60"
+              onClick={() => prefillFromSector(sectorInput)}
+              disabled={!sectorInput || loadingHazards}
+            >
+              {loadingHazards ? 'Chargement...' : 'Pre-remplir risques (NAF/secteur)'}
+            </button>
+          </div>
+          <select
+            className="rounded-xl border border-slate/20 bg-white px-3 py-2 text-sm"
+            value={filters.category}
+            onChange={(e) => setFilters((f) => ({ ...f, category: e.target.value }))}
+          >
+            <option value="">CatÃ©gorie</option>
+            {categories.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+          <select
+            className="rounded-xl border border-slate/20 bg-white px-3 py-2 text-sm"
+            value={filters.priority ?? ''}
+            onChange={(e) =>
+              setFilters((f) => ({ ...f, priority: e.target.value ? Number(e.target.value) as Priority : undefined }))
+            }
+          >
+            <option value="">PrioritÃ©</option>
+            <option value="1">P1</option>
+            <option value="2">P2</option>
+            <option value="3">P3</option>
+            <option value="4">P4</option>
+          </select>
+          <span className="pill bg-slate/10 text-slate-700">{filtered.length} risques</span>
+        </div>
+
+        <div className="mt-4 overflow-x-auto rounded-xl border border-slate/10 bg-white shadow-sm">
+          <table className="min-w-full divide-y divide-slate/10">
+            <thead className="bg-slate/5 text-left text-xs font-semibold uppercase tracking-wide text-slate/60">
+              <tr>
+                <th className="px-4 py-3">CatÃ©gorie</th>
+                <th className="px-4 py-3">Risque</th>
+                <th className="px-4 py-3">Dommages</th>
+                <th className="px-4 py-3">G</th>
+                <th className="px-4 py-3">F</th>
+                <th className="px-4 py-3">P</th>
+                <th className="px-4 py-3">Score</th>
+                <th className="px-4 py-3">PrioritÃ©</th>
+                <th className="px-4 py-3">Mesures</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate/10 text-sm">
+              {filtered.map((a) => (
+                <tr key={a.id} className="hover:bg-slate/5">
+                  <td className="px-4 py-3 text-slate/80">{a.hazardCategory}</td>
+                  <td className="px-4 py-3 font-semibold text-slate">{a.riskLabel}</td>
+                  <td className="px-4 py-3 text-slate/70">{a.damages}</td>
+                  {(['gravity', 'frequency', 'control'] as const).map((field) => (
+                    <td key={field} className="px-4 py-3">
+                      <input
+                        type="number"
+                        className="w-16 rounded-lg border border-slate/20 px-2 py-1 text-sm"
+                        value={a[field]}
+                        onChange={(e) => onChangeScore(a, field, Number(e.target.value))}
+                      />
+                    </td>
+                  ))}
+                  <td className="px-4 py-3 font-semibold text-ink">{Math.round(a.score)}</td>
+                  <td className="px-4 py-3">
+                    <PriorityBadge priority={a.priority} />
+                  </td>
+                  <td className="px-4 py-3 max-w-sm">
+                    <p className="text-xs text-slate/70">Existantes: {a.existingMeasures || 'â€”'}</p>
+                    <p className="text-xs text-slate/70">Ã€ proposer: {a.proposedMeasures || 'â€”'}</p>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Card>
+
+      <Card
+        title="Ajouter un risque depuis la bibliothÃ¨que"
+        subtitle="Filtrer par catÃ©gorie, choisir le risque, coter G/F/P et proposer des mesures"
+      >
+        <p className="text-xs text-slate/60">
+          Sources : INRS (catalogue gÃ©nÃ©rique), OPPBTP / CARSAT / ANACT selon le secteur sÃ©lectionnÃ©.
+        </p>
+        <div className="grid gap-3 md:grid-cols-3">
+          <label className="md:col-span-2 text-sm">
+            <span className="block text-slate/70">Risque</span>
+            <select
+              className="mt-1 w-full rounded-xl border border-slate/20 bg-white px-3 py-2"
+              value={form.hazardId}
+              onChange={(e) => setForm((f) => ({ ...f, hazardId: e.target.value }))}
+            >
+              {categories.map((c) => (
+                <optgroup key={c} label={c}>
+                  {hazardLibrary
+                    .filter((h) => h.category === c)
+                    .map((h) => (
+                      <option key={h.id} value={h.id}>
+                        {h.risk}
+                      </option>
+                    ))}
+                </optgroup>
+              ))}
+            </select>
+          </label>
+          <div className="grid grid-cols-3 gap-2 text-sm">
+            {(['gravity', 'frequency', 'control'] as const).map((field) => (
+              <label key={field} className="text-slate/70">
+                {field === 'gravity' ? 'G' : field === 'frequency' ? 'F' : 'P'}
+                <input
+                  type="number"
+                  className="mt-1 w-full rounded-xl border border-slate/20 px-3 py-2"
+                  value={form[field]}
+                  onChange={(e) => setForm((f) => ({ ...f, [field]: Number(e.target.value) }))}
+                />
+              </label>
+            ))}
+          </div>
+        </div>
+        <div className="mt-3 grid gap-2 md:grid-cols-2">
+          <textarea
+            className="rounded-xl border border-slate/20 px-3 py-2"
+            placeholder="Mesures existantes"
+            value={form.existingMeasures}
+            onChange={(e) => setForm((f) => ({ ...f, existingMeasures: e.target.value }))}
+          />
+          <textarea
+            className="rounded-xl border border-slate/20 px-3 py-2"
+            placeholder="Mesures Ã  proposer"
+            value={form.proposedMeasures}
+            onChange={(e) => setForm((f) => ({ ...f, proposedMeasures: e.target.value }))}
+          />
+        </div>
+        <button
+          onClick={addRisk}
+          className="mt-4 rounded-2xl bg-gradient-to-r from-ocean to-ink px-6 py-3 text-sm font-semibold text-white shadow-lg"
+        >
+          Ajouter au DUERP
+        </button>
+      </Card>
+    </div>
+  );
+};
+
+
+
+
+

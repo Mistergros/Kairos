@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --gradient: linear-gradient(135deg, rgba(91, 97, 246, 0.18), rgba(0, 179, 255, 0.16)),
+    radial-gradient(circle at 20% 20%, rgba(155, 140, 255, 0.18), transparent 35%);
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--gradient), #f6f8fb;
+}
+
+.glass {
+  @apply bg-white/70 backdrop-blur-lg border border-white/60 shadow-lg;
+}
+
+.pill {
+  @apply rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide;
+}

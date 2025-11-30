@@ -1,0 +1,212 @@
+﻿import { useState } from 'react';
+import { Card } from '../components/Card';
+import { useDuerpStore } from '../state/store';
+import { searchCompanies } from '../utils/api';
+
+const uid = () =>
+  typeof crypto !== 'undefined' && crypto.randomUUID
+    ? crypto.randomUUID()
+    : `id-${Math.random().toString(36).slice(2, 9)}`;
+
+export const Units = () => {
+  const { establishments, workUnits, addEstablishment, addWorkUnit, selectedEstablishmentId } = useDuerpStore();
+  const [establishmentForm, setEstablishmentForm] = useState({ name: '', sector: '', codeNaf: '', address: '' });
+  const [unitForm, setUnitForm] = useState({ name: '', description: '', headcount: 0 });
+  const [companyQuery, setCompanyQuery] = useState('');
+  const [companyResults, setCompanyResults] = useState<
+    { id: string; name: string; siren?: string; siret?: string; naf?: string; address?: string; city?: string; postalCode?: string }[]
+  >([]);
+  const [companyLoading, setCompanyLoading] = useState(false);
+  const [companyError, setCompanyError] = useState<string | null>(null);
+
+  const onCreateEstablishment = () => {
+    if (!establishmentForm.name) return;
+    addEstablishment({
+      id: uid(),
+      name: establishmentForm.name,
+      sector: establishmentForm.sector,
+      codeNaf: establishmentForm.codeNaf,
+      address: establishmentForm.address,
+    });
+    setEstablishmentForm({ name: '', sector: '', codeNaf: '', address: '' });
+  };
+
+  const onCreateUnit = () => {
+    if (!unitForm.name || !selectedEstablishmentId) return;
+    addWorkUnit({
+      id: uid(),
+      establishmentId: selectedEstablishmentId,
+      name: unitForm.name,
+      description: unitForm.description,
+      headcount: unitForm.headcount,
+    });
+    setUnitForm({ name: '', description: '', headcount: 0 });
+  };
+
+  const onSearchCompanies = async () => {
+    if (!companyQuery || companyQuery.length < 3) return;
+    setCompanyLoading(true);
+    setCompanyError(null);
+    try {
+      const hits = await searchCompanies(companyQuery);
+      setCompanyResults(hits);
+    } catch (err) {
+      setCompanyError("Recherche indisponible pour l'instant.");
+    } finally {
+      setCompanyLoading(false);
+    }
+  };
+
+  const onSelectCompany = (hit: typeof companyResults[number]) => {
+    const addressParts = [hit.address, hit.postalCode, hit.city].filter(Boolean);
+    setEstablishmentForm((prev) => ({
+      ...prev,
+      name: hit.name || prev.name,
+      codeNaf: hit.naf || prev.codeNaf,
+      address: addressParts.join(' ') || prev.address,
+    }));
+  };
+
+  return (
+    <div className="grid gap-4 md:grid-cols-2">
+      <Card title="Etablissements" subtitle="Raison sociale, NAF/secteur, coordonnées">
+        <div className="mb-4 rounded-2xl border border-slate/10 bg-white p-4 shadow-sm">
+          <p className="text-sm font-semibold text-slate">Recherche d'entreprise (SIREN/SIRET ou nom)</p>
+          <div className="mt-2 flex flex-col gap-2 md:flex-row md:items-center">
+            <input
+              className="flex-1 rounded-lg border border-slate/20 px-3 py-2"
+              placeholder="Ex: 552100554 ou 'Societe Exemple'"
+              value={companyQuery}
+              onChange={(e) => setCompanyQuery(e.target.value)}
+            />
+            <button
+              className="rounded-xl bg-ocean px-4 py-2 text-sm font-semibold text-white shadow-lg disabled:opacity-60"
+              onClick={onSearchCompanies}
+              disabled={companyLoading || companyQuery.length < 3}
+            >
+              {companyLoading ? 'Recherche...' : 'Rechercher'}
+            </button>
+          </div>
+          {companyError && <p className="mt-1 text-xs text-sunset">{companyError}</p>}
+          {companyResults.length > 0 && (
+            <ul className="mt-3 max-h-48 space-y-2 overflow-auto">
+              {companyResults.map((hit) => (
+                <li
+                  key={hit.id}
+                  className="cursor-pointer rounded-xl border border-slate/10 bg-slate/5 p-2 hover:bg-slate/10"
+                  onClick={() => onSelectCompany(hit)}
+                >
+                  <p className="text-sm font-semibold text-slate">{hit.name}</p>
+                  <p className="text-xs text-slate/60">
+                    {hit.siren ? `SIREN ${hit.siren}` : ''} {hit.siret ? `- SIRET ${hit.siret}` : ''}
+                  </p>
+                  <p className="text-xs text-slate/60">{hit.naf ? `NAF ${hit.naf}` : ''}</p>
+                  <p className="text-xs text-slate/60">{[hit.address, hit.postalCode, hit.city].filter(Boolean).join(' ')}</p>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        <div className="space-y-3">
+          {establishments.map((e) => (
+            <div key={e.id} className="rounded-xl border border-slate/10 bg-white p-4 shadow-sm">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-base font-semibold text-slate">{e.name}</p>
+                  <p className="text-sm text-slate/60">{e.address || 'Adresse à compléter'}</p>
+                  <p className="text-xs text-slate/60">{e.codeNaf ? `NAF ${e.codeNaf}` : 'NAF à renseigner'}</p>
+                </div>
+                <span className="pill bg-ocean/10 text-ocean-700">{e.sector || 'Secteur'}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-6 rounded-2xl bg-slate/5 p-4">
+          <p className="mb-2 font-semibold text-slate">Nouvel etablissement</p>
+          <div className="grid gap-2 md:grid-cols-2">
+            <input
+              className="rounded-lg border border-slate/20 px-3 py-2"
+              placeholder="Nom"
+              value={establishmentForm.name}
+              onChange={(e) => setEstablishmentForm((v) => ({ ...v, name: e.target.value }))}
+            />
+            <input
+              className="rounded-lg border border-slate/20 px-3 py-2"
+              placeholder="Secteur"
+              value={establishmentForm.sector}
+              onChange={(e) => setEstablishmentForm((v) => ({ ...v, sector: e.target.value }))}
+            />
+            <input
+              className="rounded-lg border border-slate/20 px-3 py-2"
+              placeholder="Code NAF"
+              value={establishmentForm.codeNaf}
+              onChange={(e) => setEstablishmentForm((v) => ({ ...v, codeNaf: e.target.value }))}
+            />
+            <input
+              className="md:col-span-2 rounded-lg border border-slate/20 px-3 py-2"
+              placeholder="Adresse"
+              value={establishmentForm.address}
+              onChange={(e) => setEstablishmentForm((v) => ({ ...v, address: e.target.value }))}
+            />
+          </div>
+          <button
+            onClick={onCreateEstablishment}
+            className="mt-3 rounded-xl bg-ink px-4 py-2 text-sm font-semibold text-white shadow-lg"
+          >
+            Ajouter
+          </button>
+        </div>
+      </Card>
+
+      <Card title="Unites de travail" subtitle="Répartir par atelier/équipe/poste pour suivre les risques">
+        <div className="space-y-3">
+          {workUnits
+            .filter((w) => w.establishmentId === selectedEstablishmentId)
+            .map((w) => (
+              <div key={w.id} className="rounded-xl border border-slate/10 bg-white p-4 shadow-sm">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-semibold text-slate">{w.name}</p>
+                    <p className="text-xs text-slate/60">{w.description || 'Description à compléter (activités, métiers)'}</p>
+                  </div>
+                  <span className="pill bg-slate/10 text-slate-700">{w.headcount ?? 0} pers.</span>
+                </div>
+              </div>
+            ))}
+        </div>
+        <div className="mt-6 rounded-2xl bg-slate/5 p-4">
+          <p className="mb-2 font-semibold text-slate">Nouvelle unite</p>
+          <div className="grid gap-2 md:grid-cols-2">
+            <input
+              className="rounded-lg border border-slate/20 px-3 py-2"
+              placeholder="Nom"
+              value={unitForm.name}
+              onChange={(e) => setUnitForm((v) => ({ ...v, name: e.target.value }))}
+            />
+            <input
+              type="number"
+              className="rounded-lg border border-slate/20 px-3 py-2"
+              placeholder="Effectif"
+              value={unitForm.headcount}
+              onChange={(e) => setUnitForm((v) => ({ ...v, headcount: Number(e.target.value) }))}
+            />
+            <textarea
+              className="md:col-span-2 rounded-lg border border-slate/20 px-3 py-2"
+              placeholder="Description (activité, zone, horaires, tâches)"
+              value={unitForm.description}
+              onChange={(e) => setUnitForm((v) => ({ ...v, description: e.target.value }))}
+            />
+          </div>
+          <button
+            onClick={onCreateUnit}
+            className="mt-3 rounded-xl bg-ocean px-4 py-2 text-sm font-semibold text-white shadow-lg"
+          >
+            Ajouter l'unite
+          </button>
+        </div>
+      </Card>
+    </div>
+  );
+};
