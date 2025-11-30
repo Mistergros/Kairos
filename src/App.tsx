@@ -54,65 +54,51 @@ export default function App() {
         <aside className="hidden md:flex w-64 flex-col bg-gradient-to-b from-kairos to-azure text-white shadow-2xl">
           <div className="px-5 py-6">
             <div className="flex items-center gap-3">
-              <img src="/kairos-logo.png" alt="Kairos" className="h-12 w-auto object-contain drop-shadow-lg" />
+              <img src="/Kairos_logo.png" alt="Kairos" className="h-12 w-auto object-contain drop-shadow-lg" />
               <div>
                 <p className="text-sm font-semibold">Kairos</p>
                 <p className="text-[11px] uppercase tracking-wide text-white/70">by Milante Consulting</p>
               </div>
             </div>
-            <p className="mt-4 text-xs text-white/60">DUERP · Inventaire · Plan d'action</p>
-          </div>
-          <nav className="flex-1 space-y-1 px-3">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              return (
-                <NavLink
-                  key={item.path}
-                  to={item.path}
-                  end={item.end}
-                  className={({ isActive }) =>
-                    `flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium transition ${
-                      isActive ? 'bg-white/15 text-white shadow-lg' : 'text-white/80 hover:bg-white/10 hover:text-white'
-                    }`
-                  }
-                >
-                  <Icon className="h-4 w-4" />
-                  <span>{item.label}</span>
-                </NavLink>
-              );
-            })}
-          </nav>
-          <div className="px-4 py-5 text-xs text-white/70">
-            <p className="font-semibold text-white">Dernière MAJ</p>
-            <p>{lastUpdateLabel}</p>
+            <div className="mt-6 space-y-2 text-sm">
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <NavLink
+                    key={item.path}
+                    to={item.path}
+                    end={item.end}
+                    className={({ isActive }) =>
+                      `flex items-center gap-3 rounded-xl px-3 py-2 transition hover:bg-white/10 ${
+                        isActive ? 'bg-white/15 font-semibold' : 'text-white/80'
+                      }`
+                    }
+                  >
+                    <Icon size={18} /> {item.label}
+                  </NavLink>
+                );
+              })}
+            </div>
           </div>
         </aside>
 
-        <div className="flex-1 flex flex-col">
-          <header className="sticky top-0 z-10 border-b border-slate/10 bg-white/80 backdrop-blur">
-            <div className="flex flex-col gap-3 px-4 py-4 lg:flex-row lg:items-center lg:justify-between lg:px-8">
-              <div className="flex items-center gap-3">
-                <img src="/kairos-logo.png" alt="Kairos" className="h-12 w-auto object-contain drop-shadow-lg" />
-                <div>
-                  <p className="text-xs uppercase tracking-wide text-slate/60">Kairos · by Milante Consulting</p>
-                  <p className="text-xl font-display font-semibold text-ink">DUERP & Plan d'action</p>
-                  <p className="text-xs text-slate/60">Dernière MAJ : {lastUpdateLabel}</p>
-                </div>
-              </div>
-              <div className="w-full md:w-auto">
-                <ContextSelectors
-                  establishments={establishments}
-                  workUnits={workUnits}
-                  selectedEstablishmentId={selectedEstablishmentId}
-                  selectedWorkUnitId={selectedWorkUnitId}
-                  onSelectEstablishment={setSelectedEstablishment}
-                  onSelectWorkUnit={setSelectedWorkUnit}
-                />
-              </div>
+        <main className="flex-1">
+          <header className="flex flex-col gap-2 border-b border-slate/10 bg-white/70 px-6 py-4 backdrop-blur-sm md:flex-row md:items-center md:justify-between">
+            <div>
+              <p className="text-xs uppercase tracking-wide text-slate/60">Kairos · by Milante Consulting</p>
+              <p className="text-xs text-slate/60">Dernière MAJ : {lastUpdateLabel}</p>
             </div>
+            <ContextSelectors
+              establishments={establishments}
+              workUnits={workUnits}
+              selectedEstablishmentId={selectedEstablishmentId}
+              selectedWorkUnitId={selectedWorkUnitId}
+              setSelectedEstablishment={setSelectedEstablishment}
+              setSelectedWorkUnit={setSelectedWorkUnit}
+            />
           </header>
 
-          <main className="px-4 py-6 lg:px-8">
+          <div className="px-4 py-6 md:px-8">
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/units" element={<Units />} />
@@ -123,8 +109,8 @@ export default function App() {
               <Route path="/pricing" element={<Pricing />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
-          </main>
-        </div>
+          </div>
+        </main>
       </div>
     </BrowserRouter>
   );

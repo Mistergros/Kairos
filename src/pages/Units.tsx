@@ -1,10 +1,10 @@
-﻿import { useState } from 'react';
-import { Card } from '../components/Card';
-import { useDuerpStore } from '../state/store';
-import { searchCompanies } from '../utils/api';
+﻿import { useState } from "react";
+import { Card } from "../components/Card";
+import { useDuerpStore } from "../state/store";
+import { searchCompanies } from "../utils/api";
 
 const uid = () =>
-  typeof crypto !== 'undefined' && crypto.randomUUID
+  typeof crypto !== "undefined" && crypto.randomUUID
     ? crypto.randomUUID()
     : `id-${Math.random().toString(36).slice(2, 9)}`;
 
@@ -21,9 +21,9 @@ export const Units = () => {
     setSelectedWorkUnit,
   } = useDuerpStore();
 
-  const [establishmentForm, setEstablishmentForm] = useState({ name: '', sector: '', codeNaf: '', address: '' });
-  const [unitForm, setUnitForm] = useState({ name: '', description: '', headcount: 0 });
-  const [companyQuery, setCompanyQuery] = useState('');
+  const [establishmentForm, setEstablishmentForm] = useState({ name: "", sector: "", codeNaf: "", address: "" });
+  const [unitForm, setUnitForm] = useState({ name: "", description: "", headcount: 0 });
+  const [companyQuery, setCompanyQuery] = useState("");
   const [companyResults, setCompanyResults] = useState<
     { id: string; name: string; siren?: string; siret?: string; naf?: string; address?: string; city?: string; postalCode?: string }[]
   >([]);
@@ -39,7 +39,7 @@ export const Units = () => {
       codeNaf: establishmentForm.codeNaf,
       address: establishmentForm.address,
     });
-    setEstablishmentForm({ name: '', sector: '', codeNaf: '', address: '' });
+    setEstablishmentForm({ name: "", sector: "", codeNaf: "", address: "" });
   };
 
   const onCreateUnit = () => {
@@ -51,7 +51,7 @@ export const Units = () => {
       description: unitForm.description,
       headcount: unitForm.headcount,
     });
-    setUnitForm({ name: '', description: '', headcount: 0 });
+    setUnitForm({ name: "", description: "", headcount: 0 });
   };
 
   const onSearchCompanies = async () => {
@@ -74,7 +74,7 @@ export const Units = () => {
       ...prev,
       name: hit.name || prev.name,
       codeNaf: hit.naf || prev.codeNaf,
-      address: addressParts.join(' ') || prev.address,
+      address: addressParts.join(" ") || prev.address,
     }));
   };
 
@@ -82,9 +82,9 @@ export const Units = () => {
     removeEstablishment(id);
     if (selectedEstablishmentId === id) {
       const nextEstab = establishments.find((e) => e.id !== id);
-      setSelectedEstablishment(nextEstab?.id || '');
+      setSelectedEstablishment(nextEstab?.id || "");
       const nextWorkUnit = workUnits.find((w) => w.establishmentId === nextEstab?.id);
-      setSelectedWorkUnit(nextWorkUnit?.id || '');
+      setSelectedWorkUnit(nextWorkUnit?.id || "");
     }
   };
 
@@ -92,19 +92,20 @@ export const Units = () => {
     removeWorkUnit(id);
     if (selectedEstablishmentId) {
       const next = workUnits.find((w) => w.establishmentId === selectedEstablishmentId && w.id !== id);
-      setSelectedWorkUnit(next?.id || '');
+      setSelectedWorkUnit(next?.id || "");
     }
   };
 
   return (
     <div className="grid gap-4 md:grid-cols-2">
-      <Card title="Etablissements" subtitle="Raison sociale, NAF/secteur, coordonnées">
+      <Card title="Établissements" subtitle="Raison sociale, NAF/secteur, coordonnées">
         <div className="mb-4 rounded-2xl border border-slate/10 bg-white p-4 shadow-sm">
           <p className="text-sm font-semibold text-slate">Recherche d'entreprise (SIREN/SIRET ou nom)</p>
           <div className="mt-2 flex flex-col gap-2 md:flex-row md:items-center">
             <input
               className="flex-1 rounded-lg border border-slate/20 px-3 py-2"
               placeholder="Ex: 552100554 ou 'Société Exemple'"
+              title="Tapez un SIREN/SIRET ou un nom (mini 3 caractères)"
               value={companyQuery}
               onChange={(e) => setCompanyQuery(e.target.value)}
             />
@@ -112,6 +113,7 @@ export const Units = () => {
               className="rounded-xl bg-ocean px-4 py-2 text-sm font-semibold text-white shadow-lg disabled:opacity-60"
               onClick={onSearchCompanies}
               disabled={companyLoading || companyQuery.length < 3}
+              title="Recherche une entreprise pour pré-remplir nom/adresse/NAF"
             >
               {companyLoading ? 'Recherche...' : 'Rechercher'}
             </button>
@@ -124,6 +126,7 @@ export const Units = () => {
                   key={hit.id}
                   className="cursor-pointer rounded-xl border border-slate/10 bg-slate/5 p-2 hover:bg-slate/10"
                   onClick={() => onSelectCompany(hit)}
+                  title="Cliquer pour remplir le formulaire établissement"
                 >
                   <p className="text-sm font-semibold text-slate">{hit.name}</p>
                   <p className="text-xs text-slate/60">
@@ -163,24 +166,28 @@ export const Units = () => {
             <input
               className="rounded-lg border border-slate/20 px-3 py-2"
               placeholder="Nom"
+              title="Nom de l'établissement"
               value={establishmentForm.name}
               onChange={(e) => setEstablishmentForm((v) => ({ ...v, name: e.target.value }))}
             />
             <input
               className="rounded-lg border border-slate/20 px-3 py-2"
               placeholder="Secteur"
+              title="Secteur d'activité (libellé libre)"
               value={establishmentForm.sector}
               onChange={(e) => setEstablishmentForm((v) => ({ ...v, sector: e.target.value }))}
             />
             <input
               className="rounded-lg border border-slate/20 px-3 py-2"
               placeholder="Code NAF"
+              title="Code NAF (ex: 62.01Z)"
               value={establishmentForm.codeNaf}
               onChange={(e) => setEstablishmentForm((v) => ({ ...v, codeNaf: e.target.value }))}
             />
             <input
               className="md:col-span-2 rounded-lg border border-slate/20 px-3 py-2"
               placeholder="Adresse"
+              title="Adresse complète"
               value={establishmentForm.address}
               onChange={(e) => setEstablishmentForm((v) => ({ ...v, address: e.target.value }))}
             />
@@ -188,6 +195,7 @@ export const Units = () => {
           <button
             onClick={onCreateEstablishment}
             className="mt-3 rounded-xl bg-ink px-4 py-2 text-sm font-semibold text-white shadow-lg"
+            title="Ajouter l'établissement"
           >
             Ajouter
           </button>
@@ -221,6 +229,7 @@ export const Units = () => {
             <input
               className="rounded-lg border border-slate/20 px-3 py-2"
               placeholder="Nom"
+              title="Nom de l'unité de travail"
               value={unitForm.name}
               onChange={(e) => setUnitForm((v) => ({ ...v, name: e.target.value }))}
             />
@@ -228,12 +237,14 @@ export const Units = () => {
               type="number"
               className="rounded-lg border border-slate/20 px-3 py-2"
               placeholder="Effectif"
+              title="Nombre de personnes dans cette unité"
               value={unitForm.headcount}
               onChange={(e) => setUnitForm((v) => ({ ...v, headcount: Number(e.target.value) }))}
             />
             <textarea
               className="md:col-span-2 rounded-lg border border-slate/20 px-3 py-2"
               placeholder="Description (activité, zone, horaires, tâches)"
+              title="Décrivez brièvement les activités, horaires, métiers"
               value={unitForm.description}
               onChange={(e) => setUnitForm((v) => ({ ...v, description: e.target.value }))}
             />
@@ -241,6 +252,7 @@ export const Units = () => {
           <button
             onClick={onCreateUnit}
             className="mt-3 rounded-xl bg-ocean px-4 py-2 text-sm font-semibold text-white shadow-lg"
+            title="Ajouter l'unité à l'établissement sélectionné"
           >
             Ajouter l'unité
           </button>
