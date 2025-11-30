@@ -98,6 +98,28 @@ const hazardByNafPrefix: Record<string, Hazard[]> = {
   "85": educationHazards,
 };
 
+type PresetHazard = Hazard & { gravity?: number; frequency?: number; control?: number };
+type NafPreset = { label: string; hazards: PresetHazard[] };
+
+let nafPresetCache: Record<string, NafPreset> | null = null;
+
+const loadNafPresets = async (): Promise<Record<string, NafPreset>> => {
+  if (nafPresetCache) return nafPresetCache;
+  if (typeof window === "undefined") {
+    nafPresetCache = {};
+    return nafPresetCache;
+  }
+  try {
+    const res = await fetch("/naf-presets.json");
+    if (!res.ok) throw new Error("preset fetch failed");
+    nafPresetCache = (await res.json()) as Record<string, NafPreset>;
+    return nafPresetCache;
+  } catch (_) {
+    nafPresetCache = {};
+    return nafPresetCache;
+  }
+};
+
 const uid = () =>
   typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : `id-${Math.random().toString(36).slice(2, 9)}`;
 
@@ -325,7 +347,9 @@ export const useDuerpStore = create<DUERPState>((set, get) => ({
     set(() => ({ loadingHazards: true }));
     try {
       const nafPrefix = naf ? naf.slice(0, 2) : "";
-      const localPreset = hazardByNafPrefix[nafPrefix] || [];
+      const presetTable = await loadNafPresets();
+      const presetFromJson = presetTable[nafPrefix]?.hazards || [];
+      const localPreset = presetFromJson.length ? presetFromJson : hazardByNafPrefix[nafPrefix] || [];
       const fetched = await fetchHazardsFromSources(sector, naf);
       const baseCandidates = [...localPreset, ...fetched];
       const sourceList = baseCandidates.length > 0 ? baseCandidates : riskLibrary;
@@ -353,9 +377,9 @@ export const useDuerpStore = create<DUERPState>((set, get) => ({
           .filter((h) => !currentIds.has(h.id))
           .slice(0, 6)
           .forEach((h) => {
-            const gravity = 7;
-            const frequency = 3;
-            const control = 0.5;
+            const gravity = (h as PresetHazard).gravity ?? 7;
+            const frequency = (h as PresetHazard).frequency ?? 3;
+            const control = (h as PresetHazard).control ?? 0.5;
             const score = gravity * frequency * control;
             assessmentsToAdd.push({
               id: uid(),

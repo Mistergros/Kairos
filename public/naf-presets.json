@@ -1,0 +1,212 @@
+{
+  "62": {
+    "label": "Informatique / Services numériques",
+    "hazards": [
+      {
+        "id": "naf62-rps",
+        "category": "Risques psychosociaux (RPS)",
+        "risk": "Charge mentale / pression client / délais courts",
+        "damages": "Stress, épuisement",
+        "example_prevention": "Planification sprints, priorisation, points d'équipe réguliers",
+        "gravity": 8,
+        "frequency": 5,
+        "control": 0.7
+      },
+      {
+        "id": "naf62-ecran",
+        "category": "Travail sur écran",
+        "risk": "Postes fixes mal aménagés, usage prolongé",
+        "damages": "TMS, fatigue visuelle",
+        "example_prevention": "Ergonomie poste, alternance tâches, pauses",
+        "gravity": 6,
+        "frequency": 5,
+        "control": 0.6
+      },
+      {
+        "id": "naf62-routier",
+        "category": "Risque routier",
+        "risk": "Déplacements fréquents (clients/projets)",
+        "damages": "Accident, fatigue",
+        "example_prevention": "Marge planning, politique trajets, entretien véhicule",
+        "gravity": 7,
+        "frequency": 4,
+        "control": 0.7
+      }
+    ]
+  },
+  "70": {
+    "label": "Conseil / Management",
+    "hazards": [
+      {
+        "id": "naf70-rps",
+        "category": "Risques psychosociaux (RPS)",
+        "risk": "Charge mentale, objectifs élevés",
+        "damages": "Stress, épuisement",
+        "example_prevention": "Priorisation, régulation charge, soutien manager",
+        "gravity": 8,
+        "frequency": 5,
+        "control": 0.7
+      },
+      {
+        "id": "naf70-ecran",
+        "category": "Travail sur écran",
+        "risk": "Postes fixes mal aménagés",
+        "damages": "TMS, fatigue visuelle",
+        "example_prevention": "Ergonomie, pauses, réglage siège/écran",
+        "gravity": 6,
+        "frequency": 5,
+        "control": 0.6
+      },
+      {
+        "id": "naf70-routier",
+        "category": "Risque routier",
+        "risk": "Déplacements clientèle",
+        "damages": "Accident, fatigue",
+        "example_prevention": "Politique trajets, marges, entretien véhicule",
+        "gravity": 7,
+        "frequency": 4,
+        "control": 0.7
+      }
+    ]
+  },
+  "43": {
+    "label": "Construction / Chantier",
+    "hazards": [
+      {
+        "id": "naf43-chute",
+        "category": "Chutes (plain-pied / hauteur)",
+        "risk": "Travaux en hauteur / échafaudage",
+        "damages": "Chute de hauteur, fractures",
+        "example_prevention": "Garde-corps, harnais, contrôle échafaudage",
+        "gravity": 9,
+        "frequency": 6,
+        "control": 0.8
+      },
+      {
+        "id": "naf43-engins",
+        "category": "Manutention mécanique / engins",
+        "risk": "Engins en zones partagées",
+        "damages": "Collision, écrasement",
+        "example_prevention": "Plan de circulation, balisage, VGP",
+        "gravity": 9,
+        "frequency": 6,
+        "control": 0.8
+      },
+      {
+        "id": "naf43-poussiere",
+        "category": "Risque toxique / chimique",
+        "risk": "Poussières (silice, ciment)",
+        "damages": "Irritation, pathologies respiratoires",
+        "example_prevention": "Aspiration source, arrosage, FFP2/3",
+        "gravity": 8,
+        "frequency": 6,
+        "control": 0.8
+      }
+    ]
+  },
+  "49": {
+    "label": "Transport",
+    "hazards": [
+      {
+        "id": "naf49-routier",
+        "category": "Risque routier",
+        "risk": "Temps de conduite prolongés",
+        "damages": "Accident, fatigue",
+        "example_prevention": "Pauses, planning, entretien véhicule",
+        "gravity": 8,
+        "frequency": 6,
+        "control": 0.8
+      },
+      {
+        "id": "naf49-chute",
+        "category": "Chutes (plain-pied / hauteur)",
+        "risk": "Montée/descente véhicules, quais",
+        "damages": "Entorse, fracture",
+        "example_prevention": "Marchepieds, propreté, éclairage",
+        "gravity": 7,
+        "frequency": 5,
+        "control": 0.7
+      },
+      {
+        "id": "naf49-manuelle",
+        "category": "Manutention manuelle",
+        "risk": "Chargement/déchargement",
+        "damages": "TMS, chutes",
+        "example_prevention": "Aides mécaniques, posture, EPI",
+        "gravity": 7,
+        "frequency": 5,
+        "control": 0.7
+      }
+    ]
+  },
+  "55": {
+    "label": "Hôtellerie / Restauration",
+    "hazards": [
+      {
+        "id": "naf55-chute",
+        "category": "Chutes (plain-pied / hauteur)",
+        "risk": "Sols glissants (cuisine, salle)",
+        "damages": "Entorse, fracture",
+        "example_prevention": "Chaussures antidérapantes, entretien",
+        "gravity": 7,
+        "frequency": 5,
+        "control": 0.7
+      },
+      {
+        "id": "naf55-brulure",
+        "category": "Risque thermique / chimique",
+        "risk": "Brûlures (fours, liquides chauds, produits)",
+        "damages": "Brûlures",
+        "example_prevention": "EPI, procédures, rangement produits",
+        "gravity": 7,
+        "frequency": 5,
+        "control": 0.7
+      },
+      {
+        "id": "naf55-rps",
+        "category": "Risques psychosociaux (RPS)",
+        "risk": "Horaires décalés, relation clientèle",
+        "damages": "Stress, fatigue",
+        "example_prevention": "Planification, pauses, soutien manager",
+        "gravity": 6,
+        "frequency": 5,
+        "control": 0.6
+      }
+    ]
+  },
+  "45": {
+    "label": "Commerce / Vente",
+    "hazards": [
+      {
+        "id": "naf45-chute",
+        "category": "Chutes (plain-pied / hauteur)",
+        "risk": "Sols encombrés, rayonnages",
+        "damages": "Entorse, fracture",
+        "example_prevention": "Rangement, signalisation, EPI",
+        "gravity": 6,
+        "frequency": 5,
+        "control": 0.6
+      },
+      {
+        "id": "naf45-manuelle",
+        "category": "Manutention manuelle",
+        "risk": "Colis/stock",
+        "damages": "TMS, lombalgies",
+        "example_prevention": "Aides manutention, formation gestes",
+        "gravity": 6,
+        "frequency": 5,
+        "control": 0.6
+      },
+      {
+        "id": "naf45-rps",
+        "category": "Risques psychosociaux (RPS)",
+        "risk": "Relation clientèle difficile",
+        "damages": "Stress, choc émotionnel",
+        "example_prevention": "Formation gestion conflit, procédures",
+        "gravity": 6,
+        "frequency": 4,
+        "control": 0.6
+      }
+    ]
+  }
+}
