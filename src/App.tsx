@@ -54,7 +54,7 @@ export default function App() {
         <aside className="hidden md:flex w-64 flex-col bg-gradient-to-b from-kairos to-azure text-white shadow-2xl">
           <div className="px-5 py-6">
             <div className="flex items-center gap-3">
-              <img src="/Kairos_logo.png" alt="Kairos" className="h-12 w-auto object-contain drop-shadow-lg" />
+              <img src="/Kairos_logo.png" alt="Kairos" className="h-20 w-auto object-contain drop-shadow-lg" />
               <div>
                 <p className="text-sm font-semibold">Kairos</p>
                 <p className="text-[11px] uppercase tracking-wide text-white/70">by Milante Consulting</p>

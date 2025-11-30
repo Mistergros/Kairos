@@ -1,10 +1,9 @@
 import { Priority } from '../types';
 
 export const computePriority = (score: number): Priority => {
-  if (score > 1400) return 1;
-  if (score >= 601) return 2;
-  if (score >= 200) return 3;
-  if (score >= 1) return 4;
+  if (score >= 150) return 1;
+  if (score >= 80) return 2;
+  if (score >= 40) return 3;
   return 4;
 };
 

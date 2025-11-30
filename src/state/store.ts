@@ -139,74 +139,15 @@ interface DUERPState {
   prefillFromSector: (sector?: string) => Promise<void>;
 }
 
-const initialEstablishment: Establishment = {
-  id: uid(),
-  name: "Atelier Demo",
-  sector: "Tertiaire",
-  codeNaf: "62.01Z",
-  address: "12 rue du Progres, 75000 Paris",
-  headcount: 45,
-};
-
-const initialUnits: WorkUnit[] = [
-  { id: uid(), establishmentId: initialEstablishment.id, name: "Bureaux", headcount: 30 },
-  { id: uid(), establishmentId: initialEstablishment.id, name: "Atelier", headcount: 15 },
-];
-
-const seedAssessment = (workUnitId: string, hazardId: string, gravity: number, frequency: number, control: number) => {
-  const hazard = riskLibrary.find((h) => h.id === hazardId)!;
-  const score = gravity * frequency * control;
-  const priority = computePriority(score);
-  return {
-    id: uid(),
-    workUnitId,
-    hazardId,
-    hazardCategory: hazard.category,
-    riskLabel: hazard.risk,
-    damages: hazard.damages,
-    gravity,
-    frequency,
-    control,
-    score,
-    priority,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  } satisfies Assessment;
-};
-
-const initialAssessments: Assessment[] = [
-  seedAssessment(initialUnits[0].id, riskLibrary[0].id, 7, 3, 0.5),
-  seedAssessment(initialUnits[1].id, riskLibrary[12].id, 10, 7, 1),
-];
-
 export const useDuerpStore = create<DUERPState>((set, get) => ({
-  establishments: [initialEstablishment],
-  workUnits: initialUnits,
+  establishments: [],
+  workUnits: [],
   hazardLibrary: riskLibrary,
-  assessments: initialAssessments,
-  actions: [
-    {
-      id: uid(),
-      establishmentId: initialEstablishment.id,
-      assessmentId: initialAssessments[0].id,
-      title: "Installer aspiration localisee",
-      description: "Limiter les emissions de solvants dans l'atelier.",
-      steps: [
-        { id: "step-1", label: "Valider fournisseur", done: false },
-        { id: "step-2", label: "Commander materiel", done: false },
-        { id: "step-3", label: "Installer et tester", done: false },
-      ],
-      owner: "Responsable maintenance",
-      dueDate: new Date(Date.now() + 7 * 24 * 3600 * 1000).toISOString(),
-      status: "IN_PROGRESS",
-      cost: 3500,
-      priority: initialAssessments[0].priority,
-      createdAt: new Date().toISOString(),
-    },
-  ],
+  assessments: [],
+  actions: [],
   versions: [],
-  selectedEstablishmentId: initialEstablishment.id,
-  selectedWorkUnitId: initialUnits[0].id,
+  selectedEstablishmentId: undefined,
+  selectedWorkUnitId: undefined,
   loadingHazards: false,
 
   setSelectedEstablishment: (id) =>
