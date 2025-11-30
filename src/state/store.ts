@@ -241,13 +241,9 @@ export const useDuerpStore = create<DUERPState>((set, get) => ({
         createdAt: now,
         updatedAt: now,
       };
-      const actions =
-        priority <= 2
-          ? [
-              ...state.actions,
-              ...(state.actions.some((act) => act.assessmentId === newAssessment.id) ? [] : [makeActionForAssessment(newAssessment)]),
-            ]
-          : state.actions;
+      const actions = state.actions.some((act) => act.assessmentId === newAssessment.id)
+        ? state.actions
+        : [...state.actions, makeActionForAssessment(newAssessment)];
       return { ...state, assessments: [...state.assessments, newAssessment], actions };
     }),
 
@@ -403,7 +399,7 @@ export const useDuerpStore = create<DUERPState>((set, get) => ({
         );
         const remainingAssessments = state.assessments.filter((a) => !removedAssessmentIds.has(a.id));
         const remainingActions = state.actions.filter((a) => !a.assessmentId || !removedAssessmentIds.has(a.assessmentId));
-        const newActions = assessmentsToAdd.filter((a) => a.priority <= 2).map((a) => makeActionForAssessment(a));
+        const newActions = assessmentsToAdd.map((a) => makeActionForAssessment(a));
 
         return {
           hazardLibrary,
