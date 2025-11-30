@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { riskLibrary } from "../data/riskLibrary";
 import { nafPresets, NafPreset } from "../data/nafPresets";
+import { buildHazardsFromMapping } from "../data/nafMappingLoader";
 import { ActionItem, Assessment, Establishment, Hazard, Priority, WorkUnit, VersionEntry } from "../types";
 import { computePriority } from "../utils/score";
 import { fetchHazardsFromSources } from "../utils/api";
@@ -329,11 +330,15 @@ export const useDuerpStore = create<DUERPState>((set, get) => ({
     set(() => ({ loadingHazards: true }));
     try {
       const nafPrefix = naf ? naf.toUpperCase().slice(0, 2) : "";
+      const mappingHazards = buildHazardsFromMapping(naf);
       const presetTable = await loadNafPresets();
       const presetFromJson = presetTable[nafPrefix]?.hazards || [];
       const fallbackPreset = hazardByNafPrefix[nafPrefix] || [];
       const fetched = await fetchHazardsFromSources(sector, naf);
-      const baseCandidates = [...presetFromJson, ...fetched, ...fallbackPreset];
+      const baseCandidates =
+        mappingHazards.length > 0
+          ? mappingHazards
+          : [...presetFromJson, ...fetched, ...fallbackPreset];
       const sourceList = baseCandidates.length > 0 ? baseCandidates : riskLibrary;
 
       const existingLibrary = get().hazardLibrary;
