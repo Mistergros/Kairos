@@ -99,6 +99,10 @@ export const Units = () => {
   return (
     <div className="grid gap-4 md:grid-cols-2">
       <Card title="Établissements" subtitle="Raison sociale, NAF/secteur, coordonnées">
+        <div className="mb-3 rounded-xl bg-slate/5 px-3 py-2 text-xs text-slate/70">
+          📌 Astuce : cherchez l’entreprise (SIREN/SIRET ou nom) pour préremplir les champs. Vous pouvez ensuite modifier
+          le secteur/NAF avant d’enregistrer.
+        </div>
         <div className="mb-4 rounded-2xl border border-slate/10 bg-white p-4 shadow-sm">
           <p className="text-sm font-semibold text-slate">Recherche d'entreprise (SIREN/SIRET ou nom)</p>
           <div className="mt-2 flex flex-col gap-2 md:flex-row md:items-center">
@@ -203,6 +207,10 @@ export const Units = () => {
       </Card>
 
       <Card title="Unités de travail" subtitle="Répartir par atelier/équipe/poste pour suivre les risques">
+        <div className="mb-3 rounded-xl bg-slate/5 px-3 py-2 text-xs text-slate/70">
+          📌 Astuce : créez plusieurs unités (bureaux, atelier, chantier, etc.). Chaque unité aura son inventaire de
+          risques dédié.
+        </div>
         <div className="space-y-3">
           {workUnits
             .filter((w) => w.establishmentId === selectedEstablishmentId)

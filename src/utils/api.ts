@@ -2,7 +2,7 @@ import { Hazard } from '../types';
 import { riskLibrary } from '../data/riskLibrary';
 
 const API_BASE = import.meta.env.VITE_DUERP_API_BASE || '';
-const COMPANY_API = import.meta.env.VITE_COMPANY_API || '';
+const COMPANY_API = import.meta.env.VITE_COMPANY_API || (typeof window !== 'undefined' ? `${window.location.origin}/api/companies` : '');
 
 const normalizeSector = (sector: string) => sector.toLowerCase().replace(/\s+/g, '-');
 
@@ -156,24 +156,6 @@ export type CompanySearchHit = {
 export const searchCompanies = async (query: string): Promise<CompanySearchHit[]> => {
   if (!query || query.length < 3) return [];
 
-  const mockResult: CompanySearchHit[] = [
-    {
-      id: 'mock-1',
-      name: `Demo ${query.toUpperCase()}`,
-      siren: '123456789',
-      siret: '12345678900011',
-      naf: '62.01Z',
-      address: '1 rue de la Paix',
-      city: 'Paris',
-      postalCode: '75002',
-    },
-  ];
-
-  if (!COMPANY_API) {
-    // Pas de backend configuré : renvoyer un mock minimal
-    return mockResult;
-  }
-
   try {
     const url = `${COMPANY_API}/search?q=${encodeURIComponent(query)}`;
     const res = await fetch(url);
@@ -183,6 +165,17 @@ export const searchCompanies = async (query: string): Promise<CompanySearchHit[]
     return (await res.json()) as CompanySearchHit[];
   } catch (err) {
     console.warn('Recherche entreprise en erreur, utilisation du mock local.', err);
-    return mockResult;
+    return [
+      {
+        id: 'mock-1',
+        name: `Demo ${query.toUpperCase()}`,
+        siren: '123456789',
+        siret: '12345678900011',
+        naf: '62.01Z',
+        address: '1 rue de la Paix',
+        city: 'Paris',
+        postalCode: '75002',
+      },
+    ];
   }
 };

@@ -101,6 +101,11 @@ export const Inventory = () => {
           />
         }
       >
+        <div className="mb-3 rounded-xl bg-slate/5 px-3 py-2 text-xs text-slate/70">
+          📌 Astuce : 1) Saisissez le code NAF/secteur puis “Pre-remplir” pour charger des risques proposés. 2) Ajustez G/F/P
+          ou utilisez le “Questionnaire (pondération)” pour appliquer une pondération guidée. 3) Supprimez les risques
+          non pertinents.
+        </div>
         <div className="flex flex-wrap items-center gap-3">
           <div className="flex items-center gap-2">
             <input
