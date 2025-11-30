@@ -1,4 +1,4 @@
-import { Establishment, WorkUnit } from '../types';
+﻿import { Establishment, WorkUnit } from "../types";
 
 type Props = {
   establishments: Establishment[];
@@ -26,6 +26,7 @@ export const ContextSelectors = ({
           className="rounded-xl border border-slate/20 bg-white px-3 py-2 text-sm shadow-sm"
           value={selectedEstablishmentId}
           onChange={(e) => onSelectEstablishment(e.target.value)}
+          title="Choisissez l'établissement en cours"
         >
           {establishments.map((e) => (
             <option key={e.id} value={e.id}>
@@ -40,6 +41,7 @@ export const ContextSelectors = ({
           className="rounded-xl border border-slate/20 bg-white px-3 py-2 text-sm shadow-sm"
           value={selectedWorkUnitId}
           onChange={(e) => onSelectWorkUnit(e.target.value)}
+          title="Choisissez l'unité de travail"
         >
           {unitsForEstablishment.map((w) => (
             <option key={w.id} value={w.id}>

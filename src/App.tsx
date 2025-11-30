@@ -1,24 +1,24 @@
-﻿import { BrowserRouter, Routes, Route, NavLink, Navigate } from 'react-router-dom';
-import { useMemo } from 'react';
-import { LayoutDashboard, Building2, ShieldCheck, ListChecks, Download, Clock3, CreditCard } from 'lucide-react';
-import { Dashboard } from './pages/Dashboard';
-import { Units } from './pages/Units';
-import { Inventory } from './pages/Inventory';
-import { ActionPlan } from './pages/ActionPlan';
-import { Exports } from './pages/Exports';
-import { Versions } from './pages/Versions';
-import { Pricing } from './pages/Pricing';
-import { ContextSelectors } from './components/Selectors';
-import { useDuerpStore } from './state/store';
+﻿import { BrowserRouter, Routes, Route, NavLink, Navigate } from "react-router-dom";
+import { useMemo } from "react";
+import { LayoutDashboard, Building2, ShieldCheck, ListChecks, Download, Clock3, CreditCard } from "lucide-react";
+import { Dashboard } from "./pages/Dashboard";
+import { Units } from "./pages/Units";
+import { Inventory } from "./pages/Inventory";
+import { ActionPlan } from "./pages/ActionPlan";
+import { Exports } from "./pages/Exports";
+import { Versions } from "./pages/Versions";
+import { Pricing } from "./pages/Pricing";
+import { ContextSelectors } from "./components/Selectors";
+import { useDuerpStore } from "./state/store";
 
 const navItems = [
-  { path: '/', label: 'Tableau de bord', icon: LayoutDashboard, end: true },
-  { path: '/units', label: 'Unités de travail', icon: Building2 },
-  { path: '/inventory', label: 'Inventaire', icon: ShieldCheck },
-  { path: '/action-plan', label: "Plan d'action", icon: ListChecks },
-  { path: '/exports', label: 'Exports', icon: Download },
-  { path: '/versions', label: 'Versions', icon: Clock3 },
-  { path: '/pricing', label: 'Plans & Tarifs', icon: CreditCard },
+  { path: "/", label: "Tableau de bord", icon: LayoutDashboard, end: true },
+  { path: "/units", label: "Unités de travail", icon: Building2 },
+  { path: "/inventory", label: "Inventaire", icon: ShieldCheck },
+  { path: "/action-plan", label: "Plan d'action", icon: ListChecks },
+  { path: "/exports", label: "Exports", icon: Download },
+  { path: "/versions", label: "Versions", icon: Clock3 },
+  { path: "/pricing", label: "Plans & Tarifs", icon: CreditCard },
 ];
 
 export default function App() {
@@ -45,8 +45,8 @@ export default function App() {
   }, [assessments, actions, versions]);
 
   const lastUpdateLabel = lastUpdate
-    ? lastUpdate.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' })
-    : 'Aucune mise à jour';
+    ? lastUpdate.toLocaleDateString("fr-FR", { day: "2-digit", month: "short", year: "numeric" })
+    : "Aucune mise à jour";
 
   return (
     <BrowserRouter>
@@ -70,7 +70,7 @@ export default function App() {
                     end={item.end}
                     className={({ isActive }) =>
                       `flex items-center gap-3 rounded-xl px-3 py-2 transition hover:bg-white/10 ${
-                        isActive ? 'bg-white/15 font-semibold' : 'text-white/80'
+                        isActive ? "bg-white/15 font-semibold" : "text-white/80"
                       }`
                     }
                   >
@@ -93,8 +93,8 @@ export default function App() {
               workUnits={workUnits}
               selectedEstablishmentId={selectedEstablishmentId}
               selectedWorkUnitId={selectedWorkUnitId}
-              setSelectedEstablishment={setSelectedEstablishment}
-              setSelectedWorkUnit={setSelectedWorkUnit}
+              onSelectEstablishment={setSelectedEstablishment}
+              onSelectWorkUnit={setSelectedWorkUnit}
             />
           </header>
 
