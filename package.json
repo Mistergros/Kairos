@@ -9,6 +9,9 @@
     "preview": "vite preview",
     "mock-api": "node mock-api.js"
   },
+  "engines": {
+    "node": ">=18"
+  },
   "dependencies": {
     "@tanstack/react-table": "^8.11.8",
     "clsx": "^2.0.0",
