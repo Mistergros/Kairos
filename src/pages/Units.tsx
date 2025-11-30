@@ -43,14 +43,18 @@ export const Units = () => {
   };
 
   const onCreateUnit = () => {
-    if (!unitForm.name || !selectedEstablishmentId) return;
+    const targetEstablishmentId = selectedEstablishmentId || establishments[0]?.id;
+    if (!unitForm.name || !targetEstablishmentId) return;
+    const newId = uid();
     addWorkUnit({
-      id: uid(),
-      establishmentId: selectedEstablishmentId,
+      id: newId,
+      establishmentId: targetEstablishmentId,
       name: unitForm.name,
       description: unitForm.description,
       headcount: unitForm.headcount,
     });
+    setSelectedEstablishment(targetEstablishmentId);
+    setSelectedWorkUnit(newId);
     setUnitForm({ name: "", description: "", headcount: 0 });
   };
 
