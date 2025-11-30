@@ -1,62 +1,54 @@
-﻿import { create } from 'zustand';
-import { riskLibrary } from '../data/riskLibrary';
-import {
-  ActionItem,
-  Assessment,
-  Establishment,
-  Hazard,
-  Priority,
-  WorkUnit,
-  VersionEntry,
-} from '../types';
-import { computePriority } from '../utils/score';
-import { fetchHazardsFromSources } from '../utils/api';
+﻿import { create } from "zustand";
+import { riskLibrary } from "../data/riskLibrary";
+import { ActionItem, Assessment, Establishment, Hazard, Priority, WorkUnit, VersionEntry } from "../types";
+import { computePriority } from "../utils/score";
+import { fetchHazardsFromSources } from "../utils/api";
 
 const itHazards: Hazard[] = [
   {
-    id: 'it-ecran-1',
-    category: 'Travail sur ecran',
-    risk: 'Postes de travail mal ajustes (ecran, siege, clavier)',
-    damages: 'TMS, fatigue visuelle',
-    example_prevention: 'Sieges reglables, ecran a hauteur yeux, pauses, lumiere adaptée',
-    sector: 'Informatique',
+    id: "it-ecran-1",
+    category: "Travail sur écran",
+    risk: "Postes de travail mal ajustés (écran, siège, clavier)",
+    damages: "TMS, fatigue visuelle",
+    example_prevention: "Sièges réglables, écran à hauteur des yeux, pauses, lumière adaptée",
+    sector: "Informatique",
   },
   {
-    id: 'it-rps-1',
-    category: 'Risques psychosociaux (RPS)',
-    risk: 'Charge mentale/projets urgents ou clients difficiles',
-    damages: 'Stress, epuisement',
-    example_prevention: 'Planifier les sprints, arbitrer les priorites, points d equipe reguliers',
-    sector: 'Informatique',
+    id: "it-rps-1",
+    category: "Risques psychosociaux (RPS)",
+    risk: "Charge mentale/projets urgents ou clients difficiles",
+    damages: "Stress, épuisement",
+    example_prevention: "Planifier les sprints, arbitrer les priorités, points d’équipe réguliers",
+    sector: "Informatique",
   },
   {
-    id: 'it-posture-1',
-    category: 'Postures de travail',
-    risk: 'Station assise prolongee, manque d alternance',
-    damages: 'Lombalgies, TMS',
-    example_prevention: 'Alternance assis-debout, pauses actives, ergonomie poste',
-    sector: 'Informatique',
+    id: "it-posture-1",
+    category: "Postures de travail",
+    risk: "Station assise prolongée, manque d’alternance",
+    damages: "Lombalgies, TMS",
+    example_prevention: "Alternance assis-debout, pauses actives, ergonomie poste",
+    sector: "Informatique",
   },
   {
-    id: 'it-elec-1',
-    category: 'Risque electrique',
-    risk: 'Multiprises surchargees, baies/serveurs',
-    damages: 'Incendie, electrocution',
-    example_prevention: 'Prises aux normes, parasurtenseurs, maintenance onduleurs/clim',
-    sector: 'Informatique',
+    id: "it-elec-1",
+    category: "Risque électrique",
+    risk: "Multiprises surchargées, baies/serveurs",
+    damages: "Incendie, électrocution",
+    example_prevention: "Prises aux normes, parasurtenseurs, maintenance onduleurs/clim",
+    sector: "Informatique",
   },
   {
-    id: 'it-incendie-1',
-    category: 'Incendie / Explosion',
-    risk: 'Locaux serveur, climatisation, batteries/onduleurs',
-    damages: 'Incendie local, arret d activite',
-    example_prevention: 'Detection, extinction adaptee, maintenance, zones degagees',
-    sector: 'Informatique',
+    id: "it-incendie-1",
+    category: "Incendie / Explosion",
+    risk: "Locaux serveur, climatisation, batteries/onduleurs",
+    damages: "Incendie local, arrêt d’activité",
+    example_prevention: "Détection, extinction adaptée, maintenance, zones dégagées",
+    sector: "Informatique",
   },
 ];
 
 const uid = () =>
-  typeof crypto !== 'undefined' && crypto.randomUUID
+  typeof crypto !== "undefined" && crypto.randomUUID
     ? crypto.randomUUID()
     : `id-${Math.random().toString(36).slice(2, 9)}`;
 
@@ -70,7 +62,7 @@ type AssessmentInput = {
   control: number;
 };
 
-type ActionInput = Omit<ActionItem, 'id' | 'createdAt' | 'priority'> & { priority?: Priority };
+type ActionInput = Omit<ActionItem, "id" | "createdAt" | "priority"> & { priority?: Priority };
 
 interface DUERPState {
   establishments: Establishment[];
@@ -91,7 +83,7 @@ interface DUERPState {
   removeAssessment: (id: string) => void;
   updateAssessment: (id: string, payload: Partial<AssessmentInput>) => void;
   addAction: (payload: ActionInput) => void;
-  updateActionStatus: (id: string, status: ActionItem['status']) => void;
+  updateActionStatus: (id: string, status: ActionItem["status"]) => void;
   toggleActionStep: (actionId: string, stepId: string) => void;
   createVersion: (label: string, reason?: string) => void;
   loadingHazards: boolean;
@@ -100,16 +92,16 @@ interface DUERPState {
 
 const initialEstablishment: Establishment = {
   id: uid(),
-  name: 'Atelier Demo',
-  sector: 'Tertiaire',
-  codeNaf: '62.01Z',
-  address: '12 rue du Progres, 75000 Paris',
+  name: "Atelier Demo",
+  sector: "Tertiaire",
+  codeNaf: "62.01Z",
+  address: "12 rue du Progrès, 75000 Paris",
   headcount: 45,
 };
 
 const initialUnits: WorkUnit[] = [
-  { id: uid(), establishmentId: initialEstablishment.id, name: 'Bureaux', headcount: 30 },
-  { id: uid(), establishmentId: initialEstablishment.id, name: 'Atelier', headcount: 15 },
+  { id: uid(), establishmentId: initialEstablishment.id, name: "Bureaux", headcount: 30 },
+  { id: uid(), establishmentId: initialEstablishment.id, name: "Atelier", headcount: 15 },
 ];
 
 const seedAssessment = (workUnitId: string, hazardId: string, gravity: number, frequency: number, control: number) => {
@@ -148,16 +140,16 @@ export const useDuerpStore = create<DUERPState>((set, get) => ({
       id: uid(),
       establishmentId: initialEstablishment.id,
       assessmentId: initialAssessments[0].id,
-      title: 'Installer aspiration localisee',
+      title: "Installer aspiration localisee",
       description: "Limiter les emissions de solvants dans l'atelier.",
       steps: [
-        { id: 'step-1', label: 'Valider fournisseur', done: false },
-        { id: 'step-2', label: 'Commander materiel', done: false },
-        { id: 'step-3', label: 'Installer et tester', done: false },
+        { id: "step-1", label: "Valider fournisseur", done: false },
+        { id: "step-2", label: "Commander materiel", done: false },
+        { id: "step-3", label: "Installer et tester", done: false },
       ],
-      owner: 'Responsable maintenance',
+      owner: "Responsable maintenance",
       dueDate: new Date(Date.now() + 7 * 24 * 3600 * 1000).toISOString(),
-      status: 'IN_PROGRESS',
+      status: "IN_PROGRESS",
       cost: 3500,
       priority: initialAssessments[0].priority,
       createdAt: new Date().toISOString(),
@@ -328,12 +320,15 @@ export const useDuerpStore = create<DUERPState>((set, get) => ({
     try {
       const fetched = await fetchHazardsFromSources(sector, naf);
       const localForSector =
-        naf?.startsWith('62') || naf?.startsWith('63') || (sector || '').toLowerCase().includes('info')
+        naf?.startsWith("62") || naf?.startsWith("63") || (sector || "").toLowerCase().includes("info")
           ? itHazards
           : [];
+
+      const baseCandidates = [...fetched, ...localForSector];
+      const sourceList = baseCandidates.length > 0 ? baseCandidates : riskLibrary;
+
       const hazardMap = new Map<string, Hazard>();
-      const existingLibrary = get().hazardLibrary;
-      [...existingLibrary, ...fetched, ...localForSector].forEach((h) => {
+      sourceList.forEach((h) => {
         const safeId = h.id || `haz-${h.risk.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
         hazardMap.set(safeId, { ...h, id: safeId });
       });
@@ -387,10 +382,3 @@ export const useDuerpStore = create<DUERPState>((set, get) => ({
     }
   },
 }));
-
-
-
-
-
-
-

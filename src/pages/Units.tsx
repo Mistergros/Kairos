@@ -1,4 +1,4 @@
-import { useState } from 'react';
+ï»¿import { useState } from 'react';
 import { Card } from '../components/Card';
 import { useDuerpStore } from '../state/store';
 import { searchCompanies } from '../utils/api';
@@ -98,13 +98,13 @@ export const Units = () => {
 
   return (
     <div className="grid gap-4 md:grid-cols-2">
-      <Card title="Etablissements" subtitle="Raison sociale, NAF/secteur, coordonnées">
+      <Card title="Etablissements" subtitle="Raison sociale, NAF/secteur, coordonnÃ©es">
         <div className="mb-4 rounded-2xl border border-slate/10 bg-white p-4 shadow-sm">
           <p className="text-sm font-semibold text-slate">Recherche d'entreprise (SIREN/SIRET ou nom)</p>
           <div className="mt-2 flex flex-col gap-2 md:flex-row md:items-center">
             <input
               className="flex-1 rounded-lg border border-slate/20 px-3 py-2"
-              placeholder="Ex: 552100554 ou 'Société Exemple'"
+              placeholder="Ex: 552100554 ou 'SociÃ©tÃ© Exemple'"
               value={companyQuery}
               onChange={(e) => setCompanyQuery(e.target.value)}
             />
@@ -143,8 +143,8 @@ export const Units = () => {
               <div className="flex items-center justify-between gap-3">
                 <div className="space-y-1">
                   <p className="text-base font-semibold text-slate">{e.name}</p>
-                  <p className="text-sm text-slate/60">{e.address || 'Adresse à compléter'}</p>
-                  <p className="text-xs text-slate/60">{e.codeNaf ? `NAF ${e.codeNaf}` : 'NAF à renseigner'}</p>
+                  <p className="text-sm text-slate/60">{e.address || 'Adresse Ã  complÃ©ter'}</p>
+                  <p className="text-xs text-slate/60">{e.codeNaf ? `NAF ${e.codeNaf}` : 'NAF Ã  renseigner'}</p>
                 </div>
                 <div className="flex flex-col items-end gap-2 text-right">
                   <span className="pill bg-ocean/10 text-ocean-700">{e.sector || 'Secteur'}</span>
@@ -158,7 +158,7 @@ export const Units = () => {
         </div>
 
         <div className="mt-6 rounded-2xl bg-slate/5 p-4">
-          <p className="mb-2 font-semibold text-slate">Nouvel établissement</p>
+          <p className="mb-2 font-semibold text-slate">Nouvel Ã©tablissement</p>
           <div className="grid gap-2 md:grid-cols-2">
             <input
               className="rounded-lg border border-slate/20 px-3 py-2"
@@ -194,7 +194,7 @@ export const Units = () => {
         </div>
       </Card>
 
-      <Card title="Unités de travail" subtitle="Répartir par atelier/équipe/poste pour suivre les risques">
+      <Card title="UnitÃ©s de travail" subtitle="RÃ©partir par atelier/Ã©quipe/poste pour suivre les risques">
         <div className="space-y-3">
           {workUnits
             .filter((w) => w.establishmentId === selectedEstablishmentId)
@@ -203,7 +203,7 @@ export const Units = () => {
                 <div className="flex items-center justify-between gap-3">
                   <div>
                     <p className="font-semibold text-slate">{w.name}</p>
-                    <p className="text-xs text-slate/60">{w.description || 'Description à compléter (activités, métiers)'}</p>
+                    <p className="text-xs text-slate/60">{w.description || 'Description Ã  complÃ©ter (activitÃ©s, mÃ©tiers)'}</p>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="pill bg-slate/10 text-slate-700">{w.headcount ?? 0} pers.</span>
@@ -216,7 +216,7 @@ export const Units = () => {
             ))}
         </div>
         <div className="mt-6 rounded-2xl bg-slate/5 p-4">
-          <p className="mb-2 font-semibold text-slate">Nouvelle unité</p>
+          <p className="mb-2 font-semibold text-slate">Nouvelle unitÃ©</p>
           <div className="grid gap-2 md:grid-cols-2">
             <input
               className="rounded-lg border border-slate/20 px-3 py-2"
@@ -233,7 +233,7 @@ export const Units = () => {
             />
             <textarea
               className="md:col-span-2 rounded-lg border border-slate/20 px-3 py-2"
-              placeholder="Description (activité, zone, horaires, tâches)"
+              placeholder="Description (activitÃ©, zone, horaires, tÃ¢ches)"
               value={unitForm.description}
               onChange={(e) => setUnitForm((v) => ({ ...v, description: e.target.value }))}
             />
@@ -242,7 +242,7 @@ export const Units = () => {
             onClick={onCreateUnit}
             className="mt-3 rounded-xl bg-ocean px-4 py-2 text-sm font-semibold text-white shadow-lg"
           >
-            Ajouter l'unité
+            Ajouter l'unitÃ©
           </button>
         </div>
       </Card>
