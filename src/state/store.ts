@@ -346,12 +346,12 @@ export const useDuerpStore = create<DUERPState>((set, get) => ({
     if (!sector && !naf) return;
     set(() => ({ loadingHazards: true }));
     try {
-      const nafPrefix = naf ? naf.slice(0, 2) : "";
+      const nafPrefix = naf ? naf.toUpperCase().slice(0, 2) : "";
       const presetTable = await loadNafPresets();
       const presetFromJson = presetTable[nafPrefix]?.hazards || [];
-      const localPreset = presetFromJson.length ? presetFromJson : hazardByNafPrefix[nafPrefix] || [];
+      const fallbackPreset = hazardByNafPrefix[nafPrefix] || [];
       const fetched = await fetchHazardsFromSources(sector, naf);
-      const baseCandidates = [...localPreset, ...fetched];
+      const baseCandidates = [...presetFromJson, ...fetched, ...fallbackPreset];
       const sourceList = baseCandidates.length > 0 ? baseCandidates : riskLibrary;
 
       const existingLibrary = get().hazardLibrary;
@@ -373,6 +373,8 @@ export const useDuerpStore = create<DUERPState>((set, get) => ({
 
       const targetEstablishment = get().selectedEstablishmentId || get().establishments[0]?.id;
       const targetUnits = get().workUnits.filter((u) => u.establishmentId === targetEstablishment);
+      if (!targetUnits.length) return;
+
       const existingByUnit = get().assessments.reduce((acc, a) => {
         acc[a.workUnitId] = acc[a.workUnitId] || new Set<string>();
         acc[a.workUnitId].add(a.hazardId);
@@ -410,16 +412,21 @@ export const useDuerpStore = create<DUERPState>((set, get) => ({
           });
       });
 
-      set((state) => ({
-        hazardLibrary,
-        assessments: [...state.assessments, ...assessmentsToAdd],
-        actions: [
-          ...state.actions,
-          ...assessmentsToAdd
-            .filter((a) => a.priority <= 2)
-            .map((a) => makeActionForAssessment(a)),
-        ],
-      }));
+      set((state) => {
+        const targetUnitIds = new Set(targetUnits.map((u) => u.id));
+        const removedAssessmentIds = new Set(
+          state.assessments.filter((a) => targetUnitIds.has(a.workUnitId)).map((a) => a.id)
+        );
+        const remainingAssessments = state.assessments.filter((a) => !removedAssessmentIds.has(a.id));
+        const remainingActions = state.actions.filter((a) => !a.assessmentId || !removedAssessmentIds.has(a.assessmentId));
+        const newActions = assessmentsToAdd.filter((a) => a.priority <= 2).map((a) => makeActionForAssessment(a));
+
+        return {
+          hazardLibrary,
+          assessments: [...remainingAssessments, ...assessmentsToAdd],
+          actions: [...remainingActions, ...newActions],
+        };
+      });
     } finally {
       set(() => ({ loadingHazards: false }));
     }
