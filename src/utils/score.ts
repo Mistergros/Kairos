@@ -1,10 +1,11 @@
 import { Priority } from '../types';
 
 export const computePriority = (score: number): Priority => {
-  if (score >= 150) return 1;
-  if (score >= 80) return 2;
-  if (score >= 40) return 3;
-  return 4;
+  // Scores issus de G * F * P. Pour avoir plus de dispersion :
+  if (score >= 60) return 1;
+  if (score >= 30) return 2;
+  if (score >= 12) return 3;
+  return 4; // scores faibles => surveiller
 };
 
 export const formatPriority = (priority: Priority) => {

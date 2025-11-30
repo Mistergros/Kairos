@@ -101,6 +101,24 @@ const hazardByNafPrefix: Record<string, Hazard[]> = {
 const uid = () =>
   typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : `id-${Math.random().toString(36).slice(2, 9)}`;
 
+const makeActionForAssessment = (a: Assessment): ActionItem => ({
+  id: uid(),
+  establishmentId: a.workUnitId, // not ideal but keep required field
+  assessmentId: a.id,
+  title: `Action prioritaire sur ${a.riskLabel}`,
+  description: "Définir les mesures correctives et les responsables",
+  steps: [
+    { id: uid(), label: "Analyser le risque", done: false },
+    { id: uid(), label: "Définir mesures et responsable", done: false },
+    { id: uid(), label: "Mettre en oeuvre", done: false },
+  ],
+  owner: "A définir",
+  dueDate: new Date(Date.now() + 14 * 24 * 3600 * 1000).toISOString(),
+  status: "TO_DO",
+  priority: a.priority,
+  createdAt: new Date().toISOString(),
+});
+
 type AssessmentInput = {
   workUnitId: string;
   hazardId: string;
@@ -217,7 +235,14 @@ export const useDuerpStore = create<DUERPState>((set, get) => ({
         createdAt: now,
         updatedAt: now,
       };
-      return { ...state, assessments: [...state.assessments, newAssessment] };
+      const actions =
+        priority <= 2
+          ? [
+              ...state.actions,
+              ...(state.actions.some((act) => act.assessmentId === newAssessment.id) ? [] : [makeActionForAssessment(newAssessment)]),
+            ]
+          : state.actions;
+      return { ...state, assessments: [...state.assessments, newAssessment], actions };
     }),
 
   removeAssessment: (id) =>
@@ -355,6 +380,12 @@ export const useDuerpStore = create<DUERPState>((set, get) => ({
       set((state) => ({
         hazardLibrary,
         assessments: [...state.assessments, ...assessmentsToAdd],
+        actions: [
+          ...state.actions,
+          ...assessmentsToAdd
+            .filter((a) => a.priority <= 2)
+            .map((a) => makeActionForAssessment(a)),
+        ],
       }));
     } finally {
       set(() => ({ loadingHazards: false }));
