@@ -107,9 +107,9 @@ const loadNafPresets = async (): Promise<Record<string, NafPreset>> => nafPreset
 const uid = () =>
   typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : `id-${Math.random().toString(36).slice(2, 9)}`;
 
-const makeActionForAssessment = (a: Assessment): ActionItem => ({
+const makeActionForAssessment = (a: Assessment, establishmentId?: string): ActionItem => ({
   id: uid(),
-  establishmentId: a.workUnitId, // not ideal but keep required field
+  establishmentId: establishmentId ?? a.workUnitId,
   assessmentId: a.id,
   title: `Action prioritaire sur ${a.riskLabel}`,
   description: "Definir les mesures correctives et les responsables",
@@ -219,6 +219,8 @@ export const useDuerpStore = create<DUERPState>((set, get) => ({
 
   addAssessment: (payload) =>
     set((state) => {
+      const workUnit = state.workUnits.find((w) => w.id === payload.workUnitId);
+      const establishmentId = workUnit?.establishmentId || state.selectedEstablishmentId;
       const hazard = state.hazardLibrary.find((h) => h.id === payload.hazardId);
       if (!hazard) return state;
       const score = payload.gravity * payload.frequency * payload.control;
@@ -243,7 +245,7 @@ export const useDuerpStore = create<DUERPState>((set, get) => ({
       };
       const actions = state.actions.some((act) => act.assessmentId === newAssessment.id)
         ? state.actions
-        : [...state.actions, makeActionForAssessment(newAssessment)];
+        : [...state.actions, makeActionForAssessment(newAssessment, establishmentId)];
       return { ...state, assessments: [...state.assessments, newAssessment], actions };
     }),
 
@@ -399,7 +401,7 @@ export const useDuerpStore = create<DUERPState>((set, get) => ({
         );
         const remainingAssessments = state.assessments.filter((a) => !removedAssessmentIds.has(a.id));
         const remainingActions = state.actions.filter((a) => !a.assessmentId || !removedAssessmentIds.has(a.assessmentId));
-        const newActions = assessmentsToAdd.map((a) => makeActionForAssessment(a));
+        const newActions = assessmentsToAdd.map((a) => makeActionForAssessment(a, targetEstablishment));
 
         return {
           hazardLibrary,
