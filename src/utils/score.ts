@@ -25,7 +25,7 @@ export const priorityLabel = (priority: Priority) => {
     case 2:
       return 'Haute';
     case 3:
-      return 'Modérée';
+      return 'Moderee';
     default:
       return 'Surveiller';
   }

@@ -33,7 +33,7 @@ const medicoHazards: Hazard[] = [
 const logistiqueHazards: Hazard[] = [
   { id: "logi-chariot", category: "Manutention mecanique / engins", risk: "Chariots en allees etroites", damages: "Collision, chute de charge", example_prevention: "CACES, miroirs, limitation vitesse", sector: "Logistique" },
   { id: "logi-manuelle", category: "Manutention manuelle", risk: "Prelevements et port repetes", damages: "TMS, lombalgies", example_prevention: "Aides manutention, rotation postes", sector: "Logistique" },
-  { id: "logi-chute", category: "Chutes (plain-pied / hauteur)", risk: "Sols encombrés, quais", damages: "Entorse, fracture", example_prevention: "Rangement, eclairage, EPI", sector: "Logistique" },
+  { id: "logi-chute", category: "Chutes (plain-pied / hauteur)", risk: "Sols encombres, quais", damages: "Entorse, fracture", example_prevention: "Rangement, eclairage, EPI", sector: "Logistique" },
 ];
 
 const agriHazards: Hazard[] = [
@@ -128,13 +128,13 @@ const makeActionForAssessment = (a: Assessment): ActionItem => ({
   establishmentId: a.workUnitId, // not ideal but keep required field
   assessmentId: a.id,
   title: `Action prioritaire sur ${a.riskLabel}`,
-  description: "Définir les mesures correctives et les responsables",
+  description: "Definir les mesures correctives et les responsables",
   steps: [
     { id: uid(), label: "Analyser le risque", done: false },
-    { id: uid(), label: "Définir mesures et responsable", done: false },
+    { id: uid(), label: "Definir mesures et responsable", done: false },
     { id: uid(), label: "Mettre en oeuvre", done: false },
   ],
-  owner: "A définir",
+  owner: "A definir",
   dueDate: new Date(Date.now() + 14 * 24 * 3600 * 1000).toISOString(),
   status: "TO_DO",
   priority: a.priority,
