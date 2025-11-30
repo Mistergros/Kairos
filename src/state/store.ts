@@ -362,6 +362,15 @@ export const useDuerpStore = create<DUERPState>((set, get) => ({
       });
       const hazardLibrary = Array.from(hazardMap.values());
 
+      // Ne pre-remplir que sur les candidats (presets/fetch), pas sur toute la librairie generique
+      const candidatesRaw = baseCandidates.length > 0 ? baseCandidates : riskLibrary;
+      const candidateMap = new Map<string, Hazard>();
+      candidatesRaw.forEach((h) => {
+        const safeId = h.id || `haz-${h.risk.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+        candidateMap.set(safeId, { ...h, id: safeId });
+      });
+      const candidates = Array.from(candidateMap.values());
+
       const targetEstablishment = get().selectedEstablishmentId || get().establishments[0]?.id;
       const targetUnits = get().workUnits.filter((u) => u.establishmentId === targetEstablishment);
       const existingByUnit = get().assessments.reduce((acc, a) => {
@@ -373,7 +382,7 @@ export const useDuerpStore = create<DUERPState>((set, get) => ({
       const assessmentsToAdd: Assessment[] = [];
       targetUnits.forEach((unit) => {
         const currentIds = existingByUnit[unit.id] || new Set<string>();
-        hazardLibrary
+        candidates
           .filter((h) => !currentIds.has(h.id))
           .slice(0, 6)
           .forEach((h) => {
