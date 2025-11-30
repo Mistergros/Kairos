@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, Fragment } from 'react';
+ï»¿import { useEffect, useMemo, useState, Fragment } from 'react';
 import { Card } from '../components/Card';
 import { PriorityBadge } from '../components/Badge';
 import { useDuerpStore } from '../state/store';
@@ -24,6 +24,7 @@ export const Inventory = () => {
     establishments,
     selectedEstablishmentId,
   } = useDuerpStore();
+
   const currentEstablishment = establishments.find((e) => e.id === selectedEstablishmentId);
   const [filters, setFilters] = useState<Filters>({ search: '', category: '' });
   const [form, setForm] = useState({
@@ -94,6 +95,7 @@ export const Inventory = () => {
           <input
             className="rounded-xl border border-slate/20 px-3 py-2 text-sm"
             placeholder="Recherche..."
+            title="Filtrer par texte (risque ou catÃ©gorie)"
             value={filters.search}
             onChange={(e) => setFilters((f) => ({ ...f, search: e.target.value }))}
           />
@@ -104,6 +106,7 @@ export const Inventory = () => {
             <input
               className="rounded-xl border border-slate/20 px-3 py-2 text-sm"
               placeholder="Code NAF ou secteur (ex: 62.01Z, BTP...)"
+              title="Saisissez un code NAF ou un secteur, puis cliquez sur Pre-remplir"
               value={sectorInput}
               onChange={(e) => setSectorInput(e.target.value)}
             />
@@ -111,6 +114,7 @@ export const Inventory = () => {
               className="rounded-xl bg-ocean px-3 py-2 text-sm font-semibold text-white shadow-sm disabled:opacity-60"
               onClick={() => prefillFromSector(sectorInput)}
               disabled={!sectorInput || loadingHazards}
+              title="Ajoute les risques gÃ©nÃ©riques + ceux du secteur/NAF (ex: 62.* -> risques IT ergonomie/RPS)"
             >
               {loadingHazards ? 'Chargement...' : 'Pre-remplir risques (NAF/secteur)'}
             </button>
@@ -119,8 +123,9 @@ export const Inventory = () => {
             className="rounded-xl border border-slate/20 bg-white px-3 py-2 text-sm"
             value={filters.category}
             onChange={(e) => setFilters((f) => ({ ...f, category: e.target.value }))}
+            title="Filtrer par catÃ©gorie de risque"
           >
-            <option value="">Catégorie</option>
+            <option value="">CatÃ©gorie</option>
             {categories.map((c) => (
               <option key={c} value={c}>
                 {c}
@@ -133,8 +138,9 @@ export const Inventory = () => {
             onChange={(e) =>
               setFilters((f) => ({ ...f, priority: e.target.value ? (Number(e.target.value) as Priority) : undefined }))
             }
+            title="Filtrer par prioritÃ© (P1 critique -> P4 surveiller)"
           >
-            <option value="">Priorité</option>
+            <option value="">PrioritÃ©</option>
             <option value="1">P1</option>
             <option value="2">P2</option>
             <option value="3">P3</option>
@@ -147,14 +153,14 @@ export const Inventory = () => {
           <table className="min-w-full divide-y divide-slate/10">
             <thead className="bg-slate/5 text-left text-xs font-semibold uppercase tracking-wide text-slate/60">
               <tr>
-                <th className="px-4 py-3">Catégorie</th>
+                <th className="px-4 py-3">CatÃ©gorie</th>
                 <th className="px-4 py-3">Risque</th>
                 <th className="px-4 py-3">Dommages</th>
                 <th className="px-4 py-3">G</th>
                 <th className="px-4 py-3">F</th>
                 <th className="px-4 py-3">P</th>
                 <th className="px-4 py-3">Score</th>
-                <th className="px-4 py-3">Priorité</th>
+                <th className="px-4 py-3">PrioritÃ©</th>
                 <th className="px-4 py-3">Mesures</th>
               </tr>
             </thead>
@@ -176,6 +182,7 @@ export const Inventory = () => {
                             className="w-16 rounded-lg border border-slate/20 px-2 py-1 text-sm"
                             value={a[field]}
                             onChange={(e) => onChangeScore(a, field, Number(e.target.value))}
+                            title={field === 'gravity' ? 'GravitÃ©' : field === 'frequency' ? 'FrÃ©quence' : 'MaÃ®trise/Protections'}
                           />
                         </td>
                       ))}
@@ -184,20 +191,22 @@ export const Inventory = () => {
                         <PriorityBadge priority={a.priority} />
                       </td>
                       <td className="px-4 py-3 max-w-sm space-y-2">
-                        <p className="text-xs text-slate/70">Existantes: {a.existingMeasures || '—'}</p>
-                        <p className="text-xs text-slate/70">À proposer: {a.proposedMeasures || '—'}</p>
+                        <p className="text-xs text-slate/70">Existantes: {a.existingMeasures || 'â€”'}</p>
+                        <p className="text-xs text-slate/70">Ã€ proposer: {a.proposedMeasures || 'â€”'}</p>
                         <div className="flex flex-wrap gap-3 text-xs">
                           <button
                             type="button"
                             className="font-semibold text-ocean hover:underline"
                             onClick={() => setExpandedRow(open ? null : a.id)}
+                            title="Ouvrir le mini-questionnaire pour ajuster G/F/P"
                           >
-                            {open ? 'Masquer le questionnaire' : 'Questionnaire (pondération)'}
+                            {open ? 'Masquer le questionnaire' : 'Questionnaire (pondÃ©ration)'}
                           </button>
                           <button
                             type="button"
                             className="text-sunset hover:underline"
                             onClick={() => removeAssessment(a.id)}
+                            title="Supprimer ce risque de l inventaire"
                           >
                             Supprimer
                           </button>
@@ -209,7 +218,7 @@ export const Inventory = () => {
                         <td className="px-4 py-3" colSpan={9}>
                           <div className="space-y-2">
                             <p className="text-xs text-slate/60">
-                              Répondez pour ajuster G / F / P : les valeurs sont appliquées directement au risque.
+                              RÃ©pondez pour ajuster G / F / P : les valeurs sont appliquÃ©es directement au risque.
                             </p>
                             <div className="grid gap-3 md:grid-cols-3">
                               {questions.map((q) => (
@@ -249,11 +258,11 @@ export const Inventory = () => {
       </Card>
 
       <Card
-        title="Ajouter un risque depuis la bibliothèque"
-        subtitle="Filtrer par catégorie, choisir le risque, coter G/F/P et proposer des mesures"
+        title="Ajouter un risque depuis la bibliothÃ¨que"
+        subtitle="Filtrer par catÃ©gorie, choisir le risque, coter G/F/P et proposer des mesures"
       >
         <p className="text-xs text-slate/60">
-          Sources : INRS (catalogue générique), OPPBTP / CARSAT / ANACT selon le secteur sélectionné.
+          Sources : INRS (catalogue gÃ©nÃ©rique), OPPBTP / CARSAT / ANACT selon le secteur sÃ©lectionnÃ©.
         </p>
         <div className="grid gap-3 md:grid-cols-3">
           <label className="md:col-span-2 text-sm">
@@ -285,6 +294,7 @@ export const Inventory = () => {
                   className="mt-1 w-full rounded-xl border border-slate/20 px-3 py-2"
                   value={form[field]}
                   onChange={(e) => setForm((f) => ({ ...f, [field]: Number(e.target.value) }))}
+                  title={field === 'gravity' ? 'GravitÃ©' : field === 'frequency' ? 'FrÃ©quence' : 'MaÃ®trise/Protections'}
                 />
               </label>
             ))}
@@ -299,7 +309,7 @@ export const Inventory = () => {
           />
           <textarea
             className="rounded-xl border border-slate/20 px-3 py-2"
-            placeholder="Mesures à proposer"
+            placeholder="Mesures Ã  proposer"
             value={form.proposedMeasures}
             onChange={(e) => setForm((f) => ({ ...f, proposedMeasures: e.target.value }))}
           />

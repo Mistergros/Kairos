@@ -12,6 +12,49 @@ import {
 import { computePriority } from '../utils/score';
 import { fetchHazardsFromSources } from '../utils/api';
 
+const itHazards: Hazard[] = [
+  {
+    id: 'it-ecran-1',
+    category: 'Travail sur ecran',
+    risk: 'Postes de travail mal ajustes (ecran, siege, clavier)',
+    damages: 'TMS, fatigue visuelle',
+    example_prevention: 'Sieges reglables, ecran a hauteur yeux, pauses, lumiere adaptée',
+    sector: 'Informatique',
+  },
+  {
+    id: 'it-rps-1',
+    category: 'Risques psychosociaux (RPS)',
+    risk: 'Charge mentale/projets urgents ou clients difficiles',
+    damages: 'Stress, epuisement',
+    example_prevention: 'Planifier les sprints, arbitrer les priorites, points d equipe reguliers',
+    sector: 'Informatique',
+  },
+  {
+    id: 'it-posture-1',
+    category: 'Postures de travail',
+    risk: 'Station assise prolongee, manque d alternance',
+    damages: 'Lombalgies, TMS',
+    example_prevention: 'Alternance assis-debout, pauses actives, ergonomie poste',
+    sector: 'Informatique',
+  },
+  {
+    id: 'it-elec-1',
+    category: 'Risque electrique',
+    risk: 'Multiprises surchargees, baies/serveurs',
+    damages: 'Incendie, electrocution',
+    example_prevention: 'Prises aux normes, parasurtenseurs, maintenance onduleurs/clim',
+    sector: 'Informatique',
+  },
+  {
+    id: 'it-incendie-1',
+    category: 'Incendie / Explosion',
+    risk: 'Locaux serveur, climatisation, batteries/onduleurs',
+    damages: 'Incendie local, arret d activite',
+    example_prevention: 'Detection, extinction adaptee, maintenance, zones degagees',
+    sector: 'Informatique',
+  },
+];
+
 const uid = () =>
   typeof crypto !== 'undefined' && crypto.randomUUID
     ? crypto.randomUUID()
@@ -284,9 +327,13 @@ export const useDuerpStore = create<DUERPState>((set, get) => ({
     set(() => ({ loadingHazards: true }));
     try {
       const fetched = await fetchHazardsFromSources(sector, naf);
+      const localForSector =
+        naf?.startsWith('62') || naf?.startsWith('63') || (sector || '').toLowerCase().includes('info')
+          ? itHazards
+          : [];
       const hazardMap = new Map<string, Hazard>();
       const existingLibrary = get().hazardLibrary;
-      [...existingLibrary, ...fetched].forEach((h) => {
+      [...existingLibrary, ...fetched, ...localForSector].forEach((h) => {
         const safeId = h.id || `haz-${h.risk.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
         hazardMap.set(safeId, { ...h, id: safeId });
       });
