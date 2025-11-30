@@ -1,4 +1,4 @@
-ï»¿import { useState } from 'react';
+import { useState } from 'react';
 import { Card } from '../components/Card';
 import { useDuerpStore } from '../state/store';
 import { searchCompanies } from '../utils/api';
@@ -9,7 +9,18 @@ const uid = () =>
     : `id-${Math.random().toString(36).slice(2, 9)}`;
 
 export const Units = () => {
-  const { establishments, workUnits, addEstablishment, addWorkUnit, selectedEstablishmentId } = useDuerpStore();
+  const {
+    establishments,
+    workUnits,
+    addEstablishment,
+    addWorkUnit,
+    removeEstablishment,
+    removeWorkUnit,
+    selectedEstablishmentId,
+    setSelectedEstablishment,
+    setSelectedWorkUnit,
+  } = useDuerpStore();
+
   const [establishmentForm, setEstablishmentForm] = useState({ name: '', sector: '', codeNaf: '', address: '' });
   const [unitForm, setUnitForm] = useState({ name: '', description: '', headcount: 0 });
   const [companyQuery, setCompanyQuery] = useState('');
@@ -67,15 +78,33 @@ export const Units = () => {
     }));
   };
 
+  const removeEstablishmentAndReset = (id: string) => {
+    removeEstablishment(id);
+    if (selectedEstablishmentId === id) {
+      const nextEstab = establishments.find((e) => e.id !== id);
+      setSelectedEstablishment(nextEstab?.id || '');
+      const nextWorkUnit = workUnits.find((w) => w.establishmentId === nextEstab?.id);
+      setSelectedWorkUnit(nextWorkUnit?.id || '');
+    }
+  };
+
+  const removeWorkUnitAndReset = (id: string) => {
+    removeWorkUnit(id);
+    if (selectedEstablishmentId) {
+      const next = workUnits.find((w) => w.establishmentId === selectedEstablishmentId && w.id !== id);
+      setSelectedWorkUnit(next?.id || '');
+    }
+  };
+
   return (
     <div className="grid gap-4 md:grid-cols-2">
-      <Card title="Etablissements" subtitle="Raison sociale, NAF/secteur, coordonnÃ©es">
+      <Card title="Etablissements" subtitle="Raison sociale, NAF/secteur, coordonnées">
         <div className="mb-4 rounded-2xl border border-slate/10 bg-white p-4 shadow-sm">
           <p className="text-sm font-semibold text-slate">Recherche d'entreprise (SIREN/SIRET ou nom)</p>
           <div className="mt-2 flex flex-col gap-2 md:flex-row md:items-center">
             <input
               className="flex-1 rounded-lg border border-slate/20 px-3 py-2"
-              placeholder="Ex: 552100554 ou 'Societe Exemple'"
+              placeholder="Ex: 552100554 ou 'Société Exemple'"
               value={companyQuery}
               onChange={(e) => setCompanyQuery(e.target.value)}
             />
@@ -111,20 +140,25 @@ export const Units = () => {
         <div className="space-y-3">
           {establishments.map((e) => (
             <div key={e.id} className="rounded-xl border border-slate/10 bg-white p-4 shadow-sm">
-              <div className="flex items-center justify-between">
-                <div>
+              <div className="flex items-center justify-between gap-3">
+                <div className="space-y-1">
                   <p className="text-base font-semibold text-slate">{e.name}</p>
-                  <p className="text-sm text-slate/60">{e.address || 'Adresse Ã  complÃ©ter'}</p>
-                  <p className="text-xs text-slate/60">{e.codeNaf ? `NAF ${e.codeNaf}` : 'NAF Ã  renseigner'}</p>
+                  <p className="text-sm text-slate/60">{e.address || 'Adresse à compléter'}</p>
+                  <p className="text-xs text-slate/60">{e.codeNaf ? `NAF ${e.codeNaf}` : 'NAF à renseigner'}</p>
                 </div>
-                <span className="pill bg-ocean/10 text-ocean-700">{e.sector || 'Secteur'}</span>
+                <div className="flex flex-col items-end gap-2 text-right">
+                  <span className="pill bg-ocean/10 text-ocean-700">{e.sector || 'Secteur'}</span>
+                  <button className="text-xs text-sunset hover:underline" onClick={() => removeEstablishmentAndReset(e.id)}>
+                    Supprimer
+                  </button>
+                </div>
               </div>
             </div>
           ))}
         </div>
 
         <div className="mt-6 rounded-2xl bg-slate/5 p-4">
-          <p className="mb-2 font-semibold text-slate">Nouvel etablissement</p>
+          <p className="mb-2 font-semibold text-slate">Nouvel établissement</p>
           <div className="grid gap-2 md:grid-cols-2">
             <input
               className="rounded-lg border border-slate/20 px-3 py-2"
@@ -160,24 +194,29 @@ export const Units = () => {
         </div>
       </Card>
 
-      <Card title="Unites de travail" subtitle="RÃ©partir par atelier/Ã©quipe/poste pour suivre les risques">
+      <Card title="Unités de travail" subtitle="Répartir par atelier/équipe/poste pour suivre les risques">
         <div className="space-y-3">
           {workUnits
             .filter((w) => w.establishmentId === selectedEstablishmentId)
             .map((w) => (
               <div key={w.id} className="rounded-xl border border-slate/10 bg-white p-4 shadow-sm">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-3">
                   <div>
                     <p className="font-semibold text-slate">{w.name}</p>
-                    <p className="text-xs text-slate/60">{w.description || 'Description Ã  complÃ©ter (activitÃ©s, mÃ©tiers)'}</p>
+                    <p className="text-xs text-slate/60">{w.description || 'Description à compléter (activités, métiers)'}</p>
                   </div>
-                  <span className="pill bg-slate/10 text-slate-700">{w.headcount ?? 0} pers.</span>
+                  <div className="flex items-center gap-2">
+                    <span className="pill bg-slate/10 text-slate-700">{w.headcount ?? 0} pers.</span>
+                    <button className="text-xs text-sunset hover:underline" onClick={() => removeWorkUnitAndReset(w.id)}>
+                      Supprimer
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
         </div>
         <div className="mt-6 rounded-2xl bg-slate/5 p-4">
-          <p className="mb-2 font-semibold text-slate">Nouvelle unite</p>
+          <p className="mb-2 font-semibold text-slate">Nouvelle unité</p>
           <div className="grid gap-2 md:grid-cols-2">
             <input
               className="rounded-lg border border-slate/20 px-3 py-2"
@@ -194,7 +233,7 @@ export const Units = () => {
             />
             <textarea
               className="md:col-span-2 rounded-lg border border-slate/20 px-3 py-2"
-              placeholder="Description (activitÃ©, zone, horaires, tÃ¢ches)"
+              placeholder="Description (activité, zone, horaires, tâches)"
               value={unitForm.description}
               onChange={(e) => setUnitForm((v) => ({ ...v, description: e.target.value }))}
             />
@@ -203,7 +242,7 @@ export const Units = () => {
             onClick={onCreateUnit}
             className="mt-3 rounded-xl bg-ocean px-4 py-2 text-sm font-semibold text-white shadow-lg"
           >
-            Ajouter l'unite
+            Ajouter l'unité
           </button>
         </div>
       </Card>

@@ -1,8 +1,9 @@
-Ôªøimport { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, Fragment } from 'react';
 import { Card } from '../components/Card';
 import { PriorityBadge } from '../components/Badge';
 import { useDuerpStore } from '../state/store';
 import { Assessment, Priority } from '../types';
+import { getQuestionsForCategory, ScoringQuestion } from '../data/scoringQuestions';
 
 type Filters = {
   search: string;
@@ -16,6 +17,7 @@ export const Inventory = () => {
     selectedWorkUnitId,
     addAssessment,
     updateAssessment,
+    removeAssessment,
     hazardLibrary,
     prefillFromSector,
     loadingHazards,
@@ -33,6 +35,8 @@ export const Inventory = () => {
     proposedMeasures: '',
   });
   const [sectorInput, setSectorInput] = useState(currentEstablishment?.codeNaf || currentEstablishment?.sector || '');
+  const [expandedRow, setExpandedRow] = useState<string | null>(null);
+  const [questionAnswers, setQuestionAnswers] = useState<Record<string, Record<string, string>>>({});
 
   useEffect(() => {
     setSectorInput(currentEstablishment?.codeNaf || currentEstablishment?.sector || '');
@@ -71,6 +75,16 @@ export const Inventory = () => {
     updateAssessment(assessment.id, { [field]: value });
   };
 
+  const applyQuestion = (assessment: Assessment, question: ScoringQuestion, value: string) => {
+    const numeric = Number(value);
+    if (Number.isNaN(numeric)) return;
+    updateAssessment(assessment.id, { [question.field]: numeric });
+    setQuestionAnswers((prev) => ({
+      ...prev,
+      [assessment.id]: { ...(prev[assessment.id] || {}), [question.id]: value },
+    }));
+  };
+
   return (
     <div className="space-y-5">
       <Card
@@ -106,7 +120,7 @@ export const Inventory = () => {
             value={filters.category}
             onChange={(e) => setFilters((f) => ({ ...f, category: e.target.value }))}
           >
-            <option value="">Cat√É¬©gorie</option>
+            <option value="">CatÈgorie</option>
             {categories.map((c) => (
               <option key={c} value={c}>
                 {c}
@@ -117,10 +131,10 @@ export const Inventory = () => {
             className="rounded-xl border border-slate/20 bg-white px-3 py-2 text-sm"
             value={filters.priority ?? ''}
             onChange={(e) =>
-              setFilters((f) => ({ ...f, priority: e.target.value ? Number(e.target.value) as Priority : undefined }))
+              setFilters((f) => ({ ...f, priority: e.target.value ? (Number(e.target.value) as Priority) : undefined }))
             }
           >
-            <option value="">Priorit√É¬©</option>
+            <option value="">PrioritÈ</option>
             <option value="1">P1</option>
             <option value="2">P2</option>
             <option value="3">P3</option>
@@ -133,54 +147,113 @@ export const Inventory = () => {
           <table className="min-w-full divide-y divide-slate/10">
             <thead className="bg-slate/5 text-left text-xs font-semibold uppercase tracking-wide text-slate/60">
               <tr>
-                <th className="px-4 py-3">Cat√É¬©gorie</th>
+                <th className="px-4 py-3">CatÈgorie</th>
                 <th className="px-4 py-3">Risque</th>
                 <th className="px-4 py-3">Dommages</th>
                 <th className="px-4 py-3">G</th>
                 <th className="px-4 py-3">F</th>
                 <th className="px-4 py-3">P</th>
                 <th className="px-4 py-3">Score</th>
-                <th className="px-4 py-3">Priorit√É¬©</th>
+                <th className="px-4 py-3">PrioritÈ</th>
                 <th className="px-4 py-3">Mesures</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate/10 text-sm">
-              {filtered.map((a) => (
-                <tr key={a.id} className="hover:bg-slate/5">
-                  <td className="px-4 py-3 text-slate/80">{a.hazardCategory}</td>
-                  <td className="px-4 py-3 font-semibold text-slate">{a.riskLabel}</td>
-                  <td className="px-4 py-3 text-slate/70">{a.damages}</td>
-                  {(['gravity', 'frequency', 'control'] as const).map((field) => (
-                    <td key={field} className="px-4 py-3">
-                      <input
-                        type="number"
-                        className="w-16 rounded-lg border border-slate/20 px-2 py-1 text-sm"
-                        value={a[field]}
-                        onChange={(e) => onChangeScore(a, field, Number(e.target.value))}
-                      />
-                    </td>
-                  ))}
-                  <td className="px-4 py-3 font-semibold text-ink">{Math.round(a.score)}</td>
-                  <td className="px-4 py-3">
-                    <PriorityBadge priority={a.priority} />
-                  </td>
-                  <td className="px-4 py-3 max-w-sm">
-                    <p className="text-xs text-slate/70">Existantes: {a.existingMeasures || '√¢‚Ç¨‚Äù'}</p>
-                    <p className="text-xs text-slate/70">√É‚Ç¨ proposer: {a.proposedMeasures || '√¢‚Ç¨‚Äù'}</p>
-                  </td>
-                </tr>
-              ))}
+              {filtered.map((a) => {
+                const questions = getQuestionsForCategory(a.hazardCategory);
+                const selected = questionAnswers[a.id] || {};
+                const open = expandedRow === a.id;
+                return (
+                  <Fragment key={a.id}>
+                    <tr className="hover:bg-slate/5">
+                      <td className="px-4 py-3 text-slate/80">{a.hazardCategory}</td>
+                      <td className="px-4 py-3 font-semibold text-slate">{a.riskLabel}</td>
+                      <td className="px-4 py-3 text-slate/70">{a.damages}</td>
+                      {(['gravity', 'frequency', 'control'] as const).map((field) => (
+                        <td key={field} className="px-4 py-3">
+                          <input
+                            type="number"
+                            className="w-16 rounded-lg border border-slate/20 px-2 py-1 text-sm"
+                            value={a[field]}
+                            onChange={(e) => onChangeScore(a, field, Number(e.target.value))}
+                          />
+                        </td>
+                      ))}
+                      <td className="px-4 py-3 font-semibold text-ink">{Math.round(a.score)}</td>
+                      <td className="px-4 py-3">
+                        <PriorityBadge priority={a.priority} />
+                      </td>
+                      <td className="px-4 py-3 max-w-sm space-y-2">
+                        <p className="text-xs text-slate/70">Existantes: {a.existingMeasures || 'ó'}</p>
+                        <p className="text-xs text-slate/70">¿ proposer: {a.proposedMeasures || 'ó'}</p>
+                        <div className="flex flex-wrap gap-3 text-xs">
+                          <button
+                            type="button"
+                            className="font-semibold text-ocean hover:underline"
+                            onClick={() => setExpandedRow(open ? null : a.id)}
+                          >
+                            {open ? 'Masquer le questionnaire' : 'Questionnaire (pondÈration)'}
+                          </button>
+                          <button
+                            type="button"
+                            className="text-sunset hover:underline"
+                            onClick={() => removeAssessment(a.id)}
+                          >
+                            Supprimer
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    {open && (
+                      <tr className="bg-slate/5">
+                        <td className="px-4 py-3" colSpan={9}>
+                          <div className="space-y-2">
+                            <p className="text-xs text-slate/60">
+                              RÈpondez pour ajuster G / F / P : les valeurs sont appliquÈes directement au risque.
+                            </p>
+                            <div className="grid gap-3 md:grid-cols-3">
+                              {questions.map((q) => (
+                                <label key={q.id} className="space-y-1 text-sm text-slate/70">
+                                  <span className="block font-semibold text-slate">
+                                    {q.label}
+                                    <span className="ml-2 rounded-full bg-slate/10 px-2 py-0.5 text-[11px] uppercase">
+                                      {q.field === 'gravity' ? 'G' : q.field === 'frequency' ? 'F' : 'P'}
+                                    </span>
+                                  </span>
+                                  {q.helper && <span className="block text-xs text-slate/60">{q.helper}</span>}
+                                  <select
+                                    className="w-full rounded-lg border border-slate/20 bg-white px-3 py-2 text-sm"
+                                    value={selected[q.id] ?? ''}
+                                    onChange={(e) => applyQuestion(a, q, e.target.value)}
+                                  >
+                                    <option value="">Choisir une option</option>
+                                    {q.options.map((opt) => (
+                                      <option key={opt.label} value={opt.value}>
+                                        {opt.label} {opt.helper ? `(${opt.helper})` : ''}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </label>
+                              ))}
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                  </Fragment>
+                );
+              })}
             </tbody>
           </table>
         </div>
       </Card>
 
       <Card
-        title="Ajouter un risque depuis la biblioth√É¬®que"
-        subtitle="Filtrer par cat√É¬©gorie, choisir le risque, coter G/F/P et proposer des mesures"
+        title="Ajouter un risque depuis la bibliothËque"
+        subtitle="Filtrer par catÈgorie, choisir le risque, coter G/F/P et proposer des mesures"
       >
         <p className="text-xs text-slate/60">
-          Sources : INRS (catalogue g√É¬©n√É¬©rique), OPPBTP / CARSAT / ANACT selon le secteur s√É¬©lectionn√É¬©.
+          Sources : INRS (catalogue gÈnÈrique), OPPBTP / CARSAT / ANACT selon le secteur sÈlectionnÈ.
         </p>
         <div className="grid gap-3 md:grid-cols-3">
           <label className="md:col-span-2 text-sm">
@@ -226,7 +299,7 @@ export const Inventory = () => {
           />
           <textarea
             className="rounded-xl border border-slate/20 px-3 py-2"
-            placeholder="Mesures √É¬† proposer"
+            placeholder="Mesures ‡ proposer"
             value={form.proposedMeasures}
             onChange={(e) => setForm((f) => ({ ...f, proposedMeasures: e.target.value }))}
           />
@@ -241,8 +314,3 @@ export const Inventory = () => {
     </div>
   );
 };
-
-
-
-
-

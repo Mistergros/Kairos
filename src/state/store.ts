@@ -41,8 +41,11 @@ interface DUERPState {
   setSelectedEstablishment: (id: string) => void;
   setSelectedWorkUnit: (id: string) => void;
   addEstablishment: (payload: Establishment) => void;
+  removeEstablishment: (id: string) => void;
   addWorkUnit: (payload: WorkUnit) => void;
+  removeWorkUnit: (id: string) => void;
   addAssessment: (payload: AssessmentInput) => void;
+  removeAssessment: (id: string) => void;
   updateAssessment: (id: string, payload: Partial<AssessmentInput>) => void;
   addAction: (payload: ActionInput) => void;
   updateActionStatus: (id: string, status: ActionItem['status']) => void;
@@ -136,11 +139,41 @@ export const useDuerpStore = create<DUERPState>((set, get) => ({
       selectedEstablishmentId: payload.id,
     })),
 
+  removeEstablishment: (id) =>
+    set((state) => {
+      const establishments = state.establishments.filter((e) => e.id !== id);
+      const workUnits = state.workUnits.filter((w) => w.establishmentId !== id);
+      const workUnitIds = new Set(workUnits.map((w) => w.id));
+      const assessments = state.assessments.filter((a) => workUnitIds.has(a.workUnitId));
+      const assessmentIds = new Set(assessments.map((a) => a.id));
+      const actions = state.actions.filter((a) => !a.assessmentId || assessmentIds.has(a.assessmentId));
+      const selectedEstablishmentId = establishments[0]?.id;
+      const selectedWorkUnitId = workUnits.find((w) => w.establishmentId === selectedEstablishmentId)?.id;
+      return {
+        establishments,
+        workUnits,
+        assessments,
+        actions,
+        selectedEstablishmentId,
+        selectedWorkUnitId,
+      };
+    }),
+
   addWorkUnit: (payload) =>
     set((state) => ({
       workUnits: [...state.workUnits, payload],
       selectedWorkUnitId: payload.id,
     })),
+
+  removeWorkUnit: (id) =>
+    set((state) => {
+      const workUnits = state.workUnits.filter((w) => w.id !== id);
+      const assessments = state.assessments.filter((a) => a.workUnitId !== id);
+      const assessmentIds = new Set(assessments.map((a) => a.id));
+      const actions = state.actions.filter((a) => !a.assessmentId || assessmentIds.has(a.assessmentId));
+      const selectedWorkUnitId = workUnits.find((w) => w.establishmentId === state.selectedEstablishmentId)?.id;
+      return { ...state, workUnits, assessments, actions, selectedWorkUnitId };
+    }),
 
   addAssessment: (payload) =>
     set((state) => {
@@ -167,6 +200,13 @@ export const useDuerpStore = create<DUERPState>((set, get) => ({
         updatedAt: now,
       };
       return { ...state, assessments: [...state.assessments, newAssessment] };
+    }),
+
+  removeAssessment: (id) =>
+    set((state) => {
+      const assessments = state.assessments.filter((a) => a.id !== id);
+      const actions = state.actions.filter((a) => a.assessmentId !== id);
+      return { ...state, assessments, actions };
     }),
 
   updateAssessment: (id, payload) =>
