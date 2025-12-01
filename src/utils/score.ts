@@ -1,11 +1,11 @@
 import { Priority } from '../types';
 
 export const computePriority = (score: number): Priority => {
-  // Scores issus de G * F * P. Pour avoir plus de dispersion :
-  if (score >= 60) return 1;
-  if (score >= 30) return 2;
-  if (score >= 12) return 3;
-  return 4; // scores faibles => surveiller
+  // Seuils adaptés au DUERP (GxFxM)
+  if (score >= 300) return 1;
+  if (score >= 170) return 2;
+  if (score >= 100) return 3;
+  return 4;
 };
 
 export const formatPriority = (priority: Priority) => {

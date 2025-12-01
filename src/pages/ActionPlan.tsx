@@ -28,6 +28,16 @@ export const ActionPlan = () => {
     [actions, selectedEstablishmentId, filter]
   );
 
+  const stats = useMemo(() => {
+    const total = filtered.length;
+    const done = filtered.filter((a) => a.status === 'DONE').length;
+    const overdue = filtered.filter(
+      (a) => a.status !== 'DONE' && a.dueDate && new Date(a.dueDate) < new Date()
+    ).length;
+    const progress = total ? Math.round((done * 100) / total) : 0;
+    return { total, done, overdue, progress };
+  }, [filtered]);
+
   const linkedAssessments = assessments.filter((a) => a);
 
   const onAdd = () => {
@@ -66,6 +76,24 @@ export const ActionPlan = () => {
           </select>
         }
       >
+        <div className="mb-4 grid gap-3 md:grid-cols-4">
+          <div className="rounded-xl bg-slate/5 px-3 py-2 text-sm">
+            <p className="text-xs uppercase text-slate/60">Total</p>
+            <p className="text-xl font-semibold text-slate">{stats.total}</p>
+          </div>
+          <div className="rounded-xl bg-slate/5 px-3 py-2 text-sm">
+            <p className="text-xs uppercase text-slate/60">Terminées</p>
+            <p className="text-xl font-semibold text-slate">{stats.done}</p>
+          </div>
+          <div className="rounded-xl bg-slate/5 px-3 py-2 text-sm">
+            <p className="text-xs uppercase text-slate/60">En retard</p>
+            <p className="text-xl font-semibold text-sunset">{stats.overdue}</p>
+          </div>
+          <div className="rounded-xl bg-slate/5 px-3 py-2 text-sm">
+            <p className="text-xs uppercase text-slate/60">Avancement</p>
+            <p className="text-xl font-semibold text-ink">{stats.progress}%</p>
+          </div>
+        </div>
         <div className="space-y-3">
           {filtered.map((a) => (
             <div
@@ -199,3 +227,6 @@ export const ActionPlan = () => {
     </div>
   );
 };
+
+// Compatibilité import par défaut
+export default ActionPlan;
