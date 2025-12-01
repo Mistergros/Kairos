@@ -5,7 +5,6 @@ import { useDuerpStore } from "../state/store";
 import { Assessment, Priority } from "../types";
 import { getQuestionsForCategory, ScoringQuestion } from "../data/scoringQuestions";
 import { getNafHints } from "../data/nafMappingLoader";
-import { recommendDUERP } from "../lib/kairos-risk-engine";
 
 type Filters = {
   search: string;
@@ -75,31 +74,6 @@ export const Inventory = () => {
     setForm((v) => ({ ...v, existingMeasures: "", proposedMeasures: "" }));
   };
 
-  const prefillFromNaf = async () => {
-    if (!sectorInput || !selectedWorkUnitId) return;
-    try {
-      const duerp = await recommendDUERP(sectorInput, { baseUrl: "/data" });
-      const currentIds = new Set(
-        assessments.filter((a) => a.workUnitId === selectedWorkUnitId).map((a) => a.hazardId)
-      );
-      duerp.inventory.forEach((item: any) => {
-        const hazard = hazardLibrary.find((h) => h.risk === item.risk);
-        if (!hazard || currentIds.has(hazard.id)) return;
-        addAssessment({
-          workUnitId: selectedWorkUnitId,
-          hazardId: hazard.id,
-          gravity: item.gravity ?? item.G ?? 7,
-          frequency: item.frequency ?? item.F ?? 3,
-          control: item.control ?? item.M ?? 0.5,
-          existingMeasures: "",
-          proposedMeasures: (duerp.measures && duerp.measures[item.risk]) ? Object.values(duerp.measures[item.risk]).flat().join("; ") : "",
-        });
-      });
-    } catch (e) {
-      console.error("prefill error", e);
-    }
-  };
-
   const onChangeScore = (assessment: Assessment, field: "gravity" | "frequency" | "control", value: number) => {
     updateAssessment(assessment.id, { [field]: value });
   };
@@ -145,7 +119,7 @@ export const Inventory = () => {
             />
             <button
               className="rounded-xl bg-ocean px-3 py-2 text-sm font-semibold text-white shadow-sm disabled:opacity-60"
-              onClick={prefillFromNaf}
+              onClick={() => prefillFromSector(sectorInput)}
               disabled={!sectorInput || loadingHazards}
               title="Ajoute les risques generiques + ceux du secteur/NAF"
             >
