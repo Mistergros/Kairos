@@ -1,0 +1,8 @@
+{
+  "block": "security",
+  "items": [
+    { "risk": "Chute de hauteur", "measures": { "CO": ["Garde-corps, harnais"], "ORG": ["Plan de prévention"], "TE": ["EPI anti-chute"], "IND": ["Vérifs échafaudages"] } },
+    { "risk": "Chute de plain-pied", "measures": { "CO": ["Sol propre, antidérapant"], "ORG": ["Rangement zones de passage"], "TE": [], "IND": [] } },
+    { "risk": "Circulation interne/engins", "measures": { "CO": ["Balisage, voies séparées"], "ORG": ["Plan de circulation"], "TE": [], "IND": [] } }
+  ]
+}

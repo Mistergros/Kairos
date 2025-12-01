@@ -1,0 +1,42 @@
+{
+  "metadata": { "version": "0.9.0" },
+  "rules": {
+    "sections": {
+      "C": {
+        "label": "Industrie / fabrication",
+        "risks": [
+          { "category": "ergonomics", "label": "Ergonomie & TMS", "items": ["Aménagement poste", "Effort prolongé", "Postures forcées", "Répétitivité"] },
+          { "category": "security", "label": "Risques pour la sécurité (accidents)", "items": ["Chute de hauteur", "Chute de plain-pied", "Outils/Machines", "Circulation interne/engins"] },
+          { "category": "ambiences", "label": "Ambiances de travail", "items": ["Bruit", "Chaleur", "Froid"] }
+        ]
+      }
+    },
+    "divisions": {
+      "70": {
+        "label": "Conseil / Management",
+        "risks": [
+          { "category": "psr", "label": "Risques psychosociaux (RPS)", "items": ["Charge mentale", "Conflits/tensions", "Organisation du travail", "Violence externe"] },
+          { "category": "ergonomics", "label": "Ergonomie & TMS", "items": ["Aménagement poste", "Effort prolongé", "Postures forcées", "Répétitivité"] },
+          { "category": "ambiences", "label": "Ambiances de travail", "items": ["Bruit", "Chaleur", "Froid", "Qualité de l’air/Ventilation"] },
+          { "category": "mobility", "label": "Déplacements pro", "items": ["Auto", "Deux-roues", "Longs trajets/fatigue", "Vélo/EDPM"] }
+        ]
+      },
+      "62": {
+        "label": "Informatique",
+        "risks": [
+          { "category": "psr", "label": "Risques psychosociaux (RPS)", "items": ["Charge mentale", "Organisation du travail"] },
+          { "category": "ergonomics", "label": "Ergonomie & TMS", "items": ["Travail sur écran", "Postures forcées"] }
+        ]
+      },
+      "43": {
+        "label": "Construction",
+        "risks": [
+          { "category": "security", "label": "Sécurité (accidents)", "items": ["Chute de hauteur", "Circulation interne/engins", "Manutention manuelle"] },
+          { "category": "chemical", "label": "Risques chimiques", "items": ["Poussières (silice, ciment)"] },
+          { "category": "ambiences", "label": "Ambiances de travail", "items": ["Bruit"] }
+        ]
+      }
+    },
+    "overrides": {}
+  }
+}

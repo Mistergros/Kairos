@@ -1,0 +1,7 @@
+{
+  "block": "org_public_mobility_sector",
+  "items": [
+    { "risk": "Organisation du travail", "measures": { "CO": ["Procédures, consignes"], "ORG": ["Briefings, rôles clairs"], "TE": [], "IND": [] } },
+    { "risk": "Auto", "measures": { "CO": [], "ORG": ["Planification trajets, pauses"], "TE": [], "IND": ["Entretien véhicule"] } }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "version": "2025.12.01",
+  "sources": ["INRS", "OPPBTP", "CARSAT", "ANACT"],
+  "blocks": [
+    "kairos_duerp_naf_mapping.json",
+    "kairos_measures_block1_security.json",
+    "kairos_measures_block2_ambiences_erg_psr.json",
+    "kairos_measures_block3_chem_bio_env.json",
+    "kairos_measures_block4_org_public_mobility_sector.json",
+    "kairos_actions_library.json"
+  ]
+}

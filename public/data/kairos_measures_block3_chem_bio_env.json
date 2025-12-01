@@ -1,0 +1,6 @@
+{
+  "block": "chem_bio_env",
+  "items": [
+    { "risk": "Poussières (silice, ciment)", "measures": { "CO": ["Aspiration à la source"], "ORG": ["Humidification"], "TE": ["FFP2/3"], "IND": [] } }
+  ]
+}

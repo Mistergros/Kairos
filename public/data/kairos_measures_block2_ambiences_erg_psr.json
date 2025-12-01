@@ -1,0 +1,8 @@
+{
+  "block": "ambiences_erg_psr",
+  "items": [
+    { "risk": "Bruit", "measures": { "CO": ["Isolation, capotage"], "ORG": ["Limiter exposition"], "TE": ["EPI anti-bruit"], "IND": [] } },
+    { "risk": "Travail sur écran", "measures": { "CO": ["Réglage poste, pauses visuelles"], "ORG": ["Alterner tâches"], "TE": [], "IND": [] } },
+    { "risk": "Charge mentale", "measures": { "CO": [], "ORG": ["Priorisation, soutien manager"], "TE": [], "IND": [] } }
+  ]
+}

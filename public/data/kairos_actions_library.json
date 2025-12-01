@@ -1,0 +1,7 @@
+{
+  "actions": [
+    { "title": "Planifier les trajets et pauses", "risk": "Auto", "priority": 2 },
+    { "title": "Optimiser l'aménagement des postes écran", "risk": "Travail sur écran", "priority": 3 },
+    { "title": "Mettre à jour le plan de prévention", "risk": "Chute de hauteur", "priority": 1 }
+  ]
+}
