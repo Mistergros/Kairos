@@ -353,38 +353,48 @@ export const useDuerpStore = create<DUERPState>((set, get) => ({
       const fallbackPreset = hazardByNafPrefix[nafPrefix] || [];
       const fetched = await fetchHazardsFromSources(sector, naf);
 
-      const baseCandidates =
-        engineHazards.length > 0
-          ? engineHazards
-          : mappingHazards.length > 0
-          ? mappingHazards
-          : [...presetFromJson, ...fetched, ...fallbackPreset];
+      // Construire une liste prioritaire NAF, puis compléter si insuffisant
+      const merged: Hazard[] = [];
+      const pushAll = (list: Hazard[]) => list.forEach((h) => merged.push(h));
 
-      if (baseCandidates.length === 0) {
-        set(() => ({ loadingHazards: false }));
-        return;
+      if (engineHazards.length) pushAll(engineHazards);
+      if (merged.length < 8 && mappingHazards.length) pushAll(mappingHazards);
+      if (merged.length < 8 && (presetFromJson.length || fallbackPreset.length || fetched.length)) {
+        pushAll(presetFromJson);
+        pushAll(fallbackPreset);
+        pushAll(fetched);
+      }
+      if (merged.length < 8) {
+        pushAll(riskLibrary); // dernier recours pour étoffer la liste
       }
 
-      const sourceList = baseCandidates;
-
-      const existingLibrary = get().hazardLibrary;
       const hazardMap = new Map<string, Hazard>();
-      [...existingLibrary, ...sourceList].forEach((h) => {
+      merged.forEach((h) => {
         const safeId = h.id || `haz-${h.risk.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
         hazardMap.set(safeId, { ...h, id: safeId });
       });
+
+      const existingLibrary = get().hazardLibrary;
+      existingLibrary.forEach((h) => {
+        hazardMap.set(h.id || `haz-${h.risk.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`, h);
+      });
+
       const hazardLibrary = Array.from(hazardMap.values());
 
-      // Ne pre-remplir que sur les candidats NAF
-      const candidatesRaw = baseCandidates;
-      const candidateMap = new Map<string, Hazard>();
-      candidatesRaw.forEach((h) => {
-        const safeId = h.id || `haz-${h.risk.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
-        candidateMap.set(safeId, { ...h, id: safeId });
-      });
-      const candidates = Array.from(candidateMap.values()).sort((a, b) =>
-        `${a.category}-${a.risk}`.localeCompare(`${b.category}-${b.risk}`)
-      );
+      const candidates = Array.from(
+        new Map(
+          merged.map((h) => {
+            const safeId = h.id || `haz-${h.risk.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+            return [
+              safeId,
+              {
+                ...h,
+                id: safeId,
+              },
+            ];
+          })
+        ).values()
+      ).sort((a, b) => `${a.category}-${a.risk}`.localeCompare(`${b.category}-${b.risk}`));
 
       const targetEstablishment = get().selectedEstablishmentId || get().establishments[0]?.id;
       const targetUnits = get().workUnits.filter((u) => u.establishmentId === targetEstablishment);
