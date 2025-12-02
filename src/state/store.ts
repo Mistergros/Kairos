@@ -109,9 +109,6 @@ const loadNafPresets = async (): Promise<Record<string, NafPreset>> => nafPreset
 const uid = () =>
   typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : `id-${Math.random().toString(36).slice(2, 9)}`;
 
-// Cache des risques calculés pour un couple NAF/secteur afin de garder un résultat déterministe entre deux clics
-const prefillCache: Record<string, Hazard[]> = {};
-
 const makeActionForAssessment = (a: Assessment, establishmentId?: string): ActionItem => ({
   id: uid(),
   establishmentId: establishmentId ?? a.workUnitId,
@@ -334,7 +331,6 @@ export const useDuerpStore = create<DUERPState>((set, get) => ({
     set(() => ({ loadingHazards: true }));
     try {
       const nafPrefix = naf ? naf.toUpperCase().slice(0, 2) : "";
-      const cacheKey = `${naf || ""}-${sector || ""}`.trim().toUpperCase();
       const engine = new RiskEngineV3();
       const engineRisks = engine.getRisks({ nafCode: naf || sector });
       const engineHazards = engineRisks
@@ -358,19 +354,18 @@ export const useDuerpStore = create<DUERPState>((set, get) => ({
       const fetched = await fetchHazardsFromSources(sector, naf);
 
       const baseCandidates =
-        prefillCache[cacheKey] && prefillCache[cacheKey].length
-          ? prefillCache[cacheKey]
-          : engineHazards.length > 0
+        engineHazards.length > 0
           ? engineHazards
           : mappingHazards.length > 0
           ? mappingHazards
           : [...presetFromJson, ...fetched, ...fallbackPreset];
 
-      if (!prefillCache[cacheKey] && baseCandidates.length) {
-        prefillCache[cacheKey] = baseCandidates;
+      if (baseCandidates.length === 0) {
+        set(() => ({ loadingHazards: false }));
+        return;
       }
 
-      const sourceList = baseCandidates.length > 0 ? baseCandidates : riskLibrary;
+      const sourceList = baseCandidates;
 
       const existingLibrary = get().hazardLibrary;
       const hazardMap = new Map<string, Hazard>();
@@ -380,8 +375,8 @@ export const useDuerpStore = create<DUERPState>((set, get) => ({
       });
       const hazardLibrary = Array.from(hazardMap.values());
 
-      // Ne pre-remplir que sur les candidats (et cache), pas sur toute la librairie generique
-      const candidatesRaw = baseCandidates.length > 0 ? baseCandidates : riskLibrary;
+      // Ne pre-remplir que sur les candidats NAF
+      const candidatesRaw = baseCandidates;
       const candidateMap = new Map<string, Hazard>();
       candidatesRaw.forEach((h) => {
         const safeId = h.id || `haz-${h.risk.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;

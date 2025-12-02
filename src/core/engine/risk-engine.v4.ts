@@ -25,19 +25,19 @@ export class RiskEngineV4 {
   }
   private tryRead(p: string){ return fs.existsSync(p) ? fs.readFileSync(p,'utf-8') : null; }
   private loadAll(){
-    const rdir = path.join(this.baseConfigPath,"risks");
-    fs.readdirSync(rdir).filter((f: string)=>f.endsWith(".json")).forEach((f: string)=>{
-      const r = JSON.parse(fs.readFileSync(path.join(rdir,f),"utf-8")) as Risk; this.risks.set(r.id,r);
+    const rdir = path.join(this.baseConfigPath,'risks');
+    fs.readdirSync(rdir).filter(f=>f.endsWith('.json')).forEach(f=>{
+      const r = JSON.parse(fs.readFileSync(path.join(rdir,f),'utf-8')) as Risk; this.risks.set(r.id,r);
     });
-    const adir = path.join(this.baseConfigPath,"actions");
-    fs.readdirSync(adir).filter((f: string)=>f.endsWith(".json")).forEach((f: string)=>{
-      const arr = JSON.parse(fs.readFileSync(path.join(adir,f),"utf-8")) as Action[];
+    const adir = path.join(this.baseConfigPath,'actions');
+    fs.readdirSync(adir).filter(f=>f.endsWith('.json')).forEach(f=>{
+      const arr = JSON.parse(fs.readFileSync(path.join(adir,f),'utf-8')) as Action[];
       if (arr.length) this.actionsByRisk.set(arr[0].risk_id, arr);
     });
-    this.generalOblig = this.loadJSON<Obligation[]>("obligations/general.json");
-    this.sectorOblig = this.loadJSON<Obligation[]>("obligations/sector.json");
-    this.unitsModifiers = this.loadJSON<Record<string,Record<string,number>>>("units/modifiers.json");
-    const rjson = this.tryRead(path.join(this.baseConfigPath,"rules/conditional.json"));
+    this.generalOblig = this.loadJSON<Obligation[]>('obligations/general.json');
+    this.sectorOblig = this.loadJSON<Obligation[]>('obligations/sector.json');
+    this.unitsModifiers = this.loadJSON<Record<string,Record<string,number>>>('units/modifiers.json');
+    const rjson = this.tryRead(path.join(this.baseConfigPath,'rules/conditional.json'));
     this.rules = rjson ? JSON.parse(rjson) : null;
   }
   private listNaf(): any[] {
@@ -50,14 +50,12 @@ export class RiskEngineV4 {
   }
   private applyRules(ctx: UnityContext, riskIds: Set<string>, actionIds: Set<string>, obligIds: Set<string>){
     if (!this.rules) return;
-    const rules = (this.rules.rules as any[]) || [];
-    for (const rule of rules){
+    for (const rule of this.rules.rules){
       let ok = true;
-      const conditions = rule.if as Record<string, unknown>;
-      for (const key of Object.keys(conditions)){
+      for (const key in rule.if){
         const parts = key.split('.'); let cur:any = ctx;
         for (const p of parts){ cur = cur?.[p]; }
-        if (cur !== conditions[key]){ ok = false; break; }
+        if (cur !== (rule.if as any)[key]){ ok = false; break; }
       }
       if (ok){
         (rule.add_risks||[]).forEach((r:string)=>riskIds.add(r));
@@ -112,18 +110,11 @@ export class RiskEngineV4 {
         const it = items.get(a.id)!; it.weight += e.score; it.risks.add(e.risk.id);
       }
     }
-    const arr: ActionPlanItem[] = Array.from(items.values())
-      .sort((x,y)=>y.weight - x.weight)
-      .map(it=> {
-        const priority: ActionPlanItem["priority"] = it.weight >= 200 ? "Haute" : it.weight >= 100 ? "Moyenne" : "Basse";
-        return {
-          action: it.a,
-          relatedRiskIds: Array.from(it.risks),
-          priority
-        };
-      });
-    const plan: ActionPlan = { items: arr };
-    return plan;
+    const arr = Array.from(items.values()).sort((x,y)=>y.weight - x.weight).map(it=> ({
+      action: it.a, relatedRiskIds: Array.from(it.risks),
+      priority: it.weight >= 200 ? 'Haute' : it.weight >= 100 ? 'Moyenne' : 'Basse'
+    })) as ActionPlanItem[];
+    return { items: arr };
   }
 }
 export default RiskEngineV4;
