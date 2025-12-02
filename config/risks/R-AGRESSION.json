@@ -1,0 +1,20 @@
+{
+  "id": "R-AGRESSION",
+  "name": "Agressions / incivilités",
+  "category": "Sécurité",
+  "description": "Relation client/usager, encaissement.",
+  "units": [
+    "Salle",
+    "Accueil"
+  ],
+  "questions": [
+    "Formation gestion conflit ?",
+    "PTI ?"
+  ],
+  "factors": [],
+  "sources": [
+    "INRS",
+    "CARSAT",
+    "EU-OSHA"
+  ]
+}

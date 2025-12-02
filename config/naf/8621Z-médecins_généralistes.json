@@ -1,0 +1,21 @@
+{
+  "naf": "8621Z",
+  "label": "Médecins généralistes",
+  "risks_priority": [
+    "R-BIO",
+    "R-CHIMIQUE",
+    "R-TMS",
+    "R-RPS",
+    "R-ECRAN"
+  ],
+  "risks_mandatory": [],
+  "actions_recommended": [
+    "A-R-BIO-001",
+    "A-R-CHIMIQUE-001",
+    "A-R-TMS-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP",
+    "OB-DASRI"
+  ]
+}

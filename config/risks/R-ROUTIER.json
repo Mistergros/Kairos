@@ -1,0 +1,19 @@
+{
+  "id": "R-ROUTIER",
+  "name": "Risque routier",
+  "category": "Accidentel",
+  "description": "Livraisons, déplacements.",
+  "units": [
+    "Livraison"
+  ],
+  "questions": [
+    "Plan de prévention ?",
+    "Repos ?"
+  ],
+  "factors": [],
+  "sources": [
+    "INRS",
+    "CARSAT",
+    "EU-OSHA"
+  ]
+}

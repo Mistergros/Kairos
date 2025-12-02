@@ -1,0 +1,17 @@
+{
+  "naf": "47",
+  "label": "Commerce de detail",
+  "risks_priority": ["R-CHUTE", "R-TMS", "R-INCENDIE", "R-AGRESSION"],
+  "actions_recommended": ["A-CHUTE-SIGNAL", "A-TMS-POSTURE", "A-AGRESSION-FORMATION"],
+  "legal_specific": ["OB-EVAC-INCENDIE"],
+  "risks": [
+    {
+      "id": "R-STOCK",
+      "name": "Manutention et stockage",
+      "category": "Physique",
+      "description": "Soulever et gerer des charges en reserve ou rayon",
+      "naf_specific": ["47"],
+      "units": ["Magasin"]
+    }
+  ]
+}

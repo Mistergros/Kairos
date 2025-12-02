@@ -1,0 +1,20 @@
+{
+  "id": "R-BIO",
+  "name": "Risque biologique",
+  "category": "Biologique",
+  "description": "Agents bio, déchets, denrées.",
+  "units": [
+    "Cuisine",
+    "Santé"
+  ],
+  "questions": [
+    "PMS/HACCP ?",
+    "DASRI ?"
+  ],
+  "factors": [],
+  "sources": [
+    "INRS",
+    "CARSAT",
+    "EU-OSHA"
+  ]
+}

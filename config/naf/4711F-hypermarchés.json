@@ -1,0 +1,19 @@
+{
+  "naf": "4711F",
+  "label": "Hypermarchés",
+  "risks_priority": [
+    "R-GLISSADES",
+    "R-MANUTENTION",
+    "R-RPS",
+    "R-INCENDIE",
+    "R-ROUTIER"
+  ],
+  "risks_mandatory": [],
+  "actions_recommended": [
+    "A-R-GLISSADES-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP",
+    "OB-VERIF"
+  ]
+}

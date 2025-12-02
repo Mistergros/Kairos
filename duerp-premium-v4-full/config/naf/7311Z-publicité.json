@@ -1,0 +1,16 @@
+{
+  "naf": "7311Z",
+  "label": "Publicité",
+  "risks_priority": [
+    "R-ECRAN",
+    "R-RPS",
+    "R-ROUTIER"
+  ],
+  "risks_mandatory": [],
+  "actions_recommended": [
+    "A-R-ECRAN-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP"
+  ]
+}

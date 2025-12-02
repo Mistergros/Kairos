@@ -1,0 +1,81 @@
+{
+  "schema": {
+    "context.features": {
+      "solvents": "boolean",
+      "cold_room": "boolean",
+      "night_work": "boolean",
+      "public_facing": "boolean",
+      "vibrating_tools": "boolean",
+      "outdoor_uv": "boolean",
+      "machines": "boolean"
+    }
+  },
+  "rules": [
+    {
+      "if": {
+        "features.solvents": true
+      },
+      "add_risks": [
+        "R-ATEX",
+        "R-CHIMIQUE"
+      ],
+      "add_obligations": [
+        "OB-ATEX"
+      ]
+    },
+    {
+      "if": {
+        "features.cold_room": true
+      },
+      "add_risks": [
+        "R-FROID"
+      ],
+      "add_actions": [
+        "A-R-FROID-001"
+      ]
+    },
+    {
+      "if": {
+        "features.night_work": true
+      },
+      "add_risks": [
+        "R-RPS"
+      ],
+      "add_obligations": [
+        "OB-TRAVAIL-NUIT"
+      ]
+    },
+    {
+      "if": {
+        "features.public_facing": true
+      },
+      "add_risks": [
+        "R-AGRESSION"
+      ]
+    },
+    {
+      "if": {
+        "features.vibrating_tools": true
+      },
+      "add_risks": [
+        "R-VIBRATIONS"
+      ]
+    },
+    {
+      "if": {
+        "features.outdoor_uv": true
+      },
+      "add_risks": [
+        "R-CANICULE"
+      ]
+    },
+    {
+      "if": {
+        "features.machines": true
+      },
+      "add_risks": [
+        "R-MACHINE"
+      ]
+    }
+  ]
+}

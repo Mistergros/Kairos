@@ -1,0 +1,17 @@
+{
+  "naf": "88",
+  "label": "Action sociale",
+  "risks_priority": ["R-RPS", "R-AGRESSION", "R-INCENDIE"],
+  "actions_recommended": ["A-RPS-CELLULE", "A-AGRESSION-FORMATION", "A-INCENDIE-EXERCICE"],
+  "legal_specific": ["OB-EVAC-INCENDIE"],
+  "risks": [
+    {
+      "id": "R-DEPLACEMENTS",
+      "name": "Deplacements exterieurs",
+      "category": "Organisationnel",
+      "description": "Interventions au domicile ou en milieu urbain exposees",
+      "naf_specific": ["88"],
+      "units": ["Terrain"]
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "naf": "5520Z",
+  "label": "Hôtellerie",
+  "risks_priority": [
+    "R-GLISSADES",
+    "R-RPS",
+    "R-ECRAN",
+    "R-INCENDIE",
+    "R-TMS"
+  ],
+  "risks_mandatory": [
+    "R-AGRESSION",
+    "R-TRAVAIL-NUIT"
+  ],
+  "actions_recommended": [
+    "A-R-GLISSADES-001",
+    "A-R-RPS-001",
+    "A-R-ECRAN-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP",
+    "OB-INCENDIE"
+  ]
+}

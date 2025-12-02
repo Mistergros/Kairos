@@ -1,0 +1,20 @@
+{
+  "id": "R-VIBRATIONS",
+  "name": "Vibrations",
+  "category": "Physique",
+  "description": "Outils vibrants, engins.",
+  "units": [
+    "Chantier",
+    "Atelier"
+  ],
+  "questions": [
+    "Inventaire HAVS ?",
+    "Limitation temps ?"
+  ],
+  "factors": [],
+  "sources": [
+    "INRS",
+    "CARSAT",
+    "EU-OSHA"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "naf": "8690D",
+  "label": "Laboratoires d’analyses médicales",
+  "risks_priority": [
+    "R-BIO",
+    "R-CHIMIQUE",
+    "R-ECRAN",
+    "R-RPS"
+  ],
+  "risks_mandatory": [],
+  "actions_recommended": [
+    "A-R-BIO-001",
+    "A-R-CHIMIQUE-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP",
+    "OB-DASRI"
+  ]
+}

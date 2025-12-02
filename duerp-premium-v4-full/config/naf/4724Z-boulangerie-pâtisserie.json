@@ -1,0 +1,23 @@
+{
+  "naf": "4724Z",
+  "label": "Boulangerie-pâtisserie",
+  "risks_priority": [
+    "R-BRULE",
+    "R-GLISSADES",
+    "R-CHIMIQUE",
+    "R-TMS",
+    "R-INCENDIE",
+    "R-ATEX"
+  ],
+  "risks_mandatory": [],
+  "actions_recommended": [
+    "A-R-BRULE-001",
+    "A-R-GLISSADES-001",
+    "A-R-CHIMIQUE-001",
+    "A-R-ATEX-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP",
+    "OB-HACCP"
+  ]
+}

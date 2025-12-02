@@ -1,0 +1,54 @@
+[
+  {
+    "id": "A-R-CANICULE-001",
+    "risk_id": "R-CANICULE",
+    "title": "Mesure technique prioritaire",
+    "type": "Humaine",
+    "impact": "Réduction du risque",
+    "difficulty": "Élevée",
+    "cost": "Faible",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-CANICULE-002",
+    "risk_id": "R-CANICULE",
+    "title": "Procédure / organisation",
+    "type": "Organisationnelle",
+    "impact": "Réduction du risque",
+    "difficulty": "Élevée",
+    "cost": "Élevé",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-CANICULE-003",
+    "risk_id": "R-CANICULE",
+    "title": "Formation/sensibilisation ciblée",
+    "type": "Technique",
+    "impact": "Réduction du risque",
+    "difficulty": "Faible",
+    "cost": "Moyen",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-CANICULE-004",
+    "risk_id": "R-CANICULE",
+    "title": "EPI adaptés et contrôlés",
+    "type": "Technique",
+    "impact": "Réduction du risque",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  }
+]

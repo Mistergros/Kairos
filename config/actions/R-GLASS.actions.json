@@ -1,0 +1,54 @@
+[
+  {
+    "id": "A-R-GLASS-001",
+    "risk_id": "R-GLASS",
+    "title": "Mesure technique prioritaire",
+    "type": "Organisationnelle",
+    "impact": "Réduction du risque",
+    "difficulty": "Moyenne",
+    "cost": "Faible",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-GLASS-002",
+    "risk_id": "R-GLASS",
+    "title": "Procédure / organisation",
+    "type": "Organisationnelle",
+    "impact": "Réduction du risque",
+    "difficulty": "Faible",
+    "cost": "Moyen",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-GLASS-003",
+    "risk_id": "R-GLASS",
+    "title": "Formation/sensibilisation ciblée",
+    "type": "Technique",
+    "impact": "Réduction du risque",
+    "difficulty": "Faible",
+    "cost": "Élevé",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-GLASS-004",
+    "risk_id": "R-GLASS",
+    "title": "EPI adaptés et contrôlés",
+    "type": "EPI",
+    "impact": "Réduction du risque",
+    "difficulty": "Faible",
+    "cost": "Élevé",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  }
+]

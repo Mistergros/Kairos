@@ -1,0 +1,54 @@
+[
+  {
+    "id": "A-R-QUALITEAIR-001",
+    "risk_id": "R-QUALITEAIR",
+    "title": "Mesure technique prioritaire",
+    "type": "Humaine",
+    "impact": "Réduction du risque",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-QUALITEAIR-002",
+    "risk_id": "R-QUALITEAIR",
+    "title": "Procédure / organisation",
+    "type": "Organisationnelle",
+    "impact": "Réduction du risque",
+    "difficulty": "Élevée",
+    "cost": "Moyen",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-QUALITEAIR-003",
+    "risk_id": "R-QUALITEAIR",
+    "title": "Formation/sensibilisation ciblée",
+    "type": "Humaine",
+    "impact": "Réduction du risque",
+    "difficulty": "Moyenne",
+    "cost": "Élevé",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-QUALITEAIR-004",
+    "risk_id": "R-QUALITEAIR",
+    "title": "EPI adaptés et contrôlés",
+    "type": "Organisationnelle",
+    "impact": "Réduction du risque",
+    "difficulty": "Élevée",
+    "cost": "Élevé",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  }
+]

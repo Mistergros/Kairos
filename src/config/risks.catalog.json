@@ -1,0 +1,49 @@
+[
+  {
+    "id": "R-TMS",
+    "name": "Troubles musculo-squelettiques",
+    "category": "Physique",
+    "description": "Postures statiques, gestes repetitifs et stations debout prolongees",
+    "naf_specific": ["56", "47"],
+    "units": ["Cuisine", "Magasin", "Bureau"]
+  },
+  {
+    "id": "R-CHUTE",
+    "name": "Chute de plain-pied",
+    "category": "Securite",
+    "description": "Glissades ou pertes d'equilibre sur sols humides ou encombres",
+    "naf_specific": ["47", "56"],
+    "units": ["Cuisine", "Magasin", "Salle"]
+  },
+  {
+    "id": "R-RPS",
+    "name": "Risque psychosocial",
+    "category": "Organisationnel",
+    "description": "Stress chronique, charge mentale et exposition aux incivilites",
+    "naf_specific": ["56", "88"],
+    "units": ["Bureau", "Accueil"]
+  },
+  {
+    "id": "R-BIO",
+    "name": "Exposition biologique",
+    "category": "Biologique",
+    "description": "Contact avec agents biologiques, soins ou nettoyage de surfaces souillees",
+    "naf_specific": ["86", "88", "56"],
+    "units": ["Salle de soins", "Cuisine"]
+  },
+  {
+    "id": "R-INCENDIE",
+    "name": "Incendie et evacuation",
+    "category": "Securite",
+    "description": "Presence de sources de chaleur, circuits electriques et evacuation du public",
+    "units": ["Tous"]
+  },
+  {
+    "id": "R-AGRESSION",
+    "name": "Agressions externes",
+    "category": "Securite",
+    "description": "Contacts difficiles avec le public, risques d'agression verbale ou physique",
+    "naf_specific": ["47", "88"],
+    "units": ["Accueil", "Magasin"]
+  }
+]

@@ -1,0 +1,18 @@
+{
+  "naf": "4332A",
+  "label": "Menuiserie bois et PVC",
+  "risks_priority": [
+    "R-MACHINE",
+    "R-COUPURE",
+    "R-BRUIT",
+    "R-MANUTENTION"
+  ],
+  "risks_mandatory": [],
+  "actions_recommended": [
+    "A-R-MACHINE-001",
+    "A-R-COUPURE-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP"
+  ]
+}

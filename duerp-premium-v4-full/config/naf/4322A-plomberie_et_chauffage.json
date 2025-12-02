@@ -1,0 +1,20 @@
+{
+  "naf": "4322A",
+  "label": "Plomberie et chauffage",
+  "risks_priority": [
+    "R-CHUTE-HAUTEUR",
+    "R-ELECTRIQUE",
+    "R-CHIMIQUE",
+    "R-MANUTENTION"
+  ],
+  "risks_mandatory": [],
+  "actions_recommended": [
+    "A-R-CHUTE-HAUTEUR-001",
+    "A-R-ELECTRIQUE-001",
+    "A-R-CHIMIQUE-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP",
+    "OB-VERIF"
+  ]
+}

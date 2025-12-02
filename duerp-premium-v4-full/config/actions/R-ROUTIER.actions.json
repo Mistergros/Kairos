@@ -1,0 +1,54 @@
+[
+  {
+    "id": "A-R-ROUTIER-001",
+    "risk_id": "R-ROUTIER",
+    "title": "Mesure technique prioritaire",
+    "type": "Technique",
+    "impact": "Réduction du risque",
+    "difficulty": "Élevée",
+    "cost": "Faible",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-ROUTIER-002",
+    "risk_id": "R-ROUTIER",
+    "title": "Procédure / organisation",
+    "type": "EPI",
+    "impact": "Réduction du risque",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-ROUTIER-003",
+    "risk_id": "R-ROUTIER",
+    "title": "Formation/sensibilisation ciblée",
+    "type": "Organisationnelle",
+    "impact": "Réduction du risque",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-ROUTIER-004",
+    "risk_id": "R-ROUTIER",
+    "title": "EPI adaptés et contrôlés",
+    "type": "EPI",
+    "impact": "Réduction du risque",
+    "difficulty": "Élevée",
+    "cost": "Faible",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  }
+]

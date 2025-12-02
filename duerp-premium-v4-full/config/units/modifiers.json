@@ -1,0 +1,39 @@
+{
+  "Cuisine": {
+    "R-CHIMIQUE": 1,
+    "R-INCENDIE": 1,
+    "R-BRULE": 1,
+    "R-TMS": 1,
+    "R-CANICULE": 1
+  },
+  "Plonge": {
+    "R-CHIMIQUE": 1,
+    "R-TMS": 1,
+    "R-COUPURE": 1,
+    "R-GLISSADES": 1
+  },
+  "Salle": {
+    "R-GLISSADES": 1,
+    "R-RPS": 1,
+    "R-AGRESSION": 1
+  },
+  "Chambre froide": {
+    "R-FROID": 2,
+    "R-CHIMIQUE": 1
+  },
+  "Bureau": {
+    "R-ECRAN": 1,
+    "R-RPS": 1
+  },
+  "Chantier": {
+    "R-CHUTE-HAUTEUR": 1,
+    "R-BRUIT": 1,
+    "R-ELECTRIQUE": 1,
+    "R-MANUTENTION": 1
+  },
+  "Entrepôt": {
+    "R-MANUTENTION": 1,
+    "R-CHUTE-HAUTEUR": 1,
+    "R-INCENDIE": 1
+  }
+}

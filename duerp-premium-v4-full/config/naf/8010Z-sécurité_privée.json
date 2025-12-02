@@ -1,0 +1,18 @@
+{
+  "naf": "8010Z",
+  "label": "Sécurité privée",
+  "risks_priority": [
+    "R-AGRESSION",
+    "R-ROUTIER",
+    "R-RPS",
+    "R-INCENDIE"
+  ],
+  "risks_mandatory": [],
+  "actions_recommended": [
+    "A-R-AGRESSION-001",
+    "A-R-ROUTIER-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "naf": "5210B",
+  "label": "Entreposage",
+  "risks_priority": [
+    "R-MANUTENTION",
+    "R-CHUTE-HAUTEUR",
+    "R-INCENDIE",
+    "R-ROUTIER",
+    "R-ELECTRIQUE"
+  ],
+  "risks_mandatory": [],
+  "actions_recommended": [
+    "A-R-MANUTENTION-001",
+    "A-R-CHUTE-HAUTEUR-001",
+    "A-R-INCENDIE-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP",
+    "OB-VERIF"
+  ]
+}

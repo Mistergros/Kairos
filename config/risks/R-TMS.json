@@ -1,0 +1,20 @@
+{
+  "id": "R-TMS",
+  "name": "Troubles musculo-squelettiques",
+  "category": "Physique",
+  "description": "Gestes répétitifs, postures.",
+  "units": [
+    "Cuisine",
+    "Bureau"
+  ],
+  "questions": [
+    "Ergonomie poste ?",
+    "Rotation tâches ?"
+  ],
+  "factors": [],
+  "sources": [
+    "INRS",
+    "CARSAT",
+    "EU-OSHA"
+  ]
+}

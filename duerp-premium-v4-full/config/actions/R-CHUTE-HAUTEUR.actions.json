@@ -1,0 +1,54 @@
+[
+  {
+    "id": "A-R-CHUTE-HAUTEUR-001",
+    "risk_id": "R-CHUTE-HAUTEUR",
+    "title": "Mesure technique prioritaire",
+    "type": "EPI",
+    "impact": "Réduction du risque",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-CHUTE-HAUTEUR-002",
+    "risk_id": "R-CHUTE-HAUTEUR",
+    "title": "Procédure / organisation",
+    "type": "Humaine",
+    "impact": "Réduction du risque",
+    "difficulty": "Élevée",
+    "cost": "Moyen",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-CHUTE-HAUTEUR-003",
+    "risk_id": "R-CHUTE-HAUTEUR",
+    "title": "Formation/sensibilisation ciblée",
+    "type": "Technique",
+    "impact": "Réduction du risque",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-CHUTE-HAUTEUR-004",
+    "risk_id": "R-CHUTE-HAUTEUR",
+    "title": "EPI adaptés et contrôlés",
+    "type": "Humaine",
+    "impact": "Réduction du risque",
+    "difficulty": "Moyenne",
+    "cost": "Élevé",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  }
+]

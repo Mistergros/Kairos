@@ -1,0 +1,20 @@
+{
+  "id": "R-GLASS",
+  "name": "Casse verre / coupures verre",
+  "category": "Accidentel",
+  "description": "Verres, bouteilles.",
+  "units": [
+    "Bar",
+    "Salle"
+  ],
+  "questions": [
+    "Gants ?",
+    "Bacs spécifiques ?"
+  ],
+  "factors": [],
+  "sources": [
+    "INRS",
+    "CARSAT",
+    "EU-OSHA"
+  ]
+}

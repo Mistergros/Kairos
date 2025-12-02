@@ -1,0 +1,17 @@
+{
+  "naf": "4329B",
+  "label": "Autres travaux d'installation",
+  "risks_priority": [
+    "R-ELECTRIQUE",
+    "R-CHIMIQUE",
+    "R-MANUTENTION"
+  ],
+  "risks_mandatory": [],
+  "actions_recommended": [
+    "A-R-ELECTRIQUE-001",
+    "A-R-CHIMIQUE-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP"
+  ]
+}

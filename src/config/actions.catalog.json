@@ -1,0 +1,59 @@
+[
+  {
+    "id": "A-TMS-POSTURE",
+    "risk_id": "R-TMS",
+    "type": "Technique",
+    "title": "Installer un plan de prevention TMS",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "impact": "Reduit les contraintes posturales via amenagements ergonomiques"
+  },
+  {
+    "id": "A-CHUTE-SIGNAL",
+    "risk_id": "R-CHUTE",
+    "type": "Organisation",
+    "title": "Plan de nettoyage et signalisation",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "naf_specific": ["56", "47"],
+    "impact": "Reduit les chutes par signaletique et maintenance reguliere"
+  },
+  {
+    "id": "A-RPS-CELLULE",
+    "risk_id": "R-RPS",
+    "type": "Organisation",
+    "title": "Mettre en place une cellule d'ecoute",
+    "difficulty": "Faible",
+    "cost": "Moyen",
+    "impact": "Donne un recours et une detection precoce des signaux faibles"
+  },
+  {
+    "id": "A-BIO-PPE",
+    "risk_id": "R-BIO",
+    "type": "Technique",
+    "title": "Renforcer les EPI et protocoles de desinfection",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "naf_specific": ["86", "88"],
+    "impact": "Limite l'exposition directe aux agents biologiques"
+  },
+  {
+    "id": "A-INCENDIE-EXERCICE",
+    "risk_id": "R-INCENDIE",
+    "type": "Organisation",
+    "title": "Organiser un exercice d'evacuation trimestriel",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "impact": "Renforce la preparation du personnel en cas d'incendie"
+  },
+  {
+    "id": "A-AGRESSION-FORMATION",
+    "risk_id": "R-AGRESSION",
+    "type": "Formation",
+    "title": "Former a la gestion des incivilites",
+    "difficulty": "Faible",
+    "cost": "Moyen",
+    "naf_specific": ["47", "88"],
+    "impact": "Equipe les equipes pour des situations difficiles avec le public"
+  }
+]

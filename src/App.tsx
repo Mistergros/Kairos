@@ -10,6 +10,10 @@ import { Versions } from "./pages/Versions";
 import { Pricing } from "./pages/Pricing";
 import { ContextSelectors } from "./components/Selectors";
 import { useDuerpStore } from "./state/store";
+import { BlueprintDashboard } from "./app/pages/BlueprintDashboard";
+import { WizardPage } from "./app/pages/WizardPage";
+import { ActionPlanPage as BlueprintActionPlanPage } from "./app/pages/ActionPlanPage";
+import { DuerpResults } from "./pages/DuerpResults";
 
 const navItems = [
   { path: "/", label: "Tableau de bord", icon: LayoutDashboard, end: true },
@@ -103,6 +107,10 @@ export default function App() {
               <Route path="/exports" element={<Exports />} />
               <Route path="/versions" element={<Versions />} />
               <Route path="/pricing" element={<Pricing />} />
+              <Route path="/duerp-results" element={<DuerpResults />} />
+              <Route path="/blueprint" element={<BlueprintDashboard />} />
+              <Route path="/blueprint/wizard" element={<WizardPage />} />
+              <Route path="/blueprint/plan" element={<BlueprintActionPlanPage />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </div>

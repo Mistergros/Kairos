@@ -1,0 +1,25 @@
+{
+  "naf": "8121Z",
+  "label": "Nettoyage",
+  "risks_priority": [
+    "R-CHUTE",
+    "R-CHIMIQUE",
+    "R-TMS",
+    "R-MANUTENTION",
+    "R-INCENDIE",
+    "R-ROUTIER"
+  ],
+  "actions_recommended": [
+    "A-CHUTE-001",
+    "A-CHIM-001",
+    "A-TMS-002",
+    "A-MANUT-001",
+    "A-FEU-001",
+    "A-ROUTIER-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP-ANNUEL",
+    "OB-VERIF-PERIODIQUES",
+    "OB-FORMATION-SECURITE"
+  ]
+}

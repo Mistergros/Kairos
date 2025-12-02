@@ -1,0 +1,20 @@
+{
+  "id": "R-MANUTENTION",
+  "name": "Manutentions manuelles",
+  "category": "Physique",
+  "description": "Port/traction/poussée de charges.",
+  "units": [
+    "Cuisine",
+    "Entrepôt"
+  ],
+  "questions": [
+    "Aides mécaniques ?",
+    "Formation gestes/postures ?"
+  ],
+  "factors": [],
+  "sources": [
+    "INRS",
+    "CARSAT",
+    "EU-OSHA"
+  ]
+}

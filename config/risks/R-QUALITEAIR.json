@@ -1,0 +1,20 @@
+{
+  "id": "R-QUALITEAIR",
+  "name": "Qualité de l'air intérieur",
+  "category": "Environnemental",
+  "description": "CO2, ventilation.",
+  "units": [
+    "Bureau",
+    "Salle"
+  ],
+  "questions": [
+    "Mesure CO2 ?",
+    "Renouvellement d'air ?"
+  ],
+  "factors": [],
+  "sources": [
+    "INRS",
+    "CARSAT",
+    "EU-OSHA"
+  ]
+}

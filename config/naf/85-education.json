@@ -1,0 +1,19 @@
+{
+  "naf": "8531Z",
+  "label": "Éducation",
+  "risks_priority": [
+    "R-ECRAN",
+    "R-RPS",
+    "R-CHUTE",
+    "R-INCENDIE"
+  ],
+  "actions_recommended": [
+    "A-ECRAN-001",
+    "A-RPS-001",
+    "A-CHUTE-001",
+    "A-FEU-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP-ANNUEL"
+  ]
+}

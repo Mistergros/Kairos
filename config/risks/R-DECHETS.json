@@ -1,0 +1,20 @@
+{
+  "id": "R-DECHETS",
+  "name": "Déchets / DASRI / biodéchets",
+  "category": "Organisationnel",
+  "description": "Tri/collecte/élimination.",
+  "units": [
+    "Cuisine",
+    "Santé"
+  ],
+  "questions": [
+    "Circuit déchets ?",
+    "Prestataire ?"
+  ],
+  "factors": [],
+  "sources": [
+    "INRS",
+    "CARSAT",
+    "EU-OSHA"
+  ]
+}

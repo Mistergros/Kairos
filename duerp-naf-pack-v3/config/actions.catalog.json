@@ -1,0 +1,200 @@
+[
+  {
+    "id": "A-TMS-001",
+    "risk_id": "R-TMS",
+    "type": "Technique",
+    "title": "Aménager les postes (hauteur, rotation des tâches)",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "impact": "Réduction contraintes posturales"
+  },
+  {
+    "id": "A-TMS-002",
+    "risk_id": "R-TMS",
+    "type": "Organisationnelle",
+    "title": "Former aux gestes et postures + aides à la manutention",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "impact": "Réduction TMS logistique/cuisine"
+  },
+  {
+    "id": "A-CHUTE-001",
+    "risk_id": "R-CHUTE",
+    "type": "Technique",
+    "title": "Antidérapants, plan de nettoyage, gestion des déversements",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "impact": "Diminution glissades"
+  },
+  {
+    "id": "A-CHUTE-H-001",
+    "risk_id": "R-CHUTE-HAUTEUR",
+    "type": "Technique",
+    "title": "Rails/EPI antichute, vérification échafaudages, PTI",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "impact": "Réduction chutes de hauteur"
+  },
+  {
+    "id": "A-COUPURE-001",
+    "risk_id": "R-COUPURE",
+    "type": "Technique",
+    "title": "Gants anti-coupures, protections machines, procédures couteaux",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "impact": "Réduction coupures"
+  },
+  {
+    "id": "A-BRUIT-001",
+    "risk_id": "R-BRUIT",
+    "type": "Technique",
+    "title": "Maintenance, capotage, isolement des sources, EPI adaptés",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "impact": "Abaissement du bruit"
+  },
+  {
+    "id": "A-CHIM-001",
+    "risk_id": "R-CHIMIQUE",
+    "type": "Technique",
+    "title": "Substitution produits, FDS à jour, ventilation, stockage",
+    "difficulty": "Moyenne",
+    "cost": "Faible",
+    "impact": "Réduction exposition chimique"
+  },
+  {
+    "id": "A-BIO-001",
+    "risk_id": "R-BIO",
+    "type": "Organisationnelle",
+    "title": "Procédures d’hygiène, EPI, vaccination, gestion déchets DASRI",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "impact": "Réduction exposition biologique"
+  },
+  {
+    "id": "A-FEU-001",
+    "risk_id": "R-INCENDIE",
+    "type": "Organisationnelle",
+    "title": "Permis feu, exercices évacuation, vérif. extincteurs/SSI",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "impact": "Réduction sinistre incendie"
+  },
+  {
+    "id": "A-ELEC-001",
+    "risk_id": "R-ELECTRIQUE",
+    "type": "Technique",
+    "title": "Consignation, vérifications périodiques, interdiction bricolage",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "impact": "Réduction électrisation"
+  },
+  {
+    "id": "A-MANUT-001",
+    "risk_id": "R-MANUTENTION",
+    "type": "Technique",
+    "title": "Diables, transpalettes, chariots—organisation des flux",
+    "difficulty": "Faible",
+    "cost": "Moyen",
+    "impact": "Réduction manutention manuelle"
+  },
+  {
+    "id": "A-RPS-001",
+    "risk_id": "R-RPS",
+    "type": "Organisationnelle",
+    "title": "Évaluation RPS, régulation charge, procédures agression",
+    "difficulty": "Moyenne",
+    "cost": "Faible",
+    "impact": "Réduction RPS"
+  },
+  {
+    "id": "A-ECRAN-001",
+    "risk_id": "R-ECRAN",
+    "type": "Technique",
+    "title": "Ergonomie poste (siège, écran, pauses visuelles)",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "impact": "Confort VDT"
+  },
+  {
+    "id": "A-ROUTIER-001",
+    "risk_id": "R-ROUTIER",
+    "type": "Organisationnelle",
+    "title": "Plan de prévention routier, entretien flotte, temps repos",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "impact": "Réduction accidents routiers"
+  },
+  {
+    "id": "A-ATEX-001",
+    "risk_id": "R-ATEX",
+    "type": "Technique",
+    "title": "Zonage ATEX, matériels conformes, formation spécifique",
+    "difficulty": "Élevée",
+    "cost": "Élevé",
+    "impact": "Maîtrise risque explosion"
+  },
+  {
+    "id": "A-AGRESSION-001",
+    "risk_id": "R-AGRESSION",
+    "type": "Organisationnelle",
+    "title": "Dispositif de prévention des incivilités + formation gestion des conflits",
+    "difficulty": "Moyenne",
+    "cost": "Faible",
+    "impact": "Réduction agressions"
+  },
+  {
+    "id": "A-NUIT-001",
+    "risk_id": "R-TRAVAILNUIT",
+    "type": "Organisationnelle",
+    "title": "Aménagement horaires, suivi médical renforcé, transport sécurisé",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "impact": "Réduction impacts travail de nuit"
+  },
+  {
+    "id": "A-CANICULE-001",
+    "risk_id": "R-CANICULE",
+    "type": "Organisationnelle",
+    "title": "Plan canicule, ventilation, pauses fraîches, hydratation",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "impact": "Réduction stress thermique"
+  },
+  {
+    "id": "A-FROID-001",
+    "risk_id": "R-FROID",
+    "type": "Technique",
+    "title": "EPI anti-froid, limitation temps d’exposition, SAS thermique",
+    "difficulty": "Faible",
+    "cost": "Moyen",
+    "impact": "Réduction risque froid"
+  },
+  {
+    "id": "A-VIB-001",
+    "risk_id": "R-VIBRATIONS",
+    "type": "Technique",
+    "title": "Outils à faibles vibrations, entretien, temps d’exposition",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "impact": "Réduction vibrations"
+  },
+  {
+    "id": "A-RAY-001",
+    "risk_id": "R-RAYONNEMENT",
+    "type": "Organisationnelle",
+    "title": "Protection UV, écrans, procédures d’éloignement",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "impact": "Réduction exposition rayonnements"
+  },
+  {
+    "id": "A-MACH-001",
+    "risk_id": "R-MACHINE",
+    "type": "Technique",
+    "title": "Carters, arrêts d’urgence, consignation, formation opérateurs",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "impact": "Sécurité machines"
+  }
+]

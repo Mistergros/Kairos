@@ -1,0 +1,32 @@
+{
+  "naf": "5610A",
+  "label": "Restauration traditionnelle",
+  "risks_priority": [
+    "R-TMS",
+    "R-GLISSADES",
+    "R-COUPURE",
+    "R-BRULE",
+    "R-CHIMIQUE",
+    "R-INCENDIE",
+    "R-CANICULE",
+    "R-RPS"
+  ],
+  "risks_mandatory": [
+    "R-BIO",
+    "R-FROID",
+    "R-ATEX"
+  ],
+  "actions_recommended": [
+    "A-R-GLISSADES-001",
+    "A-R-COUPURE-001",
+    "A-R-BRULE-001",
+    "A-R-CHIMIQUE-001",
+    "A-R-INCENDIE-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP",
+    "OB-INCENDIE",
+    "OB-HACCP",
+    "OB-VERIF"
+  ]
+}

@@ -1,0 +1,128 @@
+[
+  {
+    "id": "R-TMS",
+    "name": "Troubles musculo-squelettiques",
+    "category": "Physique",
+    "description": "Gestes répétitifs, postures statiques ou contraintes, manutentions."
+  },
+  {
+    "id": "R-CHUTE",
+    "name": "Chutes de plain-pied",
+    "category": "Accidentel",
+    "description": "Glissade, trébuchement, sols mouillés ou encombrés."
+  },
+  {
+    "id": "R-CHUTE-HAUTEUR",
+    "name": "Chutes de hauteur",
+    "category": "Accidentel",
+    "description": "Travaux en hauteur, escabeaux, toitures, échafaudages."
+  },
+  {
+    "id": "R-COUPURE",
+    "name": "Coupures et lacérations",
+    "category": "Accidentel",
+    "description": "Outils tranchants, lames, machines de découpe, verrerie."
+  },
+  {
+    "id": "R-BRUIT",
+    "name": "Bruit",
+    "category": "Physique",
+    "description": "Ambiance sonore élevée, machines, ventilation."
+  },
+  {
+    "id": "R-CHIMIQUE",
+    "name": "Agents chimiques dangereux",
+    "category": "Chimique",
+    "description": "Produits de nettoyage, solvants, désinfectants, colles, CMR."
+  },
+  {
+    "id": "R-BIO",
+    "name": "Risque biologique",
+    "category": "Biologique",
+    "description": "Exposition à agents biologiques (soins, aide à la personne, déchets)."
+  },
+  {
+    "id": "R-INCENDIE",
+    "name": "Incendie / explosion",
+    "category": "Accident majeur",
+    "description": "Sources d’ignition, ATEX, stockages, cuisine, électricité."
+  },
+  {
+    "id": "R-ELECTRIQUE",
+    "name": "Risque électrique",
+    "category": "Accidentel",
+    "description": "Interventions électriques, matériels défectueux, rallonges."
+  },
+  {
+    "id": "R-MANUTENTION",
+    "name": "Manutentions manuelles",
+    "category": "Physique",
+    "description": "Port de charges, approvisionnement, livraison, soins."
+  },
+  {
+    "id": "R-RPS",
+    "name": "Risque psychosocial (RPS)",
+    "category": "Organisationnel",
+    "description": "Charge de travail, horaires décalés, agressions, stress."
+  },
+  {
+    "id": "R-ECRAN",
+    "name": "Travail sur écran",
+    "category": "Ergonomique",
+    "description": "Poste informatique, ergonomie, éclairage."
+  },
+  {
+    "id": "R-ROUTIER",
+    "name": "Risque routier professionnel",
+    "category": "Accidentel",
+    "description": "Déplacements pour livraisons, interventions, clientèle."
+  },
+  {
+    "id": "R-ATEX",
+    "name": "Atmosphères explosives (ATEX)",
+    "category": "Accident majeur",
+    "description": "Gaz/vapeurs/poussières inflammables, zones ATEX."
+  },
+  {
+    "id": "R-AGRESSION",
+    "name": "Agression / incivilités",
+    "category": "Sécurité",
+    "description": "Relations clients/usagers difficiles, guichet, encaissement."
+  },
+  {
+    "id": "R-TRAVAILNUIT",
+    "name": "Travail de nuit / horaires décalés",
+    "category": "Organisationnel",
+    "description": "Travail posté, astreintes, impact sommeil."
+  },
+  {
+    "id": "R-CANICULE",
+    "name": "Chaleur / canicule",
+    "category": "Physique",
+    "description": "Températures élevées, cuisine, extérieurs en été."
+  },
+  {
+    "id": "R-FROID",
+    "name": "Froid / chambre froide",
+    "category": "Physique",
+    "description": "Exposition au froid, chambres froides, espaces réfrigérés."
+  },
+  {
+    "id": "R-VIBRATIONS",
+    "name": "Vibrations",
+    "category": "Physique",
+    "description": "Outils vibrants, conduite d’engins."
+  },
+  {
+    "id": "R-RAYONNEMENT",
+    "name": "Rayonnements (UV, ionisants non médicaux)",
+    "category": "Physique",
+    "description": "UV en extérieur, équipements spécifiques."
+  },
+  {
+    "id": "R-MACHINE",
+    "name": "Machines / pièces en mouvement",
+    "category": "Accidentel",
+    "description": "Contact avec pièces en mouvement, enclenchements, protections absentes."
+  }
+]

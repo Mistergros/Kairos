@@ -1,0 +1,22 @@
+{
+  "severity": {
+    "low": 2,
+    "medium": 5,
+    "high": 10
+  },
+  "probability": {
+    "rare": 2,
+    "possible": 5,
+    "likely": 8
+  },
+  "control": {
+    "strong": 0.5,
+    "standard": 1,
+    "weak": 1.5
+  },
+  "priorityThresholds": {
+    "critical": 80,
+    "high": 50,
+    "medium": 25
+  }
+}

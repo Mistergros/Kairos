@@ -1,0 +1,54 @@
+[
+  {
+    "id": "A-R-INCENDIE-001",
+    "risk_id": "R-INCENDIE",
+    "title": "Mesure technique prioritaire",
+    "type": "Humaine",
+    "impact": "Réduction du risque",
+    "difficulty": "Faible",
+    "cost": "Moyen",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-INCENDIE-002",
+    "risk_id": "R-INCENDIE",
+    "title": "Procédure / organisation",
+    "type": "EPI",
+    "impact": "Réduction du risque",
+    "difficulty": "Élevée",
+    "cost": "Élevé",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-INCENDIE-003",
+    "risk_id": "R-INCENDIE",
+    "title": "Formation/sensibilisation ciblée",
+    "type": "Humaine",
+    "impact": "Réduction du risque",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-INCENDIE-004",
+    "risk_id": "R-INCENDIE",
+    "title": "EPI adaptés et contrôlés",
+    "type": "Organisationnelle",
+    "impact": "Réduction du risque",
+    "difficulty": "Élevée",
+    "cost": "Moyen",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  }
+]

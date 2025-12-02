@@ -1,0 +1,17 @@
+{
+  "naf": "4932Z",
+  "label": "Transports de voyageurs par taxis",
+  "risks_priority": [
+    "R-ROUTIER",
+    "R-AGRESSION",
+    "R-RPS"
+  ],
+  "risks_mandatory": [],
+  "actions_recommended": [
+    "A-R-ROUTIER-001",
+    "A-R-AGRESSION-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP"
+  ]
+}

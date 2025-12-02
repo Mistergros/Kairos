@@ -1,0 +1,22 @@
+{
+  "naf": "8710A",
+  "label": "EHPAD",
+  "risks_priority": [
+    "R-BIO",
+    "R-MANUTENTION",
+    "R-RPS",
+    "R-GLISSADES",
+    "R-INCENDIE"
+  ],
+  "risks_mandatory": [],
+  "actions_recommended": [
+    "A-R-BIO-001",
+    "A-R-MANUTENTION-001",
+    "A-R-RPS-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP",
+    "OB-DASRI",
+    "OB-INCENDIE"
+  ]
+}

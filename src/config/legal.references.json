@@ -1,0 +1,35 @@
+{
+  "obligations": [
+    {
+      "id": "OB-DUERP-UPDATE",
+      "title": "Mise a jour DUERP",
+      "description": "Article R4121-2 : obligation de mise a jour annuelle",
+      "naf_specific": []
+    },
+    {
+      "id": "OB-HYGIENE-RESTO",
+      "title": "Hygiene et securite alimentaire",
+      "description": "Paquet hygiene pour les etablissements de restauration",
+      "naf_specific": ["56"]
+    },
+    {
+      "id": "OB-RPS-PREVENTION",
+      "title": "Prevention des RPS",
+      "description": "Evaluation et actions de prevention des risques psychosociaux",
+      "naf_specific": []
+    },
+    {
+      "id": "OB-EVAC-INCENDIE",
+      "title": "Consignes incendie",
+      "description": "Affichage des consignes et exercices d'evacuation periodiques",
+      "naf_specific": []
+    }
+  ],
+  "references": [
+    {
+      "id": "REF-R4121-1",
+      "title": "Code du travail - DUERP",
+      "description": "Obligation de mise a jour et tenue a disposition du DUERP"
+    }
+  ]
+}

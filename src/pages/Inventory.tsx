@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState, Fragment, ChangeEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card } from "../components/Card";
 import { PriorityBadge } from "../components/Badge";
 import { useDuerpStore } from "../state/store";
@@ -13,6 +14,7 @@ type Filters = {
 };
 
 export const Inventory = () => {
+  const navigate = useNavigate();
   const {
     assessments,
     selectedWorkUnitId,
@@ -31,8 +33,8 @@ export const Inventory = () => {
   const [form, setForm] = useState({
     hazardId: hazardLibrary[0]?.id || "",
     gravity: 7,
-    frequency: 3,
-    control: 0.5,
+    frequency: 5,
+    control: 1,
     existingMeasures: "",
     proposedMeasures: "",
   });
@@ -54,7 +56,7 @@ export const Inventory = () => {
   const categories = Array.from(new Set(hazardLibrary.map((h) => h.category)));
 
   const filtered = useMemo(() => {
-    const current = assessments.filter((a) => a.workUnitId === selectedWorkUnitId);
+    const current = assessments.filter((a) => !selectedWorkUnitId || a.workUnitId === selectedWorkUnitId);
     return current
       .filter((a) => (filters.category ? a.hazardCategory === filters.category : true))
       .filter((a) => (filters.priority ? a.priority === filters.priority : true))
@@ -94,13 +96,23 @@ export const Inventory = () => {
         title="Inventaire des risques"
         subtitle="Grille des risques, cotations et priorisation"
         corner={
-          <input
-            className="rounded-xl border border-slate/20 px-3 py-2 text-sm"
-            placeholder="Recherche..."
-            title="Filtrer par texte (risque ou categorie)"
-            value={filters.search}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => setFilters((f) => ({ ...f, search: e.target.value }))}
-          />
+          <div className="flex items-center gap-2">
+            <input
+              className="rounded-xl border border-slate/20 px-3 py-2 text-sm"
+              placeholder="Recherche..."
+              title="Filtrer par texte (risque ou categorie)"
+              value={filters.search}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setFilters((f) => ({ ...f, search: e.target.value }))}
+            />
+            <button
+              type="button"
+              className="rounded-xl bg-ocean px-3 py-2 text-xs font-semibold text-white shadow-sm"
+              onClick={() => navigate("/duerp-results")}
+              title="Ouvrir le calcul moteur V3 (risques/actions/obligations)"
+            >
+              Calculer DUERP (V3)
+            </button>
+          </div>
         }
       >
         <div className="mb-3 rounded-xl bg-slate/5 px-3 py-2 text-xs text-slate/70">

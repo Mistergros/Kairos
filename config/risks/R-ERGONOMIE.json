@@ -1,0 +1,20 @@
+{
+  "id": "R-ERGONOMIE",
+  "name": "Ergonomie du poste",
+  "category": "Ergonomique",
+  "description": "Hauteur plan, espace.",
+  "units": [
+    "Bureau",
+    "Cuisine"
+  ],
+  "questions": [
+    "Plan de travail réglable ?",
+    "Siège adapté ?"
+  ],
+  "factors": [],
+  "sources": [
+    "INRS",
+    "CARSAT",
+    "EU-OSHA"
+  ]
+}

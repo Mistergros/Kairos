@@ -1,0 +1,19 @@
+{
+  "id": "R-BRULE",
+  "name": "Brûlures / projections",
+  "category": "Accidentel",
+  "description": "Huile, vapeur, surfaces chaudes.",
+  "units": [
+    "Cuisine"
+  ],
+  "questions": [
+    "Gants thermiques ?",
+    "Procédure friteuse ?"
+  ],
+  "factors": [],
+  "sources": [
+    "INRS",
+    "CARSAT",
+    "EU-OSHA"
+  ]
+}

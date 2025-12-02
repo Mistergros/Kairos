@@ -1,0 +1,16 @@
+{
+  "naf": "8622C",
+  "label": "Autres activités de santé",
+  "risks_priority": [
+    "R-BIO",
+    "R-ECRAN",
+    "R-RPS"
+  ],
+  "risks_mandatory": [],
+  "actions_recommended": [
+    "A-R-BIO-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP"
+  ]
+}

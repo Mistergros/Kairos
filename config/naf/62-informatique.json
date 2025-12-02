@@ -1,0 +1,22 @@
+{
+  "naf": "6201Z",
+  "label": "Programmation informatique",
+  "risks_priority": [
+    "R-ECRAN",
+    "R-TMS",
+    "R-RPS",
+    "R-ELECTRIQUE",
+    "R-INCENDIE"
+  ],
+  "actions_recommended": [
+    "A-ECRAN-001",
+    "A-TMS-001",
+    "A-RPS-001",
+    "A-ELEC-001",
+    "A-FEU-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP-ANNUEL",
+    "OB-FORMATION-SECURITE"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "naf": "6419Z",
+  "label": "Banque",
+  "risks_priority": [
+    "R-ECRAN",
+    "R-RPS",
+    "R-INCENDIE",
+    "R-ROUTIER"
+  ],
+  "risks_mandatory": [
+    "R-AGRESSION"
+  ],
+  "actions_recommended": [
+    "A-R-RPS-001",
+    "A-R-ECRAN-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP"
+  ]
+}

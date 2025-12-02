@@ -1,0 +1,62 @@
+[
+  {
+    "id": "OB-DUERP-ANNUEL",
+    "title": "Mise à jour DUERP annuelle et lors d’aménagements importants",
+    "reference": "Code du travail R4121-2",
+    "applies_to_all": true
+  },
+  {
+    "id": "OB-EVAC-INCENDIE",
+    "title": "Exercices évacuation annuels, moyens de lutte incendie",
+    "reference": "Code du travail R4227-39 et suivants",
+    "applies_to_all": true
+  },
+  {
+    "id": "OB-FORMATION-SECURITE",
+    "title": "Formation sécurité adaptée au poste (y compris intérimaires)",
+    "reference": "L4141-2",
+    "applies_to_all": true
+  },
+  {
+    "id": "OB-VERIF-PERIODIQUES",
+    "title": "Vérifications périodiques (électrique, levage, extincteurs)",
+    "reference": "R4224-17, R4224-19, etc.",
+    "applies_to_all": true
+  },
+  {
+    "id": "OB-ATEX",
+    "title": "Évaluation ATEX et zonage si produits inflammables",
+    "reference": "Décret 2002-1553, Dir. 1999/92/CE",
+    "applies_to_all": false,
+    "naf_specific": [
+      "2013B",
+      "2221Z",
+      "2399Z",
+      "4120A",
+      "5610A"
+    ]
+  },
+  {
+    "id": "OB-DASRI",
+    "title": "Gestion des DASRI et circuit d’élimination",
+    "reference": "CSP + ICPE selon cas",
+    "applies_to_all": false,
+    "naf_specific": [
+      "8621Z",
+      "8710A",
+      "8810A"
+    ]
+  },
+  {
+    "id": "OB-TRAVAIL-NUIT",
+    "title": "Suivi médical et mesures spécifiques travail de nuit",
+    "reference": "Articles L3122-5 et suivants",
+    "applies_to_all": false
+  },
+  {
+    "id": "OB-AGRESSION",
+    "title": "Prévention des violences externes (public)",
+    "reference": "L4121-1 à L4121-3",
+    "applies_to_all": false
+  }
+]

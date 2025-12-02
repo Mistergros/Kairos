@@ -1,0 +1,21 @@
+{
+  "naf": "2013B",
+  "label": "Industrie chimique",
+  "risks_priority": [
+    "R-CHIMIQUE",
+    "R-ATEX",
+    "R-INCENDIE",
+    "R-TMS",
+    "R-ROUTIER"
+  ],
+  "risks_mandatory": [],
+  "actions_recommended": [
+    "A-R-CHIMIQUE-001",
+    "A-R-ATEX-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP",
+    "OB-ATEX",
+    "OB-VERIF"
+  ]
+}

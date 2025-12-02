@@ -1,0 +1,54 @@
+[
+  {
+    "id": "A-R-RAYONNEMENT-001",
+    "risk_id": "R-RAYONNEMENT",
+    "title": "Mesure technique prioritaire",
+    "type": "EPI",
+    "impact": "Réduction du risque",
+    "difficulty": "Élevée",
+    "cost": "Élevé",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-RAYONNEMENT-002",
+    "risk_id": "R-RAYONNEMENT",
+    "title": "Procédure / organisation",
+    "type": "EPI",
+    "impact": "Réduction du risque",
+    "difficulty": "Faible",
+    "cost": "Moyen",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-RAYONNEMENT-003",
+    "risk_id": "R-RAYONNEMENT",
+    "title": "Formation/sensibilisation ciblée",
+    "type": "EPI",
+    "impact": "Réduction du risque",
+    "difficulty": "Élevée",
+    "cost": "Moyen",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-RAYONNEMENT-004",
+    "risk_id": "R-RAYONNEMENT",
+    "title": "EPI adaptés et contrôlés",
+    "type": "Organisationnelle",
+    "impact": "Réduction du risque",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  }
+]

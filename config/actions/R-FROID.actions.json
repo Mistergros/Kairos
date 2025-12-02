@@ -1,0 +1,54 @@
+[
+  {
+    "id": "A-R-FROID-001",
+    "risk_id": "R-FROID",
+    "title": "Mesure technique prioritaire",
+    "type": "EPI",
+    "impact": "Réduction du risque",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-FROID-002",
+    "risk_id": "R-FROID",
+    "title": "Procédure / organisation",
+    "type": "EPI",
+    "impact": "Réduction du risque",
+    "difficulty": "Élevée",
+    "cost": "Moyen",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-FROID-003",
+    "risk_id": "R-FROID",
+    "title": "Formation/sensibilisation ciblée",
+    "type": "Technique",
+    "impact": "Réduction du risque",
+    "difficulty": "Faible",
+    "cost": "Moyen",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-FROID-004",
+    "risk_id": "R-FROID",
+    "title": "EPI adaptés et contrôlés",
+    "type": "Organisationnelle",
+    "impact": "Réduction du risque",
+    "difficulty": "Moyenne",
+    "cost": "Faible",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  }
+]

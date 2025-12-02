@@ -1,0 +1,15 @@
+{
+  "naf": "4941B",
+  "label": "Transports routiers de fret de proximité",
+  "risks_priority": [
+    "R-ROUTIER",
+    "R-MANUTENTION"
+  ],
+  "risks_mandatory": [],
+  "actions_recommended": [
+    "A-R-ROUTIER-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP"
+  ]
+}

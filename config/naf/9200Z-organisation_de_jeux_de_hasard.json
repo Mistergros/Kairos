@@ -1,0 +1,16 @@
+{
+  "naf": "9200Z",
+  "label": "Organisation de jeux de hasard",
+  "risks_priority": [
+    "R-AGRESSION",
+    "R-RPS",
+    "R-INCENDIE"
+  ],
+  "risks_mandatory": [],
+  "actions_recommended": [
+    "A-R-AGRESSION-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP"
+  ]
+}

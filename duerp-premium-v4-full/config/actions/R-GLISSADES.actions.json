@@ -1,0 +1,54 @@
+[
+  {
+    "id": "A-R-GLISSADES-001",
+    "risk_id": "R-GLISSADES",
+    "title": "Mesure technique prioritaire",
+    "type": "EPI",
+    "impact": "Réduction du risque",
+    "difficulty": "Faible",
+    "cost": "Moyen",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-GLISSADES-002",
+    "risk_id": "R-GLISSADES",
+    "title": "Procédure / organisation",
+    "type": "Technique",
+    "impact": "Réduction du risque",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-GLISSADES-003",
+    "risk_id": "R-GLISSADES",
+    "title": "Formation/sensibilisation ciblée",
+    "type": "EPI",
+    "impact": "Réduction du risque",
+    "difficulty": "Élevée",
+    "cost": "Moyen",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-GLISSADES-004",
+    "risk_id": "R-GLISSADES",
+    "title": "EPI adaptés et contrôlés",
+    "type": "EPI",
+    "impact": "Réduction du risque",
+    "difficulty": "Élevée",
+    "cost": "Faible",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  }
+]

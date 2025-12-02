@@ -1,0 +1,15 @@
+{
+  "naf": "5829C",
+  "label": "Édition de logiciels applicatifs",
+  "risks_priority": [
+    "R-ECRAN",
+    "R-RPS"
+  ],
+  "risks_mandatory": [],
+  "actions_recommended": [
+    "A-R-ECRAN-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP"
+  ]
+}

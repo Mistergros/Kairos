@@ -1,0 +1,17 @@
+{
+  "naf": "4939A",
+  "label": "Transports routiers de fret interurbains",
+  "risks_priority": [
+    "R-ROUTIER",
+    "R-MANUTENTION",
+    "R-BRUIT"
+  ],
+  "risks_mandatory": [],
+  "actions_recommended": [
+    "A-R-ROUTIER-001",
+    "A-R-MANUTENTION-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "naf": "4719B",
+  "label": "Commerce de détail non alimentaire",
+  "risks_priority": [
+    "R-GLISSADES",
+    "R-COUPURE",
+    "R-MANUTENTION",
+    "R-RPS"
+  ],
+  "risks_mandatory": [],
+  "actions_recommended": [
+    "A-R-GLISSADES-001",
+    "A-R-MANUTENTION-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP"
+  ]
+}

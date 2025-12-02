@@ -1,0 +1,22 @@
+{
+  "naf": "7111Z",
+  "label": "Architecture/ingénierie",
+  "risks_priority": [
+    "R-ECRAN",
+    "R-ROUTIER",
+    "R-CHUTE-HAUTEUR",
+    "R-ELECTRIQUE",
+    "R-RPS"
+  ],
+  "actions_recommended": [
+    "A-ECRAN-001",
+    "A-ROUTIER-001",
+    "A-CHUTE-H-001",
+    "A-ELEC-001",
+    "A-RPS-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP-ANNUEL",
+    "OB-VERIF-PERIODIQUES"
+  ]
+}

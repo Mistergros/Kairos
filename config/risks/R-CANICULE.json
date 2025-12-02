@@ -1,0 +1,20 @@
+{
+  "id": "R-CANICULE",
+  "name": "Chaleur / canicule",
+  "category": "Physique",
+  "description": "Extérieurs été / cuisines chaudes.",
+  "units": [
+    "Cuisine",
+    "Chantier"
+  ],
+  "questions": [
+    "Plan canicule ?",
+    "Ventilation ?"
+  ],
+  "factors": [],
+  "sources": [
+    "INRS",
+    "CARSAT",
+    "EU-OSHA"
+  ]
+}

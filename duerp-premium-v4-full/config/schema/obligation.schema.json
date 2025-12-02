@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Obligation",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "reference"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "reference": {
+      "type": "string"
+    },
+    "applies_to_all": {
+      "type": "boolean"
+    },
+    "naf_specific": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

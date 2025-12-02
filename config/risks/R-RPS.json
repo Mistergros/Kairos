@@ -1,0 +1,20 @@
+{
+  "id": "R-RPS",
+  "name": "RPS / stress",
+  "category": "Organisationnel",
+  "description": "Charge, horaires, agressions.",
+  "units": [
+    "Salle",
+    "Bureau"
+  ],
+  "questions": [
+    "Évaluation RPS ?",
+    "Procédure agression ?"
+  ],
+  "factors": [],
+  "sources": [
+    "INRS",
+    "CARSAT",
+    "EU-OSHA"
+  ]
+}

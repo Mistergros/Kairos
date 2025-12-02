@@ -1,0 +1,19 @@
+{
+  "id": "R-ECRAN",
+  "name": "Travail sur écran",
+  "category": "Ergonomique",
+  "description": "VDT prolongée.",
+  "units": [
+    "Bureau"
+  ],
+  "questions": [
+    "Ergonomie ?",
+    "Pauses visuelles ?"
+  ],
+  "factors": [],
+  "sources": [
+    "INRS",
+    "CARSAT",
+    "EU-OSHA"
+  ]
+}

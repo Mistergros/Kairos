@@ -1,0 +1,54 @@
+[
+  {
+    "id": "A-R-TMS-001",
+    "risk_id": "R-TMS",
+    "title": "Mesure technique prioritaire",
+    "type": "Organisationnelle",
+    "impact": "Réduction du risque",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-TMS-002",
+    "risk_id": "R-TMS",
+    "title": "Procédure / organisation",
+    "type": "Technique",
+    "impact": "Réduction du risque",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-TMS-003",
+    "risk_id": "R-TMS",
+    "title": "Formation/sensibilisation ciblée",
+    "type": "EPI",
+    "impact": "Réduction du risque",
+    "difficulty": "Faible",
+    "cost": "Élevé",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-TMS-004",
+    "risk_id": "R-TMS",
+    "title": "EPI adaptés et contrôlés",
+    "type": "EPI",
+    "impact": "Réduction du risque",
+    "difficulty": "Élevée",
+    "cost": "Faible",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  }
+]

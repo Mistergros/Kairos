@@ -1,0 +1,20 @@
+{
+  "id": "R-COUPURE",
+  "name": "Coupures / lacérations",
+  "category": "Accidentel",
+  "description": "Lames, couteaux, trancheuses.",
+  "units": [
+    "Cuisine",
+    "Atelier"
+  ],
+  "questions": [
+    "Gants anti-coupures ?",
+    "Protections machines ?"
+  ],
+  "factors": [],
+  "sources": [
+    "INRS",
+    "CARSAT",
+    "EU-OSHA"
+  ]
+}

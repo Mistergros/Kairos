@@ -1,0 +1,20 @@
+{
+  "id": "R-CHUTE-HAUTEUR",
+  "name": "Chutes de hauteur",
+  "category": "Accidentel",
+  "description": "Escabeaux, échafaudages, toitures.",
+  "units": [
+    "Chantier",
+    "Entrepôt"
+  ],
+  "questions": [
+    "Antichute/EPI disponibles ?",
+    "Échafaudages vérifiés ?"
+  ],
+  "factors": [],
+  "sources": [
+    "INRS",
+    "CARSAT",
+    "EU-OSHA"
+  ]
+}

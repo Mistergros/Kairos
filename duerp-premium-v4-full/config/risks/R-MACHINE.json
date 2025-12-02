@@ -1,0 +1,20 @@
+{
+  "id": "R-MACHINE",
+  "name": "Machines / pièces en mouvement",
+  "category": "Accidentel",
+  "description": "Carter, interverrouillage.",
+  "units": [
+    "Atelier",
+    "Chantier"
+  ],
+  "questions": [
+    "Carter ?",
+    "LOTO ?"
+  ],
+  "factors": [],
+  "sources": [
+    "INRS",
+    "CARSAT",
+    "EU-OSHA"
+  ]
+}

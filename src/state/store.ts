@@ -5,6 +5,7 @@ import { buildHazardsFromMapping } from "../data/nafMappingLoader";
 import { ActionItem, Assessment, Establishment, Hazard, Priority, WorkUnit, VersionEntry } from "../types";
 import { computePriority } from "../utils/score";
 import { fetchHazardsFromSources } from "../utils/api";
+import { RiskEngineV3 } from "../core/engine/risk-engine.v3";
 
 // Sector presets (ASCII labels to avoid encoding issues)
 const itHazards: Hazard[] = [
@@ -107,6 +108,9 @@ const loadNafPresets = async (): Promise<Record<string, NafPreset>> => nafPreset
 
 const uid = () =>
   typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : `id-${Math.random().toString(36).slice(2, 9)}`;
+
+// Cache des risques calculés pour un couple NAF/secteur afin de garder un résultat déterministe entre deux clics
+const prefillCache: Record<string, Hazard[]> = {};
 
 const makeActionForAssessment = (a: Assessment, establishmentId?: string): ActionItem => ({
   id: uid(),
@@ -330,15 +334,42 @@ export const useDuerpStore = create<DUERPState>((set, get) => ({
     set(() => ({ loadingHazards: true }));
     try {
       const nafPrefix = naf ? naf.toUpperCase().slice(0, 2) : "";
+      const cacheKey = `${naf || ""}-${sector || ""}`.trim().toUpperCase();
+      const engine = new RiskEngineV3();
+      const engineRisks = engine.getRisks({ nafCode: naf || sector });
+      const engineHazards = engineRisks
+        .map((r) => ({
+          id: r.id,
+          category: r.category || "Risque",
+          risk: r.name,
+          damages: r.description,
+          example_prevention: "",
+          sector: naf || sector || "",
+          gravity: 7,
+          frequency: 6,
+          control: 1,
+        }))
+        .sort((a, b) => a.risk.localeCompare(b.risk)) as (Hazard & { gravity?: number; frequency?: number; control?: number })[];
+
       const mappingHazards = buildHazardsFromMapping(naf);
       const presetTable = await loadNafPresets();
       const presetFromJson = presetTable[nafPrefix]?.hazards || [];
       const fallbackPreset = hazardByNafPrefix[nafPrefix] || [];
       const fetched = await fetchHazardsFromSources(sector, naf);
+
       const baseCandidates =
-        mappingHazards.length > 0
+        prefillCache[cacheKey] && prefillCache[cacheKey].length
+          ? prefillCache[cacheKey]
+          : engineHazards.length > 0
+          ? engineHazards
+          : mappingHazards.length > 0
           ? mappingHazards
           : [...presetFromJson, ...fetched, ...fallbackPreset];
+
+      if (!prefillCache[cacheKey] && baseCandidates.length) {
+        prefillCache[cacheKey] = baseCandidates;
+      }
+
       const sourceList = baseCandidates.length > 0 ? baseCandidates : riskLibrary;
 
       const existingLibrary = get().hazardLibrary;
@@ -349,63 +380,52 @@ export const useDuerpStore = create<DUERPState>((set, get) => ({
       });
       const hazardLibrary = Array.from(hazardMap.values());
 
-      // Ne pre-remplir que sur les candidats (presets/fetch), pas sur toute la librairie generique
+      // Ne pre-remplir que sur les candidats (et cache), pas sur toute la librairie generique
       const candidatesRaw = baseCandidates.length > 0 ? baseCandidates : riskLibrary;
       const candidateMap = new Map<string, Hazard>();
       candidatesRaw.forEach((h) => {
         const safeId = h.id || `haz-${h.risk.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
         candidateMap.set(safeId, { ...h, id: safeId });
       });
-      const candidates = Array.from(candidateMap.values());
+      const candidates = Array.from(candidateMap.values()).sort((a, b) =>
+        `${a.category}-${a.risk}`.localeCompare(`${b.category}-${b.risk}`)
+      );
 
       const targetEstablishment = get().selectedEstablishmentId || get().establishments[0]?.id;
       const targetUnits = get().workUnits.filter((u) => u.establishmentId === targetEstablishment);
       if (!targetUnits.length) return;
 
-      const existingByUnit = get().assessments.reduce((acc, a) => {
-        acc[a.workUnitId] = acc[a.workUnitId] || new Set<string>();
-        acc[a.workUnitId].add(a.hazardId);
-        return acc;
-      }, {} as Record<string, Set<string>>);
-
       const assessmentsToAdd: Assessment[] = [];
       targetUnits.forEach((unit) => {
-        const currentIds = existingByUnit[unit.id] || new Set<string>();
-        candidates
-          .filter((h) => !currentIds.has(h.id))
-          .slice(0, 6)
-          .forEach((h) => {
-            const gravity = (h as PresetHazard).gravity ?? 7;
-            const frequency = (h as PresetHazard).frequency ?? 3;
-            const control = (h as PresetHazard).control ?? 0.5;
-            const score = gravity * frequency * control;
-            assessmentsToAdd.push({
-              id: uid(),
-              workUnitId: unit.id,
-              hazardId: h.id,
-              hazardCategory: h.category,
-              riskLabel: h.risk,
-              damages: h.damages,
-              existingMeasures: undefined,
-              proposedMeasures: h.example_prevention,
-              gravity,
-              frequency,
-              control,
-              score,
-              priority: computePriority(score),
-              createdAt: new Date().toISOString(),
-              updatedAt: new Date().toISOString(),
-            });
+        candidates.forEach((h) => {
+          const gravity = (h as PresetHazard).gravity ?? 7;
+          const frequency = (h as PresetHazard).frequency ?? 6;
+          const control = (h as PresetHazard).control ?? 1;
+          const score = gravity * frequency * control;
+          assessmentsToAdd.push({
+            id: uid(),
+            workUnitId: unit.id,
+            hazardId: h.id,
+            hazardCategory: h.category,
+            riskLabel: h.risk,
+            damages: h.damages,
+            existingMeasures: undefined,
+            proposedMeasures: h.example_prevention,
+            gravity,
+            frequency,
+            control,
+            score,
+            priority: computePriority(score),
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
           });
+        });
       });
 
       set((state) => {
         const targetUnitIds = new Set(targetUnits.map((u) => u.id));
-        const removedAssessmentIds = new Set(
-          state.assessments.filter((a) => targetUnitIds.has(a.workUnitId)).map((a) => a.id)
-        );
-        const remainingAssessments = state.assessments.filter((a) => !removedAssessmentIds.has(a.id));
-        const remainingActions = state.actions.filter((a) => !a.assessmentId || !removedAssessmentIds.has(a.assessmentId));
+        const remainingAssessments = state.assessments.filter((a) => !targetUnitIds.has(a.workUnitId));
+        const remainingActions = state.actions.filter((a) => !a.assessmentId || !targetUnitIds.has(state.assessments.find((as) => as.id === a.assessmentId)?.workUnitId || ""));
         const newActions = assessmentsToAdd.map((a) => makeActionForAssessment(a, targetEstablishment));
 
         return {

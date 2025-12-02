@@ -1,0 +1,26 @@
+[
+  {
+    "id": "OB-DUERP",
+    "title": "Document Unique d’Évaluation des Risques",
+    "reference": "R4121-1/2",
+    "applies_to_all": true
+  },
+  {
+    "id": "OB-FORMATION",
+    "title": "Formation sécurité adaptée au poste",
+    "reference": "L4141-2",
+    "applies_to_all": true
+  },
+  {
+    "id": "OB-INCENDIE",
+    "title": "Consignes + exercices évacuation",
+    "reference": "R4227-39",
+    "applies_to_all": true
+  },
+  {
+    "id": "OB-VERIF",
+    "title": "Vérifications périodiques",
+    "reference": "R4224-17",
+    "applies_to_all": true
+  }
+]

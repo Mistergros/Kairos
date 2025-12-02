@@ -1,0 +1,21 @@
+{
+  "naf": "2399Z",
+  "label": "Minéraux non métalliques",
+  "risks_priority": [
+    "R-CHIMIQUE",
+    "R-BRUIT",
+    "R-ATEX",
+    "R-CHUTE-HAUTEUR"
+  ],
+  "risks_mandatory": [],
+  "actions_recommended": [
+    "A-R-CHIMIQUE-001",
+    "A-R-BRUIT-001",
+    "A-R-ATEX-001",
+    "A-R-CHUTE-HAUTEUR-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP",
+    "OB-ATEX"
+  ]
+}

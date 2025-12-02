@@ -1,0 +1,21 @@
+{
+  "id": "R-ATEX",
+  "name": "Atmosphères explosives",
+  "category": "Accident majeur",
+  "description": "Gaz/vapeurs/poussières inflammables.",
+  "units": [
+    "Cuisine",
+    "Atelier",
+    "Chantier"
+  ],
+  "questions": [
+    "Zonage ATEX ?",
+    "Matériel conforme ATEX ?"
+  ],
+  "factors": [],
+  "sources": [
+    "INRS",
+    "CARSAT",
+    "EU-OSHA"
+  ]
+}

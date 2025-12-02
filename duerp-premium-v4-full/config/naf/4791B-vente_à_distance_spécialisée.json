@@ -1,0 +1,16 @@
+{
+  "naf": "4791B",
+  "label": "Vente à distance spécialisée",
+  "risks_priority": [
+    "R-ECRAN",
+    "R-RPS",
+    "R-MANUTENTION"
+  ],
+  "risks_mandatory": [],
+  "actions_recommended": [
+    "A-R-ECRAN-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP"
+  ]
+}

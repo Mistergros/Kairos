@@ -1,0 +1,30 @@
+[
+  {
+    "id": "OB-DUERP-UPDATE",
+    "title": "Mise a jour annuelle du DUERP",
+    "description": "Mettre a jour le document unique au moins une fois par an et apres tout changement important",
+    "naf_specific": [],
+    "risk_ids": []
+  },
+  {
+    "id": "OB-HYGIENE-RESTO",
+    "title": "Plan hygiene restauration",
+    "description": "Respecter les bonnes pratiques d'hygiene et de securite alimentaire",
+    "naf_specific": ["56"],
+    "risk_ids": ["R-BIO"]
+  },
+  {
+    "id": "OB-RPS-PREVENTION",
+    "title": "Evaluation et prevention RPS",
+    "description": "Identifier les facteurs de risques psychosociaux et mettre en place des mesures de prevention",
+    "naf_specific": [],
+    "risk_ids": ["R-RPS"]
+  },
+  {
+    "id": "OB-EVAC-INCENDIE",
+    "title": "Exercices d'evacuation",
+    "description": "Organiser des exercices et afficher les consignes en cas d'incendie",
+    "naf_specific": [],
+    "risk_ids": ["R-INCENDIE"]
+  }
+]

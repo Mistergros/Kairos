@@ -1,0 +1,54 @@
+[
+  {
+    "id": "A-R-BRUIT-001",
+    "risk_id": "R-BRUIT",
+    "title": "Mesure technique prioritaire",
+    "type": "Humaine",
+    "impact": "Réduction du risque",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-BRUIT-002",
+    "risk_id": "R-BRUIT",
+    "title": "Procédure / organisation",
+    "type": "Humaine",
+    "impact": "Réduction du risque",
+    "difficulty": "Faible",
+    "cost": "Élevé",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-BRUIT-003",
+    "risk_id": "R-BRUIT",
+    "title": "Formation/sensibilisation ciblée",
+    "type": "Humaine",
+    "impact": "Réduction du risque",
+    "difficulty": "Moyenne",
+    "cost": "Faible",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-BRUIT-004",
+    "risk_id": "R-BRUIT",
+    "title": "EPI adaptés et contrôlés",
+    "type": "Humaine",
+    "impact": "Réduction du risque",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  }
+]

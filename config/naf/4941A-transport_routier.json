@@ -1,0 +1,20 @@
+{
+  "naf": "4941A",
+  "label": "Transport routier",
+  "risks_priority": [
+    "R-ROUTIER",
+    "R-MANUTENTION",
+    "R-BRUIT",
+    "R-INCENDIE",
+    "R-GLISSADES"
+  ],
+  "risks_mandatory": [],
+  "actions_recommended": [
+    "A-R-ROUTIER-001",
+    "A-R-MANUTENTION-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP",
+    "OB-VERIF"
+  ]
+}

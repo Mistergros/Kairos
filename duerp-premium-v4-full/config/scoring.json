@@ -1,0 +1,30 @@
+{
+  "model": "GxPxFxM",
+  "severity_scale": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "probability_scale": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "frequency_scale": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "control_scale": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "formula": "severity * probability * frequency * control"
+}

@@ -1,0 +1,17 @@
+{
+  "naf": "7022Z",
+  "label": "Conseil pour les affaires",
+  "risks_priority": [
+    "R-ECRAN",
+    "R-RPS",
+    "R-ROUTIER"
+  ],
+  "risks_mandatory": [],
+  "actions_recommended": [
+    "A-R-ECRAN-001",
+    "A-R-RPS-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP"
+  ]
+}

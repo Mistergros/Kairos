@@ -1,0 +1,20 @@
+{
+  "id": "R-INCENDIE",
+  "name": "Incendie / explosion",
+  "category": "Accident majeur",
+  "description": "Sources d’ignition, stockages, gaz.",
+  "units": [
+    "Cuisine",
+    "Entrepôt"
+  ],
+  "questions": [
+    "Exercices évacuation ?",
+    "Extincteurs vérifiés ?"
+  ],
+  "factors": [],
+  "sources": [
+    "INRS",
+    "CARSAT",
+    "EU-OSHA"
+  ]
+}

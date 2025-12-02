@@ -1,0 +1,17 @@
+{
+  "naf": "86",
+  "label": "Sante",
+  "risks_priority": ["R-BIO", "R-RPS", "R-INCENDIE"],
+  "actions_recommended": ["A-BIO-PPE", "A-RPS-CELLULE", "A-INCENDIE-EXERCICE"],
+  "legal_specific": ["OB-EVAC-INCENDIE"],
+  "risks": [
+    {
+      "id": "R-SHARPS",
+      "name": "Piqures et tranchants",
+      "category": "Biologique",
+      "description": "Exposition a des aiguilles et instruments tranchants",
+      "naf_specific": ["86"],
+      "units": ["Salle de soins"]
+    }
+  ]
+}

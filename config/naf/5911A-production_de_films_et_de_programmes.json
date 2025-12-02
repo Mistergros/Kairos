@@ -1,0 +1,17 @@
+{
+  "naf": "5911A",
+  "label": "Production de films et de programmes",
+  "risks_priority": [
+    "R-CHUTE-HAUTEUR",
+    "R-ELECTRIQUE",
+    "R-BRUIT"
+  ],
+  "risks_mandatory": [],
+  "actions_recommended": [
+    "A-R-CHUTE-HAUTEUR-001",
+    "A-R-ELECTRIQUE-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP"
+  ]
+}

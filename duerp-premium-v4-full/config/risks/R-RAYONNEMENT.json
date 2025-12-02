@@ -1,0 +1,20 @@
+{
+  "id": "R-RAYONNEMENT",
+  "name": "Rayonnements non ionisants",
+  "category": "Physique",
+  "description": "UV en extérieur.",
+  "units": [
+    "Chantier",
+    "Extérieur"
+  ],
+  "questions": [
+    "Protection UV ?",
+    "Temps d'exposition ?"
+  ],
+  "factors": [],
+  "sources": [
+    "INRS",
+    "CARSAT",
+    "EU-OSHA"
+  ]
+}

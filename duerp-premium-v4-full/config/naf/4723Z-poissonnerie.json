@@ -1,0 +1,20 @@
+{
+  "naf": "4723Z",
+  "label": "Poissonnerie",
+  "risks_priority": [
+    "R-COUPURE",
+    "R-GLISSADES",
+    "R-FROID",
+    "R-BIO",
+    "R-CHIMIQUE"
+  ],
+  "risks_mandatory": [],
+  "actions_recommended": [
+    "A-R-COUPURE-001",
+    "A-R-FROID-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP",
+    "OB-HACCP"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "id": "R-ELECTRIQUE",
+  "name": "Risque électrique",
+  "category": "Accidentel",
+  "description": "Contacts directs/indirects, bricolage.",
+  "units": [
+    "Chantier",
+    "Cuisine"
+  ],
+  "questions": [
+    "Vérifications périodiques ?",
+    "Habilitations ?"
+  ],
+  "factors": [],
+  "sources": [
+    "INRS",
+    "CARSAT",
+    "EU-OSHA"
+  ]
+}

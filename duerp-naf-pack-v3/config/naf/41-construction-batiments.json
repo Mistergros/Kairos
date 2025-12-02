@@ -1,0 +1,33 @@
+{
+  "naf": "4120A",
+  "label": "Construction de bâtiments",
+  "risks_priority": [
+    "R-CHUTE-HAUTEUR",
+    "R-ELECTRIQUE",
+    "R-BRUIT",
+    "R-CHIMIQUE",
+    "R-ATEX",
+    "R-MANUTENTION"
+  ],
+  "actions_recommended": [
+    "A-CHUTE-H-001",
+    "A-ELEC-001",
+    "A-BRUIT-001",
+    "A-CHIM-001",
+    "A-ATEX-001",
+    "A-MANUT-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP-ANNUEL",
+    "OB-ATEX",
+    "OB-VERIF-PERIODIQUES"
+  ],
+  "extra_risks": [
+    "R-VIBRATIONS",
+    "R-MACHINE"
+  ],
+  "extra_actions": [
+    "A-VIB-001",
+    "A-MACH-001"
+  ]
+}

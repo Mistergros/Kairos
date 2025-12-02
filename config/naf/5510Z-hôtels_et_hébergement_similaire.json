@@ -1,0 +1,21 @@
+{
+  "naf": "5510Z",
+  "label": "Hôtels et hébergement similaire",
+  "risks_priority": [
+    "R-GLISSADES",
+    "R-RPS",
+    "R-INCENDIE",
+    "R-ECRAN"
+  ],
+  "risks_mandatory": [
+    "R-AGRESSION"
+  ],
+  "actions_recommended": [
+    "A-R-GLISSADES-001",
+    "A-R-RPS-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP",
+    "OB-INCENDIE"
+  ]
+}

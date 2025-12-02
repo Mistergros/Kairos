@@ -1,0 +1,54 @@
+[
+  {
+    "id": "A-R-CHIMIQUE-001",
+    "risk_id": "R-CHIMIQUE",
+    "title": "Mesure technique prioritaire",
+    "type": "Organisationnelle",
+    "impact": "Réduction du risque",
+    "difficulty": "Élevée",
+    "cost": "Élevé",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-CHIMIQUE-002",
+    "risk_id": "R-CHIMIQUE",
+    "title": "Procédure / organisation",
+    "type": "Organisationnelle",
+    "impact": "Réduction du risque",
+    "difficulty": "Faible",
+    "cost": "Moyen",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-CHIMIQUE-003",
+    "risk_id": "R-CHIMIQUE",
+    "title": "Formation/sensibilisation ciblée",
+    "type": "Technique",
+    "impact": "Réduction du risque",
+    "difficulty": "Faible",
+    "cost": "Moyen",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-R-CHIMIQUE-004",
+    "risk_id": "R-CHIMIQUE",
+    "title": "EPI adaptés et contrôlés",
+    "type": "EPI",
+    "impact": "Réduction du risque",
+    "difficulty": "Élevée",
+    "cost": "Moyen",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  }
+]

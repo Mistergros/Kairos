@@ -1,0 +1,17 @@
+{
+  "naf": "56",
+  "label": "Restauration",
+  "risks_priority": ["R-TMS", "R-CHUTE", "R-BIO", "R-INCENDIE"],
+  "actions_recommended": ["A-TMS-POSTURE", "A-CHUTE-SIGNAL", "A-BIO-PPE", "A-INCENDIE-EXERCICE"],
+  "legal_specific": ["OB-HYGIENE-RESTO", "OB-EVAC-INCENDIE"],
+  "risks": [
+    {
+      "id": "R-COUPS-CHAUD",
+      "name": "Brulures et projections",
+      "category": "Physique",
+      "description": "Brulures dues aux liquides chauds, huiles et plaques",
+      "naf_specific": ["56"],
+      "units": ["Cuisine"]
+    }
+  ]
+}

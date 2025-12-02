@@ -1,0 +1,20 @@
+{
+  "id": "R-BRUIT",
+  "name": "Bruit",
+  "category": "Physique",
+  "description": "Machines, ventilation, impacts.",
+  "units": [
+    "Cuisine",
+    "Atelier"
+  ],
+  "questions": [
+    "Mesures bruit ?",
+    "EPI ?"
+  ],
+  "factors": [],
+  "sources": [
+    "INRS",
+    "CARSAT",
+    "EU-OSHA"
+  ]
+}

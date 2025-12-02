@@ -1,0 +1,22 @@
+{
+  "naf": "4722Z",
+  "label": "Boucherie-charcuterie",
+  "risks_priority": [
+    "R-COUPURE",
+    "R-GLISSADES",
+    "R-FROID",
+    "R-TMS",
+    "R-BIO",
+    "R-CHIMIQUE"
+  ],
+  "risks_mandatory": [],
+  "actions_recommended": [
+    "A-R-COUPURE-001",
+    "A-R-FROID-001",
+    "A-R-TMS-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP",
+    "OB-HACCP"
+  ]
+}

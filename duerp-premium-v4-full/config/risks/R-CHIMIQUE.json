@@ -1,0 +1,22 @@
+{
+  "id": "R-CHIMIQUE",
+  "name": "Agents chimiques",
+  "category": "Chimique",
+  "description": "Nettoyants, solvants, dégraissants, CMR.",
+  "units": [
+    "Cuisine",
+    "Plonge",
+    "Nettoyage"
+  ],
+  "questions": [
+    "FDS à jour ?",
+    "Substitution ?",
+    "Ventilation ?"
+  ],
+  "factors": [],
+  "sources": [
+    "INRS",
+    "CARSAT",
+    "EU-OSHA"
+  ]
+}

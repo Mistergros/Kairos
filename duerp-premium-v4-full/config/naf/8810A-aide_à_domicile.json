@@ -1,0 +1,20 @@
+{
+  "naf": "8810A",
+  "label": "Aide à domicile",
+  "risks_priority": [
+    "R-BIO",
+    "R-MANUTENTION",
+    "R-RPS",
+    "R-ROUTIER",
+    "R-GLISSADES"
+  ],
+  "risks_mandatory": [],
+  "actions_recommended": [
+    "A-R-BIO-001",
+    "A-R-MANUTENTION-001",
+    "A-R-ROUTIER-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP"
+  ]
+}

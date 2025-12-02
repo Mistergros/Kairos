@@ -1,0 +1,18 @@
+{
+  "naf": "9001Z",
+  "label": "Arts du spectacle vivant",
+  "risks_priority": [
+    "R-BRUIT",
+    "R-CHUTE-HAUTEUR",
+    "R-ELECTRIQUE",
+    "R-MANUTENTION"
+  ],
+  "risks_mandatory": [],
+  "actions_recommended": [
+    "A-R-BRUIT-001",
+    "A-R-CHUTE-HAUTEUR-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP"
+  ]
+}

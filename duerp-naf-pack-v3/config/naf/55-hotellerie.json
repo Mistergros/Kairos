@@ -1,0 +1,32 @@
+{
+  "naf": "5520Z",
+  "label": "Hôtellerie",
+  "risks_priority": [
+    "R-CHUTE",
+    "R-RPS",
+    "R-INCENDIE",
+    "R-TMS",
+    "R-ECRAN"
+  ],
+  "actions_recommended": [
+    "A-CHUTE-001",
+    "A-RPS-001",
+    "A-FEU-001",
+    "A-TMS-001",
+    "A-ECRAN-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP-ANNUEL",
+    "OB-FORMATION-SECURITE"
+  ],
+  "extra_risks": [
+    "R-AGRESSION",
+    "R-TRAVAILNUIT",
+    "R-CANICULE"
+  ],
+  "extra_actions": [
+    "A-AGRESSION-001",
+    "A-NUIT-001",
+    "A-CANICULE-001"
+  ]
+}

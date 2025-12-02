@@ -1,0 +1,19 @@
+{
+  "id": "R-FROID",
+  "name": "Froid",
+  "category": "Physique",
+  "description": "Chambres froides.",
+  "units": [
+    "Chambre froide"
+  ],
+  "questions": [
+    "EPI ?",
+    "Limitation temps ?"
+  ],
+  "factors": [],
+  "sources": [
+    "INRS",
+    "CARSAT",
+    "EU-OSHA"
+  ]
+}

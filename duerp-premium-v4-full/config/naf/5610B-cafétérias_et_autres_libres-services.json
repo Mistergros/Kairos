@@ -1,0 +1,24 @@
+{
+  "naf": "5610B",
+  "label": "Cafétérias et autres libres-services",
+  "risks_priority": [
+    "R-GLISSADES",
+    "R-COUPURE",
+    "R-BRULE",
+    "R-TMS",
+    "R-CHIMIQUE",
+    "R-RPS"
+  ],
+  "risks_mandatory": [
+    "R-BIO"
+  ],
+  "actions_recommended": [
+    "A-R-GLISSADES-001",
+    "A-R-COUPURE-001",
+    "A-R-BRULE-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP",
+    "OB-HACCP"
+  ]
+}

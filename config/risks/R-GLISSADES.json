@@ -1,0 +1,21 @@
+{
+  "id": "R-GLISSADES",
+  "name": "Chutes de plain-pied",
+  "category": "Accidentel",
+  "description": "Sols mouillés, obstacles, dénivelés.",
+  "units": [
+    "Cuisine",
+    "Salle",
+    "Magasin"
+  ],
+  "questions": [
+    "Plan de nettoyage ?",
+    "Chaussures antidérapantes ?"
+  ],
+  "factors": [],
+  "sources": [
+    "INRS",
+    "CARSAT",
+    "EU-OSHA"
+  ]
+}

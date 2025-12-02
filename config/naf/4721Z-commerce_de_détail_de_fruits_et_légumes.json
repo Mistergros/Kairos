@@ -1,0 +1,18 @@
+{
+  "naf": "4721Z",
+  "label": "Commerce de détail de fruits et légumes",
+  "risks_priority": [
+    "R-MANUTENTION",
+    "R-GLISSADES",
+    "R-FROID",
+    "R-COUPURE"
+  ],
+  "risks_mandatory": [],
+  "actions_recommended": [
+    "A-R-MANUTENTION-001",
+    "A-R-FROID-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP"
+  ]
+}

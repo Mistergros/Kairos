@@ -1,0 +1,40 @@
+{
+  "naf": "5610A",
+  "label": "Restauration",
+  "risks_priority": [
+    "R-TMS",
+    "R-CHUTE",
+    "R-COUPURE",
+    "R-BRUIT",
+    "R-CHIMIQUE",
+    "R-INCENDIE",
+    "R-ATEX",
+    "R-RPS"
+  ],
+  "actions_recommended": [
+    "A-TMS-001",
+    "A-TMS-002",
+    "A-CHUTE-001",
+    "A-COUPURE-001",
+    "A-BRUIT-001",
+    "A-CHIM-001",
+    "A-FEU-001",
+    "A-ATEX-001",
+    "A-RPS-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP-ANNUEL",
+    "OB-EVAC-INCENDIE",
+    "OB-ATEX",
+    "OB-VERIF-PERIODIQUES",
+    "OB-FORMATION-SECURITE"
+  ],
+  "extra_risks": [
+    "R-CANICULE",
+    "R-FROID"
+  ],
+  "extra_actions": [
+    "A-CANICULE-001",
+    "A-FROID-001"
+  ]
+}

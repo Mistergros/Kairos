@@ -1,0 +1,22 @@
+{
+  "naf": "8121Z",
+  "label": "Nettoyage courant des bâtiments",
+  "risks_priority": [
+    "R-GLISSADES",
+    "R-CHIMIQUE",
+    "R-TMS",
+    "R-MANUTENTION",
+    "R-INCENDIE",
+    "R-ROUTIER"
+  ],
+  "risks_mandatory": [],
+  "actions_recommended": [
+    "A-R-GLISSADES-001",
+    "A-R-CHIMIQUE-001",
+    "A-R-TMS-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP",
+    "OB-VERIF"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "naf": "6512Z",
+  "label": "Assurance",
+  "risks_priority": [
+    "R-ECRAN",
+    "R-RPS",
+    "R-INCENDIE"
+  ],
+  "actions_recommended": [
+    "A-ECRAN-001",
+    "A-RPS-001",
+    "A-FEU-001"
+  ],
+  "legal_specific": [
+    "OB-DUERP-ANNUEL"
+  ]
+}
