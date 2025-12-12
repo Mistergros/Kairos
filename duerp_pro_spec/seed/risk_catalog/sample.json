@@ -1,0 +1,326 @@
+[
+  {
+    "id": "risk.brulures",
+    "family": "physique",
+    "name": "Brûlures (source chaude / vapeur / huile)",
+    "description": "Contact thermique avec surfaces chaudes, projections de liquide, vapeur.",
+    "examples": [
+      "friteuse",
+      "four",
+      "casserole"
+    ],
+    "default_scoring": {
+      "severity": 4,
+      "frequency": 3,
+      "mastery": 1
+    },
+    "recommended_action_ids": [
+      "act.protection_collective",
+      "act.epi_gants_chaleur",
+      "act.formation_procedure"
+    ],
+    "legal_obligation_ids": [
+      "obl.code_travail_prevention_generale"
+    ]
+  },
+  {
+    "id": "risk.coupures",
+    "family": "mécanique",
+    "name": "Coupures / lacérations",
+    "description": "Lames, couteaux, trancheurs.",
+    "examples": [
+      "couteaux",
+      "mandoline"
+    ],
+    "default_scoring": {
+      "severity": 3,
+      "frequency": 3,
+      "mastery": 2
+    },
+    "recommended_action_ids": [
+      "act.couteaux_entretien",
+      "act.epi_gants_anti_coupure"
+    ],
+    "legal_obligation_ids": [
+      "obl.equipements_travail"
+    ]
+  },
+  {
+    "id": "risk.chimique",
+    "family": "chimique",
+    "name": "Exposition à agents chimiques (détergents, désinfectants)",
+    "description": "Irritation cutanée/respiratoire due aux produits d'entretien.",
+    "examples": [
+      "eau de Javel diluée",
+      "dégraissants"
+    ],
+    "default_scoring": {
+      "severity": 3,
+      "frequency": 3,
+      "mastery": 1
+    },
+    "recommended_action_ids": [
+      "act.fds_disponible",
+      "act.substitution_produit",
+      "act.epi_gants_nitrile"
+    ],
+    "legal_obligation_ids": [
+      "obl.risque_chimique"
+    ]
+  },
+  {
+    "id": "risk.glissade",
+    "family": "physique",
+    "name": "Glissade / chute de plain-pied",
+    "description": "Sol humide, obstacles, circulation.",
+    "examples": [
+      "plonge",
+      "chambre froide"
+    ],
+    "default_scoring": {
+      "severity": 2,
+      "frequency": 4,
+      "mastery": 1
+    },
+    "recommended_action_ids": [
+      "act.plan_circulation",
+      "act.revetement_antiderapant"
+    ],
+    "legal_obligation_ids": [
+      "obl.circulation_interne"
+    ]
+  },
+  {
+    "id": "risk.tms",
+    "family": "ergonomie",
+    "name": "Troubles musculo-squelettiques",
+    "description": "Gestes répétitifs, postures contraignantes, ports de charges.",
+    "default_scoring": {
+      "severity": 3,
+      "frequency": 3,
+      "mastery": 1
+    },
+    "recommended_action_ids": [
+      "act.aménagement_poste",
+      "act.formation_gestes_postures"
+    ],
+    "legal_obligation_ids": [
+      "obl.evaluation_risques"
+    ]
+  },
+  {
+    "id": "risk.rps",
+    "family": "organisationnel",
+    "name": "Risques psychosociaux",
+    "description": "Stress, charge mentale, agressions externes.",
+    "default_scoring": {
+      "severity": 3,
+      "frequency": 3,
+      "mastery": 0
+    },
+    "recommended_action_ids": [
+      "act.demarche_rps",
+      "act.dispositif_ecoute"
+    ],
+    "legal_obligation_ids": [
+      "obl.rps"
+    ]
+  },
+  {
+    "id": "risk.travail_ecran",
+    "family": "ergonomie",
+    "name": "Travail sur écran",
+    "description": "Fatigue visuelle, posture assise prolongée.",
+    "default_scoring": {
+      "severity": 2,
+      "frequency": 3,
+      "mastery": 2
+    },
+    "recommended_action_ids": [
+      "act.pausesecran",
+      "act.amenagement_ergonomique"
+    ],
+    "legal_obligation_ids": [
+      "obl.ecran"
+    ]
+  },
+  {
+    "id": "risk.brule_eau_chaude",
+    "family": "physique",
+    "name": "Brûlure par eau chaude",
+    "description": "Exposition à eau chaude lors de la plonge, nettoyage.",
+    "default_scoring": {
+      "severity": 3,
+      "frequency": 3,
+      "mastery": 1
+    },
+    "recommended_action_ids": [
+      "act.marquage_temperature",
+      "act.epi_gants_chaleur"
+    ],
+    "legal_obligation_ids": [
+      "obl.equipements_travail"
+    ]
+  },
+  {
+    "id": "risk.chute_hauteur",
+    "family": "physique",
+    "name": "Chute de hauteur",
+    "description": "Travail en toiture, échelles, échafaudages.",
+    "default_scoring": {
+      "severity": 5,
+      "frequency": 2,
+      "mastery": 1
+    },
+    "recommended_action_ids": [
+      "act.ligne_vie",
+      "act.protection_bords",
+      "act.formation_habilitation"
+    ],
+    "legal_obligation_ids": [
+      "obl.travail_hauteur"
+    ]
+  },
+  {
+    "id": "risk.outillage_electroportatif",
+    "family": "mécanique",
+    "name": "Outillage électroportatif",
+    "description": "Coupures, projections, vibrations.",
+    "default_scoring": {
+      "severity": 3,
+      "frequency": 3,
+      "mastery": 1
+    },
+    "recommended_action_ids": [
+      "act.verification_outillage",
+      "act.epi_lunettes"
+    ],
+    "legal_obligation_ids": [
+      "obl.equipements_travail"
+    ]
+  },
+  {
+    "id": "risk.biologique",
+    "family": "biologique",
+    "name": "Agents biologiques",
+    "description": "Contact avec fluides biologiques, pathogènes.",
+    "default_scoring": {
+      "severity": 4,
+      "frequency": 2,
+      "mastery": 1
+    },
+    "recommended_action_ids": [
+      "act.hygiene_mains",
+      "act.vaccination_recommandee"
+    ],
+    "legal_obligation_ids": [
+      "obl.risque_biologique"
+    ]
+  },
+  {
+    "id": "risk.manutention",
+    "family": "ergonomie",
+    "name": "Manutention de charges",
+    "description": "Port, déplacement, stockage.",
+    "default_scoring": {
+      "severity": 3,
+      "frequency": 3,
+      "mastery": 1
+    },
+    "recommended_action_ids": [
+      "act.aides_manuelles",
+      "act.formation_gestes_postures"
+    ],
+    "legal_obligation_ids": [
+      "obl.manutention"
+    ]
+  },
+  {
+    "id": "risk.circulation_interne",
+    "family": "organisationnel",
+    "name": "Circulation interne / heurts",
+    "description": "Chemins encombrés, croisements engins-piétons.",
+    "default_scoring": {
+      "severity": 3,
+      "frequency": 2,
+      "mastery": 1
+    },
+    "recommended_action_ids": [
+      "act.plan_circulation"
+    ],
+    "legal_obligation_ids": [
+      "obl.circulation_interne"
+    ]
+  },
+  {
+    "id": "risk.chute_niveau_diff",
+    "family": "physique",
+    "name": "Chute de niveau différent",
+    "description": "Marches, quais, trappes.",
+    "default_scoring": {
+      "severity": 4,
+      "frequency": 2,
+      "mastery": 1
+    },
+    "recommended_action_ids": [
+      "act.garde_corps",
+      "act.signalisation"
+    ],
+    "legal_obligation_ids": [
+      "obl.equipements_travail"
+    ]
+  },
+  {
+    "id": "risk.bruit",
+    "family": "physique",
+    "name": "Bruit",
+    "description": "Machines, outillage, atelier.",
+    "default_scoring": {
+      "severity": 3,
+      "frequency": 2,
+      "mastery": 1
+    },
+    "recommended_action_ids": [
+      "act.cartographie_bruit",
+      "act.epi_protection_auditive"
+    ],
+    "legal_obligation_ids": [
+      "obl.bruit"
+    ]
+  },
+  {
+    "id": "risk.poussiere",
+    "family": "physique",
+    "name": "Poussières",
+    "description": "Poussières de bois, minérales.",
+    "default_scoring": {
+      "severity": 3,
+      "frequency": 2,
+      "mastery": 1
+    },
+    "recommended_action_ids": [
+      "act.aspiration_source"
+    ],
+    "legal_obligation_ids": [
+      "obl.risque_chimique"
+    ]
+  },
+  {
+    "id": "risk.outillage_stationnaire",
+    "family": "mécanique",
+    "name": "Machines stationnaires",
+    "description": "Scies, raboteuses, presses.",
+    "default_scoring": {
+      "severity": 4,
+      "frequency": 2,
+      "mastery": 1
+    },
+    "recommended_action_ids": [
+      "act.protections_machines",
+      "act.verification_outillage"
+    ],
+    "legal_obligation_ids": [
+      "obl.equipements_travail"
+    ]
+  }
+]

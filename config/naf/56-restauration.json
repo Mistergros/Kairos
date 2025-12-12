@@ -3,7 +3,7 @@
   "label": "Restauration",
   "risks_priority": [
     "R-TMS",
-    "R-CHUTE",
+    "R-GLISSADES",
     "R-COUPURE",
     "R-BRUIT",
     "R-CHIMIQUE",

@@ -1,0 +1,210 @@
+openapi: 3.0.3
+info:
+  title: DUERP Pro API
+  version: 1.1.0
+servers:
+  - url: https://api.duerp.local/v1/api
+  - url: http://localhost:8787/api
+paths:
+  /catalog/risks:
+    get:
+      summary: List risks
+      responses:
+        '200': { description: OK }
+  /catalog/actions:
+    get:
+      summary: List recommended actions
+      responses:
+        '200': { description: OK }
+  /catalog/obligations:
+    get:
+      summary: List legal obligations
+      responses:
+        '200': { description: OK }
+  /nafs:
+    get:
+      summary: List NAFs
+      parameters:
+        - in: query
+          name: q
+          schema: { type: string }
+      responses:
+        '200': { description: OK }
+  /nafs/{code}:
+    get:
+      summary: Get NAF details (unit templates, tags)
+      parameters:
+        - in: path
+          name: code
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: OK }
+  /units:
+    get:
+      summary: List units (tenant scoped)
+      security:
+        - bearerAuth: []
+      responses:
+        '200': { description: OK }
+        '401': { description: Unauthorized }
+    post:
+      summary: Create a Unit of Work for a company (tenant scoped)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnitOfWork'
+      responses:
+        '201': { description: Created }
+        '401': { description: Unauthorized }
+  /assessments:
+    get:
+      summary: List assessments (tenant scoped)
+      security:
+        - bearerAuth: []
+      responses:
+        '200': { description: OK }
+        '401': { description: Unauthorized }
+    post:
+      summary: Create/Upsert an assessment (tenant scoped)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssessmentByUnit'
+      responses:
+        '201': { description: Created }
+        '401': { description: Unauthorized }
+  /assessments/{unitId}:
+    put:
+      summary: Upsert risk assessment for a unit (tenant scoped)
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: unitId
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssessmentByUnit'
+      responses:
+        '200': { description: OK }
+        '401': { description: Unauthorized }
+  /actions-plan:
+    get:
+      summary: List corrective actions (tenant scoped)
+      security:
+        - bearerAuth: []
+      responses:
+        '200': { description: OK }
+        '401': { description: Unauthorized }
+    post:
+      summary: Create/Upsert corrective action (tenant scoped)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id: { type: string }
+                assessment_id: { type: string }
+                action_id: { type: string }
+                owner: { type: string }
+                due_date: { type: string, format: date }
+                status: { type: string }
+      responses:
+        '201': { description: Created }
+        '401': { description: Unauthorized }
+  /evaluate:
+    post:
+      summary: Evaluate risks via engine V4 (tenant scoped)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ctx:
+                  $ref: '#/components/schemas/EvaluateCtx'
+      responses:
+        '200': { description: OK }
+        '401': { description: Unauthorized }
+  /compliance:
+    post:
+      summary: List obligations with compliance status (tenant scoped)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ctx:
+                  $ref: '#/components/schemas/EvaluateCtx'
+      responses:
+        '200': { description: OK }
+        '401': { description: Unauthorized }
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT or static token
+  schemas:
+    UnitOfWork:
+      type: object
+      required: [id, name, headcount]
+      properties:
+        id: { type: string, format: uuid }
+        company_id: { type: string, format: uuid }
+        tenant_id: { type: string, format: uuid }
+        name: { type: string }
+        description: { type: string }
+        headcount: { type: integer }
+        naf_code: { type: string }
+        custom: { type: boolean }
+    AssessmentByUnit:
+      type: object
+      properties:
+        assessments:
+          type: array
+          items:
+            type: object
+            properties:
+              risk_id: { type: string }
+              severity: { type: integer }
+              frequency: { type: integer }
+              mastery: { type: integer }
+              context: { type: string }
+              existing_measures: { type: array, items: { type: string } }
+    EvaluateCtx:
+      type: object
+      properties:
+        nafCode: { type: string }
+        unity: { type: string }
+        features:
+          type: object
+          additionalProperties: { type: boolean }
+        activity: { type: string }
+        modifiers:
+          type: object
+          additionalProperties: { type: number }

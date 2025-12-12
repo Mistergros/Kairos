@@ -1,0 +1,23 @@
+﻿ï»¿{
+  "code": "43.29A",
+  "label": "Travaux d'isolation",
+  "risk_tags": [
+    "chantier",
+    "isolation"
+  ],
+  "risks_priority": [
+    "R-CHUTE-HAUTEUR",
+    "R-CHIMIQUE",
+    "R-MANUTENTION",
+    "R-BRUIT"
+  ],
+  "risks_mandatory": [
+    "R-INCENDIE"
+  ],
+  "activities": [
+    {
+      "id": "chantier",
+      "label": "Pose sur chantier"
+    }
+  ]
+}

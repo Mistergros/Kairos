@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Action",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "label"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "organizational",
+        "technical",
+        "EPI",
+        "training",
+        "documentation"
+      ]
+    },
+    "label": {
+      "type": "string"
+    },
+    "details": {
+      "type": "string"
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "deadline_hint_days": {
+      "type": "integer"
+    },
+    "related_risk_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

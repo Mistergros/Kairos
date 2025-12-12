@@ -1,12 +1,13 @@
 export interface Action {
   id: string;
-  risk_id: string;
+  risk_id?: string;
+  related_risk_ids?: string[];
   title: string;
   type: string;
   difficulty: string;
   cost: string;
   naf_specific?: string[];
-  impact: string;
+  impact: any;
 }
 
 export interface ActionPlanItem {

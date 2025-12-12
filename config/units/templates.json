@@ -1,0 +1,46 @@
+ï»¿[
+  {
+    "id": "ut-cuisine",
+    "naf_code": "56.10A",
+    "name": "Cuisine",
+    "default_risk_ids": [
+      "R-INCENDIE",
+      "R-CHIMIQUE",
+      "R-GLISSADES",
+      "R-FROID"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut-plonge",
+    "naf_code": "56.10A",
+    "name": "Plonge",
+    "default_risk_ids": [
+      "R-CHIMIQUE",
+      "R-GLISSADES"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut-atelier-menuiserie",
+    "naf_code": "43.32A",
+    "name": "Atelier menuiserie",
+    "default_risk_ids": [
+      "R-POUSSIERES-BOIS",
+      "R-MACHINE",
+      "R-BRUIT"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut-bureau",
+    "naf_code": "62.01Z",
+    "name": "Bureau",
+    "default_risk_ids": [
+      "R-ECRAN",
+      "R-RPS",
+      "R-QUALITE-AIR"
+    ],
+    "suggested": true
+  }
+]

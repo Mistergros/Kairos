@@ -1,0 +1,55 @@
+{
+  "currency": "EUR",
+  "yearly_discount": 0.15,
+  "plans": [
+    {
+      "id": "essential",
+      "name": "Essentiel",
+      "priceMonthly": 29,
+      "priceYearly": 295,
+      "tagline": "DUERP simple et conforme",
+      "bullets": [
+        "1 établissement",
+        "2 unités",
+        "50 risques max",
+        "Export PDF"
+      ],
+      "cta": "Choisir Essentiel",
+      "mostPopular": false
+    },
+    {
+      "id": "pro",
+      "name": "Pro (IA incluse)",
+      "priceMonthly": 99,
+      "priceYearly": 995,
+      "tagline": "Le plan standard pour PME",
+      "bullets": [
+        "Établissements & unités illimités",
+        "Plan d’action complet + rappels",
+        "Collaboration (5 utilisateurs)",
+        "Bibliothèques sectorielles (NAF)",
+        "IA: génération de risques, détection d’incohérences, suggestions d’actions",
+        "Connecteurs API (PowerBI, Notion…)",
+        "Analytics"
+      ],
+      "cta": "Choisir Pro",
+      "mostPopular": true
+    },
+    {
+      "id": "consultants",
+      "name": "Consultants",
+      "priceMonthly": 249,
+      "priceYearly": 2490,
+      "tagline": "Pour cabinets RH / HSE multi-clients",
+      "bullets": [
+        "Jusqu’à 20 DUERP actifs",
+        "Exports brandés",
+        "Portail clients",
+        "Support prioritaire",
+        "Toutes les fonctionnalités IA incluses"
+      ],
+      "cta": "Choisir Licence",
+      "mostPopular": false
+    }
+  ]
+}

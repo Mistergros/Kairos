@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "NAF",
+  "type": "object",
+  "required": [
+    "code",
+    "label",
+    "unit_templates",
+    "risk_tags"
+  ],
+  "properties": {
+    "code": {
+      "type": "string",
+      "pattern": "^[0-9]{2}\\.[0-9]{2}[A-Z]$"
+    },
+    "label": {
+      "type": "string"
+    },
+    "unit_templates": {
+      "type": "array",
+      "items": {
+        "$ref": "unit_of_work.schema.json"
+      }
+    },
+    "risk_tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

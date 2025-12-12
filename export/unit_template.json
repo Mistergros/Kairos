@@ -1,0 +1,1111 @@
+[
+  {
+    "id": "ut.accueil_auto",
+    "naf_code": "45.20A",
+    "name": "Accueil / réception",
+    "description": "Public, écran",
+    "default_risk_ids": [
+      "risk.rps",
+      "risk.travail_ecran"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.ambu",
+    "naf_code": "86.90E",
+    "name": "Ambulanciers",
+    "description": "Transports, brancards",
+    "default_risk_ids": [
+      "risk.biologique",
+      "risk.routier",
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.aquaculture",
+    "naf_code": "03.21Z",
+    "name": "Aquaculture",
+    "description": "Bassin, produits",
+    "default_risk_ids": [
+      "risk.immersion_froide",
+      "risk.biologique",
+      "risk.chimique"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.atelier",
+    "naf_code": "43.39Z",
+    "name": "Atelier",
+    "description": null,
+    "default_risk_ids": [
+      "risk.bruit",
+      "risk.poussiere",
+      "risk.outillage_stationnaire"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.atelier_auto",
+    "naf_code": "45.20A",
+    "name": "Atelier mécanique",
+    "description": "Solvants, bruit, vibrations",
+    "default_risk_ids": [
+      "risk.chimique",
+      "risk.bruit",
+      "risk.vibrations",
+      "risk.tms"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.atelier_btp",
+    "naf_code": "41.20A",
+    "name": "Atelier / préfabrication",
+    "description": "Découpe, ponçage",
+    "default_risk_ids": [
+      "risk.poussiere",
+      "risk.bruit",
+      "risk.electricite",
+      "risk.vibrations"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.atelier_machine",
+    "naf_code": "33.12Z",
+    "name": "Atelier machines",
+    "description": "Perçage, sciage, élec",
+    "default_risk_ids": [
+      "risk.electricite",
+      "risk.bruit",
+      "risk.poussiere",
+      "risk.ecrasement"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.bloc",
+    "naf_code": "86.10Z",
+    "name": "Bloc / soins techniques",
+    "description": "Actes invasifs",
+    "default_risk_ids": [
+      "risk.biologique",
+      "risk.chimique",
+      "risk.bruit"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.bord",
+    "naf_code": "03.11Z",
+    "name": "À bord du navire",
+    "description": "Pêche, météo",
+    "default_risk_ids": [
+      "risk.noyade",
+      "risk.glissade",
+      "risk.froid",
+      "risk.manutention"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.brasserie",
+    "naf_code": "11.05Z",
+    "name": "Brasserie / cuverie",
+    "description": "Gaz CO2, nettoyage",
+    "default_risk_ids": [
+      "risk.confinement_air",
+      "risk.confinement_air",
+      "risk.chute_plaine"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.bureau",
+    "naf_code": "43.39Z",
+    "name": "Bureau / préparation",
+    "description": null,
+    "default_risk_ids": [
+      "risk.travail_ecran",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.bureau_gros",
+    "naf_code": "46.90Z",
+    "name": "Bureau / ADV",
+    "description": "Saisie, délais",
+    "default_risk_ids": [
+      "risk.travail_ecran",
+      "risk.charge_mentale"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.bus",
+    "naf_code": "49.39A",
+    "name": "Conducteurs / contrôleurs",
+    "description": "Transport voyageurs",
+    "default_risk_ids": [
+      "risk.routier",
+      "risk.rps",
+      "risk.incendie"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.caisse",
+    "naf_code": "47.11D",
+    "name": "Caisse",
+    "description": "Répétitivité",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.champ",
+    "naf_code": "01.11Z",
+    "name": "Champs / récolte",
+    "description": "Moissons, pulvérisation",
+    "default_risk_ids": [
+      "risk.pesticides",
+      "risk.manutention",
+      "risk.vibrations",
+      "risk.poussiere"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.chantier",
+    "naf_code": "41.20A",
+    "name": "Chantier / gros œuvre",
+    "description": "Hauteur, coactivité",
+    "default_risk_ids": [
+      "risk.chute_hauteur",
+      "risk.poussiere",
+      "risk.bruit",
+      "risk.electricite"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.chantier_hauteur",
+    "naf_code": "43.39Z",
+    "name": "Chantier / travail en hauteur",
+    "description": null,
+    "default_risk_ids": [
+      "risk.chute_hauteur",
+      "risk.outillage_electroportatif",
+      "risk.manutention",
+      "risk.amiante"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.chauffeurs",
+    "naf_code": "49.41B",
+    "name": "Chauffeurs-livreurs",
+    "description": "Conduite/arrimage",
+    "default_risk_ids": [
+      "risk.routier",
+      "risk.manutention",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.classes",
+    "naf_code": "85.20Z",
+    "name": "Classes",
+    "description": "Enseignement primaire",
+    "default_risk_ids": [
+      "risk.rps",
+      "risk.bruit",
+      "risk.troubles_voix"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.coord",
+    "naf_code": "88.10A",
+    "name": "Coordination / encadrement",
+    "description": "Planification/écran",
+    "default_risk_ids": [
+      "risk.travail_ecran",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.couverture",
+    "naf_code": "43.39Z",
+    "name": "Couvreur / étanchéité",
+    "description": "Toitures",
+    "default_risk_ids": [
+      "risk.chute_hauteur",
+      "risk.poussiere",
+      "risk.bruit",
+      "risk.amiante"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.cuisine",
+    "naf_code": "56.10A",
+    "name": "Cuisine",
+    "description": "Préparations chaudes/froides",
+    "default_risk_ids": [
+      "risk.brulures",
+      "risk.coupures",
+      "risk.chimique",
+      "risk.glissade",
+      "risk.tms"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.demenage",
+    "naf_code": "49.42Z",
+    "name": "Déménagement",
+    "description": "Port de charges lourdes",
+    "default_risk_ids": [
+      "risk.manutention",
+      "risk.tms",
+      "risk.circulation_interne"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.dentaire",
+    "naf_code": "86.22C",
+    "name": "Cabinet dentaire",
+    "description": "Soins, aérosols",
+    "default_risk_ids": [
+      "risk.aiguille",
+      "risk.biologique",
+      "risk.chimique"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.dev",
+    "naf_code": "62.01Z",
+    "name": "Développement",
+    "description": "Écrans prolongés",
+    "default_risk_ids": [
+      "risk.travail_ecran",
+      "risk.rps",
+      "risk.ecrans_multiples"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.domicile",
+    "naf_code": "88.10A",
+    "name": "Intervention au domicile",
+    "description": null,
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.chute_plain_pied",
+      "risk.rps",
+      "risk.biologique"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.elevage",
+    "naf_code": "01.21Z",
+    "name": "Élevage / stabulation",
+    "description": "Animaux, traite",
+    "default_risk_ids": [
+      "risk.animal",
+      "risk.biologique",
+      "risk.glissade",
+      "risk.manutention"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.encadrement",
+    "naf_code": "88.10A",
+    "name": "Encadrement / coordination",
+    "description": null,
+    "default_risk_ids": [
+      "risk.travail_ecran",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.etages",
+    "naf_code": "55.10Z",
+    "name": "Étages (housekeeping)",
+    "description": "Chambres, sanitaires",
+    "default_risk_ids": [
+      "risk.chimique",
+      "risk.glissade",
+      "risk.tms"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.extra_1",
+    "naf_code": "52.10A",
+    "name": "Unité supplémentaire",
+    "description": "Variation locale",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.extra_10",
+    "naf_code": "49.42Z",
+    "name": "Unité supplémentaire",
+    "description": "Variation locale",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.extra_11",
+    "naf_code": "01.11Z",
+    "name": "Unité supplémentaire",
+    "description": "Variation locale",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.extra_12",
+    "naf_code": "01.21Z",
+    "name": "Unité supplémentaire",
+    "description": "Variation locale",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.extra_13",
+    "naf_code": "03.11Z",
+    "name": "Unité supplémentaire",
+    "description": "Variation locale",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.extra_14",
+    "naf_code": "03.21Z",
+    "name": "Unité supplémentaire",
+    "description": "Variation locale",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.extra_15",
+    "naf_code": "02.20Z",
+    "name": "Unité supplémentaire",
+    "description": "Variation locale",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.extra_16",
+    "naf_code": "23.61Z",
+    "name": "Unité supplémentaire",
+    "description": "Variation locale",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.extra_17",
+    "naf_code": "16.10A",
+    "name": "Unité supplémentaire",
+    "description": "Variation locale",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.extra_18",
+    "naf_code": "31.02Z",
+    "name": "Unité supplémentaire",
+    "description": "Variation locale",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.extra_19",
+    "naf_code": "18.12Z",
+    "name": "Unité supplémentaire",
+    "description": "Variation locale",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.extra_2",
+    "naf_code": "81.22Z",
+    "name": "Unité supplémentaire",
+    "description": "Variation locale",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.extra_20",
+    "naf_code": "80.10Z",
+    "name": "Unité supplémentaire",
+    "description": "Variation locale",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.extra_21",
+    "naf_code": "86.22C",
+    "name": "Unité supplémentaire",
+    "description": "Variation locale",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.extra_22",
+    "naf_code": "86.23Z",
+    "name": "Unité supplémentaire",
+    "description": "Variation locale",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.extra_23",
+    "naf_code": "86.90F",
+    "name": "Unité supplémentaire",
+    "description": "Variation locale",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.extra_24",
+    "naf_code": "01.50Z",
+    "name": "Unité supplémentaire",
+    "description": "Variation locale",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.extra_25",
+    "naf_code": "01.61Z",
+    "name": "Unité supplémentaire",
+    "description": "Variation locale",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.extra_26",
+    "naf_code": "42.11Z",
+    "name": "Unité supplémentaire",
+    "description": "Variation locale",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.extra_27",
+    "naf_code": "42.91Z",
+    "name": "Unité supplémentaire",
+    "description": "Variation locale",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.extra_28",
+    "naf_code": "35.11Z",
+    "name": "Unité supplémentaire",
+    "description": "Variation locale",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.extra_29",
+    "naf_code": "35.30Z",
+    "name": "Unité supplémentaire",
+    "description": "Variation locale",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.extra_3",
+    "naf_code": "43.39Z",
+    "name": "Unité supplémentaire",
+    "description": "Variation locale",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.extra_30",
+    "naf_code": "19.20Z",
+    "name": "Unité supplémentaire",
+    "description": "Variation locale",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.extra_31",
+    "naf_code": "20.11Z",
+    "name": "Unité supplémentaire",
+    "description": "Variation locale",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.extra_32",
+    "naf_code": "10.85Z",
+    "name": "Unité supplémentaire",
+    "description": "Variation locale",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.extra_33",
+    "naf_code": "11.05Z",
+    "name": "Unité supplémentaire",
+    "description": "Variation locale",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.extra_4",
+    "naf_code": "62.01Z",
+    "name": "Unité supplémentaire",
+    "description": "Variation locale",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.extra_5",
+    "naf_code": "85.20Z",
+    "name": "Unité supplémentaire",
+    "description": "Variation locale",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.extra_6",
+    "naf_code": "49.39A",
+    "name": "Unité supplémentaire",
+    "description": "Variation locale",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.extra_7",
+    "naf_code": "33.12Z",
+    "name": "Unité supplémentaire",
+    "description": "Variation locale",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.extra_8",
+    "naf_code": "96.02A",
+    "name": "Unité supplémentaire",
+    "description": "Variation locale",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.extra_9",
+    "naf_code": "86.90E",
+    "name": "Unité supplémentaire",
+    "description": "Variation locale",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.foret",
+    "naf_code": "02.20Z",
+    "name": "Abattage / débardage",
+    "description": "Tronçonneuse, terrains",
+    "default_risk_ids": [
+      "risk.vibrations",
+      "risk.coupures",
+      "risk.chute_hauteur"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.formation",
+    "naf_code": "88.10A",
+    "name": "Formation interne",
+    "description": null,
+    "default_risk_ids": [
+      "risk.deplacement",
+      "risk.travail_ecran"
+    ],
+    "suggested": false
+  },
+  {
+    "id": "ut.fournil",
+    "naf_code": "10.71D",
+    "name": "Fournil / cuisson",
+    "description": "Fours, farine",
+    "default_risk_ids": [
+      "risk.brulures",
+      "risk.poussiere",
+      "risk.tms"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.gazindus",
+    "naf_code": "20.11Z",
+    "name": "Gaz industriels",
+    "description": "Gaz sous pression",
+    "default_risk_ids": [
+      "risk.haute_pression",
+      "risk.chimique",
+      "risk.incendie"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.hydro",
+    "naf_code": "42.91Z",
+    "name": "Chantier hydraulique",
+    "description": "Berges, eau",
+    "default_risk_ids": [
+      "risk.noyade",
+      "risk.chute_hauteur",
+      "risk.manutention"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.imprimerie",
+    "naf_code": "18.12Z",
+    "name": "Atelier d'impression",
+    "description": "Solvants, encres",
+    "default_risk_ids": [
+      "risk.colles_encres",
+      "risk.cmr",
+      "risk.bruit"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.intervenant",
+    "naf_code": "88.10A",
+    "name": "Intervenants à domicile",
+    "description": "Aide/transferts/soins",
+    "default_risk_ids": [
+      "risk.tms",
+      "risk.glissade",
+      "risk.biologique",
+      "risk.routier",
+      "risk.rps",
+      "risk.risque_domestique"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.labo",
+    "naf_code": "10.71D",
+    "name": "Laboratoire pâtisserie",
+    "description": "Découpe, mélanges",
+    "default_risk_ids": [
+      "risk.coupures",
+      "risk.chimique",
+      "risk.tms"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.labo_med",
+    "naf_code": "86.90F",
+    "name": "Laboratoire médical",
+    "description": "Prélèvements, réactifs",
+    "default_risk_ids": [
+      "risk.biologique",
+      "risk.chimique",
+      "risk.aiguille"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.livraison",
+    "naf_code": "56.10A",
+    "name": "Livraison / manutention",
+    "description": "Réception marchandises, déplacements.",
+    "default_risk_ids": [
+      "risk.manutention",
+      "risk.circulation_interne",
+      "risk.chute_niveau_diff"
+    ],
+    "suggested": false
+  },
+  {
+    "id": "ut.logistique",
+    "naf_code": "43.39Z",
+    "name": "Logistique / stockage",
+    "description": null,
+    "default_risk_ids": [
+      "risk.circulation_interne",
+      "risk.chute_plain_pied",
+      "risk.manutention"
+    ],
+    "suggested": false
+  },
+  {
+    "id": "ut.medicale",
+    "naf_code": "86.23Z",
+    "name": "Cabinet médical",
+    "description": "Consultations",
+    "default_risk_ids": [
+      "risk.biologique",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.menuiserie",
+    "naf_code": "31.02Z",
+    "name": "Atelier menuiserie",
+    "description": "Collage, ponçage",
+    "default_risk_ids": [
+      "risk.poussiere_bois",
+      "risk.colles_encres",
+      "risk.coupures"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.plats_prepares",
+    "naf_code": "10.85Z",
+    "name": "Plats préparés",
+    "description": "Cuisson, chaîne froide",
+    "default_risk_ids": [
+      "risk.brulures",
+      "risk.froid",
+      "risk.chimique"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.plonge",
+    "naf_code": "56.10A",
+    "name": "Plonge",
+    "description": "Lavage & produits",
+    "default_risk_ids": [
+      "risk.chimique",
+      "risk.glissade",
+      "risk.tms"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.prefa",
+    "naf_code": "23.61Z",
+    "name": "Préfabrication béton",
+    "description": "Moules, manutention",
+    "default_risk_ids": [
+      "risk.poussiere",
+      "risk.manutention",
+      "risk.bruit"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.prepa_froid",
+    "naf_code": "52.10A",
+    "name": "Prépa commandes (froid)",
+    "description": "Picking, engins",
+    "default_risk_ids": [
+      "risk.froid",
+      "risk.manutention",
+      "risk.circulation_interne",
+      "risk.bruit"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.prod_elec",
+    "naf_code": "35.11Z",
+    "name": "Production électricité",
+    "description": "Turbines, HT",
+    "default_risk_ids": [
+      "risk.electricite",
+      "risk.bruit",
+      "risk.chimique"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.proprete",
+    "naf_code": "81.22Z",
+    "name": "Agents de propreté",
+    "description": "Entretien locaux",
+    "default_risk_ids": [
+      "risk.chimique",
+      "risk.glissade",
+      "risk.tms",
+      "risk.biologique"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.quai",
+    "naf_code": "49.41B",
+    "name": "Quai / manutention",
+    "description": "Chargement/déchargement",
+    "default_risk_ids": [
+      "risk.circulation_interne",
+      "risk.manutention",
+      "risk.glissade",
+      "risk.ecrasement"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.quai_gros",
+    "naf_code": "46.90Z",
+    "name": "Quai / préparation",
+    "description": "Transpalettes, vrac",
+    "default_risk_ids": [
+      "risk.manutention",
+      "risk.circulation_interne",
+      "risk.ecrasement"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.raffinage",
+    "naf_code": "19.20Z",
+    "name": "Raffinage",
+    "description": "Hydrocarbures CMR",
+    "default_risk_ids": [
+      "risk.cmr",
+      "risk.incendie",
+      "risk.chimique"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.rayon_frais",
+    "naf_code": "47.11D",
+    "name": "Rayon froid",
+    "description": "Températures basses",
+    "default_risk_ids": [
+      "risk.froid",
+      "risk.glissade",
+      "risk.tms"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.reception",
+    "naf_code": "55.10Z",
+    "name": "Réception",
+    "description": "Accueil, écrans, nuit",
+    "default_risk_ids": [
+      "risk.travail_ecran",
+      "risk.rps",
+      "risk.nuit"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.reserve",
+    "naf_code": "47.11D",
+    "name": "Réserve / réception",
+    "description": "Palettes, chariots",
+    "default_risk_ids": [
+      "risk.manutention",
+      "risk.circulation_interne",
+      "risk.tms",
+      "risk.chute_objets"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.route",
+    "naf_code": "42.11Z",
+    "name": "Chantier route",
+    "description": "Engins, coactivité",
+    "default_risk_ids": [
+      "risk.circulation_interne",
+      "risk.vibrations",
+      "risk.chaleur"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.salle",
+    "naf_code": "56.10A",
+    "name": "Salle / service",
+    "description": "Relation client, circulation",
+    "default_risk_ids": [
+      "risk.glissade",
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.salon",
+    "naf_code": "96.02A",
+    "name": "Salon de coiffure",
+    "description": "Couleurs, coupes",
+    "default_risk_ids": [
+      "risk.chimique",
+      "risk.rps",
+      "risk.troubles_voix",
+      "risk.tms"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.scierie",
+    "naf_code": "16.10A",
+    "name": "Scierie",
+    "description": "Sciage, éjection lames",
+    "default_risk_ids": [
+      "risk.poussiere_bois",
+      "risk.bruit",
+      "risk.coupures",
+      "risk.bris_lame"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.securite",
+    "naf_code": "80.10Z",
+    "name": "Rondiers / accueil",
+    "description": "Public, nuit, isolement",
+    "default_risk_ids": [
+      "risk.violence_externe",
+      "risk.travail_isole",
+      "risk.nuit"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.service",
+    "naf_code": "86.10Z",
+    "name": "Service de soins",
+    "description": "Patients",
+    "default_risk_ids": [
+      "risk.biologique",
+      "risk.tms",
+      "risk.rps"
+    ],
+    "suggested": true
+  },
+  {
+    "id": "ut.vapeur",
+    "naf_code": "35.30Z",
+    "name": "Vapeur / air comprimé",
+    "description": "Chaudières, compresseurs",
+    "default_risk_ids": [
+      "risk.haute_pression",
+      "risk.chaleur",
+      "risk.chimique"
+    ],
+    "suggested": true
+  }
+]

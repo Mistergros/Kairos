@@ -2,7 +2,7 @@
   "id": "R-INCENDIE",
   "name": "Incendie / explosion",
   "category": "Accident majeur",
-  "description": "Sources d’ignition, stockages, gaz.",
+  "description": "Sources dâ€™ignition, stockages, gaz.",
   "units": [
     "Cuisine",
     "Entrepôt"

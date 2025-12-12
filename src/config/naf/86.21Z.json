@@ -1,0 +1,26 @@
+﻿ï»¿{
+  "code": "86.21Z",
+  "label": "Mâ”œÂ®decins gâ”œÂ®nâ”œÂ®ralistes",
+  "risk_tags": [
+    "santâ”œÂ®",
+    "biologique"
+  ],
+  "risks_priority": [
+    "R-BIO",
+    "R-CHIMIQUE",
+    "R-TMS",
+    "R-RPS",
+    "R-ECRAN"
+  ],
+  "risks_mandatory": [],
+  "activities": [
+    {
+      "id": "cabinet",
+      "label": "Cabinet/examen"
+    },
+    {
+      "id": "laboratoire",
+      "label": "Laboratoire annexe (si)"
+    }
+  ]
+}

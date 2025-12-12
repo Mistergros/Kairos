@@ -1,0 +1,578 @@
+[
+  {
+    "id": "act.aides_manuelles",
+    "type": "technical",
+    "label": "Aides à la manutention",
+    "details": "Diables, chariots."
+  },
+  {
+    "id": "act.amenagement_ergonomique",
+    "type": "technical",
+    "label": "Réglage siège/écran/clavier",
+    "details": "Guide ergonomie poste écran."
+  },
+  {
+    "id": "act.aménagement_poste",
+    "type": "technical",
+    "label": "Aménagement ergonomique du poste",
+    "details": "Plans de travail adaptés, aides à la manutention."
+  },
+  {
+    "id": "act.amenagement_poste_ecran",
+    "type": "technical",
+    "label": "Aménagement ergonomique poste écran",
+    "details": "Réglages siège/écran/clavier."
+  },
+  {
+    "id": "act.appareils_respi_isolants",
+    "type": "EPI",
+    "label": "ARI (appareils respiratoires isolants)",
+    "details": "Gaz toxiques/espaces confinés."
+  },
+  {
+    "id": "act.arrimage_securise",
+    "type": "organizational",
+    "label": "Procédure arrimage sécurisé",
+    "details": "Contrôles & EPI."
+  },
+  {
+    "id": "act.aspiration_source",
+    "type": "technical",
+    "label": "Aspiration à la source",
+    "details": "Captage poussières/fumées."
+  },
+  {
+    "id": "act.audit_QVT",
+    "type": "documentation",
+    "label": "Diagnostic QVT/RPS",
+    "details": "Plan d'actions collectif."
+  },
+  {
+    "id": "act.balisage_travaux",
+    "type": "documentation",
+    "label": "Balisage zones de travaux",
+    "details": "Signalisation chantier."
+  },
+  {
+    "id": "act.barres_antiretour",
+    "type": "technical",
+    "label": "Barres antiretour rayonnages",
+    "details": "Sécurité chutes d'objets."
+  },
+  {
+    "id": "act.barriere_accueil",
+    "type": "technical",
+    "label": "Barrière/guichet sécurisé",
+    "details": "Accueil public."
+  },
+  {
+    "id": "act.carto_bruit",
+    "type": "documentation",
+    "label": "Mesure/Cartographie du bruit",
+    "details": "LEX,8h et pics."
+  },
+  {
+    "id": "act.cartographie_bruit",
+    "type": "documentation",
+    "label": "Cartographie du bruit",
+    "details": "Mesures d'exposition sonore."
+  },
+  {
+    "id": "act.controle_incendie",
+    "type": "documentation",
+    "label": "Vérif extincteurs/désenfumage",
+    "details": "Contrats & PV."
+  },
+  {
+    "id": "act.couteaux_entretien",
+    "type": "organizational",
+    "label": "Plan d'affûtage et rangements sécurisés",
+    "details": "Entretien régulier, supports magnétiques."
+  },
+  {
+    "id": "act.demarche_rps",
+    "type": "organizational",
+    "label": "Démarche RPS (diagnostic, plan d'actions)",
+    "details": "Entretiens, indicateurs, actions collectives."
+  },
+  {
+    "id": "act.détection_gaz",
+    "type": "technical",
+    "label": "Détecteurs gaz (CO2/H2S)",
+    "details": "Silos, caves, fosses."
+  },
+  {
+    "id": "act.dispositif_ecoute",
+    "type": "organizational",
+    "label": "Dispositif d'écoute / alerte",
+    "details": "Référent, procédure signalement."
+  },
+  {
+    "id": "act.eclairage",
+    "type": "technical",
+    "label": "Amélioration éclairage",
+    "details": "Lux, anti-éblouissement."
+  },
+  {
+    "id": "act.epi_antivibr",
+    "type": "EPI",
+    "label": "Gants anti-vibrations",
+    "details": "Usage outillage."
+  },
+  {
+    "id": "act.epi_auditif",
+    "type": "EPI",
+    "label": "Protections auditives",
+    "details": "Bouchons/casques."
+  },
+  {
+    "id": "act.epi_chimique",
+    "type": "EPI",
+    "label": "Gants/combinaisons chimiques",
+    "details": "EN ISO 374."
+  },
+  {
+    "id": "act.epi_flottant",
+    "type": "EPI",
+    "label": "Gilet de sauvetage",
+    "details": "Immersion, pêche, conchyliculture."
+  },
+  {
+    "id": "act.epi_froid",
+    "type": "EPI",
+    "label": "EPI contre le froid",
+    "details": "Gants, vestes, chaussures."
+  },
+  {
+    "id": "act.epi_gants_anti_coupure",
+    "type": "EPI",
+    "label": "Gants anti-coupure",
+    "details": "EN 388 niveau adapté."
+  },
+  {
+    "id": "act.epi_gants_anticoupure",
+    "type": "EPI",
+    "label": "Gants anti-coupure EN 388",
+    "details": "Niveau adapté."
+  },
+  {
+    "id": "act.epi_gants_chaleur",
+    "type": "EPI",
+    "label": "Gants anti-chaleur EN 407",
+    "details": "Protection thermique."
+  },
+  {
+    "id": "act.epi_gants_nitrile",
+    "type": "EPI",
+    "label": "Gants nitrile pour produits chimiques",
+    "details": "Protection chimique adaptée."
+  },
+  {
+    "id": "act.epi_lunettes",
+    "type": "EPI",
+    "label": "Lunettes de protection",
+    "details": "EN 166."
+  },
+  {
+    "id": "act.epi_oculaire",
+    "type": "EPI",
+    "label": "Lunettes de protection EN166",
+    "details": "Ateliers, découpes."
+  },
+  {
+    "id": "act.epi_protection_auditive",
+    "type": "EPI",
+    "label": "Protections auditives",
+    "details": "Bouchons, casques."
+  },
+  {
+    "id": "act.epi_respiratoire",
+    "type": "EPI",
+    "label": "Protection respiratoire",
+    "details": "Filtres adaptés."
+  },
+  {
+    "id": "act.epreuves_rayonnages",
+    "type": "documentation",
+    "label": "Épreuves/contrôles rayonnages",
+    "details": "Stabilité, charges."
+  },
+  {
+    "id": "act.ergonomie_outils",
+    "type": "technical",
+    "label": "Outils ergonomiques/réglables",
+    "details": "Réduction TMS."
+  },
+  {
+    "id": "act.fds_disponible",
+    "type": "documentation",
+    "label": "FDS à jour et accessibles",
+    "details": "Inventaire, banque FDS."
+  },
+  {
+    "id": "act.filet_pecherie",
+    "type": "technical",
+    "label": "Filet/sécurisation pêche",
+    "details": "Immersion/noyade."
+  },
+  {
+    "id": "act.filets_antichute",
+    "type": "technical",
+    "label": "Filets antichute",
+    "details": "Zones de travail en hauteur."
+  },
+  {
+    "id": "act.formation_amiante",
+    "type": "training",
+    "label": "Formation amiante sous-section 4",
+    "details": "Sensibilisation opérateurs."
+  },
+  {
+    "id": "act.formation_chariot",
+    "type": "training",
+    "label": "Formation CACES/Chariots",
+    "details": "Autorisation de conduite."
+  },
+  {
+    "id": "act.formation_conduite",
+    "type": "training",
+    "label": "Éco/Conduite sécurisée",
+    "details": "Anticipation, distances."
+  },
+  {
+    "id": "act.formation_gestes",
+    "type": "training",
+    "label": "Formation gestes/postures",
+    "details": "Prévention TMS."
+  },
+  {
+    "id": "act.formation_gestes_postures",
+    "type": "training",
+    "label": "Formation gestes et postures",
+    "details": "Sensibilisation TMS."
+  },
+  {
+    "id": "act.formation_habilitation",
+    "type": "training",
+    "label": "Formation travail en hauteur",
+    "details": "Habilitation et vérifications."
+  },
+  {
+    "id": "act.formation_hauteur",
+    "type": "training",
+    "label": "Formation travail en hauteur",
+    "details": "Habilitations/vérifs."
+  },
+  {
+    "id": "act.formation_phyto",
+    "type": "training",
+    "label": "Certiphyto / formation phyto",
+    "details": "Manipulation en sécurité."
+  },
+  {
+    "id": "act.formation_procedure",
+    "type": "training",
+    "label": "Procédures et formation manipulation friteuse/four",
+    "details": "Consignes d'utilisation et vidange sécurisée."
+  },
+  {
+    "id": "act.formation_produits",
+    "type": "training",
+    "label": "Formation produits chimiques",
+    "details": "Lecture FDS, dosages."
+  },
+  {
+    "id": "act.formation_sec_space",
+    "type": "training",
+    "label": "Formation espaces confinés",
+    "details": "Procédures, sauvetage."
+  },
+  {
+    "id": "act.formation_sst",
+    "type": "training",
+    "label": "Formation SST",
+    "details": "Secours immédiat."
+  },
+  {
+    "id": "act.formation_violence",
+    "type": "training",
+    "label": "Formation gestion agressivité",
+    "details": "Désescalade."
+  },
+  {
+    "id": "act.garde_corps",
+    "type": "technical",
+    "label": "Garde-corps / trappes sécurisées",
+    "details": "Protection contre chute de niveau différent."
+  },
+  {
+    "id": "act.garde_corps_silo",
+    "type": "technical",
+    "label": "Garde-corps/ligne vie silo",
+    "details": "Accès silo sécurisé."
+  },
+  {
+    "id": "act.gestion_canicule",
+    "type": "organizational",
+    "label": "Plan canicule",
+    "details": "Aménagement horaires, eau."
+  },
+  {
+    "id": "act.gestion_conflits",
+    "type": "organizational",
+    "label": "Gestion conflits/violence externe",
+    "details": "Médiation, signalement."
+  },
+  {
+    "id": "act.gestion_dechets_coupants",
+    "type": "organizational",
+    "label": "Gestion déchets coupants",
+    "details": "Contenants sécurisés."
+  },
+  {
+    "id": "act.gestion_pesticides",
+    "type": "organizational",
+    "label": "Gestion phytosanitaires",
+    "details": "Homologation, stockage."
+  },
+  {
+    "id": "act.gestion_verglas",
+    "type": "organizational",
+    "label": "Plan verglas/neige",
+    "details": "Salage, déneigement."
+  },
+  {
+    "id": "act.harnais_longe",
+    "type": "EPI",
+    "label": "Systèmes antichute (harnais/longe)",
+    "details": "Avec points d'ancrage."
+  },
+  {
+    "id": "act.hygiene_mains",
+    "type": "organizational",
+    "label": "Procédure hygiène des mains",
+    "details": "SHA, lavage."
+  },
+  {
+    "id": "act.info_ecran",
+    "type": "documentation",
+    "label": "Information/formation écran",
+    "details": "Conformité R.4542."
+  },
+  {
+    "id": "act.kit_premiers_secours",
+    "type": "technical",
+    "label": "Trousse/kit premiers secours",
+    "details": "Accessibilité, vérifs."
+  },
+  {
+    "id": "act.ligne_vie",
+    "type": "technical",
+    "label": "Ligne de vie / point d'ancrage",
+    "details": "Systèmes antichute."
+  },
+  {
+    "id": "act.loto",
+    "type": "documentation",
+    "label": "Procédure LOTO (consignation)",
+    "details": "Électricité/machines."
+  },
+  {
+    "id": "act.marquage_temperature",
+    "type": "documentation",
+    "label": "Consigne température / marquage",
+    "details": "Affichage risques eau chaude."
+  },
+  {
+    "id": "act.mesure_vibrations",
+    "type": "documentation",
+    "label": "Mesures d'exposition vibrations",
+    "details": "Rapport et plan d'action."
+  },
+  {
+    "id": "act.organisation_astreintes",
+    "type": "organizational",
+    "label": "Organisation des astreintes",
+    "details": "Limites, relais."
+  },
+  {
+    "id": "act.organisation_cadence",
+    "type": "organizational",
+    "label": "Organisation des cadences",
+    "details": "Renfort, files, RDV."
+  },
+  {
+    "id": "act.pauses",
+    "type": "organizational",
+    "label": "Organisation de pauses",
+    "details": "Règle 20-20-20/rotation."
+  },
+  {
+    "id": "act.pausesecran",
+    "type": "organizational",
+    "label": "Micro-pauses, alternance tâches",
+    "details": "Règle 20-20-20."
+  },
+  {
+    "id": "act.plan_circulation",
+    "type": "organizational",
+    "label": "Plan de circulation",
+    "details": "Zonage, marquage, sens."
+  },
+  {
+    "id": "act.plan_deplacement",
+    "type": "organizational",
+    "label": "Plan de déplacements pro",
+    "details": "Covoiturage, visio."
+  },
+  {
+    "id": "act.plan_hygiene_hotel",
+    "type": "documentation",
+    "label": "Plan d'hygiène HCR",
+    "details": "Protocoles, enregistrements."
+  },
+  {
+    "id": "act.plan_maintenance",
+    "type": "organizational",
+    "label": "Plan de maintenance préventive",
+    "details": "Registre & périodicités."
+  },
+  {
+    "id": "act.prevention_froid",
+    "type": "organizational",
+    "label": "Procédure travail au froid",
+    "details": "Limitation exposition."
+  },
+  {
+    "id": "act.prevention_incendie",
+    "type": "organizational",
+    "label": "Permis feu / plan évacuation",
+    "details": "Exercices, moyens."
+  },
+  {
+    "id": "act.prevention_vibrations",
+    "type": "technical",
+    "label": "Réduction vibrations outils",
+    "details": "Entretien, manches."
+  },
+  {
+    "id": "act.proc_hauteur",
+    "type": "documentation",
+    "label": "Procédure travail en hauteur",
+    "details": "Modes opératoires."
+  },
+  {
+    "id": "act.protection_bords",
+    "type": "technical",
+    "label": "Garde-corps / filets",
+    "details": "Protection collective en bord de toiture."
+  },
+  {
+    "id": "act.protection_collective",
+    "type": "technical",
+    "label": "Écrans pare-graisse / capots / déflecteurs sur friteuses",
+    "details": "Limiter projections et contact avec huile."
+  },
+  {
+    "id": "act.protections_collectives",
+    "type": "technical",
+    "label": "Protections collectives (capots, écrans)",
+    "details": "Limiter l'exposition à la source."
+  },
+  {
+    "id": "act.protections_hauteur",
+    "type": "technical",
+    "label": "Garde-corps / filets / ancrages",
+    "details": "Priorité collectif."
+  },
+  {
+    "id": "act.protections_machine",
+    "type": "technical",
+    "label": "Carters/protections machines",
+    "details": "Interverrouillages."
+  },
+  {
+    "id": "act.rangement_couteaux",
+    "type": "organizational",
+    "label": "Rangement sécurisé + affûtage couteaux",
+    "details": "Supports magnétiques, plan d'affûtage."
+  },
+  {
+    "id": "act.rep_amiante",
+    "type": "organizational",
+    "label": "Repérage amiante",
+    "details": "Avant travaux."
+  },
+  {
+    "id": "act.revetement_antiderapant",
+    "type": "technical",
+    "label": "Revêtements antidérapants / tapis",
+    "details": "Pose dans zones humides."
+  },
+  {
+    "id": "act.signalisation",
+    "type": "documentation",
+    "label": "Signalisation zones à risque",
+    "details": "Panneaux, marquages au sol."
+  },
+  {
+    "id": "act.signalisation_quai",
+    "type": "documentation",
+    "label": "Signalisation quai/engins",
+    "details": "Circulation séparée."
+  },
+  {
+    "id": "act.substitution",
+    "type": "organizational",
+    "label": "Substitution produit moins dangereux",
+    "details": "Réduire CMR/chlore/solvants."
+  },
+  {
+    "id": "act.substitution_produit",
+    "type": "organizational",
+    "label": "Substitution par produits moins dangereux",
+    "details": "Choix de détergents sans chlore si possible."
+  },
+  {
+    "id": "act.tapis_antiderapant",
+    "type": "technical",
+    "label": "Revêtements/Tapis antidérapants",
+    "details": "Zones humides/gras."
+  },
+  {
+    "id": "act.traitement_air",
+    "type": "technical",
+    "label": "Traitement/entretien CTA",
+    "details": "Filtres, débits."
+  },
+  {
+    "id": "act.vaccination_recommandee",
+    "type": "organizational",
+    "label": "Vaccinations recommandées",
+    "details": "Hépatite B selon exposition."
+  },
+  {
+    "id": "act.ventilation",
+    "type": "technical",
+    "label": "Ventilation/qualité d'air",
+    "details": "Renouvellement, CO2."
+  },
+  {
+    "id": "act.verif_echelles",
+    "type": "documentation",
+    "label": "Vérification échelles/escabeaux",
+    "details": "Registre de vérif."
+  },
+  {
+    "id": "act.verif_electrique",
+    "type": "documentation",
+    "label": "Vérification électrique",
+    "details": "Registres, périodicités."
+  },
+  {
+    "id": "act.verification_outillage",
+    "type": "organizational",
+    "label": "Vérification périodique outillage",
+    "details": "Registre de contrôle."
+  }
+]

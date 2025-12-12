@@ -1,0 +1,13 @@
+{
+  "id": "R-TRAVAUX-PUB",
+  "name": "Travaux publics / terrassement",
+  "category": "Accident",
+  "description": "Enterrement, réseaux enterrés, engins de chantier, circulation.",
+  "units": [],
+  "questions": [],
+  "factors": [],
+  "sources": [
+    "INRS ED 6091",
+    "Guide anti-endommagement"
+  ]
+}

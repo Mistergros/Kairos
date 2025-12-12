@@ -1,0 +1,25 @@
+{
+
+  "id": "R-GLISSADES",
+
+  "name": "Chutes de plain-pied et de hauteur",
+
+  "category": "Accident",
+
+  "description": "Glissades, trébuchements, déséquilibres ou chutes d'échelle/escabeau/toitures.",
+
+  "units": [],
+
+  "questions": [],
+
+  "factors": [],
+
+  "sources": [
+
+    "INRS ED 6053",
+
+    "CARSAT Prévention chutes"
+
+  ]
+
+}

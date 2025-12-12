@@ -19,6 +19,10 @@ export interface WorkUnit {
   description?: string;
   location?: string;
   headcount?: number;
+  features?: string[];
+  activity?: string;
+  tags?: string[];
+  measurements?: Record<string, number>;
 }
 
 export interface Hazard {
@@ -57,7 +61,10 @@ export interface ActionItem {
   description?: string;
   steps?: { id: string; label: string; done: boolean }[];
   owner?: string;
+  startDate?: string;
   dueDate?: string;
+  endDate?: string;
+  how?: string;
   status: ActionStatus;
   cost?: number;
   evidenceUrl?: string;

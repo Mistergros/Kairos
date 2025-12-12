@@ -2,7 +2,7 @@
   "naf": "4711D",
   "label": "Commerce de détail",
   "risks_priority": [
-    "R-CHUTE",
+    "R-GLISSADES",
     "R-COUPURE",
     "R-MANUTENTION",
     "R-RPS",

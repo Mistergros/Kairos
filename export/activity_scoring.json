@@ -1,0 +1,3458 @@
+[
+  {
+    "id": "1",
+    "activity": "friture",
+    "risk_id": "risk.brulures",
+    "severity": 2,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "2",
+    "activity": "friture",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 1,
+    "control": 1
+  },
+  {
+    "id": "3",
+    "activity": "friture_1",
+    "risk_id": "risk.brulures",
+    "severity": 2,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "4",
+    "activity": "friture_1",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 1,
+    "control": 1
+  },
+  {
+    "id": "5",
+    "activity": "friture_2",
+    "risk_id": "risk.brulures",
+    "severity": 2,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "6",
+    "activity": "friture_2",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 1,
+    "control": 1
+  },
+  {
+    "id": "7",
+    "activity": "friture_3",
+    "risk_id": "risk.brulures",
+    "severity": 2,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "8",
+    "activity": "friture_3",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 1,
+    "control": 1
+  },
+  {
+    "id": "9",
+    "activity": "friture_4",
+    "risk_id": "risk.brulures",
+    "severity": 2,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "10",
+    "activity": "friture_4",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 1,
+    "control": 1
+  },
+  {
+    "id": "11",
+    "activity": "friture_5",
+    "risk_id": "risk.brulures",
+    "severity": 2,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "12",
+    "activity": "friture_5",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 1,
+    "control": 1
+  },
+  {
+    "id": "13",
+    "activity": "plancha",
+    "risk_id": "risk.brulures",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "14",
+    "activity": "plancha_1",
+    "risk_id": "risk.brulures",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "15",
+    "activity": "plancha_2",
+    "risk_id": "risk.brulures",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "16",
+    "activity": "plancha_3",
+    "risk_id": "risk.brulures",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "17",
+    "activity": "plancha_4",
+    "risk_id": "risk.brulures",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "18",
+    "activity": "plancha_5",
+    "risk_id": "risk.brulures",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "19",
+    "activity": "découpe",
+    "risk_id": "risk.coupures",
+    "severity": 1,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "20",
+    "activity": "découpe_1",
+    "risk_id": "risk.coupures",
+    "severity": 1,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "21",
+    "activity": "découpe_2",
+    "risk_id": "risk.coupures",
+    "severity": 1,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "22",
+    "activity": "découpe_3",
+    "risk_id": "risk.coupures",
+    "severity": 1,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "23",
+    "activity": "découpe_4",
+    "risk_id": "risk.coupures",
+    "severity": 1,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "24",
+    "activity": "découpe_5",
+    "risk_id": "risk.coupures",
+    "severity": 1,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "25",
+    "activity": "plonge_humide",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "26",
+    "activity": "plonge_humide",
+    "risk_id": "risk.chimique",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "27",
+    "activity": "plonge_humide_1",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "28",
+    "activity": "plonge_humide_1",
+    "risk_id": "risk.chimique",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "29",
+    "activity": "plonge_humide_2",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "30",
+    "activity": "plonge_humide_2",
+    "risk_id": "risk.chimique",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "31",
+    "activity": "plonge_humide_3",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "32",
+    "activity": "plonge_humide_3",
+    "risk_id": "risk.chimique",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "33",
+    "activity": "plonge_humide_4",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "34",
+    "activity": "plonge_humide_4",
+    "risk_id": "risk.chimique",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "35",
+    "activity": "plonge_humide_5",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "36",
+    "activity": "plonge_humide_5",
+    "risk_id": "risk.chimique",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "37",
+    "activity": "nettoyage_detergent",
+    "risk_id": "risk.chimique",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "38",
+    "activity": "nettoyage_detergent_1",
+    "risk_id": "risk.chimique",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "39",
+    "activity": "nettoyage_detergent_2",
+    "risk_id": "risk.chimique",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "40",
+    "activity": "nettoyage_detergent_3",
+    "risk_id": "risk.chimique",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "41",
+    "activity": "nettoyage_detergent_4",
+    "risk_id": "risk.chimique",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "42",
+    "activity": "nettoyage_detergent_5",
+    "risk_id": "risk.chimique",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "43",
+    "activity": "pâtisserie",
+    "risk_id": "risk.poussiere",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "44",
+    "activity": "pâtisserie",
+    "risk_id": "risk.tms",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "45",
+    "activity": "pâtisserie_1",
+    "risk_id": "risk.poussiere",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "46",
+    "activity": "pâtisserie_1",
+    "risk_id": "risk.tms",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "47",
+    "activity": "pâtisserie_2",
+    "risk_id": "risk.poussiere",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "48",
+    "activity": "pâtisserie_2",
+    "risk_id": "risk.tms",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "49",
+    "activity": "pâtisserie_3",
+    "risk_id": "risk.poussiere",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "50",
+    "activity": "pâtisserie_3",
+    "risk_id": "risk.tms",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "51",
+    "activity": "pâtisserie_4",
+    "risk_id": "risk.poussiere",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "52",
+    "activity": "pâtisserie_4",
+    "risk_id": "risk.tms",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "53",
+    "activity": "pâtisserie_5",
+    "risk_id": "risk.poussiere",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "54",
+    "activity": "pâtisserie_5",
+    "risk_id": "risk.tms",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "55",
+    "activity": "préparation_commandes",
+    "risk_id": "risk.manutention",
+    "severity": 1,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "56",
+    "activity": "préparation_commandes",
+    "risk_id": "risk.tms",
+    "severity": 0,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "57",
+    "activity": "préparation_commandes_1",
+    "risk_id": "risk.manutention",
+    "severity": 1,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "58",
+    "activity": "préparation_commandes_1",
+    "risk_id": "risk.tms",
+    "severity": 0,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "59",
+    "activity": "préparation_commandes_2",
+    "risk_id": "risk.manutention",
+    "severity": 1,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "60",
+    "activity": "préparation_commandes_2",
+    "risk_id": "risk.tms",
+    "severity": 0,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "61",
+    "activity": "préparation_commandes_3",
+    "risk_id": "risk.manutention",
+    "severity": 1,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "62",
+    "activity": "préparation_commandes_3",
+    "risk_id": "risk.tms",
+    "severity": 0,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "63",
+    "activity": "préparation_commandes_4",
+    "risk_id": "risk.manutention",
+    "severity": 1,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "64",
+    "activity": "préparation_commandes_4",
+    "risk_id": "risk.tms",
+    "severity": 0,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "65",
+    "activity": "préparation_commandes_5",
+    "risk_id": "risk.manutention",
+    "severity": 1,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "66",
+    "activity": "préparation_commandes_5",
+    "risk_id": "risk.tms",
+    "severity": 0,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "67",
+    "activity": "palettisation",
+    "risk_id": "risk.manutention",
+    "severity": 1,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "68",
+    "activity": "palettisation_1",
+    "risk_id": "risk.manutention",
+    "severity": 1,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "69",
+    "activity": "palettisation_2",
+    "risk_id": "risk.manutention",
+    "severity": 1,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "70",
+    "activity": "palettisation_3",
+    "risk_id": "risk.manutention",
+    "severity": 1,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "71",
+    "activity": "palettisation_4",
+    "risk_id": "risk.manutention",
+    "severity": 1,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "72",
+    "activity": "palettisation_5",
+    "risk_id": "risk.manutention",
+    "severity": 1,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "73",
+    "activity": "chambre_froide",
+    "risk_id": "risk.froid",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "74",
+    "activity": "chambre_froide",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "75",
+    "activity": "chambre_froide_1",
+    "risk_id": "risk.froid",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "76",
+    "activity": "chambre_froide_1",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "77",
+    "activity": "chambre_froide_2",
+    "risk_id": "risk.froid",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "78",
+    "activity": "chambre_froide_2",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "79",
+    "activity": "chambre_froide_3",
+    "risk_id": "risk.froid",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "80",
+    "activity": "chambre_froide_3",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "81",
+    "activity": "chambre_froide_4",
+    "risk_id": "risk.froid",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "82",
+    "activity": "chambre_froide_4",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "83",
+    "activity": "chambre_froide_5",
+    "risk_id": "risk.froid",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "84",
+    "activity": "chambre_froide_5",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "85",
+    "activity": "caisse_assise_debout",
+    "risk_id": "risk.tms",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "86",
+    "activity": "caisse_assise_debout",
+    "risk_id": "risk.rps",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "87",
+    "activity": "caisse_assise_debout_1",
+    "risk_id": "risk.tms",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "88",
+    "activity": "caisse_assise_debout_1",
+    "risk_id": "risk.rps",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "89",
+    "activity": "caisse_assise_debout_2",
+    "risk_id": "risk.tms",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "90",
+    "activity": "caisse_assise_debout_2",
+    "risk_id": "risk.rps",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "91",
+    "activity": "caisse_assise_debout_3",
+    "risk_id": "risk.tms",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "92",
+    "activity": "caisse_assise_debout_3",
+    "risk_id": "risk.rps",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "93",
+    "activity": "caisse_assise_debout_4",
+    "risk_id": "risk.tms",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "94",
+    "activity": "caisse_assise_debout_4",
+    "risk_id": "risk.rps",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "95",
+    "activity": "caisse_assise_debout_5",
+    "risk_id": "risk.tms",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "96",
+    "activity": "caisse_assise_debout_5",
+    "risk_id": "risk.rps",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "97",
+    "activity": "chargement_quai",
+    "risk_id": "risk.circulation_interne",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "98",
+    "activity": "chargement_quai",
+    "risk_id": "risk.ecrasement",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "99",
+    "activity": "chargement_quai_1",
+    "risk_id": "risk.circulation_interne",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "100",
+    "activity": "chargement_quai_1",
+    "risk_id": "risk.ecrasement",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "101",
+    "activity": "chargement_quai_2",
+    "risk_id": "risk.circulation_interne",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "102",
+    "activity": "chargement_quai_2",
+    "risk_id": "risk.ecrasement",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "103",
+    "activity": "chargement_quai_3",
+    "risk_id": "risk.circulation_interne",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "104",
+    "activity": "chargement_quai_3",
+    "risk_id": "risk.ecrasement",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "105",
+    "activity": "chargement_quai_4",
+    "risk_id": "risk.circulation_interne",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "106",
+    "activity": "chargement_quai_4",
+    "risk_id": "risk.ecrasement",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "107",
+    "activity": "chargement_quai_5",
+    "risk_id": "risk.circulation_interne",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "108",
+    "activity": "chargement_quai_5",
+    "risk_id": "risk.ecrasement",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "109",
+    "activity": "arrimage",
+    "risk_id": "risk.manutention",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "110",
+    "activity": "arrimage_1",
+    "risk_id": "risk.manutention",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "111",
+    "activity": "arrimage_2",
+    "risk_id": "risk.manutention",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "112",
+    "activity": "arrimage_3",
+    "risk_id": "risk.manutention",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "113",
+    "activity": "arrimage_4",
+    "risk_id": "risk.manutention",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "114",
+    "activity": "arrimage_5",
+    "risk_id": "risk.manutention",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "115",
+    "activity": "conduite_longue",
+    "risk_id": "risk.routier",
+    "severity": 2,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "116",
+    "activity": "conduite_longue",
+    "risk_id": "risk.rps",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "117",
+    "activity": "conduite_longue_1",
+    "risk_id": "risk.routier",
+    "severity": 2,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "118",
+    "activity": "conduite_longue_1",
+    "risk_id": "risk.rps",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "119",
+    "activity": "conduite_longue_2",
+    "risk_id": "risk.routier",
+    "severity": 2,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "120",
+    "activity": "conduite_longue_2",
+    "risk_id": "risk.rps",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "121",
+    "activity": "conduite_longue_3",
+    "risk_id": "risk.routier",
+    "severity": 2,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "122",
+    "activity": "conduite_longue_3",
+    "risk_id": "risk.rps",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "123",
+    "activity": "conduite_longue_4",
+    "risk_id": "risk.routier",
+    "severity": 2,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "124",
+    "activity": "conduite_longue_4",
+    "risk_id": "risk.rps",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "125",
+    "activity": "conduite_longue_5",
+    "risk_id": "risk.routier",
+    "severity": 2,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "126",
+    "activity": "conduite_longue_5",
+    "risk_id": "risk.rps",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "127",
+    "activity": "gerbeur",
+    "risk_id": "risk.circulation_interne",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "128",
+    "activity": "gerbeur_1",
+    "risk_id": "risk.circulation_interne",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "129",
+    "activity": "gerbeur_2",
+    "risk_id": "risk.circulation_interne",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "130",
+    "activity": "gerbeur_3",
+    "risk_id": "risk.circulation_interne",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "131",
+    "activity": "gerbeur_4",
+    "risk_id": "risk.circulation_interne",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "132",
+    "activity": "gerbeur_5",
+    "risk_id": "risk.circulation_interne",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "133",
+    "activity": "décapage",
+    "risk_id": "risk.chimique",
+    "severity": 1,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "134",
+    "activity": "décapage_1",
+    "risk_id": "risk.chimique",
+    "severity": 1,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "135",
+    "activity": "décapage_2",
+    "risk_id": "risk.chimique",
+    "severity": 1,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "136",
+    "activity": "décapage_3",
+    "risk_id": "risk.chimique",
+    "severity": 1,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "137",
+    "activity": "décapage_4",
+    "risk_id": "risk.chimique",
+    "severity": 1,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "138",
+    "activity": "décapage_5",
+    "risk_id": "risk.chimique",
+    "severity": 1,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "139",
+    "activity": "sols_humides",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "140",
+    "activity": "sols_humides_1",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "141",
+    "activity": "sols_humides_2",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "142",
+    "activity": "sols_humides_3",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "143",
+    "activity": "sols_humides_4",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "144",
+    "activity": "sols_humides_5",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "145",
+    "activity": "bio_nettoyage",
+    "risk_id": "risk.biologique",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "146",
+    "activity": "bio_nettoyage_1",
+    "risk_id": "risk.biologique",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "147",
+    "activity": "bio_nettoyage_2",
+    "risk_id": "risk.biologique",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "148",
+    "activity": "bio_nettoyage_3",
+    "risk_id": "risk.biologique",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "149",
+    "activity": "bio_nettoyage_4",
+    "risk_id": "risk.biologique",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "150",
+    "activity": "bio_nettoyage_5",
+    "risk_id": "risk.biologique",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "151",
+    "activity": "transfert_personne",
+    "risk_id": "risk.tms",
+    "severity": 2,
+    "frequency": 2,
+    "control": -1
+  },
+  {
+    "id": "152",
+    "activity": "transfert_personne_1",
+    "risk_id": "risk.tms",
+    "severity": 2,
+    "frequency": 2,
+    "control": -1
+  },
+  {
+    "id": "153",
+    "activity": "transfert_personne_2",
+    "risk_id": "risk.tms",
+    "severity": 2,
+    "frequency": 2,
+    "control": -1
+  },
+  {
+    "id": "154",
+    "activity": "transfert_personne_3",
+    "risk_id": "risk.tms",
+    "severity": 2,
+    "frequency": 2,
+    "control": -1
+  },
+  {
+    "id": "155",
+    "activity": "transfert_personne_4",
+    "risk_id": "risk.tms",
+    "severity": 2,
+    "frequency": 2,
+    "control": -1
+  },
+  {
+    "id": "156",
+    "activity": "transfert_personne_5",
+    "risk_id": "risk.tms",
+    "severity": 2,
+    "frequency": 2,
+    "control": -1
+  },
+  {
+    "id": "157",
+    "activity": "soins_hygiene",
+    "risk_id": "risk.biologique",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "158",
+    "activity": "soins_hygiene",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 1,
+    "control": 1
+  },
+  {
+    "id": "159",
+    "activity": "soins_hygiene_1",
+    "risk_id": "risk.biologique",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "160",
+    "activity": "soins_hygiene_1",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 1,
+    "control": 1
+  },
+  {
+    "id": "161",
+    "activity": "soins_hygiene_2",
+    "risk_id": "risk.biologique",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "162",
+    "activity": "soins_hygiene_2",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 1,
+    "control": 1
+  },
+  {
+    "id": "163",
+    "activity": "soins_hygiene_3",
+    "risk_id": "risk.biologique",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "164",
+    "activity": "soins_hygiene_3",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 1,
+    "control": 1
+  },
+  {
+    "id": "165",
+    "activity": "soins_hygiene_4",
+    "risk_id": "risk.biologique",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "166",
+    "activity": "soins_hygiene_4",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 1,
+    "control": 1
+  },
+  {
+    "id": "167",
+    "activity": "soins_hygiene_5",
+    "risk_id": "risk.biologique",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "168",
+    "activity": "soins_hygiene_5",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 1,
+    "control": 1
+  },
+  {
+    "id": "169",
+    "activity": "tournée_domiciles",
+    "risk_id": "risk.routier",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "170",
+    "activity": "tournée_domiciles",
+    "risk_id": "risk.risque_domestique",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "171",
+    "activity": "tournée_domiciles_1",
+    "risk_id": "risk.routier",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "172",
+    "activity": "tournée_domiciles_1",
+    "risk_id": "risk.risque_domestique",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "173",
+    "activity": "tournée_domiciles_2",
+    "risk_id": "risk.routier",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "174",
+    "activity": "tournée_domiciles_2",
+    "risk_id": "risk.risque_domestique",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "175",
+    "activity": "tournée_domiciles_3",
+    "risk_id": "risk.routier",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "176",
+    "activity": "tournée_domiciles_3",
+    "risk_id": "risk.risque_domestique",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "177",
+    "activity": "tournée_domiciles_4",
+    "risk_id": "risk.routier",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "178",
+    "activity": "tournée_domiciles_4",
+    "risk_id": "risk.risque_domestique",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "179",
+    "activity": "tournée_domiciles_5",
+    "risk_id": "risk.routier",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "180",
+    "activity": "tournée_domiciles_5",
+    "risk_id": "risk.risque_domestique",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "181",
+    "activity": "travail_sur_toiture",
+    "risk_id": "risk.chute_hauteur",
+    "severity": 2,
+    "frequency": 1,
+    "control": -1
+  },
+  {
+    "id": "182",
+    "activity": "travail_sur_toiture_1",
+    "risk_id": "risk.chute_hauteur",
+    "severity": 2,
+    "frequency": 1,
+    "control": -1
+  },
+  {
+    "id": "183",
+    "activity": "travail_sur_toiture_2",
+    "risk_id": "risk.chute_hauteur",
+    "severity": 2,
+    "frequency": 1,
+    "control": -1
+  },
+  {
+    "id": "184",
+    "activity": "travail_sur_toiture_3",
+    "risk_id": "risk.chute_hauteur",
+    "severity": 2,
+    "frequency": 1,
+    "control": -1
+  },
+  {
+    "id": "185",
+    "activity": "travail_sur_toiture_4",
+    "risk_id": "risk.chute_hauteur",
+    "severity": 2,
+    "frequency": 1,
+    "control": -1
+  },
+  {
+    "id": "186",
+    "activity": "travail_sur_toiture_5",
+    "risk_id": "risk.chute_hauteur",
+    "severity": 2,
+    "frequency": 1,
+    "control": -1
+  },
+  {
+    "id": "187",
+    "activity": "echafaudage_roulant",
+    "risk_id": "risk.chute_hauteur",
+    "severity": 2,
+    "frequency": 1,
+    "control": -1
+  },
+  {
+    "id": "188",
+    "activity": "echafaudage_roulant_1",
+    "risk_id": "risk.chute_hauteur",
+    "severity": 2,
+    "frequency": 1,
+    "control": -1
+  },
+  {
+    "id": "189",
+    "activity": "echafaudage_roulant_2",
+    "risk_id": "risk.chute_hauteur",
+    "severity": 2,
+    "frequency": 1,
+    "control": -1
+  },
+  {
+    "id": "190",
+    "activity": "echafaudage_roulant_3",
+    "risk_id": "risk.chute_hauteur",
+    "severity": 2,
+    "frequency": 1,
+    "control": -1
+  },
+  {
+    "id": "191",
+    "activity": "echafaudage_roulant_4",
+    "risk_id": "risk.chute_hauteur",
+    "severity": 2,
+    "frequency": 1,
+    "control": -1
+  },
+  {
+    "id": "192",
+    "activity": "echafaudage_roulant_5",
+    "risk_id": "risk.chute_hauteur",
+    "severity": 2,
+    "frequency": 1,
+    "control": -1
+  },
+  {
+    "id": "193",
+    "activity": "perforation",
+    "risk_id": "risk.bruit",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "194",
+    "activity": "perforation",
+    "risk_id": "risk.poussiere",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "195",
+    "activity": "perforation_1",
+    "risk_id": "risk.bruit",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "196",
+    "activity": "perforation_1",
+    "risk_id": "risk.poussiere",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "197",
+    "activity": "perforation_2",
+    "risk_id": "risk.bruit",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "198",
+    "activity": "perforation_2",
+    "risk_id": "risk.poussiere",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "199",
+    "activity": "perforation_3",
+    "risk_id": "risk.bruit",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "200",
+    "activity": "perforation_3",
+    "risk_id": "risk.poussiere",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "201",
+    "activity": "perforation_4",
+    "risk_id": "risk.bruit",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "202",
+    "activity": "perforation_4",
+    "risk_id": "risk.poussiere",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "203",
+    "activity": "perforation_5",
+    "risk_id": "risk.bruit",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "204",
+    "activity": "perforation_5",
+    "risk_id": "risk.poussiere",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "205",
+    "activity": "scie_circulaire",
+    "risk_id": "risk.coupures",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "206",
+    "activity": "scie_circulaire",
+    "risk_id": "risk.bris_lame",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "207",
+    "activity": "scie_circulaire_1",
+    "risk_id": "risk.coupures",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "208",
+    "activity": "scie_circulaire_1",
+    "risk_id": "risk.bris_lame",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "209",
+    "activity": "scie_circulaire_2",
+    "risk_id": "risk.coupures",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "210",
+    "activity": "scie_circulaire_2",
+    "risk_id": "risk.bris_lame",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "211",
+    "activity": "scie_circulaire_3",
+    "risk_id": "risk.coupures",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "212",
+    "activity": "scie_circulaire_3",
+    "risk_id": "risk.bris_lame",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "213",
+    "activity": "scie_circulaire_4",
+    "risk_id": "risk.coupures",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "214",
+    "activity": "scie_circulaire_4",
+    "risk_id": "risk.bris_lame",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "215",
+    "activity": "scie_circulaire_5",
+    "risk_id": "risk.coupures",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "216",
+    "activity": "scie_circulaire_5",
+    "risk_id": "risk.bris_lame",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "217",
+    "activity": "soupçon_amiante",
+    "risk_id": "risk.amiante",
+    "severity": 2,
+    "frequency": 0,
+    "control": -1
+  },
+  {
+    "id": "218",
+    "activity": "soupçon_amiante_1",
+    "risk_id": "risk.amiante",
+    "severity": 2,
+    "frequency": 0,
+    "control": -1
+  },
+  {
+    "id": "219",
+    "activity": "soupçon_amiante_2",
+    "risk_id": "risk.amiante",
+    "severity": 2,
+    "frequency": 0,
+    "control": -1
+  },
+  {
+    "id": "220",
+    "activity": "soupçon_amiante_3",
+    "risk_id": "risk.amiante",
+    "severity": 2,
+    "frequency": 0,
+    "control": -1
+  },
+  {
+    "id": "221",
+    "activity": "soupçon_amiante_4",
+    "risk_id": "risk.amiante",
+    "severity": 2,
+    "frequency": 0,
+    "control": -1
+  },
+  {
+    "id": "222",
+    "activity": "soupçon_amiante_5",
+    "risk_id": "risk.amiante",
+    "severity": 2,
+    "frequency": 0,
+    "control": -1
+  },
+  {
+    "id": "223",
+    "activity": "nettoyeur_HP",
+    "risk_id": "risk.haute_pression",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "224",
+    "activity": "nettoyeur_HP_1",
+    "risk_id": "risk.haute_pression",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "225",
+    "activity": "nettoyeur_HP_2",
+    "risk_id": "risk.haute_pression",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "226",
+    "activity": "nettoyeur_HP_3",
+    "risk_id": "risk.haute_pression",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "227",
+    "activity": "nettoyeur_HP_4",
+    "risk_id": "risk.haute_pression",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "228",
+    "activity": "nettoyeur_HP_5",
+    "risk_id": "risk.haute_pression",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "229",
+    "activity": "developpement_intensif",
+    "risk_id": "risk.travail_ecran",
+    "severity": 0,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "230",
+    "activity": "developpement_intensif",
+    "risk_id": "risk.ecrans_multiples",
+    "severity": 0,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "231",
+    "activity": "developpement_intensif_1",
+    "risk_id": "risk.travail_ecran",
+    "severity": 0,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "232",
+    "activity": "developpement_intensif_1",
+    "risk_id": "risk.ecrans_multiples",
+    "severity": 0,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "233",
+    "activity": "developpement_intensif_2",
+    "risk_id": "risk.travail_ecran",
+    "severity": 0,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "234",
+    "activity": "developpement_intensif_2",
+    "risk_id": "risk.ecrans_multiples",
+    "severity": 0,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "235",
+    "activity": "developpement_intensif_3",
+    "risk_id": "risk.travail_ecran",
+    "severity": 0,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "236",
+    "activity": "developpement_intensif_3",
+    "risk_id": "risk.ecrans_multiples",
+    "severity": 0,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "237",
+    "activity": "developpement_intensif_4",
+    "risk_id": "risk.travail_ecran",
+    "severity": 0,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "238",
+    "activity": "developpement_intensif_4",
+    "risk_id": "risk.ecrans_multiples",
+    "severity": 0,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "239",
+    "activity": "developpement_intensif_5",
+    "risk_id": "risk.travail_ecran",
+    "severity": 0,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "240",
+    "activity": "developpement_intensif_5",
+    "risk_id": "risk.ecrans_multiples",
+    "severity": 0,
+    "frequency": 2,
+    "control": 0
+  },
+  {
+    "id": "241",
+    "activity": "support_clients",
+    "risk_id": "risk.rps",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "242",
+    "activity": "support_clients",
+    "risk_id": "risk.troubles_voix",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "243",
+    "activity": "support_clients_1",
+    "risk_id": "risk.rps",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "244",
+    "activity": "support_clients_1",
+    "risk_id": "risk.troubles_voix",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "245",
+    "activity": "support_clients_2",
+    "risk_id": "risk.rps",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "246",
+    "activity": "support_clients_2",
+    "risk_id": "risk.troubles_voix",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "247",
+    "activity": "support_clients_3",
+    "risk_id": "risk.rps",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "248",
+    "activity": "support_clients_3",
+    "risk_id": "risk.troubles_voix",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "249",
+    "activity": "support_clients_4",
+    "risk_id": "risk.rps",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "250",
+    "activity": "support_clients_4",
+    "risk_id": "risk.troubles_voix",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "251",
+    "activity": "support_clients_5",
+    "risk_id": "risk.rps",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "252",
+    "activity": "support_clients_5",
+    "risk_id": "risk.troubles_voix",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "253",
+    "activity": "open_space",
+    "risk_id": "risk.confinement_air",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "254",
+    "activity": "open_space",
+    "risk_id": "risk.bruit",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "255",
+    "activity": "open_space_1",
+    "risk_id": "risk.confinement_air",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "256",
+    "activity": "open_space_1",
+    "risk_id": "risk.bruit",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "257",
+    "activity": "open_space_2",
+    "risk_id": "risk.confinement_air",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "258",
+    "activity": "open_space_2",
+    "risk_id": "risk.bruit",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "259",
+    "activity": "open_space_3",
+    "risk_id": "risk.confinement_air",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "260",
+    "activity": "open_space_3",
+    "risk_id": "risk.bruit",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "261",
+    "activity": "open_space_4",
+    "risk_id": "risk.confinement_air",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "262",
+    "activity": "open_space_4",
+    "risk_id": "risk.bruit",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "263",
+    "activity": "open_space_5",
+    "risk_id": "risk.confinement_air",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "264",
+    "activity": "open_space_5",
+    "risk_id": "risk.bruit",
+    "severity": 0,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "265",
+    "activity": "prélèvements",
+    "risk_id": "risk.aiguille",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "266",
+    "activity": "prélèvements",
+    "risk_id": "risk.biologique",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "267",
+    "activity": "prélèvements_1",
+    "risk_id": "risk.aiguille",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "268",
+    "activity": "prélèvements_1",
+    "risk_id": "risk.biologique",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "269",
+    "activity": "prélèvements_2",
+    "risk_id": "risk.aiguille",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "270",
+    "activity": "prélèvements_2",
+    "risk_id": "risk.biologique",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "271",
+    "activity": "prélèvements_3",
+    "risk_id": "risk.aiguille",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "272",
+    "activity": "prélèvements_3",
+    "risk_id": "risk.biologique",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "273",
+    "activity": "prélèvements_4",
+    "risk_id": "risk.aiguille",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "274",
+    "activity": "prélèvements_4",
+    "risk_id": "risk.biologique",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "275",
+    "activity": "prélèvements_5",
+    "risk_id": "risk.aiguille",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "276",
+    "activity": "prélèvements_5",
+    "risk_id": "risk.biologique",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "277",
+    "activity": "désinfection",
+    "risk_id": "risk.chimique",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "278",
+    "activity": "désinfection_1",
+    "risk_id": "risk.chimique",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "279",
+    "activity": "désinfection_2",
+    "risk_id": "risk.chimique",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "280",
+    "activity": "désinfection_3",
+    "risk_id": "risk.chimique",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "281",
+    "activity": "désinfection_4",
+    "risk_id": "risk.chimique",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "282",
+    "activity": "désinfection_5",
+    "risk_id": "risk.chimique",
+    "severity": 0,
+    "frequency": 2,
+    "control": 1
+  },
+  {
+    "id": "283",
+    "activity": "collage",
+    "risk_id": "risk.colles_encres",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "284",
+    "activity": "collage",
+    "risk_id": "risk.cmr",
+    "severity": 1,
+    "frequency": 0,
+    "control": 0
+  },
+  {
+    "id": "285",
+    "activity": "collage_1",
+    "risk_id": "risk.colles_encres",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "286",
+    "activity": "collage_1",
+    "risk_id": "risk.cmr",
+    "severity": 1,
+    "frequency": 0,
+    "control": 0
+  },
+  {
+    "id": "287",
+    "activity": "collage_2",
+    "risk_id": "risk.colles_encres",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "288",
+    "activity": "collage_2",
+    "risk_id": "risk.cmr",
+    "severity": 1,
+    "frequency": 0,
+    "control": 0
+  },
+  {
+    "id": "289",
+    "activity": "collage_3",
+    "risk_id": "risk.colles_encres",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "290",
+    "activity": "collage_3",
+    "risk_id": "risk.cmr",
+    "severity": 1,
+    "frequency": 0,
+    "control": 0
+  },
+  {
+    "id": "291",
+    "activity": "collage_4",
+    "risk_id": "risk.colles_encres",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "292",
+    "activity": "collage_4",
+    "risk_id": "risk.cmr",
+    "severity": 1,
+    "frequency": 0,
+    "control": 0
+  },
+  {
+    "id": "293",
+    "activity": "collage_5",
+    "risk_id": "risk.colles_encres",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "294",
+    "activity": "collage_5",
+    "risk_id": "risk.cmr",
+    "severity": 1,
+    "frequency": 0,
+    "control": 0
+  },
+  {
+    "id": "295",
+    "activity": "ponçage_bois",
+    "risk_id": "risk.poussiere_bois",
+    "severity": 2,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "296",
+    "activity": "ponçage_bois_1",
+    "risk_id": "risk.poussiere_bois",
+    "severity": 2,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "297",
+    "activity": "ponçage_bois_2",
+    "risk_id": "risk.poussiere_bois",
+    "severity": 2,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "298",
+    "activity": "ponçage_bois_3",
+    "risk_id": "risk.poussiere_bois",
+    "severity": 2,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "299",
+    "activity": "ponçage_bois_4",
+    "risk_id": "risk.poussiere_bois",
+    "severity": 2,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "300",
+    "activity": "ponçage_bois_5",
+    "risk_id": "risk.poussiere_bois",
+    "severity": 2,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "301",
+    "activity": "sciage_bois",
+    "risk_id": "risk.poussiere_bois",
+    "severity": 2,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "302",
+    "activity": "sciage_bois",
+    "risk_id": "risk.bris_lame",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "303",
+    "activity": "sciage_bois_1",
+    "risk_id": "risk.poussiere_bois",
+    "severity": 2,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "304",
+    "activity": "sciage_bois_1",
+    "risk_id": "risk.bris_lame",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "305",
+    "activity": "sciage_bois_2",
+    "risk_id": "risk.poussiere_bois",
+    "severity": 2,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "306",
+    "activity": "sciage_bois_2",
+    "risk_id": "risk.bris_lame",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "307",
+    "activity": "sciage_bois_3",
+    "risk_id": "risk.poussiere_bois",
+    "severity": 2,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "308",
+    "activity": "sciage_bois_3",
+    "risk_id": "risk.bris_lame",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "309",
+    "activity": "sciage_bois_4",
+    "risk_id": "risk.poussiere_bois",
+    "severity": 2,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "310",
+    "activity": "sciage_bois_4",
+    "risk_id": "risk.bris_lame",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "311",
+    "activity": "sciage_bois_5",
+    "risk_id": "risk.poussiere_bois",
+    "severity": 2,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "312",
+    "activity": "sciage_bois_5",
+    "risk_id": "risk.bris_lame",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "313",
+    "activity": "meuleuse",
+    "risk_id": "risk.bruit",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "314",
+    "activity": "meuleuse",
+    "risk_id": "risk.poussiere",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "315",
+    "activity": "meuleuse",
+    "risk_id": "risk.coupures",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "316",
+    "activity": "meuleuse_1",
+    "risk_id": "risk.bruit",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "317",
+    "activity": "meuleuse_1",
+    "risk_id": "risk.poussiere",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "318",
+    "activity": "meuleuse_1",
+    "risk_id": "risk.coupures",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "319",
+    "activity": "meuleuse_2",
+    "risk_id": "risk.bruit",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "320",
+    "activity": "meuleuse_2",
+    "risk_id": "risk.poussiere",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "321",
+    "activity": "meuleuse_2",
+    "risk_id": "risk.coupures",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "322",
+    "activity": "meuleuse_3",
+    "risk_id": "risk.bruit",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "323",
+    "activity": "meuleuse_3",
+    "risk_id": "risk.poussiere",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "324",
+    "activity": "meuleuse_3",
+    "risk_id": "risk.coupures",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "325",
+    "activity": "meuleuse_4",
+    "risk_id": "risk.bruit",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "326",
+    "activity": "meuleuse_4",
+    "risk_id": "risk.poussiere",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "327",
+    "activity": "meuleuse_4",
+    "risk_id": "risk.coupures",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "328",
+    "activity": "meuleuse_5",
+    "risk_id": "risk.bruit",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "329",
+    "activity": "meuleuse_5",
+    "risk_id": "risk.poussiere",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "330",
+    "activity": "meuleuse_5",
+    "risk_id": "risk.coupures",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "331",
+    "activity": "pulvérisation_phyto",
+    "risk_id": "risk.pesticides",
+    "severity": 2,
+    "frequency": 1,
+    "control": -1
+  },
+  {
+    "id": "332",
+    "activity": "pulvérisation_phyto_1",
+    "risk_id": "risk.pesticides",
+    "severity": 2,
+    "frequency": 1,
+    "control": -1
+  },
+  {
+    "id": "333",
+    "activity": "pulvérisation_phyto_2",
+    "risk_id": "risk.pesticides",
+    "severity": 2,
+    "frequency": 1,
+    "control": -1
+  },
+  {
+    "id": "334",
+    "activity": "pulvérisation_phyto_3",
+    "risk_id": "risk.pesticides",
+    "severity": 2,
+    "frequency": 1,
+    "control": -1
+  },
+  {
+    "id": "335",
+    "activity": "pulvérisation_phyto_4",
+    "risk_id": "risk.pesticides",
+    "severity": 2,
+    "frequency": 1,
+    "control": -1
+  },
+  {
+    "id": "336",
+    "activity": "pulvérisation_phyto_5",
+    "risk_id": "risk.pesticides",
+    "severity": 2,
+    "frequency": 1,
+    "control": -1
+  },
+  {
+    "id": "337",
+    "activity": "récolte_mécanisée",
+    "risk_id": "risk.vibrations",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "338",
+    "activity": "récolte_mécanisée",
+    "risk_id": "risk.poussiere",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "339",
+    "activity": "récolte_mécanisée_1",
+    "risk_id": "risk.vibrations",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "340",
+    "activity": "récolte_mécanisée_1",
+    "risk_id": "risk.poussiere",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "341",
+    "activity": "récolte_mécanisée_2",
+    "risk_id": "risk.vibrations",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "342",
+    "activity": "récolte_mécanisée_2",
+    "risk_id": "risk.poussiere",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "343",
+    "activity": "récolte_mécanisée_3",
+    "risk_id": "risk.vibrations",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "344",
+    "activity": "récolte_mécanisée_3",
+    "risk_id": "risk.poussiere",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "345",
+    "activity": "récolte_mécanisée_4",
+    "risk_id": "risk.vibrations",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "346",
+    "activity": "récolte_mécanisée_4",
+    "risk_id": "risk.poussiere",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "347",
+    "activity": "récolte_mécanisée_5",
+    "risk_id": "risk.vibrations",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "348",
+    "activity": "récolte_mécanisée_5",
+    "risk_id": "risk.poussiere",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "349",
+    "activity": "traite_bovins",
+    "risk_id": "risk.animal",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "350",
+    "activity": "traite_bovins",
+    "risk_id": "risk.biologique",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "351",
+    "activity": "traite_bovins_1",
+    "risk_id": "risk.animal",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "352",
+    "activity": "traite_bovins_1",
+    "risk_id": "risk.biologique",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "353",
+    "activity": "traite_bovins_2",
+    "risk_id": "risk.animal",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "354",
+    "activity": "traite_bovins_2",
+    "risk_id": "risk.biologique",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "355",
+    "activity": "traite_bovins_3",
+    "risk_id": "risk.animal",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "356",
+    "activity": "traite_bovins_3",
+    "risk_id": "risk.biologique",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "357",
+    "activity": "traite_bovins_4",
+    "risk_id": "risk.animal",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "358",
+    "activity": "traite_bovins_4",
+    "risk_id": "risk.biologique",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "359",
+    "activity": "traite_bovins_5",
+    "risk_id": "risk.animal",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "360",
+    "activity": "traite_bovins_5",
+    "risk_id": "risk.biologique",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "361",
+    "activity": "abattage_arbre",
+    "risk_id": "risk.vibrations",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "362",
+    "activity": "abattage_arbre",
+    "risk_id": "risk.coupures",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "363",
+    "activity": "abattage_arbre",
+    "risk_id": "risk.chute_hauteur",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "364",
+    "activity": "abattage_arbre_1",
+    "risk_id": "risk.vibrations",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "365",
+    "activity": "abattage_arbre_1",
+    "risk_id": "risk.coupures",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "366",
+    "activity": "abattage_arbre_1",
+    "risk_id": "risk.chute_hauteur",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "367",
+    "activity": "abattage_arbre_2",
+    "risk_id": "risk.vibrations",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "368",
+    "activity": "abattage_arbre_2",
+    "risk_id": "risk.coupures",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "369",
+    "activity": "abattage_arbre_2",
+    "risk_id": "risk.chute_hauteur",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "370",
+    "activity": "abattage_arbre_3",
+    "risk_id": "risk.vibrations",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "371",
+    "activity": "abattage_arbre_3",
+    "risk_id": "risk.coupures",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "372",
+    "activity": "abattage_arbre_3",
+    "risk_id": "risk.chute_hauteur",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "373",
+    "activity": "abattage_arbre_4",
+    "risk_id": "risk.vibrations",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "374",
+    "activity": "abattage_arbre_4",
+    "risk_id": "risk.coupures",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "375",
+    "activity": "abattage_arbre_4",
+    "risk_id": "risk.chute_hauteur",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "376",
+    "activity": "abattage_arbre_5",
+    "risk_id": "risk.vibrations",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "377",
+    "activity": "abattage_arbre_5",
+    "risk_id": "risk.coupures",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "378",
+    "activity": "abattage_arbre_5",
+    "risk_id": "risk.chute_hauteur",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "379",
+    "activity": "débardage",
+    "risk_id": "risk.ecrasement",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "380",
+    "activity": "débardage",
+    "risk_id": "risk.circulation_interne",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "381",
+    "activity": "débardage_1",
+    "risk_id": "risk.ecrasement",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "382",
+    "activity": "débardage_1",
+    "risk_id": "risk.circulation_interne",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "383",
+    "activity": "débardage_2",
+    "risk_id": "risk.ecrasement",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "384",
+    "activity": "débardage_2",
+    "risk_id": "risk.circulation_interne",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "385",
+    "activity": "débardage_3",
+    "risk_id": "risk.ecrasement",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "386",
+    "activity": "débardage_3",
+    "risk_id": "risk.circulation_interne",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "387",
+    "activity": "débardage_4",
+    "risk_id": "risk.ecrasement",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "388",
+    "activity": "débardage_4",
+    "risk_id": "risk.circulation_interne",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "389",
+    "activity": "débardage_5",
+    "risk_id": "risk.ecrasement",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "390",
+    "activity": "débardage_5",
+    "risk_id": "risk.circulation_interne",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "391",
+    "activity": "pont_bateau",
+    "risk_id": "risk.noyade",
+    "severity": 2,
+    "frequency": 0,
+    "control": -1
+  },
+  {
+    "id": "392",
+    "activity": "pont_bateau",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 1,
+    "control": 1
+  },
+  {
+    "id": "393",
+    "activity": "pont_bateau",
+    "risk_id": "risk.froid",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "394",
+    "activity": "pont_bateau_1",
+    "risk_id": "risk.noyade",
+    "severity": 2,
+    "frequency": 0,
+    "control": -1
+  },
+  {
+    "id": "395",
+    "activity": "pont_bateau_1",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 1,
+    "control": 1
+  },
+  {
+    "id": "396",
+    "activity": "pont_bateau_1",
+    "risk_id": "risk.froid",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "397",
+    "activity": "pont_bateau_2",
+    "risk_id": "risk.noyade",
+    "severity": 2,
+    "frequency": 0,
+    "control": -1
+  },
+  {
+    "id": "398",
+    "activity": "pont_bateau_2",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 1,
+    "control": 1
+  },
+  {
+    "id": "399",
+    "activity": "pont_bateau_2",
+    "risk_id": "risk.froid",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "400",
+    "activity": "pont_bateau_3",
+    "risk_id": "risk.noyade",
+    "severity": 2,
+    "frequency": 0,
+    "control": -1
+  },
+  {
+    "id": "401",
+    "activity": "pont_bateau_3",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 1,
+    "control": 1
+  },
+  {
+    "id": "402",
+    "activity": "pont_bateau_3",
+    "risk_id": "risk.froid",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "403",
+    "activity": "pont_bateau_4",
+    "risk_id": "risk.noyade",
+    "severity": 2,
+    "frequency": 0,
+    "control": -1
+  },
+  {
+    "id": "404",
+    "activity": "pont_bateau_4",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 1,
+    "control": 1
+  },
+  {
+    "id": "405",
+    "activity": "pont_bateau_4",
+    "risk_id": "risk.froid",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "406",
+    "activity": "pont_bateau_5",
+    "risk_id": "risk.noyade",
+    "severity": 2,
+    "frequency": 0,
+    "control": -1
+  },
+  {
+    "id": "407",
+    "activity": "pont_bateau_5",
+    "risk_id": "risk.glissade",
+    "severity": 0,
+    "frequency": 1,
+    "control": 1
+  },
+  {
+    "id": "408",
+    "activity": "pont_bateau_5",
+    "risk_id": "risk.froid",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "409",
+    "activity": "filet_peche",
+    "risk_id": "risk.noyade",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "410",
+    "activity": "filet_peche",
+    "risk_id": "risk.manutention",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "411",
+    "activity": "filet_peche_1",
+    "risk_id": "risk.noyade",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "412",
+    "activity": "filet_peche_1",
+    "risk_id": "risk.manutention",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "413",
+    "activity": "filet_peche_2",
+    "risk_id": "risk.noyade",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "414",
+    "activity": "filet_peche_2",
+    "risk_id": "risk.manutention",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "415",
+    "activity": "filet_peche_3",
+    "risk_id": "risk.noyade",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "416",
+    "activity": "filet_peche_3",
+    "risk_id": "risk.manutention",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "417",
+    "activity": "filet_peche_4",
+    "risk_id": "risk.noyade",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "418",
+    "activity": "filet_peche_4",
+    "risk_id": "risk.manutention",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "419",
+    "activity": "filet_peche_5",
+    "risk_id": "risk.noyade",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "420",
+    "activity": "filet_peche_5",
+    "risk_id": "risk.manutention",
+    "severity": 1,
+    "frequency": 1,
+    "control": 0
+  },
+  {
+    "id": "421",
+    "activity": "silo_entree",
+    "risk_id": "risk.enfermement_silo",
+    "severity": 2,
+    "frequency": 0,
+    "control": -1
+  },
+  {
+    "id": "422",
+    "activity": "silo_entree",
+    "risk_id": "risk.confinement_air",
+    "severity": 1,
+    "frequency": 0,
+    "control": 0
+  },
+  {
+    "id": "423",
+    "activity": "silo_entree_1",
+    "risk_id": "risk.enfermement_silo",
+    "severity": 2,
+    "frequency": 0,
+    "control": -1
+  },
+  {
+    "id": "424",
+    "activity": "silo_entree_1",
+    "risk_id": "risk.confinement_air",
+    "severity": 1,
+    "frequency": 0,
+    "control": 0
+  },
+  {
+    "id": "425",
+    "activity": "silo_entree_2",
+    "risk_id": "risk.enfermement_silo",
+    "severity": 2,
+    "frequency": 0,
+    "control": -1
+  },
+  {
+    "id": "426",
+    "activity": "silo_entree_2",
+    "risk_id": "risk.confinement_air",
+    "severity": 1,
+    "frequency": 0,
+    "control": 0
+  },
+  {
+    "id": "427",
+    "activity": "silo_entree_3",
+    "risk_id": "risk.enfermement_silo",
+    "severity": 2,
+    "frequency": 0,
+    "control": -1
+  },
+  {
+    "id": "428",
+    "activity": "silo_entree_3",
+    "risk_id": "risk.confinement_air",
+    "severity": 1,
+    "frequency": 0,
+    "control": 0
+  },
+  {
+    "id": "429",
+    "activity": "silo_entree_4",
+    "risk_id": "risk.enfermement_silo",
+    "severity": 2,
+    "frequency": 0,
+    "control": -1
+  },
+  {
+    "id": "430",
+    "activity": "silo_entree_4",
+    "risk_id": "risk.confinement_air",
+    "severity": 1,
+    "frequency": 0,
+    "control": 0
+  },
+  {
+    "id": "431",
+    "activity": "silo_entree_5",
+    "risk_id": "risk.enfermement_silo",
+    "severity": 2,
+    "frequency": 0,
+    "control": -1
+  },
+  {
+    "id": "432",
+    "activity": "silo_entree_5",
+    "risk_id": "risk.confinement_air",
+    "severity": 1,
+    "frequency": 0,
+    "control": 0
+  }
+]

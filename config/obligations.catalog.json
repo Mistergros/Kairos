@@ -1,62 +1,276 @@
-[
-  {
-    "id": "OB-DUERP-ANNUEL",
-    "title": "Mise à jour DUERP annuelle et lors d’aménagements importants",
-    "reference": "Code du travail R4121-2",
-    "applies_to_all": true
-  },
-  {
-    "id": "OB-EVAC-INCENDIE",
-    "title": "Exercices évacuation annuels, moyens de lutte incendie",
-    "reference": "Code du travail R4227-39 et suivants",
-    "applies_to_all": true
-  },
-  {
-    "id": "OB-FORMATION-SECURITE",
-    "title": "Formation sécurité adaptée au poste (y compris intérimaires)",
-    "reference": "L4141-2",
-    "applies_to_all": true
-  },
-  {
-    "id": "OB-VERIF-PERIODIQUES",
-    "title": "Vérifications périodiques (électrique, levage, extincteurs)",
-    "reference": "R4224-17, R4224-19, etc.",
-    "applies_to_all": true
-  },
-  {
-    "id": "OB-ATEX",
-    "title": "Évaluation ATEX et zonage si produits inflammables",
-    "reference": "Décret 2002-1553, Dir. 1999/92/CE",
-    "applies_to_all": false,
-    "naf_specific": [
-      "2013B",
-      "2221Z",
-      "2399Z",
-      "4120A",
-      "5610A"
-    ]
-  },
-  {
-    "id": "OB-DASRI",
-    "title": "Gestion des DASRI et circuit d’élimination",
-    "reference": "CSP + ICPE selon cas",
-    "applies_to_all": false,
-    "naf_specific": [
-      "8621Z",
-      "8710A",
-      "8810A"
-    ]
-  },
-  {
-    "id": "OB-TRAVAIL-NUIT",
-    "title": "Suivi médical et mesures spécifiques travail de nuit",
-    "reference": "Articles L3122-5 et suivants",
-    "applies_to_all": false
-  },
-  {
-    "id": "OB-AGRESSION",
-    "title": "Prévention des violences externes (public)",
-    "reference": "L4121-1 à L4121-3",
-    "applies_to_all": false
-  }
+[
+  {
+    "id": "OB-DUERP",
+    "title": "Document Unique d'Ã¢â€Å“ÃƒÂ«valuation des Risques",
+    "reference": "C. trav. R.4121-1 Ã¢â€Å“ÃƒÂ¡ R.4121-4",
+    "applies_to_all": true,
+    "periodicity": "Mise Ã¢â€Å“ÃƒÂ¡ jour annuelle et lors des modifications",
+    "evidences": [
+      "DUERP Ã¢â€Å“ÃƒÂ¡ jour"
+    ]
+  },
+  {
+    "id": "OB-FORMATION",
+    "title": "Formation sÃ¢â€Å“Ã‚Â®curitÃ¢â€Å“Ã‚Â® adaptÃ¢â€Å“Ã‚Â®e",
+    "reference": "C. trav. L.4141-2",
+    "applies_to_all": true,
+    "periodicity": "Ã¢â€Å“Ãƒâ€¡ l'embauche et pÃ¢â€Å“Ã‚Â®riodique",
+    "evidences": [
+      "TraÃ¢â€Å“Ã‚ÂºabilitÃ¢â€Å“Ã‚Â® formations"
+    ]
+  },
+  {
+    "id": "OB-VERIF-ELECT",
+    "title": "VÃ¢â€Å“Ã‚Â®rifications installations Ã¢â€Å“Ã‚Â®lectriques",
+    "reference": "C. trav. R.4226-14 et s.",
+    "applies_to_all": true,
+    "periodicity": "Annuelle",
+    "evidences": [
+      "PV vÃ¢â€Å“Ã‚Â®rifications"
+    ]
+  },
+  {
+    "id": "OB-INCENDIE",
+    "title": "Consignes et exercices d'Ã¢â€Å“Ã‚Â®vacuation",
+    "reference": "C. trav. R.4227-37 Ã¢â€Å“ÃƒÂ¡ R.4227-39",
+    "applies_to_all": true,
+    "periodicity": "Au moins annuel",
+    "evidences": [
+      "Registre sÃ¢â€Å“Ã‚Â®curitÃ¢â€Å“Ã‚Â®"
+    ]
+  },
+  {
+    "id": "OB-ATEX",
+    "title": "Ã¢â€Å“ÃƒÂ«valuation et zonage ATEX",
+    "reference": "Dir 1999/92/CE; DÃ¢â€Å“Ã‚Â®cret 2002-1553",
+    "applies_to_all": false,
+    "naf_specific": [
+      "10",
+      "20",
+      "22",
+      "56",
+      "43"
+    ],
+    "risk_ids": [
+      "R-ATEX",
+      "R-CHIMIQUE"
+    ],
+    "evidences": [
+      "Zonage ATEX validÃ¢â€Å“Ã‚Â®"
+    ],
+    "links": [
+      "https://osha.europa.eu/"
+    ]
+  },
+  {
+    "id": "OB-HACCP",
+    "title": "PMS/HACCP",
+    "reference": "Paquet HygiÃ¢â€Å“Ã‚Â¿ne",
+    "applies_to_all": false,
+    "naf_specific": [
+      "56",
+      "10",
+      "55"
+    ],
+    "risk_ids": [
+      "R-BIO",
+      "R-CHIMIQUE",
+      "R-FROID"
+    ],
+    "evidences": [
+      "Plan HACCP"
+    ]
+  },
+  {
+    "id": "OB-DASRI",
+    "title": "Gestion des DASRI",
+    "reference": "CSP; arrÃ¢â€Å“Ã‚Â¬tÃ¢â€Å“Ã‚Â® DASRI",
+    "applies_to_all": false,
+    "naf_specific": [
+      "86",
+      "87"
+    ],
+    "risk_ids": [
+      "R-BIO",
+      "R-DECHETS"
+    ],
+    "evidences": [
+      "Bordereaux DASRI"
+    ]
+  },
+  {
+    "id": "OB-BRUIT",
+    "title": "Ã¢â€Å“ÃƒÂ«valuation du bruit et actions",
+    "reference": "C. trav. R.4431-1 et s.",
+    "applies_to_all": false,
+    "naf_specific": [
+      "41",
+      "43",
+      "10",
+      "22"
+    ],
+    "risk_ids": [
+      "R-BRUIT"
+    ],
+    "thresholds": {
+      "LEX8h": ">80 dB(A)"
+    },
+    "periodicity": "Selon rÃ¢â€Å“Ã‚Â®sultat",
+    "evidences": [
+      "Rapport mesures"
+    ]
+  },
+  {
+    "id": "OB-VIB",
+    "title": "Ã¢â€Å“ÃƒÂ«valuation des vibrations",
+    "reference": "C. trav. R.4441-1 et s.",
+    "applies_to_all": false,
+    "naf_specific": [
+      "41",
+      "43"
+    ],
+    "risk_ids": [
+      "R-VIBRATIONS"
+    ],
+    "evidences": [
+      "Rapport exposition"
+    ]
+  },
+  {
+    "id": "OB-POUSSIERES-BOIS",
+    "title": "PrÃ¢â€Å“Ã‚Â®vention poussiÃ¢â€Å“Ã‚Â¿res de bois (CMR)",
+    "reference": "C. trav. R.4412-149 et s.",
+    "applies_to_all": false,
+    "naf_specific": [
+      "43.32A"
+    ],
+    "risk_ids": [
+      "R-POUSSIERES-BOIS"
+    ],
+    "evidences": [
+      "Mesures/aspiration"
+    ]
+  },
+  {
+    "id": "OB-SILICE",
+    "title": "PrÃ¢â€Å“Ã‚Â®vention silice cristalline (CMR)",
+    "reference": "C. trav. R.4412-149 et s.",
+    "applies_to_all": false,
+    "naf_specific": [
+      "41",
+      "43"
+    ],
+    "risk_ids": [
+      "R-SILICE"
+    ],
+    "evidences": [
+      "ProcÃ¢â€Å“Ã‚Â®dures mouillage/aspiration"
+    ]
+  },
+  {
+    "id": "OB-TRAVAIL-NUIT",
+    "title": "Suivi mÃ¢â€Å“Ã‚Â®dical travail de nuit",
+    "reference": "C. trav. L.3122-5 et s.",
+    "applies_to_all": false,
+    "naf_specific": [
+      "56",
+      "55",
+      "93"
+    ],
+    "risk_ids": [
+      "R-RPS"
+    ],
+    "evidences": [
+      "Suivi Sante-Travail"
+    ]
+  },
+  {
+    "id": "OB-MACHINES",
+    "title": "ConformitÃ¢â€Å“Ã‚Â® machines (carters, arrÃ¢â€Å“Ã‚Â¬ts d'urgence)",
+    "reference": "C. trav. R.4321-1 et s.",
+    "applies_to_all": false,
+    "naf_specific": [
+      "10",
+      "22",
+      "43"
+    ],
+    "risk_ids": [
+      "R-MACHINE"
+    ],
+    "periodicity": "ContrÃ¢â€Å“Ã¢â€Â¤les pÃ¢â€Å“Ã‚Â®riodiques selon notice",
+    "evidences": [
+      "Fiches de conformitÃ¢â€Å“Ã‚Â®",
+      "Rapports de contrÃ¢â€Å“Ã¢â€Â¤le"
+    ]
+  },
+  {
+    "id": "OB-LEVAGE",
+    "title": "VÃ¢â€Å“Ã‚Â®rifications appareils de levage",
+    "reference": "C. trav. R.4323-23 et s.",
+    "applies_to_all": false,
+    "naf_specific": [
+      "41",
+      "43",
+      "52"
+    ],
+    "risk_ids": [
+      "R-MANUTENTION"
+    ],
+    "periodicity": "Semestrielle/Annuelle",
+    "evidences": [
+      "PV vÃ¢â€Å“Ã‚Â®rification levage"
+    ]
+  },
+  {
+    "id": "OB-PRESSION",
+    "title": "ContrÃ¢â€Å“Ã¢â€Â¤le Ã¢â€Å“Ã‚Â®quipements sous pression",
+    "reference": "Code env. & arrÃ¢â€Å“Ã‚Â¬tÃ¢â€Å“Ã‚Â®s ESP",
+    "applies_to_all": false,
+    "naf_specific": [
+      "10",
+      "22",
+      "56"
+    ],
+    "risk_ids": [
+      "R-INCENDIE"
+    ],
+    "periodicity": "Selon catÃ¢â€Å“Ã‚Â®gorie ESP",
+    "evidences": [
+      "Registre ESP"
+    ]
+  },
+  {
+    "id": "OB-LEGIONELLES",
+    "title": "MaÃ¢â€Å“Ã‚Â«trise lÃ¢â€Å“Ã‚Â®gionelles rÃ¢â€Å“Ã‚Â®seaux ECS/torches",
+    "reference": "Recommandations sanitaires",
+    "applies_to_all": false,
+    "naf_specific": [
+      "55",
+      "86",
+      "87"
+    ],
+    "risk_ids": [
+      "R-BIO"
+    ],
+    "periodicity": "Programme surveillance",
+    "evidences": [
+      "Analyses pÃ¢â€Å“Ã‚Â®riodiques"
+    ]
+  },
+  {
+    "id": "OB-AMIANTE-SS4",
+    "title": "Sous-section 4 (interventions amiante)",
+    "reference": "C. trav. R.4412-139 et s.",
+    "applies_to_all": false,
+    "naf_specific": [
+      "41",
+      "43"
+    ],
+    "risk_ids": [
+      "R-MACHINE"
+    ],
+    "evidences": [
+      "Plan de retrait/encapsulage SS4"
+    ]
+  }
 ]

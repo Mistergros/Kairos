@@ -1,0 +1,41 @@
+[
+  {
+    "id": "A-CMR-001",
+    "risk_id": "R-CMR",
+    "title": "Substitution / FDS à jour (CMR)",
+    "type": "Technique",
+    "impact": "Réduction de l'exposition aux CMR par substitution et contrôle",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-CMR-002",
+    "risk_id": "R-CMR",
+    "title": "Mesures de confinement / ventilation (CMR)",
+    "type": "Technique",
+    "impact": "Captage à la source, ventilation adaptée pour CMR",
+    "difficulty": "Élevée",
+    "cost": "Élevé",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-CMR-003",
+    "risk_id": "R-CMR",
+    "title": "Suivi médical renforcé / traçabilité exposition",
+    "type": "Humaine",
+    "impact": "Réduction du risque via surveillance et traçabilité",
+    "difficulty": "Moyenne",
+    "cost": "Faible",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  }
+]

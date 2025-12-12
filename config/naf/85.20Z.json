@@ -1,0 +1,25 @@
+{
+  "code": "85.20Z",
+  "label": "Enseignement primaire",
+  "risk_tags": [
+    "education",
+    "accueil public"
+  ],
+  "risks_priority": [
+    "R-ECRAN",
+    "R-RPS",
+    "R-QUALITE-AIR",
+    "R-AGRESSION"
+  ],
+  "risks_mandatory": [],
+  "activities": [
+    {
+      "id": "bureau",
+      "label": "Bureaux/administration"
+    },
+    {
+      "id": "accueil",
+      "label": "Accueil/public"
+    }
+  ]
+}

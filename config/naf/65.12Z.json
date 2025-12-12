@@ -1,0 +1,25 @@
+{
+  "code": "65.12Z",
+  "label": "Assurance",
+  "risk_tags": [
+    "bureau",
+    "accueil"
+  ],
+  "risks_priority": [
+    "R-ECRAN",
+    "R-RPS",
+    "R-AGRESSION",
+    "R-QUALITE-AIR"
+  ],
+  "risks_mandatory": [],
+  "activities": [
+    {
+      "id": "bureau",
+      "label": "Bureau"
+    },
+    {
+      "id": "accueil",
+      "label": "Accueil / agence"
+    }
+  ]
+}

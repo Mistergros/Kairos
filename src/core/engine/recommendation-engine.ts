@@ -36,6 +36,13 @@ export function generateActionPlan(evaluatedRisks: RiskEvaluation[], nafCode?: s
         if (!existing.relatedRiskIds.includes(evaluation.risk.id)) {
           existing.relatedRiskIds.push(evaluation.risk.id);
         }
+        const unitId = evaluation.unity?.id || evaluation.unity?.name;
+        if (unitId) {
+          const workUnitIds = (existing as any).workUnitIds || [];
+          if (!workUnitIds.includes(unitId)) {
+            (existing as any).workUnitIds = [...workUnitIds, unitId];
+          }
+        }
         existing.nafAligned = existing.nafAligned || Boolean(action.naf_specific?.some((code) => nafCode?.startsWith(code || "")));
         return;
       }
@@ -45,6 +52,7 @@ export function generateActionPlan(evaluatedRisks: RiskEvaluation[], nafCode?: s
         priorityScore,
         relatedRiskIds: [evaluation.risk.id],
         nafAligned: Boolean(action.naf_specific?.some((code) => nafCode?.startsWith(code || ""))),
+        ...(evaluation.unity ? { workUnitIds: [evaluation.unity.id || evaluation.unity.name] as string[] } : {}),
       });
     });
   });

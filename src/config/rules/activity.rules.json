@@ -1,0 +1,346 @@
+[
+  {
+    "id": "RULE_SOLVENTS_ATEX",
+    "if": {
+      "features": [
+        "solvents"
+      ]
+    },
+    "then": {
+      "add_risks": [
+        "R-CHIMIQUE",
+        "R-ATEX"
+      ],
+      "add_actions": [
+        "A-CHIM-001",
+        "A-ATEX-001"
+      ],
+      "add_obligations": [
+        "OB-ATEX"
+      ]
+    }
+  },
+  {
+    "id": "RULE_COLD_ROOM",
+    "if": {
+      "features": [
+        "cold_room"
+      ]
+    },
+    "then": {
+      "add_risks": [
+        "R-FROID"
+      ],
+      "add_actions": [
+        "A-FROID-001"
+      ]
+    }
+  },
+  {
+    "id": "RULE_NIGHT_WORK",
+    "if": {
+      "features": [
+        "night_work"
+      ]
+    },
+    "then": {
+      "add_risks": [
+        "R-RPS"
+      ],
+      "add_obligations": [
+        "OB-TRAVAIL-NUIT"
+      ]
+    }
+  },
+  {
+    "id": "RULE_PUBLIC_FACING",
+    "if": {
+      "features": [
+        "public_facing"
+      ]
+    },
+    "then": {
+      "add_risks": [
+        "R-AGRESSION"
+      ],
+      "add_actions": [
+        "A-AGRES-001"
+      ]
+    }
+  },
+  {
+    "id": "RULE_VIBRATING_TOOLS",
+    "if": {
+      "features": [
+        "vibrating_tools"
+      ]
+    },
+    "then": {
+      "add_risks": [
+        "R-VIBRATIONS"
+      ],
+      "add_actions": [
+        "A-VIB-001",
+        "A-VIB-002"
+      ]
+    }
+  },
+  {
+    "id": "RULE_OUTDOOR_UV",
+    "if": {
+      "features": [
+        "outdoor_uv"
+      ]
+    },
+    "then": {
+      "add_risks": [
+        "R-RAYONNEMENT-UV"
+      ],
+      "add_actions": [
+        "A-UV-001"
+      ]
+    }
+  },
+  {
+    "id": "RULE_MACHINES",
+    "if": {
+      "features": [
+        "machines"
+      ]
+    },
+    "then": {
+      "add_risks": [
+        "R-MACHINE"
+      ],
+      "add_actions": [
+        "A-MAC-001",
+        "A-MAC-002"
+      ]
+    }
+  },
+  {
+    "id": "RULE_CUISINE",
+    "if": {
+      "activities": [
+        "cuisine",
+        "restauration"
+      ]
+    },
+    "then": {
+      "add_risks": [
+        "R-CHIMIQUE",
+        "R-FROID",
+        "R-GLISSADES",
+        "R-INCENDIE"
+      ],
+      "add_actions": [
+        "A-CHIM-001",
+        "A-FROID-001",
+        "A-GLIS-001",
+        "A-INC-001"
+      ]
+    }
+  },
+  {
+    "id": "RULE_PLONGE",
+    "if": {
+      "activities": [
+        "plonge"
+      ]
+    },
+    "then": {
+      "add_risks": [
+        "R-CHIMIQUE",
+        "R-GLISSADES"
+      ],
+      "add_actions": [
+        "A-CHIM-003",
+        "A-GLIS-002"
+      ]
+    }
+  },
+  {
+    "id": "RULE_CHANTIER",
+    "if": {
+      "activities": [
+        "chantier",
+        "terrain"
+      ],
+      "naf_prefix": [
+        "41",
+        "42",
+        "43"
+      ]
+    },
+    "then": {
+      "add_risks": [
+        "R-CHUTE-HAUTEUR",
+        "R-BRUIT",
+        "R-MANUTENTION"
+      ],
+      "add_actions": [
+        "A-CHUTE-H-001",
+        "A-BRUIT-001",
+        "A-MANUT-001"
+      ]
+    }
+  },
+  {
+    "id": "RULE_SILICE",
+    "if": {
+      "activities": [
+        "chantier",
+        "atelier"
+      ],
+      "tags": [
+        "decoupe_beton",
+        "poncage_pierre"
+      ]
+    },
+    "then": {
+      "add_risks": [
+        "R-SILICE"
+      ],
+      "add_actions": [
+        "A-SILICE-001"
+      ],
+      "add_obligations": [
+        "OB-SILICE"
+      ]
+    }
+  },
+  {
+    "id": "RULE_BOIS",
+    "if": {
+      "naf_prefix": [
+        "43.32A"
+      ]
+    },
+    "then": {
+      "add_risks": [
+        "R-POUSSIERES-BOIS"
+      ],
+      "add_actions": [
+        "A-BOIS-001"
+      ],
+      "add_obligations": [
+        "OB-POUSSIERES-BOIS"
+      ]
+    }
+  },
+  {
+    "id": "RULE_NOISE_MEASURE",
+    "if": {
+      "measurements": {
+        "LEX8h": ">80"
+      }
+    },
+    "then": {
+      "add_risks": [
+        "R-BRUIT"
+      ],
+      "add_obligations": [
+        "OB-BRUIT"
+      ],
+      "add_actions": [
+        "A-BRUIT-001",
+        "A-BRUIT-002"
+      ]
+    }
+  },
+  {
+    "id": "RULE_CO2",
+    "if": {
+      "measurements": {
+        "CO2": ">1300"
+      }
+    },
+    "then": {
+      "add_risks": [
+        "R-QUALITE-AIR"
+      ],
+      "add_actions": [
+        "A-AIR-001"
+      ]
+    }
+  },
+  {
+    "id": "RULE_ASBESTOS_SUSPECT",
+    "if": {
+      "features": [
+        "suspect_asbestos"
+      ]
+    },
+    "then": {
+      "add_risks": [
+        "R-MACHINE"
+      ],
+      "add_obligations": [
+        "OB-AMIANTE-SS4"
+      ]
+    }
+  },
+  {
+    "id": "RULE_WOOD_DUST",
+    "if": {
+      "naf_prefix": [
+        "43.32A"
+      ],
+      "activities": [
+        "atelier"
+      ]
+    },
+    "then": {
+      "add_risks": [
+        "R-POUSSIERES-BOIS"
+      ],
+      "add_actions": [
+        "A-BOIS-001",
+        "A-BOIS-002"
+      ],
+      "add_obligations": [
+        "OB-POUSSIERES-BOIS"
+      ]
+    }
+  },
+  {
+    "id": "RULE_REFRIGERATED_AREA",
+    "if": {
+      "activities": [
+        "chambre_froide"
+      ]
+    },
+    "then": {
+      "add_risks": [
+        "R-FROID"
+      ],
+      "add_actions": [
+        "A-FROID-001",
+        "A-FROID-002"
+      ]
+    }
+  },
+  {
+    "id": "RULE_DELIVERY",
+    "if": {
+      "activities": [
+        "livraison"
+      ],
+      "naf_prefix": [
+        "49",
+        "56",
+        "47"
+      ]
+    },
+    "then": {
+      "add_risks": [
+        "R-ROUTIER",
+        "R-MANUTENTION"
+      ],
+      "add_actions": [
+        "A-ROUTIER-001",
+        "A-MANUT-001"
+      ]
+    }
+  }
+]

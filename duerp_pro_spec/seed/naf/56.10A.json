@@ -1,0 +1,73 @@
+{
+  "code": "56.10A",
+  "label": "Restauration traditionnelle",
+  "unit_templates": [
+    {
+      "id": "ut.cuisine",
+      "name": "Cuisine",
+      "description": "Préparation chaude/froide, cuisson, friture.",
+      "default_risk_ids": [
+        "risk.brulures",
+        "risk.coupures",
+        "risk.chimique",
+        "risk.glissade",
+        "risk.tms"
+      ],
+      "suggested": true
+    },
+    {
+      "id": "ut.plonge",
+      "name": "Plonge",
+      "description": "Lavage, produits détergents, humidité.",
+      "default_risk_ids": [
+        "risk.chimique",
+        "risk.tms",
+        "risk.glissade",
+        "risk.brule_eau_chaude"
+      ],
+      "suggested": true
+    },
+    {
+      "id": "ut.salle",
+      "name": "Salle / service",
+      "description": "Relation client, port de charges légères.",
+      "default_risk_ids": [
+        "risk.chute_plain_pied",
+        "risk.tms",
+        "risk.rps"
+      ],
+      "suggested": true
+    },
+    {
+      "id": "ut.bureau",
+      "name": "Bureau / administratif",
+      "description": "Gestion, compta, écrans.",
+      "default_risk_ids": [
+        "risk.travail_ecran",
+        "risk.rps",
+        "risk.posture_assise"
+      ],
+      "suggested": true
+    },
+    {
+      "id": "ut.livraison",
+      "name": "Livraison / manutention",
+      "description": "Réception marchandises, déplacements.",
+      "default_risk_ids": [
+        "risk.manutention",
+        "risk.circulation_interne",
+        "risk.chute_niveau_diff"
+      ],
+      "suggested": false
+    }
+  ],
+  "risk_tags": [
+    "chimique",
+    "coupure",
+    "brûlure",
+    "glissade",
+    "TMS",
+    "RPS",
+    "incendie"
+  ]
+}

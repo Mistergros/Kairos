@@ -1,0 +1,113 @@
+[
+  {
+    "id": "obl.code_travail_prevention_generale",
+    "source": "Code du travail",
+    "title": "Principes généraux de prévention",
+    "reference": "L.4121-1 à L.4121-5",
+    "summary": "Éviter les risques, évaluer ceux qui ne peuvent pas être évités, combattre les risques à la source...",
+    "applies_to": [
+      "tous"
+    ]
+  },
+  {
+    "id": "obl.equipements_travail",
+    "source": "Code du travail",
+    "title": "Utilisation équipements de travail",
+    "reference": "R.4321-1 et suivants",
+    "summary": "Conformité, protections, vérifications.",
+    "applies_to": [
+      "machines",
+      "outillage"
+    ]
+  },
+  {
+    "id": "obl.risque_chimique",
+    "source": "Code du travail",
+    "title": "Risque chimique",
+    "reference": "R.4412-1 et suivants",
+    "summary": "Inventaire agents, FDS, substitution, protections.",
+    "applies_to": [
+      "agents_chimiques"
+    ]
+  },
+  {
+    "id": "obl.circulation_interne",
+    "source": "Code du travail",
+    "title": "Locaux et circulation",
+    "reference": "R.4224-1 et suivants",
+    "summary": "Sécurité des circulations et sols.",
+    "applies_to": [
+      "locaux"
+    ]
+  },
+  {
+    "id": "obl.evaluation_risques",
+    "source": "Code du travail",
+    "title": "Évaluation des risques et DUERP",
+    "reference": "R.4121-1",
+    "summary": "Inventaire et mise à jour.",
+    "applies_to": [
+      "tous"
+    ]
+  },
+  {
+    "id": "obl.rps",
+    "source": "INRS",
+    "title": "Prévention des RPS",
+    "reference": "ED 6140 (réf. doc)",
+    "summary": "Démarche structurée RPS.",
+    "applies_to": [
+      "organisation"
+    ]
+  },
+  {
+    "id": "obl.ecran",
+    "source": "Code du travail",
+    "title": "Travail sur écran",
+    "reference": "R.4542-1 et suivants",
+    "summary": "Aménagement, pauses, information.",
+    "applies_to": [
+      "écran"
+    ]
+  },
+  {
+    "id": "obl.travail_hauteur",
+    "source": "Code du travail",
+    "title": "Travail en hauteur",
+    "reference": "R.4323-58 et suivants",
+    "summary": "Priorité protection collective, équipements antichute.",
+    "applies_to": [
+      "hauteur"
+    ]
+  },
+  {
+    "id": "obl.risque_biologique",
+    "source": "Code du travail",
+    "title": "Agents biologiques",
+    "reference": "R.4421-1 et suivants",
+    "summary": "Classification, prévention, vaccination.",
+    "applies_to": [
+      "biologique"
+    ]
+  },
+  {
+    "id": "obl.manutention",
+    "source": "Code du travail",
+    "title": "Manutention manuelle",
+    "reference": "R.4541-1 et suivants",
+    "summary": "Évaluation, aides mécaniques, formation.",
+    "applies_to": [
+      "manutention"
+    ]
+  },
+  {
+    "id": "obl.bruit",
+    "source": "Code du travail",
+    "title": "Bruit",
+    "reference": "R.4431-1 et suivants",
+    "summary": "Valeurs d'exposition, protections.",
+    "applies_to": [
+      "bruit"
+    ]
+  }
+]

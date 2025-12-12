@@ -1,0 +1,29 @@
+﻿ï»¿{
+  "code": "43.32A",
+  "label": "Travaux de menuiserie bois et PVC",
+  "risk_tags": [
+    "atelier",
+    "bois",
+    "chantier"
+  ],
+  "risks_priority": [
+    "R-POUSSIERES-BOIS",
+    "R-MACHINE",
+    "R-BRUIT",
+    "R-MANUTENTION",
+    "R-CHUTE-HAUTEUR"
+  ],
+  "risks_mandatory": [
+    "R-INCENDIE"
+  ],
+  "activities": [
+    {
+      "id": "atelier",
+      "label": "Atelier de fabrication"
+    },
+    {
+      "id": "chantier",
+      "label": "Pose sur site"
+    }
+  ]
+}

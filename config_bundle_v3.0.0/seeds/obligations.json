@@ -1,0 +1,212 @@
+[
+  {
+    "id": "obl.evaluation_risques",
+    "source": "Code du travail",
+    "title": "Évaluation des risques & DUERP",
+    "reference": "R.4121-1 à R.4121-4",
+    "summary": "Inventaire, transcription, MAJ."
+  },
+  {
+    "id": "obl.travail_ecran",
+    "source": "Code du travail",
+    "title": "Travail sur écran",
+    "reference": "R.4542-1 à R.4542-19",
+    "summary": "Aménagement, info, pauses."
+  },
+  {
+    "id": "obl.risque_chimique",
+    "source": "Code du travail",
+    "title": "Risque chimique",
+    "reference": "R.4412-1 et s.",
+    "summary": "Inventaire, FDS, substitution."
+  },
+  {
+    "id": "obl.travail_hauteur",
+    "source": "Code du travail",
+    "title": "Travail en hauteur",
+    "reference": "R.4323-58 et s.",
+    "summary": "Priorité collectif."
+  },
+  {
+    "id": "obl.bruit",
+    "source": "Code du travail",
+    "title": "Bruit",
+    "reference": "R.4431-1 et s.",
+    "summary": "Valeurs déclenchement/exposition."
+  },
+  {
+    "id": "obl.manutention",
+    "source": "Code du travail",
+    "title": "Manutention manuelle",
+    "reference": "R.4541-1 et s.",
+    "summary": "Évaluation, aides."
+  },
+  {
+    "id": "obl.elec",
+    "source": "Code du travail",
+    "title": "Installations électriques",
+    "reference": "R.4226-14 et s.",
+    "summary": "Vérifications périodiques."
+  },
+  {
+    "id": "obl.incendie",
+    "source": "Code du travail",
+    "title": "Incendie/évacuation",
+    "reference": "R.4227-1 et s.",
+    "summary": "Moyens, exercices."
+  },
+  {
+    "id": "obl.bio",
+    "source": "Code du travail",
+    "title": "Agents biologiques",
+    "reference": "R.4421-1 et s.",
+    "summary": "Classification, prévention."
+  },
+  {
+    "id": "obl.amiante",
+    "source": "Code du travail",
+    "title": "Amiante",
+    "reference": "R.4412-94 et s.",
+    "summary": "Repérage, formation."
+  },
+  {
+    "id": "obl.epi",
+    "source": "Code du travail",
+    "title": "EPI",
+    "reference": "R.4321-4 et s.",
+    "summary": "Mise à disposition, entretien."
+  },
+  {
+    "id": "obl.ventilation",
+    "source": "Code du travail",
+    "title": "Aération/assainissement",
+    "reference": "R.4222-1 et s.",
+    "summary": "Renouvellement d'air."
+  },
+  {
+    "id": "obl.routier",
+    "source": "Recommandations",
+    "title": "Sécurité routière au travail",
+    "reference": "INRS",
+    "summary": "PDCA déplacements pro."
+  },
+  {
+    "id": "obl.rps",
+    "source": "INRS",
+    "title": "Prévention des RPS",
+    "reference": "INRS ED 6140",
+    "summary": "Démarche structurée."
+  },
+  {
+    "id": "obl.vibrations",
+    "source": "Code du travail",
+    "title": "Vibrations mécaniques",
+    "reference": "R.4441-1 et s.",
+    "summary": "Évaluation, seuils."
+  },
+  {
+    "id": "obl.machines",
+    "source": "Code du travail",
+    "title": "Machines",
+    "reference": "R.4312-1 et s.",
+    "summary": "Conformité CE, protections."
+  },
+  {
+    "id": "obl.eclairage",
+    "source": "Normes/Guides",
+    "title": "Éclairage des lieux de travail",
+    "reference": "NF EN 12464-1",
+    "summary": "Niveaux d'éclairement."
+  },
+  {
+    "id": "obl.phyto",
+    "source": "Code rural",
+    "title": "Phytosanitaires (Certiphyto)",
+    "reference": "CRPM Livre II",
+    "summary": "Utilisation, stockage, formation."
+  },
+  {
+    "id": "obl.espaces_confines",
+    "source": "Guides",
+    "title": "Espaces confinés",
+    "reference": "INRS/OPPBTP",
+    "summary": "Procédures, sauvetage."
+  },
+  {
+    "id": "obl.silos",
+    "source": "Guides",
+    "title": "Sécurité silos/fermentation",
+    "reference": "INRS/ARACT",
+    "summary": "Gaz, chutes, accès."
+  },
+  {
+    "id": "obl.pisciculture",
+    "source": "Guides",
+    "title": "Sécurité pisciculture/pêche",
+    "reference": "INRS",
+    "summary": "Immersion, noyade."
+  },
+  {
+    "id": "obl.imprimerie",
+    "source": "Guides",
+    "title": "Imprimerie & solvants",
+    "reference": "INRS",
+    "summary": "COV, CMR."
+  },
+  {
+    "id": "obl.menuiserie",
+    "source": "Guides",
+    "title": "Menuiserie bois",
+    "reference": "INRS",
+    "summary": "Poussières de bois, machines."
+  },
+  {
+    "id": "obl.securite_privee",
+    "source": "Guides",
+    "title": "Sécurité privée",
+    "reference": "INRS",
+    "summary": "Agressions, procédures."
+  },
+  {
+    "id": "obl.amiante_SS4",
+    "source": "Arrêtés/DT",
+    "title": "Amiante SS4",
+    "reference": "Arrêté 23/02/2012 (réf.)",
+    "summary": "Formation, modes opératoires."
+  },
+  {
+    "id": "obl.CACES",
+    "source": "Recommandations",
+    "title": "Conduite engins (CACES)",
+    "reference": "CNAM/INRS",
+    "summary": "Autorisation, formation."
+  },
+  {
+    "id": "obl.brancardage",
+    "source": "Guides",
+    "title": "Brancardage & soins",
+    "reference": "INRS/Santé",
+    "summary": "Manutention patients."
+  },
+  {
+    "id": "obl.travail_isole",
+    "source": "Guides",
+    "title": "Travail isolé",
+    "reference": "INRS",
+    "summary": "Dispositifs d'alarme, orga."
+  },
+  {
+    "id": "obl.permis_feu",
+    "source": "Guides",
+    "title": "Permis feu",
+    "reference": "INRS/OPPBTP",
+    "summary": "Procédure avant travaux à chaud."
+  },
+  {
+    "id": "obl.Loto",
+    "source": "Guides",
+    "title": "Consignation LOTO",
+    "reference": "INRS",
+    "summary": "Élec/machines."
+  }
+]

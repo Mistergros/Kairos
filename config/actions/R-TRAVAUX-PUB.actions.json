@@ -1,0 +1,28 @@
+[
+  {
+    "id": "A-TRAVAUX-PUB-001",
+    "risk_id": "R-TRAVAUX-PUB",
+    "title": "Plan de prévention terrassement / réseaux enterrés",
+    "type": "Organisationnelle",
+    "impact": "Réduction du risque d'ensevelissement et de heurt engins",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "references": [
+      "INRS",
+      "OPPBTP"
+    ]
+  },
+  {
+    "id": "A-TRAVAUX-PUB-002",
+    "risk_id": "R-TRAVAUX-PUB",
+    "title": "Balisage, DICT et consignation réseaux",
+    "type": "Technique",
+    "impact": "Sécurise les travaux à proximité de réseaux (gaz/élec/eau)",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "references": [
+      "INRS",
+      "OPPBTP"
+    ]
+  }
+]

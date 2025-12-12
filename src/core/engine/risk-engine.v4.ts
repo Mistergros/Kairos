@@ -19,34 +19,43 @@ export class RiskEngineV4 {
     this.scoring = this.loadJSON<ScoringCfg>('scoring.json');
     this.loadAll();
   }
+  private parseJSON<T>(raw: string): T {
+    const clean = (raw || "").replace(/^\uFEFF/, '').replace(/^\u00EF\u00BB\u00BF/, '');
+    return JSON.parse(clean) as T;
+  }
   private loadJSON<T>(rel: string): T {
     const p = path.join(this.baseConfigPath, rel);
-    return JSON.parse(fs.readFileSync(p,'utf-8')) as T;
+    const raw = fs.readFileSync(p,'utf-8');
+    return this.parseJSON<T>(raw);
   }
   private tryRead(p: string){ return fs.existsSync(p) ? fs.readFileSync(p,'utf-8') : null; }
   private loadAll(){
     const rdir = path.join(this.baseConfigPath,'risks');
     fs.readdirSync(rdir).filter(f=>f.endsWith('.json')).forEach(f=>{
-      const r = JSON.parse(fs.readFileSync(path.join(rdir,f),'utf-8')) as Risk; this.risks.set(r.id,r);
+      const r = this.parseJSON<Risk>(fs.readFileSync(path.join(rdir,f),'utf-8')); this.risks.set(r.id,r);
     });
     const adir = path.join(this.baseConfigPath,'actions');
     fs.readdirSync(adir).filter(f=>f.endsWith('.json')).forEach(f=>{
-      const arr = JSON.parse(fs.readFileSync(path.join(adir,f),'utf-8')) as Action[];
-      if (arr.length) this.actionsByRisk.set(arr[0].risk_id, arr);
+      const arr = this.parseJSON<Action[]>(fs.readFileSync(path.join(adir,f),'utf-8'));
+      if (arr.length){
+        const rid = arr[0].risk_id || (arr[0] as any).related_risk_ids?.[0];
+        if (rid) this.actionsByRisk.set(rid, arr);
+      }
     });
     this.generalOblig = this.loadJSON<Obligation[]>('obligations/general.json');
     this.sectorOblig = this.loadJSON<Obligation[]>('obligations/sector.json');
     this.unitsModifiers = this.loadJSON<Record<string,Record<string,number>>>('units/modifiers.json');
     const rjson = this.tryRead(path.join(this.baseConfigPath,'rules/conditional.json'));
-    this.rules = rjson ? JSON.parse(rjson) : null;
+    this.rules = rjson ? this.parseJSON(rjson) : null;
   }
   private listNaf(): any[] {
     const ndir = path.join(this.baseConfigPath,'naf');
-    return fs.readdirSync(ndir).filter(f=>f.endsWith('.json')).map(f => JSON.parse(fs.readFileSync(path.join(ndir,f),'utf-8')));
+    return fs.readdirSync(ndir).filter(f=>f.endsWith('.json')).map(f => this.parseJSON(fs.readFileSync(path.join(ndir,f),'utf-8')));
   }
-  public getNAFProfile(nafCode: string){
+  public getNAFProfile(nafCode?: string){
+    const code = nafCode || "";
     const all = this.listNaf();
-    return all.find(n => String(nafCode).startsWith(String(n.naf))) || null;
+    return all.find(n => String(code).startsWith(String(n.naf))) || null;
   }
   private applyRules(ctx: UnityContext, riskIds: Set<string>, actionIds: Set<string>, obligIds: Set<string>){
     if (!this.rules) return;

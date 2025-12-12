@@ -1,4 +1,4 @@
-{
+﻿{
   "naf": "47",
   "label": "Commerce de detail",
   "risks_priority": ["R-CHUTE", "R-TMS", "R-INCENDIE", "R-AGRESSION"],

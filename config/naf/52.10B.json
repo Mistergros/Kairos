@@ -1,0 +1,20 @@
+{
+  "code": "52.10B",
+  "label": "Entreposage et stockage non frigorifique",
+  "risk_tags": [
+    "entrepot"
+  ],
+  "risks_priority": [
+    "R-MANUTENTION",
+    "R-CHUTE-HAUTEUR",
+    "R-INCENDIE",
+    "R-ELECTRIQUE"
+  ],
+  "risks_mandatory": [],
+  "activities": [
+    {
+      "id": "entrepot",
+      "label": "Pr├®paration/stockage"
+    }
+  ]
+}

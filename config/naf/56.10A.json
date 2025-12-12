@@ -1,0 +1,38 @@
+{
+  "code": "56.10A",
+  "label": "Restauration traditionnelle",
+  "risk_tags": [
+    "cuisine",
+    "friture",
+    "froid",
+    "plonge"
+  ],
+  "risks_priority": [
+    "R-INCENDIE",
+    "R-CHIMIQUE",
+    "R-GLISSADES",
+    "R-TMS"
+  ],
+  "risks_mandatory": [
+    "R-INCENDIE",
+    "R-CHIMIQUE"
+  ],
+  "activities": [
+    {
+      "id": "cuisine",
+      "label": "Cuisine / production"
+    },
+    {
+      "id": "plonge",
+      "label": "Plonge / laverie"
+    },
+    {
+      "id": "salle",
+      "label": "Service en salle"
+    },
+    {
+      "id": "chambre_froide",
+      "label": "Chambre froide"
+    }
+  ]
+}

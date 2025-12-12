@@ -1,0 +1,409 @@
+[
+  {
+    "code": "01.11Z",
+    "label": "Culture de céréales",
+    "risk_tags": [
+      "agri",
+      "machines",
+      "poussières",
+      "pesticides"
+    ]
+  },
+  {
+    "code": "01.21Z",
+    "label": "Élevage de bovins",
+    "risk_tags": [
+      "animal",
+      "machines",
+      "agri"
+    ]
+  },
+  {
+    "code": "01.50Z",
+    "label": "Culture et élevage de poissons",
+    "risk_tags": [
+      "immersion_froide",
+      "biologique"
+    ]
+  },
+  {
+    "code": "01.61Z",
+    "label": "Activités de soutien à l’agriculture",
+    "risk_tags": [
+      "machines",
+      "pesticides"
+    ]
+  },
+  {
+    "code": "02.20Z",
+    "label": "Exploitation forestière",
+    "risk_tags": [
+      "chute",
+      "tronçonneuse",
+      "vibrations"
+    ]
+  },
+  {
+    "code": "03.11Z",
+    "label": "Pêche en mer",
+    "risk_tags": [
+      "noyade",
+      "froid",
+      "glissade",
+      "manutention"
+    ]
+  },
+  {
+    "code": "03.21Z",
+    "label": "Aquaculture en mer",
+    "risk_tags": [
+      "immersion",
+      "biologique",
+      "chimique"
+    ]
+  },
+  {
+    "code": "10.71D",
+    "label": "Boulangerie-pâtisserie",
+    "risk_tags": [
+      "brûlure",
+      "coupure",
+      "poussières",
+      "TMS"
+    ]
+  },
+  {
+    "code": "10.85Z",
+    "label": "Fabrication plats préparés",
+    "risk_tags": [
+      "brûlure",
+      "froid",
+      "chimique"
+    ]
+  },
+  {
+    "code": "11.05Z",
+    "label": "Fabrication de bière",
+    "risk_tags": [
+      "biologique",
+      "chute_plaine",
+      "gaz"
+    ]
+  },
+  {
+    "code": "16.10A",
+    "label": "Sciage et rabotage du bois",
+    "risk_tags": [
+      "poussière_bois",
+      "bruit",
+      "coupure"
+    ]
+  },
+  {
+    "code": "18.12Z",
+    "label": "Autre impression (imprimerie)",
+    "risk_tags": [
+      "colles_encres",
+      "cmr",
+      "bruit"
+    ]
+  },
+  {
+    "code": "19.20Z",
+    "label": "Raffinage de pétrole",
+    "risk_tags": [
+      "chimique",
+      "incendie",
+      "explosion",
+      "cmr"
+    ]
+  },
+  {
+    "code": "20.11Z",
+    "label": "Fabrication gaz industriels",
+    "risk_tags": [
+      "gaz",
+      "pression",
+      "chimique"
+    ]
+  },
+  {
+    "code": "23.61Z",
+    "label": "Fabrication d’éléments en béton",
+    "risk_tags": [
+      "poussières",
+      "manutention",
+      "bruit"
+    ]
+  },
+  {
+    "code": "31.02Z",
+    "label": "Fabrication de meubles",
+    "risk_tags": [
+      "poussière_bois",
+      "colles",
+      "machines"
+    ]
+  },
+  {
+    "code": "33.12Z",
+    "label": "Réparation de machines",
+    "risk_tags": [
+      "mécanique",
+      "électricité",
+      "bruit",
+      "poussières"
+    ]
+  },
+  {
+    "code": "35.11Z",
+    "label": "Production d’électricité",
+    "risk_tags": [
+      "électricité",
+      "bruit",
+      "chimique"
+    ]
+  },
+  {
+    "code": "35.30Z",
+    "label": "Fourniture vapeur et air conditionné",
+    "risk_tags": [
+      "chaleur",
+      "pression",
+      "chimique"
+    ]
+  },
+  {
+    "code": "41.20A",
+    "label": "Construction de bâtiments résidentiels",
+    "risk_tags": [
+      "hauteur",
+      "outillage",
+      "poussières",
+      "bruit"
+    ]
+  },
+  {
+    "code": "42.11Z",
+    "label": "Construction de routes",
+    "risk_tags": [
+      "circulation",
+      "machines",
+      "vibrations",
+      "chaleur"
+    ]
+  },
+  {
+    "code": "42.91Z",
+    "label": "Construction d’ouvrages hydrauliques",
+    "risk_tags": [
+      "noyade",
+      "hauteur",
+      "machines"
+    ]
+  },
+  {
+    "code": "43.39Z",
+    "label": "Autres travaux de finition",
+    "risk_tags": [
+      "hauteur",
+      "outillage",
+      "poussières",
+      "bruit"
+    ]
+  },
+  {
+    "code": "45.20A",
+    "label": "Entretien/réparation véhicules",
+    "risk_tags": [
+      "chimique",
+      "bruit",
+      "vibrations",
+      "TMS"
+    ]
+  },
+  {
+    "code": "46.90Z",
+    "label": "Commerce de gros",
+    "risk_tags": [
+      "manutention",
+      "circulation",
+      "TMS"
+    ]
+  },
+  {
+    "code": "47.11D",
+    "label": "Supermarchés",
+    "risk_tags": [
+      "TMS",
+      "manutention",
+      "circulation",
+      "froid",
+      "coupure"
+    ]
+  },
+  {
+    "code": "49.39A",
+    "label": "Transports de voyageurs",
+    "risk_tags": [
+      "routier",
+      "RPS",
+      "incendie"
+    ]
+  },
+  {
+    "code": "49.41B",
+    "label": "Transports routiers de fret",
+    "risk_tags": [
+      "routier",
+      "manutention",
+      "circulation",
+      "TMS",
+      "RPS"
+    ]
+  },
+  {
+    "code": "49.42Z",
+    "label": "Déménagement",
+    "risk_tags": [
+      "manutention",
+      "TMS",
+      "circulation"
+    ]
+  },
+  {
+    "code": "52.10A",
+    "label": "Entreposage frigorifique",
+    "risk_tags": [
+      "froid",
+      "manutention",
+      "circulation",
+      "TMS",
+      "bruit"
+    ]
+  },
+  {
+    "code": "55.10Z",
+    "label": "Hôtels et hébergement similaire",
+    "risk_tags": [
+      "RPS",
+      "glissade",
+      "chimique",
+      "TMS"
+    ]
+  },
+  {
+    "code": "56.10A",
+    "label": "Restauration traditionnelle",
+    "risk_tags": [
+      "brûlure",
+      "coupure",
+      "chimique",
+      "glissade",
+      "TMS"
+    ]
+  },
+  {
+    "code": "62.01Z",
+    "label": "Programmation informatique",
+    "risk_tags": [
+      "écran",
+      "RPS"
+    ]
+  },
+  {
+    "code": "80.10Z",
+    "label": "Activités de sécurité privée",
+    "risk_tags": [
+      "violence_externe",
+      "travail_isole",
+      "rps"
+    ]
+  },
+  {
+    "code": "81.22Z",
+    "label": "Nettoyage courant des bâtiments",
+    "risk_tags": [
+      "chimique",
+      "glissade",
+      "TMS",
+      "biologique"
+    ]
+  },
+  {
+    "code": "85.20Z",
+    "label": "Enseignement primaire",
+    "risk_tags": [
+      "RPS",
+      "bruit",
+      "écran"
+    ]
+  },
+  {
+    "code": "86.10Z",
+    "label": "Activités hospitalières",
+    "risk_tags": [
+      "biologique",
+      "chimique",
+      "TMS",
+      "RPS"
+    ]
+  },
+  {
+    "code": "86.22C",
+    "label": "Pratique dentaire",
+    "risk_tags": [
+      "biologique",
+      "aiguille",
+      "chimique"
+    ]
+  },
+  {
+    "code": "86.23Z",
+    "label": "Pratique de la médecine",
+    "risk_tags": [
+      "biologique",
+      "rps",
+      "chimique"
+    ]
+  },
+  {
+    "code": "86.90E",
+    "label": "Ambulances",
+    "risk_tags": [
+      "biologique",
+      "routier",
+      "RPS",
+      "manutention"
+    ]
+  },
+  {
+    "code": "86.90F",
+    "label": "Activités de laboratoires médicaux",
+    "risk_tags": [
+      "biologique",
+      "chimique",
+      "aiguille"
+    ]
+  },
+  {
+    "code": "88.10A",
+    "label": "Aide à domicile",
+    "risk_tags": [
+      "biologique",
+      "TMS",
+      "RPS",
+      "routier"
+    ]
+  },
+  {
+    "code": "96.02A",
+    "label": "Coiffure",
+    "risk_tags": [
+      "chimique",
+      "RPS",
+      "troubles voix",
+      "TMS"
+    ]
+  }
+]

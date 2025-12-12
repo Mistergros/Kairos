@@ -1,0 +1,25 @@
+﻿ï»¿{
+  "code": "55.10Z",
+  "label": "Hâ”œâ”¤tels et hâ”œÂ®bergement similaire",
+  "risk_tags": [
+    "hebergement",
+    "accueil"
+  ],
+  "risks_priority": [
+    "R-GLISSADES",
+    "R-RPS",
+    "R-INCENDIE",
+    "R-ECRAN"
+  ],
+  "risks_mandatory": [],
+  "activities": [
+    {
+      "id": "hebergement",
+      "label": "â”œÃ«tages/chambres"
+    },
+    {
+      "id": "accueil",
+      "label": "Râ”œÂ®ception/accueil"
+    }
+  ]
+}

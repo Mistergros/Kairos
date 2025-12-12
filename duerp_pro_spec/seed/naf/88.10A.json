@@ -1,0 +1,41 @@
+{
+  "code": "88.10A",
+  "label": "Aide à domicile",
+  "unit_templates": [
+    {
+      "id": "ut.domicile",
+      "name": "Intervention au domicile",
+      "default_risk_ids": [
+        "risk.tms",
+        "risk.chute_plain_pied",
+        "risk.rps",
+        "risk.biologique"
+      ],
+      "suggested": true
+    },
+    {
+      "id": "ut.encadrement",
+      "name": "Encadrement / coordination",
+      "default_risk_ids": [
+        "risk.travail_ecran",
+        "risk.rps"
+      ],
+      "suggested": true
+    },
+    {
+      "id": "ut.formation",
+      "name": "Formation interne",
+      "default_risk_ids": [
+        "risk.deplacement",
+        "risk.travail_ecran"
+      ],
+      "suggested": false
+    }
+  ],
+  "risk_tags": [
+    "biologique",
+    "TMS",
+    "RPS",
+    "déplacements"
+  ]
+}

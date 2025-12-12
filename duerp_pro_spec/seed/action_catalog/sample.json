@@ -1,0 +1,189 @@
+[
+  {
+    "id": "act.protection_collective",
+    "type": "technical",
+    "label": "Écrans pare-graisse / capots / déflecteurs sur friteuses",
+    "details": "Limiter projections et contact avec huile.",
+    "evidence": [
+      "photos",
+      "fiche technique"
+    ]
+  },
+  {
+    "id": "act.epi_gants_chaleur",
+    "type": "EPI",
+    "label": "Gants anti-chaleur conformes",
+    "details": "EN 407",
+    "evidence": [
+      "PV conformité"
+    ]
+  },
+  {
+    "id": "act.formation_procedure",
+    "type": "training",
+    "label": "Procédures et formation manipulation friteuse/four",
+    "details": "Consignes d'utilisation et vidange sécurisée."
+  },
+  {
+    "id": "act.couteaux_entretien",
+    "type": "organizational",
+    "label": "Plan d'affûtage et rangements sécurisés",
+    "details": "Entretien régulier, supports magnétiques."
+  },
+  {
+    "id": "act.epi_gants_anti_coupure",
+    "type": "EPI",
+    "label": "Gants anti-coupure",
+    "details": "EN 388 niveau adapté."
+  },
+  {
+    "id": "act.fds_disponible",
+    "type": "documentation",
+    "label": "Fiches de données de sécurité disponibles",
+    "details": "FDS à jour et accessibles."
+  },
+  {
+    "id": "act.substitution_produit",
+    "type": "organizational",
+    "label": "Substitution par produits moins dangereux",
+    "details": "Choix de détergents sans chlore si possible."
+  },
+  {
+    "id": "act.epi_gants_nitrile",
+    "type": "EPI",
+    "label": "Gants nitrile pour produits chimiques",
+    "details": "Protection chimique adaptée."
+  },
+  {
+    "id": "act.plan_circulation",
+    "type": "organizational",
+    "label": "Plan de circulation et rangement",
+    "details": "Zones matérialisées, consignes de circulation."
+  },
+  {
+    "id": "act.revetement_antiderapant",
+    "type": "technical",
+    "label": "Revêtements antidérapants / tapis",
+    "details": "Pose dans zones humides."
+  },
+  {
+    "id": "act.aménagement_poste",
+    "type": "technical",
+    "label": "Aménagement ergonomique du poste",
+    "details": "Plans de travail adaptés, aides à la manutention."
+  },
+  {
+    "id": "act.formation_gestes_postures",
+    "type": "training",
+    "label": "Formation gestes et postures",
+    "details": "Sensibilisation TMS."
+  },
+  {
+    "id": "act.demarche_rps",
+    "type": "organizational",
+    "label": "Démarche RPS (diagnostic, plan d'actions)",
+    "details": "Entretiens, indicateurs, actions collectives."
+  },
+  {
+    "id": "act.dispositif_ecoute",
+    "type": "organizational",
+    "label": "Dispositif d'écoute / alerte",
+    "details": "Référent, procédure signalement."
+  },
+  {
+    "id": "act.pausesecran",
+    "type": "organizational",
+    "label": "Micro-pauses, alternance tâches",
+    "details": "Règle 20-20-20."
+  },
+  {
+    "id": "act.amenagement_ergonomique",
+    "type": "technical",
+    "label": "Réglage siège/écran/clavier",
+    "details": "Guide ergonomie poste écran."
+  },
+  {
+    "id": "act.marquage_temperature",
+    "type": "documentation",
+    "label": "Consigne température / marquage",
+    "details": "Affichage risques eau chaude."
+  },
+  {
+    "id": "act.ligne_vie",
+    "type": "technical",
+    "label": "Ligne de vie / point d'ancrage",
+    "details": "Systèmes antichute."
+  },
+  {
+    "id": "act.protection_bords",
+    "type": "technical",
+    "label": "Garde-corps / filets",
+    "details": "Protection collective en bord de toiture."
+  },
+  {
+    "id": "act.formation_habilitation",
+    "type": "training",
+    "label": "Formation travail en hauteur",
+    "details": "Habilitation et vérifications."
+  },
+  {
+    "id": "act.verification_outillage",
+    "type": "organizational",
+    "label": "Vérification périodique outillage",
+    "details": "Registre de contrôle."
+  },
+  {
+    "id": "act.epi_lunettes",
+    "type": "EPI",
+    "label": "Lunettes de protection",
+    "details": "EN 166."
+  },
+  {
+    "id": "act.hygiene_mains",
+    "type": "organizational",
+    "label": "Procédure hygiène des mains",
+    "details": "Solution hydroalcoolique, lavage."
+  },
+  {
+    "id": "act.vaccination_recommandee",
+    "type": "organizational",
+    "label": "Vaccinations recommandées",
+    "details": "Hépatite B selon exposition."
+  },
+  {
+    "id": "act.aides_manuelles",
+    "type": "technical",
+    "label": "Aides à la manutention",
+    "details": "Diables, chariots."
+  },
+  {
+    "id": "act.garde_corps",
+    "type": "technical",
+    "label": "Garde-corps / trappes sécurisées",
+    "details": "Protection contre chute de niveau différent."
+  },
+  {
+    "id": "act.signalisation",
+    "type": "documentation",
+    "label": "Signalisation zones à risque",
+    "details": "Panneaux, marquages au sol."
+  },
+  {
+    "id": "act.cartographie_bruit",
+    "type": "documentation",
+    "label": "Cartographie du bruit",
+    "details": "Mesures d'exposition sonore."
+  },
+  {
+    "id": "act.epi_protection_auditive",
+    "type": "EPI",
+    "label": "Protections auditives",
+    "details": "Bouchons, casques."
+  },
+  {
+    "id": "act.aspiration_source",
+    "type": "technical",
+    "label": "Aspiration à la source",
+    "details": "Captage des poussières."
+  }
+]

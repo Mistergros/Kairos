@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AssessmentByUnit",
+  "type": "object",
+  "required": [
+    "unit_id",
+    "risks"
+  ],
+  "properties": {
+    "unit_id": {
+      "type": "string"
+    },
+    "headcount": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "risks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "risk_id",
+          "severity",
+          "frequency",
+          "mastery"
+        ],
+        "properties": {
+          "risk_id": {
+            "type": "string"
+          },
+          "context": {
+            "type": "string"
+          },
+          "existing_measures": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "severity": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          },
+          "frequency": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          },
+          "mastery": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 5
+          },
+          "score": {
+            "type": "integer"
+          },
+          "actions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "action_id",
+                "owner",
+                "due_date"
+              ],
+              "properties": {
+                "action_id": {
+                  "type": "string"
+                },
+                "owner": {
+                  "type": "string"
+                },
+                "due_date": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "todo",
+                    "in_progress",
+                    "done",
+                    "deferred"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

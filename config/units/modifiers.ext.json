@@ -1,0 +1,116 @@
+{
+  "default": {
+    "R-BRUIT": {
+      "probability": 1
+    }
+  },
+  "activities": {
+    "cuisine": {
+      "R-FROID": {
+        "probability": 1
+      },
+      "R-INCENDIE": {
+        "severity": 1
+      },
+      "R-GLISSADES": {
+        "probability": 1
+      }
+    },
+    "plonge": {
+      "R-CHIMIQUE": {
+        "probability": 1
+      },
+      "R-GLISSADES": {
+        "probability": 1
+      }
+    },
+    "bureau": {
+      "R-ECRAN": {
+        "probability": 1
+      },
+      "R-RPS": {
+        "probability": 1
+      },
+      "R-QUALITE-AIR": {
+        "probability": 1
+      }
+    },
+    "chantier": {
+      "R-CHUTE-HAUTEUR": {
+        "severity": 1
+      },
+      "R-BRUIT": {
+        "probability": 1
+      },
+      "R-SILICE": {
+        "probability": 1
+      }
+    },
+    "atelier": {
+      "R-MACHINE": {
+        "probability": 1
+      },
+      "R-POUSSIERES-BOIS": {
+        "probability": 1
+      }
+    },
+    "entrepot": {
+      "R-MANUTENTION": {
+        "probability": 1
+      },
+      "R-CHUTE-HAUTEUR": {
+        "probability": 1
+      }
+    },
+    "magasin": {
+      "R-GLISSADES": {
+        "probability": 1
+      }
+    },
+    "accueil": {
+      "R-AGRESSION": {
+        "probability": 1
+      }
+    },
+    "hebergement": {
+      "R-GLISSADES": {
+        "probability": 1
+      }
+    },
+    "restauration": {
+      "R-INCENDIE": {
+        "severity": 1
+      },
+      "R-GLISSADES": {
+        "probability": 1
+      },
+      "R-CHIMIQUE": {
+        "probability": 1
+      }
+    },
+    "isolation": {
+      "R-CHUTE-HAUTEUR": {
+        "severity": 1
+      },
+      "R-CHIMIQUE": {
+        "probability": 1
+      }
+    },
+    "menuiserie": {
+      "R-POUSSIERES-BOIS": {
+        "probability": 1
+      },
+      "R-BRUIT": {
+        "probability": 1
+      }
+    },
+    "education": {
+      "R-ECRAN": {
+        "probability": 1
+      },
+      "R-RPS": {
+        "probability": 1
+      }
+    }
+  }
+}

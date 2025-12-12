@@ -1,0 +1,92 @@
+[
+  {
+    "id": "ut-magasin",
+    "naf_code": "47.11",
+    "name": "Magasin / surface de vente",
+    "description": "Vente, réception marchandises, relation clientèle",
+    "default_risk_ids": ["R-CHUTE", "R-MANUT", "R-PSY"],
+    "suggested": true,
+    "headcount_hint": 12
+  },
+  {
+    "id": "ut-resto",
+    "naf_code": "56.10",
+    "name": "Cuisine et salle",
+    "description": "Préparation, cuisson, plonge et service",
+    "default_risk_ids": ["R-CHUTE", "R-MANUT", "R-INCENDIE"],
+    "suggested": true,
+    "headcount_hint": 8
+  },
+  {
+    "id": "ut-atelier-meca",
+    "naf_code": "45.20",
+    "name": "Atelier mécanique",
+    "description": "Réparation VL/PL, carrosserie, pneumatiques",
+    "default_risk_ids": ["R-MACHINE", "R-CHIMIQUE", "R-CHUTE"],
+    "suggested": true,
+    "headcount_hint": 6
+  },
+  {
+    "id": "ut-btp-chantier",
+    "naf_code": "41.20",
+    "name": "Chantier BTP",
+    "description": "Organisation multi-corps d'état, travaux en hauteur et second œuvre",
+    "default_risk_ids": ["R-CHUTE", "R-ELEC", "R-MACHINE"],
+    "suggested": true,
+    "headcount_hint": 15
+  },
+  {
+    "id": "ut-entrepot",
+    "naf_code": "52.10",
+    "name": "Entrepôt / préparation de commandes",
+    "description": "Réception, stockage, picking, expédition",
+    "default_risk_ids": ["R-MANUT", "R-CHUTE", "R-ROUTIER"],
+    "suggested": true,
+    "headcount_hint": 20
+  },
+  {
+    "id": "ut-si-dev",
+    "naf_code": "62.01",
+    "name": "Équipe IT / développement",
+    "description": "Développement logiciel, support, réunions",
+    "default_risk_ids": ["R-ECRAN", "R-PSY"],
+    "suggested": true,
+    "headcount_hint": 10
+  },
+  {
+    "id": "ut-hopital-soins",
+    "naf_code": "86.10",
+    "name": "Unité de soins",
+    "description": "Soins, hébergement, urgences",
+    "default_risk_ids": ["R-BIO", "R-PSY", "R-INCENDIE"],
+    "suggested": true,
+    "headcount_hint": 25
+  },
+  {
+    "id": "ut-ehpad",
+    "naf_code": "87.10",
+    "name": "EHPAD / hébergement médicalisé",
+    "description": "Soins et hôtellerie auprès de personnes âgées",
+    "default_risk_ids": ["R-BIO", "R-MANUT", "R-PSY"],
+    "suggested": true,
+    "headcount_hint": 30
+  },
+  {
+    "id": "ut-agro",
+    "naf_code": "10.11",
+    "name": "Atelier agroalimentaire",
+    "description": "Découpe, conditionnement, chaîne de production",
+    "default_risk_ids": ["R-MANUT", "R-BRUIT", "R-CHIMIQUE"],
+    "suggested": true,
+    "headcount_hint": 18
+  },
+  {
+    "id": "ut-chimie",
+    "naf_code": "20.14",
+    "name": "Unité de production chimique",
+    "description": "Réacteurs, formulation, conditionnement",
+    "default_risk_ids": ["R-CHIMIQUE", "R-CMR", "R-ATEX"],
+    "suggested": true,
+    "headcount_hint": 22
+  }
+]

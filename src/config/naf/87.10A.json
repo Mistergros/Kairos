@@ -1,0 +1,27 @@
+﻿ï»¿{
+  "code": "87.10A",
+  "label": "Hâ”œÂ®bergement mâ”œÂ®dicalisâ”œÂ® (EHPAD)",
+  "risk_tags": [
+    "soins",
+    "manutention",
+    "biologique"
+  ],
+  "risks_priority": [
+    "R-BIO",
+    "R-MANUTENTION",
+    "R-RPS",
+    "R-GLISSADES",
+    "R-INCENDIE"
+  ],
+  "risks_mandatory": [],
+  "activities": [
+    {
+      "id": "soins",
+      "label": "Soins/râ”œÂ®sidents"
+    },
+    {
+      "id": "cuisine",
+      "label": "Cuisine"
+    }
+  ]
+}

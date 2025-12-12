@@ -1,0 +1,568 @@
+[
+  {
+    "id": "risk.aero_biologique",
+    "family": "biologique",
+    "name": "Aérosols biologiques",
+    "description": "Nettoyage, soins.",
+    "examples": [],
+    "default_severity": 3,
+    "default_frequency": 1,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.agression",
+    "family": "organisationnel",
+    "name": "Agression / sécurité privée",
+    "description": "Conflits, interpellations.",
+    "examples": [],
+    "default_severity": 4,
+    "default_frequency": 1,
+    "default_mastery": 0
+  },
+  {
+    "id": "risk.aiguille",
+    "family": "mécanique",
+    "name": "Piqûre d'aiguille",
+    "description": "Soins, prélèvements.",
+    "examples": [],
+    "default_severity": 4,
+    "default_frequency": 1,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.amiante",
+    "family": "chimique",
+    "name": "Amiante",
+    "description": "Interventions sur MCA.",
+    "examples": [],
+    "default_severity": 5,
+    "default_frequency": 1,
+    "default_mastery": 0
+  },
+  {
+    "id": "risk.animal",
+    "family": "biologique",
+    "name": "Accidents liés aux animaux",
+    "description": "Morsures, coups.",
+    "examples": [],
+    "default_severity": 4,
+    "default_frequency": 1,
+    "default_mastery": 0
+  },
+  {
+    "id": "risk.biologique",
+    "family": "biologique",
+    "name": "Agents biologiques",
+    "description": "Sang, déchets, micro-organismes.",
+    "examples": [],
+    "default_severity": 4,
+    "default_frequency": 2,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.bris_de_verre",
+    "family": "mécanique",
+    "name": "Bris de verre / coupants",
+    "description": "Bar, restauration.",
+    "examples": [],
+    "default_severity": 2,
+    "default_frequency": 2,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.bris_lame",
+    "family": "mécanique",
+    "name": "Projection/bris de lame",
+    "description": "Scies, meuleuses.",
+    "examples": [],
+    "default_severity": 4,
+    "default_frequency": 1,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.bruit",
+    "family": "physique",
+    "name": "Bruit",
+    "description": "Machines, outillage, salle.",
+    "examples": [],
+    "default_severity": 3,
+    "default_frequency": 2,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.brule_eau_chaude",
+    "family": "physique",
+    "name": "Brûlure par eau chaude",
+    "description": "Exposition à eau chaude lors de la plonge, nettoyage.",
+    "examples": null,
+    "default_severity": 3,
+    "default_frequency": 3,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.brulures",
+    "family": "physique",
+    "name": "Brûlures (chaleur/huile/vapeur)",
+    "description": "Contact thermique, projections.",
+    "examples": [
+      "friteuse",
+      "four",
+      "plancha"
+    ],
+    "default_severity": 4,
+    "default_frequency": 3,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.chaleur",
+    "family": "physique",
+    "name": "Chaleur / ambiance thermique",
+    "description": "Four, été, serre.",
+    "examples": [],
+    "default_severity": 2,
+    "default_frequency": 3,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.charge_mentale",
+    "family": "organisationnel",
+    "name": "Charge mentale / cadence",
+    "description": "Pics d'activité.",
+    "examples": [],
+    "default_severity": 3,
+    "default_frequency": 2,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.chimique",
+    "family": "chimique",
+    "name": "Exposition à agents chimiques",
+    "description": "Dégraissants, solvants, désinfectants.",
+    "examples": [
+      "détergents",
+      "Javel"
+    ],
+    "default_severity": 3,
+    "default_frequency": 3,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.chute_hauteur",
+    "family": "physique",
+    "name": "Chute de hauteur",
+    "description": "Toiture, échafaudage, nacelle.",
+    "examples": [],
+    "default_severity": 5,
+    "default_frequency": 2,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.chute_niveau_diff",
+    "family": "physique",
+    "name": "Chute de niveau différent",
+    "description": "Marches, quais, trappes.",
+    "examples": null,
+    "default_severity": 4,
+    "default_frequency": 2,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.chute_objets",
+    "family": "mécanique",
+    "name": "Chute d'objets",
+    "description": "Stockage haut.",
+    "examples": [],
+    "default_severity": 3,
+    "default_frequency": 2,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.chute_plaine",
+    "family": "physique",
+    "name": "Chute de plain-pied extérieur",
+    "description": "Sol inégal, boue, racines.",
+    "examples": [],
+    "default_severity": 2,
+    "default_frequency": 3,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.circulation_interne",
+    "family": "organisationnel",
+    "name": "Circulation interne / heurts",
+    "description": "Engins/flux piétons.",
+    "examples": [],
+    "default_severity": 3,
+    "default_frequency": 2,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.cmr",
+    "family": "chimique",
+    "name": "CMR (cancérogènes…)",
+    "description": "Encres/solvants CMR.",
+    "examples": [],
+    "default_severity": 5,
+    "default_frequency": 1,
+    "default_mastery": 0
+  },
+  {
+    "id": "risk.colles_encres",
+    "family": "chimique",
+    "name": "Colles/Encres (imprimerie)",
+    "description": "Solvants, COV, CMR.",
+    "examples": [],
+    "default_severity": 4,
+    "default_frequency": 1,
+    "default_mastery": 0
+  },
+  {
+    "id": "risk.confinement_air",
+    "family": "physique",
+    "name": "Mauvaise ventilation/confinement",
+    "description": "CO2, odeurs.",
+    "examples": [],
+    "default_severity": 2,
+    "default_frequency": 2,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.coup_de_chaud",
+    "family": "physique",
+    "name": "Coup de chaud / canicule",
+    "description": "Ambiances chaudes.",
+    "examples": [],
+    "default_severity": 3,
+    "default_frequency": 1,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.coup_de_froid",
+    "family": "physique",
+    "name": "Choc thermique (froid)",
+    "description": "Entrées/sorties chambre froide.",
+    "examples": [],
+    "default_severity": 2,
+    "default_frequency": 2,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.coupures",
+    "family": "mécanique",
+    "name": "Coupures / lacérations",
+    "description": "Lames, couteaux, trancheurs.",
+    "examples": [
+      "couteaux",
+      "mandoline"
+    ],
+    "default_severity": 3,
+    "default_frequency": 3,
+    "default_mastery": 2
+  },
+  {
+    "id": "risk.eclairage_insuff",
+    "family": "physique",
+    "name": "Éclairage insuffisant",
+    "description": "Cheminement, précision.",
+    "examples": [],
+    "default_severity": 2,
+    "default_frequency": 2,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.ecrans_multiples",
+    "family": "ergonomie",
+    "name": "Multi-écrans & périphériques",
+    "description": "Souris/clavier multiples.",
+    "examples": [],
+    "default_severity": 2,
+    "default_frequency": 2,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.ecrasement",
+    "family": "mécanique",
+    "name": "Écrasement / coincement",
+    "description": "Rayonnages, engins.",
+    "examples": [],
+    "default_severity": 4,
+    "default_frequency": 1,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.electricite",
+    "family": "physique",
+    "name": "Électricité",
+    "description": "Interventions électriques.",
+    "examples": [],
+    "default_severity": 4,
+    "default_frequency": 1,
+    "default_mastery": 2
+  },
+  {
+    "id": "risk.enfermement_silo",
+    "family": "physique",
+    "name": "Enfermement / asphyxie (silo)",
+    "description": "Gaz de fermentation, chute.",
+    "examples": [],
+    "default_severity": 5,
+    "default_frequency": 1,
+    "default_mastery": 0
+  },
+  {
+    "id": "risk.engrenages",
+    "family": "mécanique",
+    "name": "Engrenages / enroulement",
+    "description": "Arbres PTO, convoyeurs.",
+    "examples": [],
+    "default_severity": 4,
+    "default_frequency": 1,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.froid",
+    "family": "physique",
+    "name": "Froid (chambres froides)",
+    "description": "Exposition au froid.",
+    "examples": [],
+    "default_severity": 2,
+    "default_frequency": 2,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.glace_neige",
+    "family": "physique",
+    "name": "Glace / neige (extérieur)",
+    "description": "Accès site.",
+    "examples": [],
+    "default_severity": 2,
+    "default_frequency": 1,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.glissade",
+    "family": "physique",
+    "name": "Chute de plain-pied",
+    "description": "Sols humides, dénivelés.",
+    "examples": [
+      "plonge",
+      "quai"
+    ],
+    "default_severity": 2,
+    "default_frequency": 4,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.haute_pression",
+    "family": "physique",
+    "name": "Hautes pressions / nettoyeurs HP",
+    "description": "Jets haute pression.",
+    "examples": [],
+    "default_severity": 3,
+    "default_frequency": 1,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.immersion_froide",
+    "family": "physique",
+    "name": "Immersion eau froide",
+    "description": "Conchyliculture/pêche.",
+    "examples": [],
+    "default_severity": 4,
+    "default_frequency": 1,
+    "default_mastery": 0
+  },
+  {
+    "id": "risk.incendie",
+    "family": "physique",
+    "name": "Incendie/Explosion",
+    "description": "Gaz, solvants, huiles.",
+    "examples": [],
+    "default_severity": 5,
+    "default_frequency": 1,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.manutention",
+    "family": "ergonomie",
+    "name": "Manutention de charges",
+    "description": "Port, manutention, stockage.",
+    "examples": [],
+    "default_severity": 3,
+    "default_frequency": 3,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.noyade",
+    "family": "physique",
+    "name": "Noyade / immersion",
+    "description": "Pêche, pisciculture.",
+    "examples": [],
+    "default_severity": 5,
+    "default_frequency": 1,
+    "default_mastery": 0
+  },
+  {
+    "id": "risk.nuit",
+    "family": "organisationnel",
+    "name": "Travail de nuit/rythmes",
+    "description": "Sommeil, vigilance.",
+    "examples": [],
+    "default_severity": 3,
+    "default_frequency": 2,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.outillage_electroportatif",
+    "family": "mécanique",
+    "name": "Outillage électroportatif",
+    "description": "Coupures, projections, vibrations.",
+    "examples": null,
+    "default_severity": 3,
+    "default_frequency": 3,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.outillage_stationnaire",
+    "family": "mécanique",
+    "name": "Machines stationnaires",
+    "description": "Scies, raboteuses, presses.",
+    "examples": null,
+    "default_severity": 4,
+    "default_frequency": 2,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.pesticides",
+    "family": "chimique",
+    "name": "Pesticides / phytosanitaires",
+    "description": "Pulvérisation, stockage.",
+    "examples": [],
+    "default_severity": 5,
+    "default_frequency": 1,
+    "default_mastery": 0
+  },
+  {
+    "id": "risk.poussiere",
+    "family": "physique",
+    "name": "Poussières (bois/minérales)",
+    "description": "Découpe, ponçage.",
+    "examples": [],
+    "default_severity": 3,
+    "default_frequency": 2,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.poussiere_bois",
+    "family": "physique",
+    "name": "Poussières de bois",
+    "description": "Menuiserie, CNC.",
+    "examples": [],
+    "default_severity": 4,
+    "default_frequency": 1,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.rayonnements",
+    "family": "physique",
+    "name": "Rayonnements non ionisants",
+    "description": "Soudage, UV.",
+    "examples": [],
+    "default_severity": 3,
+    "default_frequency": 1,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.risque_domestique",
+    "family": "organisationnel",
+    "name": "Risque domestique chez tiers",
+    "description": "Objets, animaux, chutes.",
+    "examples": [],
+    "default_severity": 2,
+    "default_frequency": 2,
+    "default_mastery": 0
+  },
+  {
+    "id": "risk.routier",
+    "family": "organisationnel",
+    "name": "Risque routier pro",
+    "description": "Déplacements, livraisons.",
+    "examples": [],
+    "default_severity": 4,
+    "default_frequency": 2,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.rps",
+    "family": "organisationnel",
+    "name": "Risques psychosociaux",
+    "description": "Stress, charge, violence externe.",
+    "examples": [],
+    "default_severity": 3,
+    "default_frequency": 3,
+    "default_mastery": 0
+  },
+  {
+    "id": "risk.tms",
+    "family": "ergonomie",
+    "name": "Troubles musculo-squelettiques",
+    "description": "Gestes répétitifs, efforts.",
+    "examples": [
+      "caisse",
+      "picking"
+    ],
+    "default_severity": 3,
+    "default_frequency": 3,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.travail_ecran",
+    "family": "ergonomie",
+    "name": "Travail sur écran",
+    "description": "Fatigue visuelle, posture.",
+    "examples": [],
+    "default_severity": 2,
+    "default_frequency": 3,
+    "default_mastery": 2
+  },
+  {
+    "id": "risk.travail_isole",
+    "family": "organisationnel",
+    "name": "Travail isolé",
+    "description": "Absence d'assistance.",
+    "examples": [],
+    "default_severity": 3,
+    "default_frequency": 1,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.troubles_voix",
+    "family": "physique",
+    "name": "Troubles de la voix",
+    "description": "Accueil, vente, bruit.",
+    "examples": [],
+    "default_severity": 2,
+    "default_frequency": 2,
+    "default_mastery": 0
+  },
+  {
+    "id": "risk.vibrations",
+    "family": "physique",
+    "name": "Vibrations",
+    "description": "Outils portatifs.",
+    "examples": [],
+    "default_severity": 3,
+    "default_frequency": 2,
+    "default_mastery": 1
+  },
+  {
+    "id": "risk.violence_externe",
+    "family": "organisationnel",
+    "name": "Violence externe / public",
+    "description": "Accueil, guichet.",
+    "examples": [],
+    "default_severity": 4,
+    "default_frequency": 1,
+    "default_mastery": 0
+  }
+]

@@ -1,200 +1,589 @@
 [
   {
-    "id": "A-TMS-001",
-    "risk_id": "R-TMS",
-    "type": "Technique",
-    "title": "Aménager les postes (hauteur, rotation des tâches)",
-    "difficulty": "Faible",
-    "cost": "Faible",
-    "impact": "Réduction contraintes posturales"
-  },
-  {
-    "id": "A-TMS-002",
-    "risk_id": "R-TMS",
-    "type": "Organisationnelle",
-    "title": "Former aux gestes et postures + aides à la manutention",
-    "difficulty": "Moyenne",
-    "cost": "Moyen",
-    "impact": "Réduction TMS logistique/cuisine"
-  },
-  {
-    "id": "A-CHUTE-001",
-    "risk_id": "R-CHUTE",
-    "type": "Technique",
-    "title": "Antidérapants, plan de nettoyage, gestion des déversements",
-    "difficulty": "Faible",
-    "cost": "Faible",
-    "impact": "Diminution glissades"
-  },
-  {
-    "id": "A-CHUTE-H-001",
-    "risk_id": "R-CHUTE-HAUTEUR",
-    "type": "Technique",
-    "title": "Rails/EPI antichute, vérification échafaudages, PTI",
-    "difficulty": "Moyenne",
-    "cost": "Moyen",
-    "impact": "Réduction chutes de hauteur"
-  },
-  {
-    "id": "A-COUPURE-001",
-    "risk_id": "R-COUPURE",
-    "type": "Technique",
-    "title": "Gants anti-coupures, protections machines, procédures couteaux",
-    "difficulty": "Faible",
-    "cost": "Faible",
-    "impact": "Réduction coupures"
-  },
-  {
-    "id": "A-BRUIT-001",
-    "risk_id": "R-BRUIT",
-    "type": "Technique",
-    "title": "Maintenance, capotage, isolement des sources, EPI adaptés",
-    "difficulty": "Moyenne",
-    "cost": "Moyen",
-    "impact": "Abaissement du bruit"
-  },
-  {
-    "id": "A-CHIM-001",
-    "risk_id": "R-CHIMIQUE",
-    "type": "Technique",
-    "title": "Substitution produits, FDS à jour, ventilation, stockage",
-    "difficulty": "Moyenne",
-    "cost": "Faible",
-    "impact": "Réduction exposition chimique"
-  },
-  {
-    "id": "A-BIO-001",
-    "risk_id": "R-BIO",
-    "type": "Organisationnelle",
-    "title": "Procédures d’hygiène, EPI, vaccination, gestion déchets DASRI",
-    "difficulty": "Moyenne",
-    "cost": "Moyen",
-    "impact": "Réduction exposition biologique"
-  },
-  {
-    "id": "A-FEU-001",
+    "id": "A-INC-001",
     "risk_id": "R-INCENDIE",
-    "type": "Organisationnelle",
-    "title": "Permis feu, exercices évacuation, vérif. extincteurs/SSI",
-    "difficulty": "Faible",
-    "cost": "Faible",
-    "impact": "Réduction sinistre incendie"
-  },
-  {
-    "id": "A-ELEC-001",
-    "risk_id": "R-ELECTRIQUE",
-    "type": "Technique",
-    "title": "Consignation, vérifications périodiques, interdiction bricolage",
-    "difficulty": "Faible",
-    "cost": "Faible",
-    "impact": "Réduction électrisation"
-  },
-  {
-    "id": "A-MANUT-001",
-    "risk_id": "R-MANUTENTION",
-    "type": "Technique",
-    "title": "Diables, transpalettes, chariots—organisation des flux",
-    "difficulty": "Faible",
-    "cost": "Moyen",
-    "impact": "Réduction manutention manuelle"
-  },
-  {
-    "id": "A-RPS-001",
-    "risk_id": "R-RPS",
-    "type": "Organisationnelle",
-    "title": "Évaluation RPS, régulation charge, procédures agression",
+    "type": "Organisation",
+    "title": "Organiser l'evacuation et les points de rassemblement",
+    "description": "Mettre a jour le plan d'evacuation, afficher les consignes et tester la chaine d'alerte.",
     "difficulty": "Moyenne",
     "cost": "Faible",
-    "impact": "Réduction RPS"
+    "references": [
+      "Code du travail R4227-38 a R4227-41",
+      "Guide INRS ED 868"
+    ],
+    "evidences": [
+      "Plan et consignes affiches",
+      "Compte rendu d'exercice incendie"
+    ]
   },
   {
-    "id": "A-ECRAN-001",
-    "risk_id": "R-ECRAN",
+    "id": "A-INC-002",
+    "risk_id": "R-INCENDIE",
     "type": "Technique",
-    "title": "Ergonomie poste (siège, écran, pauses visuelles)",
-    "difficulty": "Faible",
-    "cost": "Faible",
-    "impact": "Confort VDT"
-  },
-  {
-    "id": "A-ROUTIER-001",
-    "risk_id": "R-ROUTIER",
-    "type": "Organisationnelle",
-    "title": "Plan de prévention routier, entretien flotte, temps repos",
+    "title": "Verifier les moyens de premiere intervention",
+    "description": "Verifier presence, acces et validite des extincteurs, robinets d'incendie et coupe-circuits.",
     "difficulty": "Moyenne",
     "cost": "Moyen",
-    "impact": "Réduction accidents routiers"
+    "references": [
+      "NF S 61-919",
+      "Code du travail R4227-28"
+    ],
+    "evidences": [
+      "Rapport de verification periodique",
+      "Main courante d'intervention"
+    ]
   },
   {
     "id": "A-ATEX-001",
     "risk_id": "R-ATEX",
     "type": "Technique",
-    "title": "Zonage ATEX, matériels conformes, formation spécifique",
-    "difficulty": "Élevée",
-    "cost": "Élevé",
-    "impact": "Maîtrise risque explosion"
-  },
-  {
-    "id": "A-AGRESSION-001",
-    "risk_id": "R-AGRESSION",
-    "type": "Organisationnelle",
-    "title": "Dispositif de prévention des incivilités + formation gestion des conflits",
-    "difficulty": "Moyenne",
-    "cost": "Faible",
-    "impact": "Réduction agressions"
-  },
-  {
-    "id": "A-NUIT-001",
-    "risk_id": "R-TRAVAILNUIT",
-    "type": "Organisationnelle",
-    "title": "Aménagement horaires, suivi médical renforcé, transport sécurisé",
-    "difficulty": "Moyenne",
+    "title": "Mettre a jour le zonage ATEX et le registre des controles",
+    "description": "Identifier les zones ATEX, adapter le materiel, consigner les controles et autorisations.",
+    "difficulty": "Elevee",
     "cost": "Moyen",
-    "impact": "Réduction impacts travail de nuit"
+    "references": [
+      "Directive ATEX 1999/92/CE",
+      "INRS ED 6079"
+    ],
+    "evidences": [
+      "Zonage ATEX documente",
+      "Rapports de mesure / conformite"
+    ]
   },
   {
-    "id": "A-CANICULE-001",
-    "risk_id": "R-CANICULE",
-    "type": "Organisationnelle",
-    "title": "Plan canicule, ventilation, pauses fraîches, hydratation",
-    "difficulty": "Faible",
-    "cost": "Faible",
-    "impact": "Réduction stress thermique"
-  },
-  {
-    "id": "A-FROID-001",
-    "risk_id": "R-FROID",
+    "id": "A-ATEX-002",
+    "risk_id": "R-ATEX",
     "type": "Technique",
-    "title": "EPI anti-froid, limitation temps d’exposition, SAS thermique",
-    "difficulty": "Faible",
-    "cost": "Moyen",
-    "impact": "Réduction risque froid"
-  },
-  {
-    "id": "A-VIB-001",
-    "risk_id": "R-VIBRATIONS",
-    "type": "Technique",
-    "title": "Outils à faibles vibrations, entretien, temps d’exposition",
+    "title": "Installer ventilation ou aspiration a la source",
+    "description": "Limiter les concentrations de vapeurs/poussieres inflammables par captage et aeration.",
     "difficulty": "Moyenne",
     "cost": "Moyen",
-    "impact": "Réduction vibrations"
+    "references": [
+      "INRS ED 945",
+      "Code du travail R4222-1"
+    ],
+    "evidences": [
+      "Mesure de concentration",
+      "Rapport de maintenance ventilation"
+    ]
   },
   {
-    "id": "A-RAY-001",
-    "risk_id": "R-RAYONNEMENT",
-    "type": "Organisationnelle",
-    "title": "Protection UV, écrans, procédures d’éloignement",
-    "difficulty": "Faible",
-    "cost": "Faible",
-    "impact": "Réduction exposition rayonnements"
+    "id": "A-CHIM-001",
+    "risk_id": "R-CHIMIQUE",
+    "type": "Technique",
+    "title": "Substituer et securiser le stockage des produits chimiques",
+    "description": "Identifier les produits dangereux, rechercher des alternatives, separer incompatibilites et etiqueter.",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "references": [
+      "REACH/CLP",
+      "INRS ED 985"
+    ],
+    "evidences": [
+      "Inventaire et FDS",
+      "Plan de stockage et incompatibilites"
+    ]
+  },
+  {
+    "id": "A-CHIM-002",
+    "risk_id": "R-CHIMIQUE",
+    "type": "Technique",
+    "title": "Installer un captage a la source et controler l'efficacite",
+    "description": "Mettre en place aspiration/ventilation et verifier l'efficacite par mesures ou controles periodiques.",
+    "difficulty": "Elevee",
+    "cost": "Eleve",
+    "references": [
+      "INRS ED 6275",
+      "Code du travail R4222-10"
+    ],
+    "evidences": [
+      "Mesures d'empoussiere ment/concentration",
+      "Rapport maintenance ventilation"
+    ]
   },
   {
     "id": "A-MACH-001",
     "risk_id": "R-MACHINE",
     "type": "Technique",
-    "title": "Carters, arrêts d’urgence, consignation, formation opérateurs",
+    "title": "Verifier et remettre en etat les protecteurs de machines",
+    "description": "Verifier carters, grilles, arrets d'urgence, inter-verrouillages et consigner les ecarts.",
     "difficulty": "Moyenne",
     "cost": "Moyen",
-    "impact": "Sécurité machines"
+    "references": [
+      "Directive Machines 2006/42/CE",
+      "INRS ED 975"
+    ],
+    "evidences": [
+      "Rapport de controle machine",
+      "Fiches de securite des machines"
+    ]
+  },
+  {
+    "id": "A-MACH-002",
+    "risk_id": "R-MACHINE",
+    "type": "Organisation",
+    "title": "Formaliser la consignation/deconsignation",
+    "description": "Mettre en place une procedure LO/TO, equipements de consignation et formation des operateurs.",
+    "difficulty": "Moyenne",
+    "cost": "Faible",
+    "references": [
+      "INRS ED 6109"
+    ],
+    "evidences": [
+      "Procedure LO/TO",
+      "Liste des habilitations"
+    ]
+  },
+  {
+    "id": "A-CHUTE-001",
+    "risk_id": "R-CHUTE-HAUTEUR",
+    "type": "Technique",
+    "title": "Installer ou controler les protections antichute",
+    "description": "Mettre en place garde-corps, ancrages, filets ou EPI antichute adaptes et controles periodiques.",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "references": [
+      "Code du travail R4323-58",
+      "INRS ED 6184"
+    ],
+    "evidences": [
+      "PV de verification EPI",
+      "Plan de prevention / PPSPS"
+    ]
+  },
+  {
+    "id": "A-GLISS-001",
+    "risk_id": "R-GLISSADES",
+    "type": "Organisation",
+    "title": "Maintenir les cheminements degages et antiderapants",
+    "description": "Nettoyage, traitement antiderapant, eclairage adapte et signalisation des zones a risque.",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "references": [
+      "INRS ED 776"
+    ],
+    "evidences": [
+      "Plan de nettoyage",
+      "Signalisation en place"
+    ]
+  },
+  {
+    "id": "A-MANUT-001",
+    "risk_id": "R-MANUTENTION",
+    "type": "Organisation",
+    "title": "Mettre en place aides a la manutention et rotation des postes",
+    "description": "Introduire aides mecanisees, adapter les charges, organiser la rotation et la formation gestes/postures.",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "references": [
+      "INRS ED 777"
+    ],
+    "evidences": [
+      "Inventaire des aides",
+      "Formation PRAP"
+    ]
+  },
+  {
+    "id": "A-BRUIT-001",
+    "risk_id": "R-BRUIT",
+    "type": "Technique",
+    "title": "Reduire le bruit a la source et equiper en protections auditives",
+    "description": "Traiter le bruit (capotage, isolation), planifier des pauses et fournir des protecteurs adaptes.",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "references": [
+      "INRS ED 6388"
+    ],
+    "evidences": [
+      "Mesures d'exposition",
+      "Fiche de mise a disposition EPI"
+    ]
+  },
+  {
+    "id": "A-VIB-001",
+    "risk_id": "R-VIBRATIONS",
+    "type": "Technique",
+    "title": "Limiter l'exposition aux vibrations",
+    "description": "Choisir outils a faibles vibrations, entretenir, planifier des pauses, gants anti-vibratiles si besoin.",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "references": [
+      "INRS ED 974"
+    ],
+    "evidences": [
+      "Mesures d'exposition",
+      "Plan de rotation postes"
+    ]
+  },
+  {
+    "id": "A-TMS-001",
+    "risk_id": "R-TMS",
+    "type": "Organisation",
+    "title": "Adapter les postes et alterner les taches",
+    "description": "Reglages ergonomiques, alternance des gestes repetitifs, micro-pauses et formation gestes/postures.",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "references": [
+      "INRS ED 923"
+    ],
+    "evidences": [
+      "Fiches de poste ajuste es",
+      "Plan d'alternance"
+    ]
+  },
+  {
+    "id": "A-RPS-001",
+    "risk_id": "R-RPS",
+    "type": "Organisation",
+    "title": "Mettre en place un plan de prevention RPS",
+    "description": "Clarifier les roles, equilibrer la charge, espaces de parole, signalement des situations critiques.",
+    "difficulty": "Moyenne",
+    "cost": "Faible",
+    "references": [
+      "INRS ED 6140"
+    ],
+    "evidences": [
+      "Plan d'action RPS",
+      "Dispositif de signalement"
+    ]
+  },
+  {
+    "id": "A-BIO-001",
+    "risk_id": "R-BIO",
+    "type": "Organisation",
+    "title": "Renforcer l'hygiene et la protection biologique",
+    "description": "Protocoles de nettoyage, vaccination si pertinente, EPI adaptés et gestion des dechets speciaux.",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "references": [
+      "INRS ED 109",
+      "Code du travail R4421-1"
+    ],
+    "evidences": [
+      "Protocoles et registres de nettoyage",
+      "Traçabilite vaccination/EPI"
+    ]
+  },
+  {
+    "id": "A-ELEC-001",
+    "risk_id": "R-ELECTRIQUE",
+    "type": "Technique",
+    "title": "Mettre a niveau les installations et habilitations electriques",
+    "description": "Verifier protections, differenciels, equipotentialite; habiliter le personnel et consigner les interventions.",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "references": [
+      "NF C 18-510",
+      "Code du travail R4544-9"
+    ],
+    "evidences": [
+      "Rapport de controle electrique",
+      "Liste des habilitations"
+    ]
+  },
+  {
+    "id": "A-ROUTIER-001",
+    "risk_id": "R-ROUTIER",
+    "type": "Organisation",
+    "title": "Planifier les trajets et prevenir la fatigue au volant",
+    "description": "Adapter les itineraires, prevoir des pauses, veiller a l'etat des vehicules et sensibiliser les conducteurs.",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "references": [
+      "INRS ED 6059"
+    ],
+    "evidences": [
+      "Plan de prevention routier",
+      "Suivi entretien vehicule"
+    ]
+  },
+  {
+    "id": "A-ECRAN-001",
+    "risk_id": "R-ECRAN",
+    "type": "Organisation",
+    "title": "Adapter l'ergonomie des postes ecran",
+    "description": "Regler siege/ecran/clavier, ajouter supports, limiter eblouissement et prevoir pauses visuelles (20/20/20).",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "references": [
+      "INRS ED 923"
+    ],
+    "evidences": [
+      "Fiches de poste reglees",
+      "Releves ergonomiques"
+    ]
+  },
+  {
+    "id": "A-ECRAN-002",
+    "risk_id": "R-ECRAN",
+    "type": "Organisation",
+    "title": "Alterner les taches et prevenir la fatigue numerique",
+    "description": "Planifier des alternances hors ecran, pauses actives et sensibiliser aux reglages luminosite/contraste.",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "references": [
+      "INRS ED 923"
+    ],
+    "evidences": [
+      "Planning d'alternance",
+      "Supports de sensibilisation"
+    ]
+  },
+  {
+    "id": "A-NIGHT-001",
+    "risk_id": "R-NIGHT",
+    "type": "Organisation",
+    "title": "Amenager le travail de nuit et les rythmes",
+    "description": "Planifier des rotations, pauses, eclairage adapte et securiser les trajets (parking, acces).",
+    "difficulty": "Moyenne",
+    "cost": "Faible",
+    "references": [
+      "INRS ND 2239"
+    ],
+    "evidences": [
+      "Planning d'horaires",
+      "Consignes de securite nocturne"
+    ]
+  },
+  {
+    "id": "A-NIGHT-002",
+    "risk_id": "R-NIGHT",
+    "type": "Organisation",
+    "title": "Suivre la sante et la vigilance des equipes de nuit",
+    "description": "Dispositif de signalement fatigue, rotation des postes sensibles, possibilite de repos et suivi medical adapte.",
+    "difficulty": "Moyenne",
+    "cost": "Faible",
+    "references": [
+      "INRS ND 2239"
+    ],
+    "evidences": [
+      "Compte-rendus de suivi",
+      "Procedure de remontee fatigue"
+    ]
+  },
+  {
+    "id": "A-RPS-002",
+    "risk_id": "R-RPS",
+    "type": "Organisation",
+    "title": "Mettre en place un dispositif de signalement et de soutien",
+    "description": "Canal de declaration des situations critiques, traitement rapide, diffusion des ressources d'aide et supervision.",
+    "difficulty": "Moyenne",
+    "cost": "Faible",
+    "references": [
+      "INRS ED 6140"
+    ],
+    "evidences": [
+      "Procedure de signalement",
+      "Suivi des situations traitees"
+    ]
+  },
+  {
+    "id": "A-TMS-002",
+    "risk_id": "R-TMS",
+    "type": "Technique",
+    "title": "Equiper les postes repetitifs en aides ergonomiques",
+    "description": "Supports articules, rehausseurs, aides au levage/poussee et ajustement des hauteurs de travail.",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "references": [
+      "INRS ED 923"
+    ],
+    "evidences": [
+      "Liste des aides installees",
+      "Photos/mesures ergonomiques"
+    ]
+  },
+  {
+    "id": "A-QUALAIR-001",
+    "risk_id": "R-QUALITEAIR",
+    "type": "Technique",
+    "title": "Ameliorer la qualite de l'air interieur",
+    "description": "Ventilation adaptee, entretien filtres, mesure CO2/COV, eliminer sources de polluants internes.",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "references": [
+      "INRS ED 6007"
+    ],
+    "evidences": [
+      "Mesures CO2/COV",
+      "Registre d'entretien ventilation"
+    ]
+  },
+  {
+    "id": "A-POUSSIERE-BOIS-001",
+    "risk_id": "R-POUSSIERES-BOIS",
+    "type": "Technique",
+    "title": "Captage et aspiration des poussieres de bois",
+    "description": "Installer captage a la source, brumisation si besoin, nettoyage par aspiration (pas de soufflage).",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "references": [
+      "INRS ED 6077"
+    ],
+    "evidences": [
+      "Rapport empoussierement",
+      "Plan de nettoyage aspiration"
+    ]
+  },
+  {
+    "id": "A-SILICE-001",
+    "risk_id": "R-SILICE",
+    "type": "Technique",
+    "title": "Limiter l'exposition aux poussieres de silice",
+    "description": "Arrosage/captage, outils a emission reduite, zones ventilees, EPI respiratoires adaptes.",
+    "difficulty": "Elevee",
+    "cost": "Moyen",
+    "references": [
+      "INRS ED 6270"
+    ],
+    "evidences": [
+      "Mesures VLEP",
+      "Registre EPI respiratoires"
+    ]
+  },
+  {
+    "id": "A-MANUT-ERGON-POSTE",
+    "risk_id": "R-MANUTENTION",
+    "type": "Technique",
+    "title": "Equiper les postes en aides mecanisees de manutention",
+    "description": "Installer diables, transpalettes, tables elevatrices et rails de transfert selon l'analyse des flux et hauteurs de travail.",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "references": [
+      "INRS ED 777"
+    ],
+    "evidences": [
+      "Inventaire des aides en place",
+      "Photos/mesures ergonomiques"
+    ]
+  },
+  {
+    "id": "A-MANUT-ROTATION",
+    "risk_id": "R-MANUTENTION",
+    "type": "Organisation",
+    "title": "Organiser la rotation et la reduction des charges",
+    "description": "Limiter le poids/unite, partager ou alterner les taches repetitives, planifier pauses et consignation des aides disponibles.",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "references": [
+      "INRS ED 777"
+    ],
+    "evidences": [
+      "Planning d'alternance",
+      "Consignes de manutention"
+    ]
+  },
+  {
+    "id": "A-TMS-POSTE",
+    "risk_id": "R-TMS",
+    "type": "Technique",
+    "title": "Adapter les postes pour reduire les gestes repetitifs",
+    "description": "Reglages hauteur/portee, supports articulés, rehausseurs et optimisation du layout pour limiter amplitudes et torsions.",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "references": [
+      "INRS ED 923"
+    ],
+    "evidences": [
+      "Fiches de poste ajuste es",
+      "Releve ergonomique"
+    ]
+  },
+  {
+    "id": "A-RPS-PREVENTION",
+    "risk_id": "R-RPS",
+    "type": "Organisation",
+    "title": "Mettre en place des rituels de regulation et de soutien",
+    "description": "Points d'equipe reguliers, partage de charge/ressources, supervision ou soutien psychologique si besoin.",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "references": [
+      "INRS ED 6140"
+    ],
+    "evidences": [
+      "Compte-rendus de points equipe",
+      "Plan d'action RPS"
+    ]
+  },
+  {
+    "id": "A-NIGHT-ORGA",
+    "risk_id": "R-NIGHT",
+    "type": "Organisation",
+    "title": "Adapter l'organisation du travail de nuit",
+    "description": "Rotation planifiee, pauses, eclairage adapté, consignes securite trajets/parking et protocole de gestion fatigue.",
+    "difficulty": "Moyenne",
+    "cost": "Faible",
+    "references": [
+      "INRS ND 2239"
+    ],
+    "evidences": [
+      "Planning de rotation",
+      "Consignes de securite nocturne"
+    ]
+  },
+  {
+    "id": "A-TRAVAUX-PUB-001",
+    "risk_id": "R-TRAVAUX-PUB",
+    "title": "Plan de prévention terrassement / réseaux enterrés",
+    "type": "Organisationnelle",
+    "impact": "Réduction du risque d'ensevelissement et de heurt engins",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "references": [
+      "INRS",
+      "OPPBTP"
+    ]
+  },
+  {
+    "id": "A-TRAVAUX-PUB-002",
+    "risk_id": "R-TRAVAUX-PUB",
+    "title": "Balisage, DICT et consignation réseaux",
+    "type": "Technique",
+    "impact": "Sécurise les travaux à proximité de réseaux (gaz/élec/eau)",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "references": [
+      "INRS",
+      "OPPBTP"
+    ]
+  },
+  {
+    "id": "A-CMR-001",
+    "risk_id": "R-CMR",
+    "title": "Substitution / FDS à jour (CMR)",
+    "type": "Technique",
+    "impact": "Réduction de l'exposition aux CMR par substitution et contrôle",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-CMR-002",
+    "risk_id": "R-CMR",
+    "title": "Mesures de confinement / ventilation (CMR)",
+    "type": "Technique",
+    "impact": "Captage à la source, ventilation adaptée pour CMR",
+    "difficulty": "Élevée",
+    "cost": "Élevé",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
+  },
+  {
+    "id": "A-CMR-003",
+    "risk_id": "R-CMR",
+    "title": "Suivi médical renforcé / traçabilité exposition",
+    "type": "Humaine",
+    "impact": "Réduction du risque via surveillance et traçabilité",
+    "difficulty": "Moyenne",
+    "cost": "Faible",
+    "references": [
+      "INRS",
+      "CARSAT"
+    ]
   }
 ]

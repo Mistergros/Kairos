@@ -4,9 +4,15 @@ import { embed, search, EmbeddedDocument } from "../rag";
 export function rankActions(prompt: string, actions: Action[], limit = 3): Action[] {
   const corpus: EmbeddedDocument[] = actions.map((action) => ({
     id: action.id,
-    text: `${action.title} ${action.impact}`,
-    vector: embed(`${action.title} ${action.impact}`),
-    metadata: { risk: action.risk_id },
+    text: `${action.title} ${String(
+      typeof action.impact === "string" ? action.impact : JSON.stringify(action.impact || {})
+    )}`,
+    vector: embed(
+      `${action.title} ${String(
+        typeof action.impact === "string" ? action.impact : JSON.stringify(action.impact || {})
+      )}`
+    ),
+    metadata: { risk: action.risk_id || (action as any).related_risk_ids?.[0] || "" },
   }));
 
   const results = search(prompt, corpus, limit);

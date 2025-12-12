@@ -7,7 +7,15 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "mock-api": "node mock-api.js"
+    "mock-api": "node mock-api.js",
+    "duerp:db:init": "node scripts/duerp/bootstrap.cjs",
+    "duerp:db:reset": "node scripts/duerp/bootstrap.cjs --reset",
+    "duerp:api:check": "node -e \"console.log('OpenAPI: duerp_pro_spec/specs/openapi.yaml')\"",
+    "dev:api": "tsx api/server.ts",
+    "config:build:front": "tsx scripts/config/build-front.ts",
+    "config:validate": "tsx scripts/config/validate-config.ts",
+    "test:api:smoke": "tsx scripts/tests/api-smoke.ts",
+    "test:api:integration": "tsx scripts/tests/api-integration.ts"
   },
   "engines": {
     "node": ">=18"
@@ -22,7 +30,12 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.0",
-    "zustand": "^4.4.7"
+    "zustand": "^4.4.7",
+    "dotenv": "^16.4.5",
+    "pg": "^8.11.3",
+    "zod": "^3.23.8",
+    "yaml": "^2.6.0",
+    "fast-glob": "^3.3.2"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",
@@ -33,6 +46,7 @@
     "tailwindcss": "^3.3.6",
     "ts-node": "^10.9.1",
     "typescript": "^5.3.2",
-    "vite": "^5.0.3"
+    "vite": "^5.0.3",
+    "tsx": "^4.19.0"
   }
 }

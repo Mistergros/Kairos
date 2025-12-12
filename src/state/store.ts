@@ -1,11 +1,13 @@
 import { create } from "zustand";
 import { riskLibrary } from "../data/riskLibrary";
+import actionsCatalog from "../../config/actions.catalog.json";
 import { nafPresets, NafPreset } from "../data/nafPresets";
 import { buildHazardsFromMapping } from "../data/nafMappingLoader";
 import { ActionItem, Assessment, Establishment, Hazard, Priority, WorkUnit, VersionEntry } from "../types";
 import { computePriority } from "../utils/score";
 import { fetchHazardsFromSources } from "../utils/api";
 import { RiskEngineV3 } from "../core/engine/risk-engine.v3";
+import duerpApi from "../services/duerpApi";
 
 // Sector presets (ASCII labels to avoid encoding issues)
 const itHazards: Hazard[] = [
@@ -109,23 +111,111 @@ const loadNafPresets = async (): Promise<Record<string, NafPreset>> => nafPreset
 const uid = () =>
   typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : `id-${Math.random().toString(36).slice(2, 9)}`;
 
-const makeActionForAssessment = (a: Assessment, establishmentId?: string): ActionItem => ({
-  id: uid(),
-  establishmentId: establishmentId ?? a.workUnitId,
-  assessmentId: a.id,
-  title: `Action prioritaire sur ${a.riskLabel}`,
-  description: "Definir les mesures correctives et les responsables",
-  steps: [
-    { id: uid(), label: "Analyser le risque", done: false },
-    { id: uid(), label: "Definir mesures et responsable", done: false },
-    { id: uid(), label: "Mettre en oeuvre", done: false },
-  ],
-  owner: "A definir",
-  dueDate: new Date(Date.now() + 14 * 24 * 3600 * 1000).toISOString(),
-  status: "TO_DO",
-  priority: a.priority,
-  createdAt: new Date().toISOString(),
-});
+const normalize = (s: string) =>
+  (s || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+
+const labelToRiskId: Record<string, string> = {
+  "atmospheres explosives": "r-atex",
+  "incendie et evacuation": "r-incendie",
+  "chutes de plain pied et de hauteur": "r-chute-hauteur",
+  "machines et equipements de travail": "r-machine",
+  "risque electrique": "r-electrique",
+  "risque routier professionnel": "r-routier",
+  "bruit": "r-bruit",
+  "vibrations": "r-vibrations",
+  "risques psychosociaux": "r-rps",
+  "risques psychosociaux rps": "r-rps",
+  "travail sur ecran": "r-ecran",
+  "manutention manuelle": "r-manutention",
+  "manutentions manuelles et tms": "r-manutention",
+  "manutention manuelle et tms": "r-manutention",
+  "agents chimiques dangereux": "r-chimique",
+  "biologique": "r-bio",
+  "glissades": "r-glissades",
+  "travail de nuit": "r-night",
+  "horaires atypiques travail de nuit": "r-night",
+  "travail de nuit equipes alternantes": "r-night",
+  "tms": "r-tms",
+};
+
+const categoryToRiskId: Record<string, string> = {
+  "manutention manuelle": "r-manutention",
+  "ergonomie": "r-tms",
+  "organisation": "r-rps",
+  "travail sur ecran": "r-ecran",
+  "bruit": "r-bruit",
+  "vibrations": "r-vibrations",
+  "risques psychosociaux": "r-rps",
+  "travail de nuit": "r-night",
+};
+
+type CatalogEntry = { risk_id?: string; title?: string; description?: string };
+
+const actionsByRisk = (() => {
+  const map = new Map<string, CatalogEntry[]>();
+  (actionsCatalog as CatalogEntry[]).forEach((a) => {
+    if (!a.risk_id) return;
+    const key = normalize(a.risk_id);
+    if (!map.has(key)) map.set(key, []);
+    map.get(key)!.push(a);
+  });
+  return map;
+})();
+
+const pickCatalogAction = (assessment: Assessment) => {
+  const label = normalize(assessment.riskLabel || "");
+  const hazard = normalize(assessment.hazardId || "");
+  const category = normalize(assessment.hazardCategory || "");
+
+  const byId = hazard ? actionsByRisk.get(hazard) : undefined;
+  if (byId?.length) return byId[0];
+
+  const alias = labelToRiskId[label];
+  const byAlias = alias ? actionsByRisk.get(normalize(alias)) : undefined;
+  if (byAlias?.length) return byAlias[0];
+
+  const byCategory = category ? actionsByRisk.get(categoryToRiskId[category] ? normalize(categoryToRiskId[category]) : "") : undefined;
+  if (byCategory?.length) return byCategory[0];
+
+  const byLabel = Array.from(actionsByRisk.values())
+    .flat()
+    .find((c) => {
+      const rid = normalize((c as any).risk_id || "");
+      return rid === label || rid.includes(label) || label.includes(rid);
+    });
+  return byLabel;
+};
+
+const makeActionForAssessment = (a: Assessment, establishmentId?: string): ActionItem => {
+  const catalog = pickCatalogAction(a);
+  const title = catalog?.title ? catalog.title : `Mettre en oeuvre les mesures pour ${a.riskLabel}`;
+  const description = catalog?.description
+    ? catalog.description
+    : "Definir les mesures correctives et les responsables";
+
+  return {
+    id: uid(),
+    establishmentId: establishmentId ?? a.workUnitId,
+    assessmentId: a.id,
+    title,
+    description,
+    steps: [
+      { id: uid(), label: "Analyser le risque", done: false },
+      { id: uid(), label: "Definir mesures et responsable", done: false },
+      { id: uid(), label: "Mettre en oeuvre", done: false },
+    ],
+    owner: "A definir",
+    dueDate: new Date(Date.now() + 14 * 24 * 3600 * 1000).toISOString(),
+    status: "TO_DO",
+    priority: a.priority,
+    createdAt: new Date().toISOString(),
+  };
+};
 
 type AssessmentInput = {
   workUnitId: string;
@@ -138,6 +228,41 @@ type AssessmentInput = {
 };
 
 type ActionInput = Omit<ActionItem, "id" | "createdAt" | "priority"> & { priority?: Priority };
+
+const FEATURE_BOOSTS: Record<string, { gravity?: number; frequency?: number; control?: number }> = {
+  solvents: { gravity: 2 },
+  cold_room: { frequency: 1 },
+  night_work: { gravity: 1 },
+  public_facing: { frequency: 1 },
+  vibrating_tools: { gravity: 1, frequency: 1 },
+  outdoor_uv: { gravity: 1 },
+  machines: { gravity: 1, frequency: 1 },
+  screen_work: { gravity: 0, frequency: 0 },
+  manual_handling: { gravity: 1, frequency: 1 },
+  noise: { frequency: 1 },
+  driving: { frequency: 1 },
+  heights: { gravity: 2 },
+  bio: { gravity: 2 },
+  cleaning_agents: { gravity: 1, frequency: 1 },
+};
+
+const applyFeatureAdjustments = (g: number, f: number, c: number, features?: string[]) => {
+  if (!features || !features.length) return { gravity: g, frequency: f, control: c };
+  let gravity = g;
+  let frequency = f;
+  let control = c;
+  features.forEach((feat) => {
+    const boost = FEATURE_BOOSTS[feat];
+    if (!boost) return;
+    gravity += boost.gravity ?? 0;
+    frequency += boost.frequency ?? 0;
+    control += boost.control ?? 0;
+  });
+  gravity = Math.min(Math.max(gravity, 1), 10);
+  frequency = Math.min(Math.max(frequency, 1), 10);
+  control = Math.min(Math.max(control, 0.5), 10);
+  return { gravity, frequency, control };
+};
 
 interface DUERPState {
   establishments: Establishment[];
@@ -154,16 +279,20 @@ interface DUERPState {
   removeEstablishment: (id: string) => void;
   addWorkUnit: (payload: WorkUnit) => void;
   removeWorkUnit: (id: string) => void;
+  addHazard: (payload: Hazard) => void;
   addAssessment: (payload: AssessmentInput) => void;
   removeAssessment: (id: string) => void;
   updateAssessment: (id: string, payload: Partial<AssessmentInput>) => void;
   addAction: (payload: ActionInput) => void;
+  updateAction: (id: string, payload: Partial<ActionItem>) => void;
   updateActionStatus: (id: string, status: ActionItem["status"]) => void;
   toggleActionStep: (actionId: string, stepId: string) => void;
   createVersion: (label: string, reason?: string) => void;
   loadingHazards: boolean;
   prefillFromSector: (sector?: string) => Promise<void>;
 }
+
+const USE_REMOTE_ENGINE = (import.meta as any)?.env?.VITE_USE_REMOTE_ENGINE === "true";
 
 export const useDuerpStore = create<DUERPState>((set, get) => ({
   establishments: [],
@@ -217,6 +346,14 @@ export const useDuerpStore = create<DUERPState>((set, get) => ({
       const actions = state.actions.filter((a) => !a.assessmentId || assessmentIds.has(a.assessmentId));
       const selectedWorkUnitId = workUnits.find((w) => w.establishmentId === state.selectedEstablishmentId)?.id;
       return { ...state, workUnits, assessments, actions, selectedWorkUnitId };
+    }),
+
+  addHazard: (payload) =>
+    set((state) => {
+      const map = new Map(state.hazardLibrary.map((h) => [h.id || `haz-${h.risk}`, h]));
+      const safeId = payload.id || `haz-${payload.risk.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+      map.set(safeId, { ...payload, id: safeId });
+      return { ...state, hazardLibrary: Array.from(map.values()) };
     }),
 
   addAssessment: (payload) =>
@@ -291,14 +428,39 @@ export const useDuerpStore = create<DUERPState>((set, get) => ({
           priority:
             payload.priority ??
             (payload.assessmentId ? state.assessments.find((a) => a.id === payload.assessmentId)?.priority ?? 4 : 4),
+          startDate: payload.startDate,
+          endDate: payload.endDate,
+          how: payload.how,
         },
       ],
     })),
 
+  updateAction: (id, payload) =>
+    set((state) => {
+      const now = Date.now();
+      return {
+        actions: state.actions.map((a) => {
+          if (a.id !== id) return a;
+          const next = { ...a, ...payload };
+          const endTime = next.endDate ? new Date(next.endDate).getTime() : undefined;
+          const mustBeLate = endTime !== undefined && endTime < now && next.status !== "DONE";
+          return { ...next, status: mustBeLate ? "LATE" : next.status };
+        }),
+      };
+    }),
+
   updateActionStatus: (id, status) =>
-    set((state) => ({
-      actions: state.actions.map((a) => (a.id === id ? { ...a, status } : a)),
-    })),
+    set((state) => {
+      const now = Date.now();
+      return {
+        actions: state.actions.map((a) => {
+          if (a.id !== id) return a;
+          const endTime = a.endDate ? new Date(a.endDate).getTime() : undefined;
+          const mustBeLate = endTime !== undefined && endTime < now && status !== "DONE";
+          return { ...a, status: mustBeLate ? "LATE" : status };
+        }),
+      };
+    }),
 
   toggleActionStep: (actionId, stepId) =>
     set((state) => ({
@@ -328,22 +490,48 @@ export const useDuerpStore = create<DUERPState>((set, get) => ({
     const establishment = get().establishments.find((e) => e.id === get().selectedEstablishmentId);
     const naf = establishment?.codeNaf;
     if (!sector && !naf) return;
+    const targetWorkUnitId = get().selectedWorkUnitId;
+    const targetUnit = targetWorkUnitId ? get().workUnits.find((u) => u.id === targetWorkUnitId) : undefined;
     set(() => ({ loadingHazards: true }));
     try {
       const nafPrefix = naf ? naf.toUpperCase().slice(0, 2) : "";
       const engine = new RiskEngineV3();
-      const engineRisks = engine.getRisks({ nafCode: naf || sector });
-      const engineHazards = engineRisks
-        .map((r) => ({
-          id: r.id,
-          category: r.category || "Risque",
-          risk: r.name,
-          damages: r.description,
+      const featuresFlags = (targetUnit?.features || []).reduce((acc, key) => {
+        acc[key] = true;
+        return acc;
+      }, {} as Record<string, boolean>);
+
+      const ctx = {
+        nafCode: naf || sector,
+        features: featuresFlags,
+        activity: targetUnit?.activity,
+        unity: targetUnit?.name,
+      };
+
+      let engineEvaluations: any[] = [];
+      if (USE_REMOTE_ENGINE) {
+        try {
+          const remote = await duerpApi.evaluateV4(ctx);
+          engineEvaluations = Array.isArray(remote?.evaluations) ? remote.evaluations : [];
+        } catch (err) {
+          console.warn("Remote engine V4 failed, fallback to V3", err);
+        }
+      }
+      if (!engineEvaluations.length) {
+        engineEvaluations = engine.evaluate(ctx);
+      }
+
+      const engineHazards = engineEvaluations
+        .map((e) => ({
+          id: e.risk.id,
+          category: e.risk.category || "Risque",
+          risk: e.risk.name,
+          damages: e.risk.description,
           example_prevention: "",
           sector: naf || sector || "",
-          gravity: 7,
-          frequency: 6,
-          control: 1,
+          gravity: e.severity,
+          frequency: e.probability,
+          control: e.control,
         }))
         .sort((a, b) => a.risk.localeCompare(b.risk)) as (Hazard & { gravity?: number; frequency?: number; control?: number })[];
 
@@ -397,15 +585,17 @@ export const useDuerpStore = create<DUERPState>((set, get) => ({
       ).sort((a, b) => `${a.category}-${a.risk}`.localeCompare(`${b.category}-${b.risk}`));
 
       const targetEstablishment = get().selectedEstablishmentId || get().establishments[0]?.id;
-      const targetUnits = get().workUnits.filter((u) => u.establishmentId === targetEstablishment);
+      const allUnits = get().workUnits.filter((u) => u.establishmentId === targetEstablishment);
+      const targetUnits = targetWorkUnitId ? allUnits.filter((u) => u.id === targetWorkUnitId) : allUnits;
       if (!targetUnits.length) return;
 
       const assessmentsToAdd: Assessment[] = [];
       targetUnits.forEach((unit) => {
         candidates.forEach((h) => {
-          const gravity = (h as PresetHazard).gravity ?? 7;
-          const frequency = (h as PresetHazard).frequency ?? 6;
-          const control = (h as PresetHazard).control ?? 1;
+          const baseG = (h as PresetHazard).gravity ?? 7;
+          const baseF = (h as PresetHazard).frequency ?? 6;
+          const baseC = (h as PresetHazard).control ?? 1;
+          const { gravity, frequency, control } = applyFeatureAdjustments(baseG, baseF, baseC, unit.features);
           const score = gravity * frequency * control;
           assessmentsToAdd.push({
             id: uid(),

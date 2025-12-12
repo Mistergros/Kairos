@@ -1,0 +1,29 @@
+{
+  "code": "41",
+  "label": "Construction de b├ótiments (pr├®fixe)",
+  "risk_tags": [
+    "chantier",
+    "hauteur",
+    "├®lectricit├®"
+  ],
+  "risks_priority": [
+    "R-CHUTE-HAUTEUR",
+    "R-BRUIT",
+    "R-ELECTRIQUE",
+    "R-MANUTENTION",
+    "R-SILICE"
+  ],
+  "risks_mandatory": [
+    "R-INCENDIE"
+  ],
+  "activities": [
+    {
+      "id": "chantier",
+      "label": "Chantier / gros oeuvre"
+    },
+    {
+      "id": "terrain",
+      "label": "Interventions terrain"
+    }
+  ]
+}

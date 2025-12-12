@@ -1,0 +1,27 @@
+﻿ï»¿{
+  "code": "47.11D",
+  "label": "Supâ”œÂ®rettes",
+  "risk_tags": [
+    "magasin",
+    "manutention"
+  ],
+  "risks_priority": [
+    "R-GLISSADES",
+    "R-MANUTENTION",
+    "R-RPS",
+    "R-INCENDIE"
+  ],
+  "risks_mandatory": [
+    "R-INCENDIE"
+  ],
+  "activities": [
+    {
+      "id": "magasin",
+      "label": "Surface de vente"
+    },
+    {
+      "id": "reserve",
+      "label": "Râ”œÂ®serve / back-office"
+    }
+  ]
+}

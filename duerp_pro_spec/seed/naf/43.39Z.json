@@ -1,0 +1,53 @@
+{
+  "code": "43.39Z",
+  "label": "Autres travaux de finition (toiture, étanchéité)",
+  "unit_templates": [
+    {
+      "id": "ut.chantier_hauteur",
+      "name": "Chantier / travail en hauteur",
+      "default_risk_ids": [
+        "risk.chute_hauteur",
+        "risk.outillage_electroportatif",
+        "risk.manutention",
+        "risk.amiante"
+      ],
+      "suggested": true
+    },
+    {
+      "id": "ut.atelier",
+      "name": "Atelier",
+      "default_risk_ids": [
+        "risk.bruit",
+        "risk.poussiere",
+        "risk.outillage_stationnaire"
+      ],
+      "suggested": true
+    },
+    {
+      "id": "ut.bureau",
+      "name": "Bureau / préparation",
+      "default_risk_ids": [
+        "risk.travail_ecran",
+        "risk.rps"
+      ],
+      "suggested": true
+    },
+    {
+      "id": "ut.logistique",
+      "name": "Logistique / stockage",
+      "default_risk_ids": [
+        "risk.circulation_interne",
+        "risk.chute_plain_pied",
+        "risk.manutention"
+      ],
+      "suggested": false
+    }
+  ],
+  "risk_tags": [
+    "chute hauteur",
+    "outillage",
+    "amiante",
+    "bruit",
+    "poussières"
+  ]
+}

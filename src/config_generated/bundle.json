@@ -1,0 +1,3917 @@
+{
+  "metadata": {
+    "builtAt": "2025-12-10T15:31:22.319Z",
+    "sourceHash": "f043f4a2b774f36f4a5f034a651dafe63bb8183f6b62f0f5f0a1e5ca92a408c4",
+    "files": 143
+  },
+  "risks": [
+    {
+      "id": "R-AGRESSION",
+      "name": "Agressions / incivilités",
+      "category": "Sécurité",
+      "description": "Relation client/usager, encaissement.",
+      "units": [
+        "Salle",
+        "Accueil"
+      ],
+      "questions": [
+        "Formation gestion conflit ?",
+        "PTI ?"
+      ],
+      "factors": [],
+      "sources": [
+        "INRS",
+        "CARSAT",
+        "EU-OSHA"
+      ]
+    },
+    {
+      "id": "R-ATEX",
+      "name": "Atmosphères explosives",
+      "category": "Accident majeur",
+      "description": "Gaz/vapeurs/poussières inflammables.",
+      "units": [
+        "Cuisine",
+        "Atelier",
+        "Chantier"
+      ],
+      "questions": [
+        "Zonage ATEX ?",
+        "Matériel conforme ATEX ?"
+      ],
+      "factors": [],
+      "sources": [
+        "INRS",
+        "CARSAT",
+        "EU-OSHA"
+      ]
+    },
+    {
+      "id": "R-BIO",
+      "name": "Risque biologique",
+      "category": "Biologique",
+      "description": "Agents bio, déchets, denrées.",
+      "units": [
+        "Cuisine",
+        "Santé"
+      ],
+      "questions": [
+        "PMS/HACCP ?",
+        "DASRI ?"
+      ],
+      "factors": [],
+      "sources": [
+        "INRS",
+        "CARSAT",
+        "EU-OSHA"
+      ]
+    },
+    {
+      "id": "R-BRUIT",
+      "name": "Bruit",
+      "category": "Physique",
+      "description": "Machines, ventilation, impacts.",
+      "units": [
+        "Cuisine",
+        "Atelier"
+      ],
+      "questions": [
+        "Mesures bruit ?",
+        "EPI ?"
+      ],
+      "factors": [],
+      "sources": [
+        "INRS",
+        "CARSAT",
+        "EU-OSHA"
+      ]
+    },
+    {
+      "id": "R-BRULE",
+      "name": "Brûlures / projections",
+      "category": "Accidentel",
+      "description": "Huile, vapeur, surfaces chaudes.",
+      "units": [
+        "Cuisine"
+      ],
+      "questions": [
+        "Gants thermiques ?",
+        "Procédure friteuse ?"
+      ],
+      "factors": [],
+      "sources": [
+        "INRS",
+        "CARSAT",
+        "EU-OSHA"
+      ]
+    },
+    {
+      "id": "R-CANICULE",
+      "name": "Chaleur / canicule",
+      "category": "Physique",
+      "description": "Extérieurs été / cuisines chaudes.",
+      "units": [
+        "Cuisine",
+        "Chantier"
+      ],
+      "questions": [
+        "Plan canicule ?",
+        "Ventilation ?"
+      ],
+      "factors": [],
+      "sources": [
+        "INRS",
+        "CARSAT",
+        "EU-OSHA"
+      ]
+    },
+    {
+      "id": "R-CHIMIQUE",
+      "name": "Agents chimiques",
+      "category": "Chimique",
+      "description": "Nettoyants, solvants, dégraissants, CMR.",
+      "units": [
+        "Cuisine",
+        "Plonge",
+        "Nettoyage"
+      ],
+      "questions": [
+        "FDS à jour ?",
+        "Substitution ?",
+        "Ventilation ?"
+      ],
+      "factors": [],
+      "sources": [
+        "INRS",
+        "CARSAT",
+        "EU-OSHA"
+      ]
+    },
+    {
+      "id": "R-CHUTE-HAUTEUR",
+      "name": "Chutes de hauteur",
+      "category": "Accidentel",
+      "description": "Escabeaux, échafaudages, toitures.",
+      "units": [
+        "Chantier",
+        "Entrepôt"
+      ],
+      "questions": [
+        "Antichute/EPI disponibles ?",
+        "Échafaudages vérifiés ?"
+      ],
+      "factors": [],
+      "sources": [
+        "INRS",
+        "CARSAT",
+        "EU-OSHA"
+      ]
+    },
+    {
+      "id": "R-GLISSADES",
+      "name": "Chutes de plain-pied et de hauteur",
+      "category": "Accident",
+      "description": "Glissades, trébuchements, déséquilibres ou chutes d'échelle/escabeau/toitures.",
+      "units": [],
+      "questions": [],
+      "factors": [],
+      "sources": [
+        "INRS ED 6053",
+        "CARSAT Prévention chutes"
+      ]
+    },
+    {
+      "id": "R-CMR",
+      "name": "Agents CMR",
+      "category": "Chimique",
+      "description": "Exposition à des substances Cancérogènes, Mutagènes ou Reprotoxiques.",
+      "units": [],
+      "questions": [],
+      "factors": [],
+      "sources": [
+        "INRS ED 6090"
+      ]
+    },
+    {
+      "id": "R-COUPURE",
+      "name": "Coupures / lacérations",
+      "category": "Accidentel",
+      "description": "Lames, couteaux, trancheuses.",
+      "units": [
+        "Cuisine",
+        "Atelier"
+      ],
+      "questions": [
+        "Gants anti-coupures ?",
+        "Protections machines ?"
+      ],
+      "factors": [],
+      "sources": [
+        "INRS",
+        "CARSAT",
+        "EU-OSHA"
+      ]
+    },
+    {
+      "id": "R-DECHETS",
+      "name": "Déchets / DASRI / biodéchets",
+      "category": "Organisationnel",
+      "description": "Tri/collecte/élimination.",
+      "units": [
+        "Cuisine",
+        "Santé"
+      ],
+      "questions": [
+        "Circuit déchets ?",
+        "Prestataire ?"
+      ],
+      "factors": [],
+      "sources": [
+        "INRS",
+        "CARSAT",
+        "EU-OSHA"
+      ]
+    },
+    {
+      "id": "R-ECRAN",
+      "name": "Travail sur écran",
+      "category": "Ergonomique",
+      "description": "VDT prolongée.",
+      "units": [
+        "Bureau"
+      ],
+      "questions": [
+        "Ergonomie ?",
+        "Pauses visuelles ?"
+      ],
+      "factors": [],
+      "sources": [
+        "INRS",
+        "CARSAT",
+        "EU-OSHA"
+      ]
+    },
+    {
+      "id": "R-ELECTRIQUE",
+      "name": "Risque électrique",
+      "category": "Accidentel",
+      "description": "Contacts directs/indirects, bricolage.",
+      "units": [
+        "Chantier",
+        "Cuisine"
+      ],
+      "questions": [
+        "Vérifications périodiques ?",
+        "Habilitations ?"
+      ],
+      "factors": [],
+      "sources": [
+        "INRS",
+        "CARSAT",
+        "EU-OSHA"
+      ]
+    },
+    {
+      "id": "R-ERGONOMIE",
+      "name": "Ergonomie du poste",
+      "category": "Ergonomique",
+      "description": "Hauteur plan, espace.",
+      "units": [
+        "Bureau",
+        "Cuisine"
+      ],
+      "questions": [
+        "Plan de travail réglable ?",
+        "Siège adapté ?"
+      ],
+      "factors": [],
+      "sources": [
+        "INRS",
+        "CARSAT",
+        "EU-OSHA"
+      ]
+    },
+    {
+      "id": "R-FROID",
+      "name": "Froid",
+      "category": "Physique",
+      "description": "Chambres froides.",
+      "units": [
+        "Chambre froide"
+      ],
+      "questions": [
+        "EPI ?",
+        "Limitation temps ?"
+      ],
+      "factors": [],
+      "sources": [
+        "INRS",
+        "CARSAT",
+        "EU-OSHA"
+      ]
+    },
+    {
+      "id": "R-GLASS",
+      "name": "Casse verre / coupures verre",
+      "category": "Accidentel",
+      "description": "Verres, bouteilles.",
+      "units": [
+        "Bar",
+        "Salle"
+      ],
+      "questions": [
+        "Gants ?",
+        "Bacs spécifiques ?"
+      ],
+      "factors": [],
+      "sources": [
+        "INRS",
+        "CARSAT",
+        "EU-OSHA"
+      ]
+    },
+    {
+      "id": "R-GLISSADES",
+      "name": "Chutes de plain-pied",
+      "category": "Accidentel",
+      "description": "Sols mouillés, obstacles, dénivelés.",
+      "units": [
+        "Cuisine",
+        "Salle",
+        "Magasin"
+      ],
+      "questions": [
+        "Plan de nettoyage ?",
+        "Chaussures antidérapantes ?"
+      ],
+      "factors": [],
+      "sources": [
+        "INRS",
+        "CARSAT",
+        "EU-OSHA"
+      ]
+    },
+    {
+      "id": "R-INCENDIE",
+      "name": "Incendie / explosion",
+      "category": "Accident majeur",
+      "description": "Sources dâ€™ignition, stockages, gaz.",
+      "units": [
+        "Cuisine",
+        "Entrepôt"
+      ],
+      "questions": [
+        "Exercices évacuation ?",
+        "Extincteurs vérifiés ?"
+      ],
+      "factors": [],
+      "sources": [
+        "INRS",
+        "CARSAT",
+        "EU-OSHA"
+      ]
+    },
+    {
+      "id": "R-MACHINE",
+      "name": "Machines / pièces en mouvement",
+      "category": "Accidentel",
+      "description": "Carter, interverrouillage.",
+      "units": [
+        "Atelier",
+        "Chantier"
+      ],
+      "questions": [
+        "Carter ?",
+        "LOTO ?"
+      ],
+      "factors": [],
+      "sources": [
+        "INRS",
+        "CARSAT",
+        "EU-OSHA"
+      ]
+    },
+    {
+      "id": "R-MANUTENTION",
+      "name": "Manutentions manuelles",
+      "category": "Physique",
+      "description": "Port/traction/poussée de charges.",
+      "units": [
+        "Cuisine",
+        "Entrepôt"
+      ],
+      "questions": [
+        "Aides mécaniques ?",
+        "Formation gestes/postures ?"
+      ],
+      "factors": [],
+      "sources": [
+        "INRS",
+        "CARSAT",
+        "EU-OSHA"
+      ]
+    },
+    {
+      "id": "R-QUALITEAIR",
+      "name": "Qualité de l'air intérieur",
+      "category": "Environnemental",
+      "description": "CO2, ventilation.",
+      "units": [
+        "Bureau",
+        "Salle"
+      ],
+      "questions": [
+        "Mesure CO2 ?",
+        "Renouvellement d'air ?"
+      ],
+      "factors": [],
+      "sources": [
+        "INRS",
+        "CARSAT",
+        "EU-OSHA"
+      ]
+    },
+    {
+      "id": "R-RAYONNEMENT",
+      "name": "Rayonnements non ionisants",
+      "category": "Physique",
+      "description": "UV en extérieur.",
+      "units": [
+        "Chantier",
+        "Extérieur"
+      ],
+      "questions": [
+        "Protection UV ?",
+        "Temps d'exposition ?"
+      ],
+      "factors": [],
+      "sources": [
+        "INRS",
+        "CARSAT",
+        "EU-OSHA"
+      ]
+    },
+    {
+      "id": "R-ROUTIER",
+      "name": "Risque routier",
+      "category": "Accidentel",
+      "description": "Livraisons, déplacements.",
+      "units": [
+        "Livraison"
+      ],
+      "questions": [
+        "Plan de prévention ?",
+        "Repos ?"
+      ],
+      "factors": [],
+      "sources": [
+        "INRS",
+        "CARSAT",
+        "EU-OSHA"
+      ]
+    },
+    {
+      "id": "R-RPS",
+      "name": "RPS / stress",
+      "category": "Organisationnel",
+      "description": "Charge, horaires, agressions.",
+      "units": [
+        "Salle",
+        "Bureau"
+      ],
+      "questions": [
+        "Évaluation RPS ?",
+        "Procédure agression ?"
+      ],
+      "factors": [],
+      "sources": [
+        "INRS",
+        "CARSAT",
+        "EU-OSHA"
+      ]
+    },
+    {
+      "id": "R-TMS",
+      "name": "Troubles musculo-squelettiques",
+      "category": "Physique",
+      "description": "Gestes répétitifs, postures.",
+      "units": [
+        "Cuisine",
+        "Bureau"
+      ],
+      "questions": [
+        "Ergonomie poste ?",
+        "Rotation tâches ?"
+      ],
+      "factors": [],
+      "sources": [
+        "INRS",
+        "CARSAT",
+        "EU-OSHA"
+      ]
+    },
+    {
+      "id": "R-TRAVAUX-PUB",
+      "name": "Travaux publics / terrassement",
+      "category": "Accident",
+      "description": "Enterrement, réseaux enterrés, engins de chantier, circulation.",
+      "units": [],
+      "questions": [],
+      "factors": [],
+      "sources": [
+        "INRS ED 6091",
+        "Guide anti-endommagement"
+      ]
+    },
+    {
+      "id": "R-VIBRATIONS",
+      "name": "Vibrations",
+      "category": "Physique",
+      "description": "Outils vibrants, engins.",
+      "units": [
+        "Chantier",
+        "Atelier"
+      ],
+      "questions": [
+        "Inventaire HAVS ?",
+        "Limitation temps ?"
+      ],
+      "factors": [],
+      "sources": [
+        "INRS",
+        "CARSAT",
+        "EU-OSHA"
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "id": "A-R-AGRESSION-001",
+      "risk_id": "R-AGRESSION",
+      "title": "Mesure technique prioritaire",
+      "type": "EPI",
+      "impact": "Réduction du risque",
+      "difficulty": "Moyenne",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-AGRESSION-002",
+      "risk_id": "R-AGRESSION",
+      "title": "Procédure / organisation",
+      "type": "Technique",
+      "impact": "Réduction du risque",
+      "difficulty": "Moyenne",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-AGRESSION-003",
+      "risk_id": "R-AGRESSION",
+      "title": "Formation/sensibilisation ciblée",
+      "type": "Humaine",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Faible",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-AGRESSION-004",
+      "risk_id": "R-AGRESSION",
+      "title": "EPI adaptés et contrôlés",
+      "type": "Technique",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-ATEX-001",
+      "risk_id": "R-ATEX",
+      "title": "Mesure technique prioritaire",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-ATEX-002",
+      "risk_id": "R-ATEX",
+      "title": "Procédure / organisation",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque",
+      "difficulty": "Moyenne",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-ATEX-003",
+      "risk_id": "R-ATEX",
+      "title": "Formation/sensibilisation ciblée",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque",
+      "difficulty": "Moyenne",
+      "cost": "Faible",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-ATEX-004",
+      "risk_id": "R-ATEX",
+      "title": "EPI adaptés et contrôlés",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-BIO-001",
+      "risk_id": "R-BIO",
+      "title": "Mesure technique prioritaire",
+      "type": "Technique",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-BIO-002",
+      "risk_id": "R-BIO",
+      "title": "Procédure / organisation",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque",
+      "difficulty": "Moyenne",
+      "cost": "Faible",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-BIO-003",
+      "risk_id": "R-BIO",
+      "title": "Formation/sensibilisation ciblée",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque",
+      "difficulty": "Moyenne",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-BIO-004",
+      "risk_id": "R-BIO",
+      "title": "EPI adaptés et contrôlés",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-BRUIT-001",
+      "risk_id": "R-BRUIT",
+      "title": "Mesure technique prioritaire",
+      "type": "Humaine",
+      "impact": "Réduction du risque",
+      "difficulty": "Moyenne",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-BRUIT-002",
+      "risk_id": "R-BRUIT",
+      "title": "Procédure / organisation",
+      "type": "Humaine",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-BRUIT-003",
+      "risk_id": "R-BRUIT",
+      "title": "Formation/sensibilisation ciblée",
+      "type": "Humaine",
+      "impact": "Réduction du risque",
+      "difficulty": "Moyenne",
+      "cost": "Faible",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-BRUIT-004",
+      "risk_id": "R-BRUIT",
+      "title": "EPI adaptés et contrôlés",
+      "type": "Humaine",
+      "impact": "Réduction du risque",
+      "difficulty": "Moyenne",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-BRULE-001",
+      "risk_id": "R-BRULE",
+      "title": "Mesure technique prioritaire",
+      "type": "Technique",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Faible",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-BRULE-002",
+      "risk_id": "R-BRULE",
+      "title": "Procédure / organisation",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-BRULE-003",
+      "risk_id": "R-BRULE",
+      "title": "Formation/sensibilisation ciblée",
+      "type": "Humaine",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Faible",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-BRULE-004",
+      "risk_id": "R-BRULE",
+      "title": "EPI adaptés et contrôlés",
+      "type": "EPI",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-CANICULE-001",
+      "risk_id": "R-CANICULE",
+      "title": "Mesure technique prioritaire",
+      "type": "Humaine",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Faible",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-CANICULE-002",
+      "risk_id": "R-CANICULE",
+      "title": "Procédure / organisation",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-CANICULE-003",
+      "risk_id": "R-CANICULE",
+      "title": "Formation/sensibilisation ciblée",
+      "type": "Technique",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-CANICULE-004",
+      "risk_id": "R-CANICULE",
+      "title": "EPI adaptés et contrôlés",
+      "type": "Technique",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Faible",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-CHIMIQUE-001",
+      "risk_id": "R-CHIMIQUE",
+      "title": "Mesure technique prioritaire",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-CHIMIQUE-002",
+      "risk_id": "R-CHIMIQUE",
+      "title": "Procédure / organisation",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-CHIMIQUE-003",
+      "risk_id": "R-CHIMIQUE",
+      "title": "Formation/sensibilisation ciblée",
+      "type": "Technique",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-CHIMIQUE-004",
+      "risk_id": "R-CHIMIQUE",
+      "title": "EPI adaptés et contrôlés",
+      "type": "EPI",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-CHUTE-HAUTEUR-001",
+      "risk_id": "R-CHUTE-HAUTEUR",
+      "title": "Mesure technique prioritaire",
+      "type": "EPI",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Faible",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-CHUTE-HAUTEUR-002",
+      "risk_id": "R-CHUTE-HAUTEUR",
+      "title": "Procédure / organisation",
+      "type": "Humaine",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-CHUTE-HAUTEUR-003",
+      "risk_id": "R-CHUTE-HAUTEUR",
+      "title": "Formation/sensibilisation ciblée",
+      "type": "Technique",
+      "impact": "Réduction du risque",
+      "difficulty": "Moyenne",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-CHUTE-HAUTEUR-004",
+      "risk_id": "R-CHUTE-HAUTEUR",
+      "title": "EPI adaptés et contrôlés",
+      "type": "Humaine",
+      "impact": "Réduction du risque",
+      "difficulty": "Moyenne",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-CMR-001",
+      "risk_id": "R-CMR",
+      "title": "Substitution / FDS à jour (CMR)",
+      "type": "Technique",
+      "impact": "Réduction de l'exposition aux CMR par substitution et contrôle",
+      "difficulty": "Moyenne",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-CMR-002",
+      "risk_id": "R-CMR",
+      "title": "Mesures de confinement / ventilation (CMR)",
+      "type": "Technique",
+      "impact": "Captage à la source, ventilation adaptée pour CMR",
+      "difficulty": "Élevée",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-CMR-003",
+      "risk_id": "R-CMR",
+      "title": "Suivi médical renforcé / traçabilité exposition",
+      "type": "Humaine",
+      "impact": "Réduction du risque via surveillance et traçabilité",
+      "difficulty": "Moyenne",
+      "cost": "Faible",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-COUPURE-001",
+      "risk_id": "R-COUPURE",
+      "title": "Mesure technique prioritaire",
+      "type": "EPI",
+      "impact": "Réduction du risque",
+      "difficulty": "Moyenne",
+      "cost": "Faible",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-COUPURE-002",
+      "risk_id": "R-COUPURE",
+      "title": "Procédure / organisation",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-COUPURE-003",
+      "risk_id": "R-COUPURE",
+      "title": "Formation/sensibilisation ciblée",
+      "type": "Technique",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-COUPURE-004",
+      "risk_id": "R-COUPURE",
+      "title": "EPI adaptés et contrôlés",
+      "type": "Technique",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Faible",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-DECHETS-001",
+      "risk_id": "R-DECHETS",
+      "title": "Mesure technique prioritaire",
+      "type": "Humaine",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-DECHETS-002",
+      "risk_id": "R-DECHETS",
+      "title": "Procédure / organisation",
+      "type": "Humaine",
+      "impact": "Réduction du risque",
+      "difficulty": "Moyenne",
+      "cost": "Faible",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-DECHETS-003",
+      "risk_id": "R-DECHETS",
+      "title": "Formation/sensibilisation ciblée",
+      "type": "Technique",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-DECHETS-004",
+      "risk_id": "R-DECHETS",
+      "title": "EPI adaptés et contrôlés",
+      "type": "Humaine",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-ECRAN-001",
+      "risk_id": "R-ECRAN",
+      "title": "Mesure technique prioritaire",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Faible",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-ECRAN-002",
+      "risk_id": "R-ECRAN",
+      "title": "Procédure / organisation",
+      "type": "Humaine",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Faible",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-ECRAN-003",
+      "risk_id": "R-ECRAN",
+      "title": "Formation/sensibilisation ciblée",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-ECRAN-004",
+      "risk_id": "R-ECRAN",
+      "title": "EPI adaptés et contrôlés",
+      "type": "Technique",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-ELECTRIQUE-001",
+      "risk_id": "R-ELECTRIQUE",
+      "title": "Mesure technique prioritaire",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-ELECTRIQUE-002",
+      "risk_id": "R-ELECTRIQUE",
+      "title": "Procédure / organisation",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-ELECTRIQUE-003",
+      "risk_id": "R-ELECTRIQUE",
+      "title": "Formation/sensibilisation ciblée",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-ELECTRIQUE-004",
+      "risk_id": "R-ELECTRIQUE",
+      "title": "EPI adaptés et contrôlés",
+      "type": "Technique",
+      "impact": "Réduction du risque",
+      "difficulty": "Moyenne",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-ERGONOMIE-001",
+      "risk_id": "R-ERGONOMIE",
+      "title": "Mesure technique prioritaire",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-ERGONOMIE-002",
+      "risk_id": "R-ERGONOMIE",
+      "title": "Procédure / organisation",
+      "type": "EPI",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-ERGONOMIE-003",
+      "risk_id": "R-ERGONOMIE",
+      "title": "Formation/sensibilisation ciblée",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-ERGONOMIE-004",
+      "risk_id": "R-ERGONOMIE",
+      "title": "EPI adaptés et contrôlés",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-FROID-001",
+      "risk_id": "R-FROID",
+      "title": "Mesure technique prioritaire",
+      "type": "EPI",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Faible",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-FROID-002",
+      "risk_id": "R-FROID",
+      "title": "Procédure / organisation",
+      "type": "EPI",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-FROID-003",
+      "risk_id": "R-FROID",
+      "title": "Formation/sensibilisation ciblée",
+      "type": "Technique",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-FROID-004",
+      "risk_id": "R-FROID",
+      "title": "EPI adaptés et contrôlés",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque",
+      "difficulty": "Moyenne",
+      "cost": "Faible",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-GLASS-001",
+      "risk_id": "R-GLASS",
+      "title": "Mesure technique prioritaire",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque",
+      "difficulty": "Moyenne",
+      "cost": "Faible",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-GLASS-002",
+      "risk_id": "R-GLASS",
+      "title": "Procédure / organisation",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-GLASS-003",
+      "risk_id": "R-GLASS",
+      "title": "Formation/sensibilisation ciblée",
+      "type": "Technique",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-GLASS-004",
+      "risk_id": "R-GLASS",
+      "title": "EPI adaptés et contrôlés",
+      "type": "EPI",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-GLISSADES-001",
+      "risk_id": "R-GLISSADES",
+      "title": "Mesure technique prioritaire",
+      "type": "EPI",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-GLISSADES-002",
+      "risk_id": "R-GLISSADES",
+      "title": "Procédure / organisation",
+      "type": "Technique",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Faible",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-GLISSADES-003",
+      "risk_id": "R-GLISSADES",
+      "title": "Formation/sensibilisation ciblée",
+      "type": "EPI",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-GLISSADES-004",
+      "risk_id": "R-GLISSADES",
+      "title": "EPI adaptés et contrôlés",
+      "type": "EPI",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Faible",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-INCENDIE-001",
+      "risk_id": "R-INCENDIE",
+      "title": "Mesure technique prioritaire",
+      "type": "Humaine",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-INCENDIE-002",
+      "risk_id": "R-INCENDIE",
+      "title": "Procédure / organisation",
+      "type": "EPI",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-INCENDIE-003",
+      "risk_id": "R-INCENDIE",
+      "title": "Formation/sensibilisation ciblée",
+      "type": "Humaine",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Faible",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-INCENDIE-004",
+      "risk_id": "R-INCENDIE",
+      "title": "EPI adaptés et contrôlés",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-MACHINE-001",
+      "risk_id": "R-MACHINE",
+      "title": "Mesure technique prioritaire",
+      "type": "Humaine",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-MACHINE-002",
+      "risk_id": "R-MACHINE",
+      "title": "Procédure / organisation",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-MACHINE-003",
+      "risk_id": "R-MACHINE",
+      "title": "Formation/sensibilisation ciblée",
+      "type": "Technique",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-MACHINE-004",
+      "risk_id": "R-MACHINE",
+      "title": "EPI adaptés et contrôlés",
+      "type": "Technique",
+      "impact": "Réduction du risque",
+      "difficulty": "Moyenne",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-MANUTENTION-001",
+      "risk_id": "R-MANUTENTION",
+      "title": "Mesure technique prioritaire",
+      "type": "Technique",
+      "impact": "Réduction du risque",
+      "difficulty": "Moyenne",
+      "cost": "Faible",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-MANUTENTION-002",
+      "risk_id": "R-MANUTENTION",
+      "title": "Procédure / organisation",
+      "type": "Technique",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-MANUTENTION-003",
+      "risk_id": "R-MANUTENTION",
+      "title": "Formation/sensibilisation ciblée",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-MANUTENTION-004",
+      "risk_id": "R-MANUTENTION",
+      "title": "EPI adaptés et contrôlés",
+      "type": "Technique",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-QUALITEAIR-001",
+      "risk_id": "R-QUALITEAIR",
+      "title": "Mesure technique prioritaire",
+      "type": "Humaine",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Faible",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-QUALITEAIR-002",
+      "risk_id": "R-QUALITEAIR",
+      "title": "Procédure / organisation",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-QUALITEAIR-003",
+      "risk_id": "R-QUALITEAIR",
+      "title": "Formation/sensibilisation ciblée",
+      "type": "Humaine",
+      "impact": "Réduction du risque",
+      "difficulty": "Moyenne",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-QUALITEAIR-004",
+      "risk_id": "R-QUALITEAIR",
+      "title": "EPI adaptés et contrôlés",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-RAYONNEMENT-001",
+      "risk_id": "R-RAYONNEMENT",
+      "title": "Mesure technique prioritaire",
+      "type": "EPI",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-RAYONNEMENT-002",
+      "risk_id": "R-RAYONNEMENT",
+      "title": "Procédure / organisation",
+      "type": "EPI",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-RAYONNEMENT-003",
+      "risk_id": "R-RAYONNEMENT",
+      "title": "Formation/sensibilisation ciblée",
+      "type": "EPI",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-RAYONNEMENT-004",
+      "risk_id": "R-RAYONNEMENT",
+      "title": "EPI adaptés et contrôlés",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque",
+      "difficulty": "Moyenne",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-ROUTIER-001",
+      "risk_id": "R-ROUTIER",
+      "title": "Mesure technique prioritaire",
+      "type": "Technique",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Faible",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-ROUTIER-002",
+      "risk_id": "R-ROUTIER",
+      "title": "Procédure / organisation",
+      "type": "EPI",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Faible",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-ROUTIER-003",
+      "risk_id": "R-ROUTIER",
+      "title": "Formation/sensibilisation ciblée",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque",
+      "difficulty": "Moyenne",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-ROUTIER-004",
+      "risk_id": "R-ROUTIER",
+      "title": "EPI adaptés et contrôlés",
+      "type": "EPI",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Faible",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-RPS-001",
+      "risk_id": "R-RPS",
+      "title": "Mesure technique prioritaire",
+      "type": "Technique",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Faible",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-RPS-002",
+      "risk_id": "R-RPS",
+      "title": "Procédure / organisation",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque",
+      "difficulty": "Moyenne",
+      "cost": "Faible",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-RPS-003",
+      "risk_id": "R-RPS",
+      "title": "Formation/sensibilisation ciblée",
+      "type": "EPI",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-RPS-004",
+      "risk_id": "R-RPS",
+      "title": "EPI adaptés et contrôlés",
+      "type": "EPI",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-TMS-001",
+      "risk_id": "R-TMS",
+      "title": "Mesure technique prioritaire",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Faible",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-TMS-002",
+      "risk_id": "R-TMS",
+      "title": "Procédure / organisation",
+      "type": "Technique",
+      "impact": "Réduction du risque",
+      "difficulty": "Moyenne",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-TMS-003",
+      "risk_id": "R-TMS",
+      "title": "Formation/sensibilisation ciblée",
+      "type": "EPI",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-TMS-004",
+      "risk_id": "R-TMS",
+      "title": "EPI adaptés et contrôlés",
+      "type": "EPI",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Faible",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-TRAVAUX-PUB-001",
+      "risk_id": "R-TRAVAUX-PUB",
+      "title": "Plan de prévention terrassement / réseaux enterrés",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque d'ensevelissement et de heurt engins",
+      "difficulty": "Moyenne",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "OPPBTP"
+      ]
+    },
+    {
+      "id": "A-TRAVAUX-PUB-002",
+      "risk_id": "R-TRAVAUX-PUB",
+      "title": "Balisage, DICT et consignation réseaux",
+      "type": "Technique",
+      "impact": "Sécurise les travaux à proximité de réseaux (gaz/élec/eau)",
+      "difficulty": "Moyenne",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "OPPBTP"
+      ]
+    },
+    {
+      "id": "A-R-VIBRATIONS-001",
+      "risk_id": "R-VIBRATIONS",
+      "title": "Mesure technique prioritaire",
+      "type": "Technique",
+      "impact": "Réduction du risque",
+      "difficulty": "Moyenne",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-VIBRATIONS-002",
+      "risk_id": "R-VIBRATIONS",
+      "title": "Procédure / organisation",
+      "type": "Technique",
+      "impact": "Réduction du risque",
+      "difficulty": "Élevée",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-VIBRATIONS-003",
+      "risk_id": "R-VIBRATIONS",
+      "title": "Formation/sensibilisation ciblée",
+      "type": "Organisationnelle",
+      "impact": "Réduction du risque",
+      "difficulty": "Moyenne",
+      "cost": "Élevé",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    },
+    {
+      "id": "A-R-VIBRATIONS-004",
+      "risk_id": "R-VIBRATIONS",
+      "title": "EPI adaptés et contrôlés",
+      "type": "Technique",
+      "impact": "Réduction du risque",
+      "difficulty": "Faible",
+      "cost": "Moyen",
+      "references": [
+        "INRS",
+        "CARSAT"
+      ]
+    }
+  ],
+  "obligations": [
+    {
+      "id": "OB-DUERP",
+      "title": "Document Unique d’Évaluation des Risques",
+      "reference": "R4121-1/2",
+      "applies_to_all": true
+    },
+    {
+      "id": "OB-FORMATION",
+      "title": "Formation sécurité adaptée au poste",
+      "reference": "L4141-2",
+      "applies_to_all": true
+    },
+    {
+      "id": "OB-INCENDIE",
+      "title": "Consignes + exercices évacuation",
+      "reference": "R4227-39",
+      "applies_to_all": true
+    },
+    {
+      "id": "OB-VERIF",
+      "title": "Vérifications périodiques",
+      "reference": "R4224-17",
+      "applies_to_all": true
+    },
+    {
+      "id": "OB-ATEX",
+      "title": "Zonage ATEX",
+      "reference": "1999/92/CE",
+      "applies_to_all": false,
+      "naf_specific": [
+        "10",
+        "20",
+        "22",
+        "56",
+        "41",
+        "43"
+      ]
+    },
+    {
+      "id": "OB-DASRI",
+      "title": "DASRI",
+      "reference": "CSP",
+      "applies_to_all": false,
+      "naf_specific": [
+        "86",
+        "87",
+        "88"
+      ]
+    },
+    {
+      "id": "OB-HACCP",
+      "title": "PMS / HACCP",
+      "reference": "Paquet Hygiène",
+      "applies_to_all": false,
+      "naf_specific": [
+        "56",
+        "10",
+        "55"
+      ]
+    },
+    {
+      "id": "OB-TRAVAIL-NUIT",
+      "title": "Suivi médical travail de nuit",
+      "reference": "L3122-5",
+      "applies_to_all": false
+    }
+  ],
+  "naf": [
+    {
+      "code": "10.11Z",
+      "label": "Fabrication de produits de boulangerie-p├ótisserie frais",
+      "risk_tags": [
+        "agro",
+        "four",
+        "poussi├¿res farine"
+      ],
+      "risks_priority": [
+        "R-BRULE",
+        "R-GLISSADES",
+        "R-CHIMIQUE",
+        "R-TMS",
+        "R-INCENDIE",
+        "R-ATEX"
+      ],
+      "risks_mandatory": [
+        "R-INCENDIE"
+      ],
+      "activities": [
+        {
+          "id": "atelier",
+          "label": "Atelier de production"
+        },
+        {
+          "id": "four",
+          "label": "Cuisson/fours"
+        },
+        {
+          "id": "magasin",
+          "label": "Vente"
+        }
+      ]
+    },
+    {
+      "naf": "2013B",
+      "label": "Industrie chimique",
+      "risks_priority": [
+        "R-CHIMIQUE",
+        "R-ATEX",
+        "R-INCENDIE",
+        "R-TMS",
+        "R-ROUTIER"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-CHIMIQUE-001",
+        "A-R-ATEX-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP",
+        "OB-ATEX",
+        "OB-VERIF"
+      ]
+    },
+    {
+      "naf": "2221Z",
+      "label": "Plasturgie",
+      "risks_priority": [
+        "R-CHIMIQUE",
+        "R-BRUIT",
+        "R-TMS",
+        "R-INCENDIE",
+        "R-MACHINE"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-CHIMIQUE-001",
+        "A-R-BRUIT-001",
+        "A-R-TMS-001",
+        "A-R-MACHINE-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP",
+        "OB-VERIF"
+      ]
+    },
+    {
+      "naf": "2399Z",
+      "label": "Minéraux non métalliques",
+      "risks_priority": [
+        "R-CHIMIQUE",
+        "R-BRUIT",
+        "R-ATEX",
+        "R-CHUTE-HAUTEUR"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-CHIMIQUE-001",
+        "A-R-BRUIT-001",
+        "A-R-ATEX-001",
+        "A-R-CHUTE-HAUTEUR-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP",
+        "OB-ATEX"
+      ]
+    },
+    {
+      "naf": "4120A",
+      "label": "Construction de bâtiments",
+      "risks_priority": [
+        "R-CHUTE-HAUTEUR",
+        "R-ELECTRIQUE",
+        "R-BRUIT",
+        "R-CHIMIQUE",
+        "R-ATEX",
+        "R-MANUTENTION"
+      ],
+      "actions_recommended": [
+        "A-CHUTE-H-001",
+        "A-ELEC-001",
+        "A-BRUIT-001",
+        "A-CHIM-001",
+        "A-ATEX-001",
+        "A-MANUT-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP-ANNUEL",
+        "OB-ATEX",
+        "OB-VERIF-PERIODIQUES"
+      ],
+      "extra_risks": [
+        "R-VIBRATIONS",
+        "R-MACHINE"
+      ],
+      "extra_actions": [
+        "A-VIB-001",
+        "A-MACH-001"
+      ]
+    },
+    {
+      "code": "41",
+      "label": "Construction de b├ótiments (pr├®fixe)",
+      "risk_tags": [
+        "chantier",
+        "hauteur",
+        "├®lectricit├®"
+      ],
+      "risks_priority": [
+        "R-CHUTE-HAUTEUR",
+        "R-BRUIT",
+        "R-ELECTRIQUE",
+        "R-MANUTENTION",
+        "R-SILICE"
+      ],
+      "risks_mandatory": [
+        "R-INCENDIE"
+      ],
+      "activities": [
+        {
+          "id": "chantier",
+          "label": "Chantier / gros oeuvre"
+        },
+        {
+          "id": "terrain",
+          "label": "Interventions terrain"
+        }
+      ]
+    },
+    {
+      "naf": "4120A",
+      "label": "Construction de bâtiments",
+      "risks_priority": [
+        "R-CHUTE-HAUTEUR",
+        "R-ELECTRIQUE",
+        "R-BRUIT",
+        "R-CHIMIQUE",
+        "R-MANUTENTION"
+      ],
+      "risks_mandatory": [
+        "R-ATEX",
+        "R-MACHINE",
+        "R-VIBRATIONS"
+      ],
+      "actions_recommended": [
+        "A-R-CHUTE-HAUTEUR-001",
+        "A-R-ELECTRIQUE-001",
+        "A-R-BRUIT-001",
+        "A-R-CHIMIQUE-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP",
+        "OB-VERIF",
+        "OB-ATEX"
+      ]
+    },
+    {
+      "code": "43.29A",
+      "label": "Travaux d'isolation",
+      "risk_tags": [
+        "chantier",
+        "isolation"
+      ],
+      "risks_priority": [
+        "R-CHUTE-HAUTEUR",
+        "R-CHIMIQUE",
+        "R-MANUTENTION",
+        "R-BRUIT"
+      ],
+      "risks_mandatory": [
+        "R-INCENDIE"
+      ],
+      "activities": [
+        {
+          "id": "chantier",
+          "label": "Pose sur chantier"
+        }
+      ]
+    },
+    {
+      "code": "43.32A",
+      "label": "Travaux de menuiserie bois et PVC",
+      "risk_tags": [
+        "atelier",
+        "bois",
+        "chantier"
+      ],
+      "risks_priority": [
+        "R-POUSSIERES-BOIS",
+        "R-MACHINE",
+        "R-BRUIT",
+        "R-MANUTENTION",
+        "R-CHUTE-HAUTEUR"
+      ],
+      "risks_mandatory": [
+        "R-INCENDIE"
+      ],
+      "activities": [
+        {
+          "id": "atelier",
+          "label": "Atelier de fabrication"
+        },
+        {
+          "id": "chantier",
+          "label": "Pose sur site"
+        }
+      ]
+    },
+    {
+      "naf": "4321A",
+      "label": "Installation électrique",
+      "risks_priority": [
+        "R-ELECTRIQUE",
+        "R-CHUTE-HAUTEUR",
+        "R-MANUTENTION",
+        "R-BRUIT"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-ELECTRIQUE-001",
+        "A-R-CHUTE-HAUTEUR-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP",
+        "OB-VERIF"
+      ]
+    },
+    {
+      "naf": "4322A",
+      "label": "Plomberie et chauffage",
+      "risks_priority": [
+        "R-CHUTE-HAUTEUR",
+        "R-ELECTRIQUE",
+        "R-CHIMIQUE",
+        "R-MANUTENTION"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-CHUTE-HAUTEUR-001",
+        "A-R-ELECTRIQUE-001",
+        "A-R-CHIMIQUE-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP",
+        "OB-VERIF"
+      ]
+    },
+    {
+      "naf": "4329A",
+      "label": "Travaux d'isolation",
+      "risks_priority": [
+        "R-CHUTE-HAUTEUR",
+        "R-CHIMIQUE",
+        "R-MANUTENTION"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-CHUTE-HAUTEUR-001",
+        "A-R-CHIMIQUE-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP"
+      ]
+    },
+    {
+      "naf": "4329B",
+      "label": "Autres travaux d'installation",
+      "risks_priority": [
+        "R-ELECTRIQUE",
+        "R-CHIMIQUE",
+        "R-MANUTENTION"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-ELECTRIQUE-001",
+        "A-R-CHIMIQUE-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP"
+      ]
+    },
+    {
+      "naf": "4331Z",
+      "label": "Plâtrerie",
+      "risks_priority": [
+        "R-CHUTE-HAUTEUR",
+        "R-MANUTENTION",
+        "R-POUSSIERES"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-CHUTE-HAUTEUR-001",
+        "A-R-MANUTENTION-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP"
+      ]
+    },
+    {
+      "naf": "4332A",
+      "label": "Menuiserie bois et PVC",
+      "risks_priority": [
+        "R-MACHINE",
+        "R-COUPURE",
+        "R-BRUIT",
+        "R-MANUTENTION"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-MACHINE-001",
+        "A-R-COUPURE-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP"
+      ]
+    },
+    {
+      "naf": "4332B",
+      "label": "Menuiserie métallique",
+      "risks_priority": [
+        "R-MACHINE",
+        "R-BRUIT",
+        "R-MANUTENTION",
+        "R-ATEX"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-MACHINE-001",
+        "A-R-BRUIT-001",
+        "A-R-ATEX-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP"
+      ]
+    },
+    {
+      "naf": "4334Z",
+      "label": "Peinture et vitrerie",
+      "risks_priority": [
+        "R-CHIMIQUE",
+        "R-CHUTE-HAUTEUR",
+        "R-MANUTENTION",
+        "R-ATEX"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-CHIMIQUE-001",
+        "A-R-CHUTE-HAUTEUR-001",
+        "A-R-ATEX-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP",
+        "OB-ATEX"
+      ]
+    },
+    {
+      "naf": "4711D",
+      "label": "Commerce de détail",
+      "risks_priority": [
+        "R-GLISSADES",
+        "R-COUPURE",
+        "R-MANUTENTION",
+        "R-RPS",
+        "R-INCENDIE",
+        "R-ELECTRIQUE",
+        "R-ECRAN"
+      ],
+      "actions_recommended": [
+        "A-CHUTE-001",
+        "A-COUPURE-001",
+        "A-MANUT-001",
+        "A-RPS-001",
+        "A-FEU-001",
+        "A-ELEC-001",
+        "A-ECRAN-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP-ANNUEL",
+        "OB-VERIF-PERIODIQUES",
+        "OB-FORMATION-SECURITE"
+      ],
+      "extra_risks": [
+        "R-AGRESSION",
+        "R-CANICULE"
+      ],
+      "extra_actions": [
+        "A-AGRESSION-001",
+        "A-CANICULE-001"
+      ]
+    },
+    {
+      "code": "47.11D",
+      "label": "Sup├®rettes",
+      "risk_tags": [
+        "magasin",
+        "manutention"
+      ],
+      "risks_priority": [
+        "R-GLISSADES",
+        "R-MANUTENTION",
+        "R-RPS",
+        "R-INCENDIE"
+      ],
+      "risks_mandatory": [
+        "R-INCENDIE"
+      ],
+      "activities": [
+        {
+          "id": "magasin",
+          "label": "Surface de vente"
+        },
+        {
+          "id": "reserve",
+          "label": "R├®serve / back-office"
+        }
+      ]
+    },
+    {
+      "naf": "4711B",
+      "label": "Supérettes",
+      "risks_priority": [
+        "R-GLISSADES",
+        "R-MANUTENTION",
+        "R-RPS"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-GLISSADES-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP"
+      ]
+    },
+    {
+      "naf": "4711C",
+      "label": "Supermarchés",
+      "risks_priority": [
+        "R-GLISSADES",
+        "R-MANUTENTION",
+        "R-RPS",
+        "R-INCENDIE"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-GLISSADES-001",
+        "A-R-MANUTENTION-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP",
+        "OB-VERIF"
+      ]
+    },
+    {
+      "naf": "4711D",
+      "label": "Commerce de détail alimentaire",
+      "risks_priority": [
+        "R-GLISSADES",
+        "R-COUPURE",
+        "R-MANUTENTION",
+        "R-INCENDIE",
+        "R-ELECTRIQUE",
+        "R-RPS"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-GLISSADES-001",
+        "A-R-COUPURE-001",
+        "A-R-MANUTENTION-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP",
+        "OB-VERIF"
+      ]
+    },
+    {
+      "naf": "4711F",
+      "label": "Hypermarchés",
+      "risks_priority": [
+        "R-GLISSADES",
+        "R-MANUTENTION",
+        "R-RPS",
+        "R-INCENDIE",
+        "R-ROUTIER"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-GLISSADES-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP",
+        "OB-VERIF"
+      ]
+    },
+    {
+      "naf": "4719B",
+      "label": "Commerce de détail non alimentaire",
+      "risks_priority": [
+        "R-GLISSADES",
+        "R-COUPURE",
+        "R-MANUTENTION",
+        "R-RPS"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-GLISSADES-001",
+        "A-R-MANUTENTION-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP"
+      ]
+    },
+    {
+      "naf": "4721Z",
+      "label": "Commerce de détail de fruits et légumes",
+      "risks_priority": [
+        "R-MANUTENTION",
+        "R-GLISSADES",
+        "R-FROID",
+        "R-COUPURE"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-MANUTENTION-001",
+        "A-R-FROID-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP"
+      ]
+    },
+    {
+      "naf": "4722Z",
+      "label": "Boucherie-charcuterie",
+      "risks_priority": [
+        "R-COUPURE",
+        "R-GLISSADES",
+        "R-FROID",
+        "R-TMS",
+        "R-BIO",
+        "R-CHIMIQUE"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-COUPURE-001",
+        "A-R-FROID-001",
+        "A-R-TMS-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP",
+        "OB-HACCP"
+      ]
+    },
+    {
+      "naf": "4723Z",
+      "label": "Poissonnerie",
+      "risks_priority": [
+        "R-COUPURE",
+        "R-GLISSADES",
+        "R-FROID",
+        "R-BIO",
+        "R-CHIMIQUE"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-COUPURE-001",
+        "A-R-FROID-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP",
+        "OB-HACCP"
+      ]
+    },
+    {
+      "naf": "4724Z",
+      "label": "Boulangerie-pâtisserie",
+      "risks_priority": [
+        "R-BRULE",
+        "R-GLISSADES",
+        "R-CHIMIQUE",
+        "R-TMS",
+        "R-INCENDIE",
+        "R-ATEX"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-BRULE-001",
+        "A-R-GLISSADES-001",
+        "A-R-CHIMIQUE-001",
+        "A-R-ATEX-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP",
+        "OB-HACCP"
+      ]
+    },
+    {
+      "naf": "4791A",
+      "label": "Vente à distance sur catalogue général",
+      "risks_priority": [
+        "R-ECRAN",
+        "R-RPS",
+        "R-MANUTENTION"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-ECRAN-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP"
+      ]
+    },
+    {
+      "naf": "4791B",
+      "label": "Vente à distance spécialisée",
+      "risks_priority": [
+        "R-ECRAN",
+        "R-RPS",
+        "R-MANUTENTION"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-ECRAN-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP"
+      ]
+    },
+    {
+      "code": "49.41A",
+      "label": "Transport routier de fret",
+      "risk_tags": [
+        "routier",
+        "manutention"
+      ],
+      "risks_priority": [
+        "R-ROUTIER",
+        "R-MANUTENTION",
+        "R-BRUIT"
+      ],
+      "risks_mandatory": [],
+      "activities": [
+        {
+          "id": "livraison",
+          "label": "Livraison/route"
+        },
+        {
+          "id": "entrepot",
+          "label": "Entrep├┤t/chargement"
+        }
+      ]
+    },
+    {
+      "naf": "4931Z",
+      "label": "Transports urbains et suburbains de voyageurs",
+      "risks_priority": [
+        "R-ROUTIER",
+        "R-AGRESSION",
+        "R-RPS"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-ROUTIER-001",
+        "A-R-AGRESSION-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP"
+      ]
+    },
+    {
+      "naf": "4932Z",
+      "label": "Taxis",
+      "risks_priority": [
+        "R-ROUTIER",
+        "R-AGRESSION",
+        "R-RPS"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-AGRESSION-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP"
+      ]
+    },
+    {
+      "naf": "4932Z",
+      "label": "Transports de voyageurs par taxis",
+      "risks_priority": [
+        "R-ROUTIER",
+        "R-AGRESSION",
+        "R-RPS"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-ROUTIER-001",
+        "A-R-AGRESSION-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP"
+      ]
+    },
+    {
+      "naf": "4939A",
+      "label": "Transports routiers de fret interurbains",
+      "risks_priority": [
+        "R-ROUTIER",
+        "R-MANUTENTION",
+        "R-BRUIT"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-ROUTIER-001",
+        "A-R-MANUTENTION-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP"
+      ]
+    },
+    {
+      "naf": "4939B",
+      "label": "Autres transports routiers de fret",
+      "risks_priority": [
+        "R-ROUTIER",
+        "R-MANUTENTION",
+        "R-BRUIT"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-ROUTIER-001",
+        "A-R-MANUTENTION-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP"
+      ]
+    },
+    {
+      "naf": "4941A",
+      "label": "Transport routier",
+      "risks_priority": [
+        "R-ROUTIER",
+        "R-MANUTENTION",
+        "R-BRUIT",
+        "R-INCENDIE",
+        "R-GLISSADES"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-ROUTIER-001",
+        "A-R-MANUTENTION-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP",
+        "OB-VERIF"
+      ]
+    },
+    {
+      "naf": "4941B",
+      "label": "Transports routiers de fret de proximité",
+      "risks_priority": [
+        "R-ROUTIER",
+        "R-MANUTENTION"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-ROUTIER-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP"
+      ]
+    },
+    {
+      "code": "52.10B",
+      "label": "Entreposage et stockage non frigorifique",
+      "risk_tags": [
+        "entrepot"
+      ],
+      "risks_priority": [
+        "R-MANUTENTION",
+        "R-CHUTE-HAUTEUR",
+        "R-INCENDIE",
+        "R-ELECTRIQUE"
+      ],
+      "risks_mandatory": [],
+      "activities": [
+        {
+          "id": "entrepot",
+          "label": "Pr├®paration/stockage"
+        }
+      ]
+    },
+    {
+      "naf": "5210B",
+      "label": "Entreposage",
+      "risks_priority": [
+        "R-MANUTENTION",
+        "R-CHUTE-HAUTEUR",
+        "R-INCENDIE",
+        "R-ROUTIER",
+        "R-ELECTRIQUE"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-MANUTENTION-001",
+        "A-R-CHUTE-HAUTEUR-001",
+        "A-R-INCENDIE-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP",
+        "OB-VERIF"
+      ]
+    },
+    {
+      "naf": "5229A",
+      "label": "Messagerie, fret express",
+      "risks_priority": [
+        "R-MANUTENTION",
+        "R-ROUTIER",
+        "R-GLISSADES"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-MANUTENTION-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP"
+      ]
+    },
+    {
+      "naf": "5520Z",
+      "label": "Hôtellerie",
+      "risks_priority": [
+        "R-GLISSADES",
+        "R-RPS",
+        "R-INCENDIE",
+        "R-TMS",
+        "R-ECRAN"
+      ],
+      "actions_recommended": [
+        "A-CHUTE-001",
+        "A-RPS-001",
+        "A-FEU-001",
+        "A-TMS-001",
+        "A-ECRAN-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP-ANNUEL",
+        "OB-FORMATION-SECURITE"
+      ],
+      "extra_risks": [
+        "R-AGRESSION",
+        "R-TRAVAILNUIT",
+        "R-CANICULE"
+      ],
+      "extra_actions": [
+        "A-AGRESSION-001",
+        "A-NUIT-001",
+        "A-CANICULE-001"
+      ]
+    },
+    {
+      "code": "55.10Z",
+      "label": "H├┤tels et h├®bergement similaire",
+      "risk_tags": [
+        "hebergement",
+        "accueil"
+      ],
+      "risks_priority": [
+        "R-GLISSADES",
+        "R-RPS",
+        "R-INCENDIE",
+        "R-ECRAN"
+      ],
+      "risks_mandatory": [],
+      "activities": [
+        {
+          "id": "hebergement",
+          "label": "├ëtages/chambres"
+        },
+        {
+          "id": "accueil",
+          "label": "R├®ception/accueil"
+        }
+      ]
+    },
+    {
+      "naf": "5510Z",
+      "label": "Hôtels et hébergement similaire",
+      "risks_priority": [
+        "R-GLISSADES",
+        "R-RPS",
+        "R-INCENDIE",
+        "R-ECRAN"
+      ],
+      "risks_mandatory": [
+        "R-AGRESSION"
+      ],
+      "actions_recommended": [
+        "A-R-GLISSADES-001",
+        "A-R-RPS-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP",
+        "OB-INCENDIE"
+      ]
+    },
+    {
+      "naf": "5520Z",
+      "label": "Hôtellerie",
+      "risks_priority": [
+        "R-GLISSADES",
+        "R-RPS",
+        "R-ECRAN",
+        "R-INCENDIE",
+        "R-TMS"
+      ],
+      "risks_mandatory": [
+        "R-AGRESSION",
+        "R-TRAVAIL-NUIT"
+      ],
+      "actions_recommended": [
+        "A-R-GLISSADES-001",
+        "A-R-RPS-001",
+        "A-R-ECRAN-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP",
+        "OB-INCENDIE"
+      ]
+    },
+    {
+      "naf": "5610A",
+      "label": "Restauration",
+      "risks_priority": [
+        "R-TMS",
+        "R-GLISSADES",
+        "R-COUPURE",
+        "R-BRUIT",
+        "R-CHIMIQUE",
+        "R-INCENDIE",
+        "R-ATEX",
+        "R-RPS"
+      ],
+      "actions_recommended": [
+        "A-TMS-001",
+        "A-TMS-002",
+        "A-CHUTE-001",
+        "A-COUPURE-001",
+        "A-BRUIT-001",
+        "A-CHIM-001",
+        "A-FEU-001",
+        "A-ATEX-001",
+        "A-RPS-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP-ANNUEL",
+        "OB-EVAC-INCENDIE",
+        "OB-ATEX",
+        "OB-VERIF-PERIODIQUES",
+        "OB-FORMATION-SECURITE"
+      ],
+      "extra_risks": [
+        "R-CANICULE",
+        "R-FROID"
+      ],
+      "extra_actions": [
+        "A-CANICULE-001",
+        "A-FROID-001"
+      ]
+    },
+    {
+      "code": "56.10A",
+      "label": "Restauration traditionnelle",
+      "risk_tags": [
+        "cuisine",
+        "friture",
+        "froid",
+        "plonge"
+      ],
+      "risks_priority": [
+        "R-INCENDIE",
+        "R-CHIMIQUE",
+        "R-GLISSADES",
+        "R-TMS"
+      ],
+      "risks_mandatory": [
+        "R-INCENDIE",
+        "R-CHIMIQUE"
+      ],
+      "activities": [
+        {
+          "id": "cuisine",
+          "label": "Cuisine / production"
+        },
+        {
+          "id": "plonge",
+          "label": "Plonge / laverie"
+        },
+        {
+          "id": "salle",
+          "label": "Service en salle"
+        },
+        {
+          "id": "chambre_froide",
+          "label": "Chambre froide"
+        }
+      ]
+    },
+    {
+      "code": "56.10C",
+      "label": "Restauration rapide",
+      "risk_tags": [
+        "cuisine",
+        "friture",
+        "plonge"
+      ],
+      "risks_priority": [
+        "R-GLISSADES",
+        "R-COUPURE",
+        "R-BRULE",
+        "R-TMS",
+        "R-CHIMIQUE"
+      ],
+      "risks_mandatory": [
+        "R-INCENDIE",
+        "R-CHIMIQUE"
+      ],
+      "activities": [
+        {
+          "id": "cuisine",
+          "label": "Cuisine"
+        },
+        {
+          "id": "plonge",
+          "label": "Laverie"
+        },
+        {
+          "id": "accueil",
+          "label": "Comptoir/accueil"
+        }
+      ]
+    },
+    {
+      "naf": "5610A",
+      "label": "Restauration traditionnelle",
+      "risks_priority": [
+        "R-TMS",
+        "R-GLISSADES",
+        "R-COUPURE",
+        "R-BRULE",
+        "R-CHIMIQUE",
+        "R-INCENDIE",
+        "R-CANICULE",
+        "R-RPS"
+      ],
+      "risks_mandatory": [
+        "R-BIO",
+        "R-FROID",
+        "R-ATEX"
+      ],
+      "actions_recommended": [
+        "A-R-GLISSADES-001",
+        "A-R-COUPURE-001",
+        "A-R-BRULE-001",
+        "A-R-CHIMIQUE-001",
+        "A-R-INCENDIE-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP",
+        "OB-INCENDIE",
+        "OB-HACCP",
+        "OB-VERIF"
+      ]
+    },
+    {
+      "naf": "5610B",
+      "label": "Cafétérias et autres libres-services",
+      "risks_priority": [
+        "R-GLISSADES",
+        "R-COUPURE",
+        "R-BRULE",
+        "R-TMS",
+        "R-CHIMIQUE",
+        "R-RPS"
+      ],
+      "risks_mandatory": [
+        "R-BIO"
+      ],
+      "actions_recommended": [
+        "A-R-GLISSADES-001",
+        "A-R-COUPURE-001",
+        "A-R-BRULE-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP",
+        "OB-HACCP"
+      ]
+    },
+    {
+      "naf": "5610C",
+      "label": "Restauration rapide",
+      "risks_priority": [
+        "R-GLISSADES",
+        "R-COUPURE",
+        "R-BRULE",
+        "R-TMS",
+        "R-CHIMIQUE",
+        "R-RPS"
+      ],
+      "risks_mandatory": [
+        "R-BIO",
+        "R-CANICULE"
+      ],
+      "actions_recommended": [
+        "A-R-GLISSADES-001",
+        "A-R-COUPURE-001",
+        "A-R-BRULE-001",
+        "A-R-TMS-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP",
+        "OB-HACCP"
+      ]
+    },
+    {
+      "naf": "5829C",
+      "label": "Édition de logiciels applicatifs",
+      "risks_priority": [
+        "R-ECRAN",
+        "R-RPS"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-ECRAN-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP"
+      ]
+    },
+    {
+      "naf": "5911A",
+      "label": "Production de films et de programmes",
+      "risks_priority": [
+        "R-CHUTE-HAUTEUR",
+        "R-ELECTRIQUE",
+        "R-BRUIT"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-CHUTE-HAUTEUR-001",
+        "A-R-ELECTRIQUE-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP"
+      ]
+    },
+    {
+      "naf": "6201Z",
+      "label": "Programmation informatique",
+      "risks_priority": [
+        "R-ECRAN",
+        "R-TMS",
+        "R-RPS",
+        "R-ELECTRIQUE",
+        "R-INCENDIE"
+      ],
+      "actions_recommended": [
+        "A-ECRAN-001",
+        "A-TMS-001",
+        "A-RPS-001",
+        "A-ELEC-001",
+        "A-FEU-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP-ANNUEL",
+        "OB-FORMATION-SECURITE"
+      ]
+    },
+    {
+      "code": "62.01Z",
+      "label": "Programmation informatique",
+      "risk_tags": [
+        "bureau"
+      ],
+      "risks_priority": [
+        "R-ECRAN",
+        "R-RPS",
+        "R-QUALITE-AIR"
+      ],
+      "risks_mandatory": [],
+      "activities": [
+        {
+          "id": "bureau",
+          "label": "Bureau / open space"
+        }
+      ]
+    },
+    {
+      "naf": "6201Z",
+      "label": "Programmation informatique",
+      "risks_priority": [
+        "R-ECRAN",
+        "R-RPS",
+        "R-ELECTRIQUE",
+        "R-INCENDIE"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-ECRAN-001",
+        "A-R-RPS-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP"
+      ]
+    },
+    {
+      "naf": "6202A",
+      "label": "Conseil en systèmes informatiques",
+      "risks_priority": [
+        "R-ECRAN",
+        "R-RPS"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-ECRAN-001",
+        "A-R-RPS-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP"
+      ]
+    },
+    {
+      "naf": "6419Z",
+      "label": "Banque",
+      "risks_priority": [
+        "R-ECRAN",
+        "R-RPS",
+        "R-INCENDIE",
+        "R-ROUTIER"
+      ],
+      "actions_recommended": [
+        "A-ECRAN-001",
+        "A-RPS-001",
+        "A-FEU-001",
+        "A-ROUTIER-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP-ANNUEL"
+      ],
+      "extra_risks": [
+        "R-AGRESSION"
+      ],
+      "extra_actions": [
+        "A-AGRESSION-001"
+      ]
+    },
+    {
+      "naf": "6419Z",
+      "label": "Banque",
+      "risks_priority": [
+        "R-ECRAN",
+        "R-RPS",
+        "R-INCENDIE",
+        "R-ROUTIER"
+      ],
+      "risks_mandatory": [
+        "R-AGRESSION"
+      ],
+      "actions_recommended": [
+        "A-R-RPS-001",
+        "A-R-ECRAN-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP"
+      ]
+    },
+    {
+      "naf": "6512Z",
+      "label": "Assurance",
+      "risks_priority": [
+        "R-ECRAN",
+        "R-RPS",
+        "R-INCENDIE"
+      ],
+      "actions_recommended": [
+        "A-ECRAN-001",
+        "A-RPS-001",
+        "A-FEU-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP-ANNUEL"
+      ]
+    },
+    {
+      "code": "65.12Z",
+      "label": "Assurance",
+      "risk_tags": [
+        "bureau",
+        "accueil"
+      ],
+      "risks_priority": [
+        "R-ECRAN",
+        "R-RPS",
+        "R-AGRESSION",
+        "R-QUALITE-AIR"
+      ],
+      "risks_mandatory": [],
+      "activities": [
+        {
+          "id": "bureau",
+          "label": "Bureau"
+        },
+        {
+          "id": "accueil",
+          "label": "Accueil / agence"
+        }
+      ]
+    },
+    {
+      "naf": "6512Z",
+      "label": "Assurance",
+      "risks_priority": [
+        "R-ECRAN",
+        "R-RPS",
+        "R-INCENDIE"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-ECRAN-001",
+        "A-R-RPS-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP"
+      ]
+    },
+    {
+      "naf": "7022Z",
+      "label": "Conseil pour les affaires",
+      "risks_priority": [
+        "R-ECRAN",
+        "R-RPS",
+        "R-ROUTIER"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-ECRAN-001",
+        "A-R-RPS-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP"
+      ]
+    },
+    {
+      "naf": "7111Z",
+      "label": "Architecture/ingénierie",
+      "risks_priority": [
+        "R-ECRAN",
+        "R-ROUTIER",
+        "R-CHUTE-HAUTEUR",
+        "R-ELECTRIQUE",
+        "R-RPS"
+      ],
+      "actions_recommended": [
+        "A-ECRAN-001",
+        "A-ROUTIER-001",
+        "A-CHUTE-H-001",
+        "A-ELEC-001",
+        "A-RPS-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP-ANNUEL",
+        "OB-VERIF-PERIODIQUES"
+      ]
+    },
+    {
+      "naf": "7111Z",
+      "label": "Architecture/ingénierie",
+      "risks_priority": [
+        "R-ECRAN",
+        "R-ROUTIER",
+        "R-CHUTE-HAUTEUR",
+        "R-ELECTRIQUE",
+        "R-RPS"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-ECRAN-001",
+        "A-R-ROUTIER-001",
+        "A-R-CHUTE-HAUTEUR-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP",
+        "OB-VERIF"
+      ]
+    },
+    {
+      "naf": "7311Z",
+      "label": "Publicité",
+      "risks_priority": [
+        "R-ECRAN",
+        "R-RPS",
+        "R-ROUTIER"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-ECRAN-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP"
+      ]
+    },
+    {
+      "naf": "8010Z",
+      "label": "Sécurité privée",
+      "risks_priority": [
+        "R-AGRESSION",
+        "R-ROUTIER",
+        "R-RPS",
+        "R-INCENDIE"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-AGRESSION-001",
+        "A-R-ROUTIER-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP"
+      ]
+    },
+    {
+      "naf": "8121Z",
+      "label": "Nettoyage",
+      "risks_priority": [
+        "R-GLISSADES",
+        "R-CHIMIQUE",
+        "R-TMS",
+        "R-MANUTENTION",
+        "R-INCENDIE",
+        "R-ROUTIER"
+      ],
+      "actions_recommended": [
+        "A-CHUTE-001",
+        "A-CHIM-001",
+        "A-TMS-002",
+        "A-MANUT-001",
+        "A-FEU-001",
+        "A-ROUTIER-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP-ANNUEL",
+        "OB-VERIF-PERIODIQUES",
+        "OB-FORMATION-SECURITE"
+      ]
+    },
+    {
+      "naf": "8121Z",
+      "label": "Nettoyage courant des bâtiments",
+      "risks_priority": [
+        "R-GLISSADES",
+        "R-CHIMIQUE",
+        "R-TMS",
+        "R-MANUTENTION",
+        "R-INCENDIE",
+        "R-ROUTIER"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-GLISSADES-001",
+        "A-R-CHIMIQUE-001",
+        "A-R-TMS-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP",
+        "OB-VERIF"
+      ]
+    },
+    {
+      "naf": "8531Z",
+      "label": "Éducation",
+      "risks_priority": [
+        "R-ECRAN",
+        "R-RPS",
+        "R-GLISSADES",
+        "R-INCENDIE"
+      ],
+      "actions_recommended": [
+        "A-ECRAN-001",
+        "A-RPS-001",
+        "A-CHUTE-001",
+        "A-FEU-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP-ANNUEL"
+      ]
+    },
+    {
+      "code": "85.20Z",
+      "label": "Enseignement primaire",
+      "risk_tags": [
+        "education",
+        "accueil public"
+      ],
+      "risks_priority": [
+        "R-ECRAN",
+        "R-RPS",
+        "R-QUALITE-AIR",
+        "R-AGRESSION"
+      ],
+      "risks_mandatory": [],
+      "activities": [
+        {
+          "id": "bureau",
+          "label": "Bureaux/administration"
+        },
+        {
+          "id": "accueil",
+          "label": "Accueil/public"
+        }
+      ]
+    },
+    {
+      "naf": "8559A",
+      "label": "Formation continue",
+      "risks_priority": [
+        "R-ECRAN",
+        "R-RPS",
+        "R-GLISSADES"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-ECRAN-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP"
+      ]
+    },
+    {
+      "code": "86.21Z",
+      "label": "M├®decins g├®n├®ralistes",
+      "risk_tags": [
+        "sant├®",
+        "biologique"
+      ],
+      "risks_priority": [
+        "R-BIO",
+        "R-CHIMIQUE",
+        "R-TMS",
+        "R-RPS",
+        "R-ECRAN"
+      ],
+      "risks_mandatory": [],
+      "activities": [
+        {
+          "id": "cabinet",
+          "label": "Cabinet/examen"
+        },
+        {
+          "id": "laboratoire",
+          "label": "Laboratoire annexe (si)"
+        }
+      ]
+    },
+    {
+      "naf": "8621Z",
+      "label": "Médecins généralistes",
+      "risks_priority": [
+        "R-BIO",
+        "R-CHIMIQUE",
+        "R-TMS",
+        "R-RPS",
+        "R-ECRAN"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-BIO-001",
+        "A-R-CHIMIQUE-001",
+        "A-R-TMS-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP",
+        "OB-DASRI"
+      ]
+    },
+    {
+      "naf": "8622C",
+      "label": "Autres activités de santé",
+      "risks_priority": [
+        "R-BIO",
+        "R-ECRAN",
+        "R-RPS"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-BIO-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP"
+      ]
+    },
+    {
+      "naf": "8690D",
+      "label": "Laboratoires d’analyses médicales",
+      "risks_priority": [
+        "R-BIO",
+        "R-CHIMIQUE",
+        "R-ECRAN",
+        "R-RPS"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-BIO-001",
+        "A-R-CHIMIQUE-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP",
+        "OB-DASRI"
+      ]
+    },
+    {
+      "code": "87.10A",
+      "label": "H├®bergement m├®dicalis├® (EHPAD)",
+      "risk_tags": [
+        "soins",
+        "manutention",
+        "biologique"
+      ],
+      "risks_priority": [
+        "R-BIO",
+        "R-MANUTENTION",
+        "R-RPS",
+        "R-GLISSADES",
+        "R-INCENDIE"
+      ],
+      "risks_mandatory": [],
+      "activities": [
+        {
+          "id": "soins",
+          "label": "Soins/r├®sidents"
+        },
+        {
+          "id": "cuisine",
+          "label": "Cuisine"
+        }
+      ]
+    },
+    {
+      "naf": "8710A",
+      "label": "EHPAD",
+      "risks_priority": [
+        "R-BIO",
+        "R-MANUTENTION",
+        "R-RPS",
+        "R-GLISSADES",
+        "R-INCENDIE"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-BIO-001",
+        "A-R-MANUTENTION-001",
+        "A-R-RPS-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP",
+        "OB-DASRI",
+        "OB-INCENDIE"
+      ]
+    },
+    {
+      "naf": "8810A",
+      "label": "Aide à domicile",
+      "risks_priority": [
+        "R-BIO",
+        "R-MANUTENTION",
+        "R-RPS",
+        "R-ROUTIER",
+        "R-GLISSADES"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-BIO-001",
+        "A-R-MANUTENTION-001",
+        "A-R-ROUTIER-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP"
+      ]
+    },
+    {
+      "naf": "9001Z",
+      "label": "Arts du spectacle vivant",
+      "risks_priority": [
+        "R-BRUIT",
+        "R-CHUTE-HAUTEUR",
+        "R-ELECTRIQUE",
+        "R-MANUTENTION"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-BRUIT-001",
+        "A-R-CHUTE-HAUTEUR-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP"
+      ]
+    },
+    {
+      "naf": "9102Z",
+      "label": "Musées",
+      "risks_priority": [
+        "R-GLISSADES",
+        "R-RPS",
+        "R-INCENDIE"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-GLISSADES-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP"
+      ]
+    },
+    {
+      "naf": "9200Z",
+      "label": "Organisation de jeux de hasard",
+      "risks_priority": [
+        "R-AGRESSION",
+        "R-RPS",
+        "R-INCENDIE"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-AGRESSION-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP"
+      ]
+    },
+    {
+      "naf": "9313Z",
+      "label": "Centres de culture physique",
+      "risks_priority": [
+        "R-AGRESSION",
+        "R-RPS",
+        "R-INCENDIE",
+        "R-MANUTENTION"
+      ],
+      "risks_mandatory": [],
+      "actions_recommended": [
+        "A-R-AGRESSION-001"
+      ],
+      "legal_specific": [
+        "OB-DUERP"
+      ]
+    }
+  ],
+  "scoring": {
+    "model": "GxPxFxM",
+    "severity_scale": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "probability_scale": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "frequency_scale": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "control_scale": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "formula": "severity * probability * frequency * control"
+  },
+  "rulesConditional": {
+    "schema": {
+      "context.features": {
+        "solvents": "boolean",
+        "cold_room": "boolean",
+        "night_work": "boolean",
+        "public_facing": "boolean",
+        "vibrating_tools": "boolean",
+        "outdoor_uv": "boolean",
+        "machines": "boolean"
+      }
+    },
+    "rules": [
+      {
+        "if": {
+          "features.solvents": true
+        },
+        "add_risks": [
+          "R-ATEX",
+          "R-CHIMIQUE"
+        ],
+        "add_obligations": [
+          "OB-ATEX"
+        ]
+      },
+      {
+        "if": {
+          "features.cold_room": true
+        },
+        "add_risks": [
+          "R-FROID"
+        ],
+        "add_actions": [
+          "A-R-FROID-001"
+        ]
+      },
+      {
+        "if": {
+          "features.night_work": true
+        },
+        "add_risks": [
+          "R-RPS"
+        ],
+        "add_obligations": [
+          "OB-TRAVAIL-NUIT"
+        ]
+      },
+      {
+        "if": {
+          "features.public_facing": true
+        },
+        "add_risks": [
+          "R-AGRESSION"
+        ]
+      },
+      {
+        "if": {
+          "features.vibrating_tools": true
+        },
+        "add_risks": [
+          "R-VIBRATIONS"
+        ]
+      },
+      {
+        "if": {
+          "features.outdoor_uv": true
+        },
+        "add_risks": [
+          "R-CANICULE"
+        ]
+      },
+      {
+        "if": {
+          "features.machines": true
+        },
+        "add_risks": [
+          "R-MACHINE"
+        ]
+      }
+    ]
+  },
+  "unitsModifiers": {
+    "Cuisine": {
+      "R-CHIMIQUE": 1,
+      "R-INCENDIE": 1,
+      "R-BRULE": 1,
+      "R-TMS": 1,
+      "R-CANICULE": 1
+    },
+    "Plonge": {
+      "R-CHIMIQUE": 1,
+      "R-TMS": 1,
+      "R-COUPURE": 1,
+      "R-GLISSADES": 1
+    },
+    "Salle": {
+      "R-GLISSADES": 1,
+      "R-RPS": 1,
+      "R-AGRESSION": 1
+    },
+    "Chambre froide": {
+      "R-FROID": 2,
+      "R-CHIMIQUE": 1
+    },
+    "Bureau": {
+      "R-ECRAN": 1,
+      "R-RPS": 1
+    },
+    "Chantier": {
+      "R-CHUTE-HAUTEUR": 1,
+      "R-BRUIT": 1,
+      "R-ELECTRIQUE": 1,
+      "R-MANUTENTION": 1
+    },
+    "Entrep?t": {
+      "R-MANUTENTION": 1,
+      "R-CHUTE-HAUTEUR": 1,
+      "R-INCENDIE": 1
+    }
+  }
+}

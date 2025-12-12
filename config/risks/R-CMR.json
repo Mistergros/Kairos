@@ -1,0 +1,12 @@
+{
+  "id": "R-CMR",
+  "name": "Agents CMR",
+  "category": "Chimique",
+  "description": "Exposition à des substances Cancérogènes, Mutagènes ou Reprotoxiques.",
+  "units": [],
+  "questions": [],
+  "factors": [],
+  "sources": [
+    "INRS ED 6090"
+  ]
+}

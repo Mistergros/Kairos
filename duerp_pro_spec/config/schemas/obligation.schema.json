@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LegalObligation",
+  "type": "object",
+  "required": [
+    "id",
+    "source",
+    "title"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "Code du travail",
+        "INRS",
+        "CARSAT",
+        "INERIS",
+        "Autre"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "reference": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "applies_to": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

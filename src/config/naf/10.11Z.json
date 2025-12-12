@@ -1,0 +1,34 @@
+﻿ï»¿{
+  "code": "10.11Z",
+  "label": "Fabrication de produits de boulangerie-pâ”œÃ³tisserie frais",
+  "risk_tags": [
+    "agro",
+    "four",
+    "poussiâ”œÂ¿res farine"
+  ],
+  "risks_priority": [
+    "R-BRULE",
+    "R-GLISSADES",
+    "R-CHIMIQUE",
+    "R-TMS",
+    "R-INCENDIE",
+    "R-ATEX"
+  ],
+  "risks_mandatory": [
+    "R-INCENDIE"
+  ],
+  "activities": [
+    {
+      "id": "atelier",
+      "label": "Atelier de production"
+    },
+    {
+      "id": "four",
+      "label": "Cuisson/fours"
+    },
+    {
+      "id": "magasin",
+      "label": "Vente"
+    }
+  ]
+}

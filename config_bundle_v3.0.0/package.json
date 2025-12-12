@@ -1,0 +1,16 @@
+{
+  "name": "duerp-config-bundle",
+  "version": "3.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "config:apply": "tsx scripts/apply-config.ts",
+    "config:apply:reset": "tsx scripts/apply-config.ts --reset"
+  },
+  "dependencies": {
+    "pg": "^8.13.1"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2"
+  }
+}
