@@ -797,12 +797,19 @@ export default function LandingPage() {
 
   const startCheckout = async (planId?: PlanId) => {
     if (checkoutState === "loading") return;
+    // Si pas connecté → inscription d'abord, avec le plan en paramètre
+    if (!isSignedIn) {
+      navigate(`/sign-up?plan=${planId || "essential"}`);
+      return;
+    }
+
     const status = String((user?.publicMetadata as any)?.subscriptionStatus || "");
     const isActive = status === "active" || status === "trialing";
-    if (isSignedIn && isActive) {
+    if (isActive) {
       navigate("/");
       return;
     }
+
     setCheckoutState("loading");
     setCheckoutError(null);
     try {
@@ -825,7 +832,7 @@ export default function LandingPage() {
     } catch (err) {
       console.error(err);
       setCheckoutState("error");
-      setCheckoutError("Impossible de demarrer le paiement. Reessayez.");
+      setCheckoutError("Impossible de démarrer le paiement. Réessayez dans quelques secondes.");
     }
   };
 
