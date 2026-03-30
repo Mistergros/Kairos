@@ -59,43 +59,33 @@ function Navbar({
   isSignedIn: boolean;
 }) {
   return (
-    <header className="sticky top-0 z-20 w-full border-b border-white/40 bg-white/70 backdrop-blur dark:bg-slate-900/70">
-      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-6">
-        <div className="flex items-center gap-2">
-          <div className="h-6 w-6 rounded-full bg-blue-600" />
-          <span className="font-semibold text-slate-900 dark:text-white">Kaijos</span>
+    <header className="sticky top-0 z-20 w-full border-b border-slate-100 bg-white shadow-sm">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+        <div className="flex items-center gap-2.5">
+          <div className="h-7 w-7 rounded-lg bg-kairos flex items-center justify-center">
+            <span className="text-white font-extrabold text-sm">K</span>
+          </div>
+          <span className="font-bold text-ink text-lg tracking-tight">Kaijos</span>
         </div>
-
-        <nav className="hidden md:flex items-center gap-6 text-sm text-slate-700 dark:text-slate-300">
-          <a href="#features" className="hover:text-blue-600">Fonctionnalités</a>
-          <a href="#use-cases" className="hover:text-blue-600">Cas pratiques</a>
-          <a href="#how" className="hover:text-blue-600">Étapes</a>
-          <a href="#pricing" className="hover:text-blue-600">Tarifs</a>
+        <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-500">
+          <a href="#features" className="hover:text-ink transition">Fonctionnalités</a>
+          <a href="#use-cases" className="hover:text-ink transition">Cas pratiques</a>
+          <a href="#how" className="hover:text-ink transition">Étapes</a>
+          <a href="#pricing" className="hover:text-ink transition">Tarifs</a>
         </nav>
-
         <div className="flex items-center gap-3">
           {isSignedIn ? (
-            <a
-              href="/mon-compte"
-              className="text-sm text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
-            >
-              Mon compte
-            </a>
+            <a href="/mon-compte" className="text-sm font-medium text-slate-600 hover:text-ink transition">Mon compte</a>
           ) : (
-            <a
-              href="/sign-in"
-              className="text-sm text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
-            >
-              Se connecter
-            </a>
+            <a href="/sign-in" className="text-sm font-medium text-slate-600 hover:text-ink transition">Se connecter</a>
           )}
           <button
             type="button"
             onClick={() => onSubscribe("essential")}
             disabled={isLoading}
-            className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70"
+            className="rounded-lg bg-kairos px-5 py-2 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50 transition"
           >
-            {isLoading ? "Redirection..." : "S'abonner"}
+            {isLoading ? "…" : "Essayer"}
           </button>
         </div>
       </div>
@@ -108,110 +98,108 @@ function Navbar({
 ------------------------------------------------------------ */
 function Hero({ onSubscribe, isLoading }: { onSubscribe: SubscribeHandler; isLoading: boolean }) {
   return (
-    <section className="w-full bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white">
-      <div className="mx-auto max-w-7xl px-6 pt-20 pb-0 flex flex-col items-center text-center">
+    <section className="w-full bg-ink">
+      <div className="mx-auto max-w-6xl px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
 
-        <span className="inline-flex items-center gap-2 rounded-full border border-blue-400/30 bg-blue-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-blue-300 mb-6">
-          Kaijos · by Milante Consulting
-        </span>
-
-        <h1 className="text-5xl md:text-6xl font-extrabold leading-tight max-w-3xl">
-          Votre DUERP conforme,{" "}
-          <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-            sans Excel, sans galère.
+        {/* Texte gauche */}
+        <div>
+          <span className="inline-block rounded-full border border-kairos text-kairos text-xs font-semibold px-4 py-1.5 mb-6 tracking-wide">
+            BY MILANTE CONSULTING
           </span>
-        </h1>
 
-        <p className="mt-6 text-lg md:text-xl text-slate-300 max-w-2xl">
-          Kaijos pré-remplit votre inventaire des risques selon votre code NAF, génère le PDF légal et suit votre plan d’action — en quelques minutes, pas en quelques jours.
-        </p>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-white leading-tight">
+            Le DUERP de votre entreprise,{" "}
+            <span className="text-kairos">conforme et à jour.</span>
+          </h1>
 
-        <div className="mt-10 flex flex-wrap justify-center gap-4">
-          <button
-            type="button"
-            onClick={() => onSubscribe("essential")}
-            disabled={isLoading}
-            className="rounded-xl bg-blue-500 px-8 py-3.5 text-base font-bold text-white shadow-lg shadow-blue-500/30 hover:bg-blue-400 disabled:opacity-60 transition"
-          >
-            {isLoading ? "Redirection…" : "Commencer gratuitement →"}
-          </button>
-          <a href="#pricing" className="rounded-xl border border-white/20 bg-white/5 px-8 py-3.5 text-base font-semibold hover:bg-white/10 transition">
-            Voir les offres
-          </a>
-        </div>
+          <p className="mt-6 text-lg text-slate-300 leading-relaxed">
+            Kaijos structure votre évaluation des risques professionnels, pré-remplit l’inventaire selon votre secteur NAF et génère le document légal prêt à signer.
+          </p>
 
-        <p className="mt-5 text-sm text-slate-400">
-          ✓ Conforme art. R.4121-1 du Code du travail &nbsp;·&nbsp; ✓ Export PDF légal inclus &nbsp;·&nbsp; ✓ Sans installation
-        </p>
-
-        {/* Aperçu interface */}
-        <div className="mt-16 w-full max-w-5xl rounded-t-3xl overflow-hidden shadow-2xl ring-1 ring-white/10">
-          {/* Barre de fenêtre */}
-          <div className="flex items-center gap-2 bg-slate-800 px-4 py-3">
-            <span className="h-3 w-3 rounded-full bg-red-400" />
-            <span className="h-3 w-3 rounded-full bg-yellow-400" />
-            <span className="h-3 w-3 rounded-full bg-green-400" />
-            <span className="ml-4 flex-1 rounded bg-slate-700 px-3 py-1 text-xs text-slate-400">app.kaijos.com</span>
+          <div className="mt-4 space-y-2">
+            {[
+              "Conforme art. R.4121-1 du Code du travail",
+              "Pré-remplissage automatique par code NAF",
+              "Plan d’action avec responsables et échéances",
+              "Export PDF légal en un clic",
+            ].map((t) => (
+              <div key={t} className="flex items-center gap-2 text-sm text-slate-300">
+                <span className="h-4 w-4 rounded-full bg-lime flex items-center justify-center text-white text-[10px] font-bold shrink-0">✓</span>
+                {t}
+              </div>
+            ))}
           </div>
-          {/* Simulation inventaire */}
-          <div className="bg-slate-50 p-6">
-            <div className="mb-4 flex items-center justify-between">
-              <div className="flex gap-2">
-                <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-700">Bureau — Administration</span>
-                <span className="rounded-full bg-slate-200 px-3 py-1 text-xs text-slate-600">Atelier — Production</span>
-              </div>
-              <span className="rounded-lg bg-blue-600 px-4 py-1.5 text-xs font-bold text-white">Pré-remplir risques (NAF)</span>
-            </div>
-            <div className="overflow-hidden rounded-xl border border-slate-200 bg-white">
-              <table className="w-full text-xs">
-                <thead className="bg-slate-100 text-slate-500">
-                  <tr>
-                    {["Catégorie", "Risque", "G", "F", "M", "Score", "Priorité"].map((h) => (
-                      <th key={h} className="px-3 py-2 text-left font-semibold">{h}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100 text-slate-700">
-                  {[
-                    { cat: "RPS", risk: "Conflits / tensions", g: 8, f: 6, m: 2, score: 24, p: "P1", color: "bg-red-500" },
-                    { cat: "TMS", risk: "Postures contraignantes", g: 6, f: 9, m: 3, score: 18, p: "P1", color: "bg-red-500" },
-                    { cat: "Électrique", risk: "Contact indirect", g: 8, f: 2, m: 4, score: 4, p: "P3", color: "bg-yellow-400" },
-                    { cat: "Incendie", risk: "Départ de feu", g: 10, f: 2, m: 3, score: 6, p: "P2", color: "bg-orange-400" },
-                  ].map((r) => (
-                    <tr key={r.risk} className="hover:bg-slate-50">
-                      <td className="px-3 py-2 text-slate-500">{r.cat}</td>
-                      <td className="px-3 py-2 font-medium">{r.risk}</td>
-                      <td className="px-3 py-2">{r.g}</td>
-                      <td className="px-3 py-2">{r.f}</td>
-                      <td className="px-3 py-2">{r.m}</td>
-                      <td className="px-3 py-2 font-bold">{r.score}</td>
-                      <td className="px-3 py-2">
-                        <span className={`inline-flex h-6 w-8 items-center justify-center rounded-full text-[10px] font-bold text-white ${r.color}`}>{r.p}</span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <div className="mt-3 flex gap-3">
-              <div className="flex-1 rounded-lg border border-slate-200 bg-white p-3">
-                <p className="text-[10px] font-semibold uppercase text-slate-400 mb-1">Actions en cours</p>
-                <p className="text-2xl font-bold text-slate-800">7</p>
-              </div>
-              <div className="flex-1 rounded-lg border border-slate-200 bg-white p-3">
-                <p className="text-[10px] font-semibold uppercase text-slate-400 mb-1">Risques P1</p>
-                <p className="text-2xl font-bold text-red-600">2</p>
-              </div>
-              <div className="flex-1 rounded-lg border border-slate-200 bg-white p-3">
-                <p className="text-[10px] font-semibold uppercase text-slate-400 mb-1">Complétude</p>
-                <p className="text-2xl font-bold text-green-600">84%</p>
-              </div>
-              <div className="flex-1 rounded-lg border border-green-100 bg-green-50 p-3 flex items-center justify-center">
-                <span className="text-xs font-bold text-green-700">↓ Export PDF</span>
-              </div>
-            </div>
+
+          <div className="mt-10 flex flex-wrap gap-4">
+            <button
+              type="button"
+              onClick={() => onSubscribe("essential")}
+              disabled={isLoading}
+              className="rounded-xl bg-kairos px-8 py-3.5 text-base font-bold text-white hover:opacity-90 disabled:opacity-50 transition"
+            >
+              {isLoading ? "Redirection…" : "Démarrer maintenant"}
+            </button>
+            <a href="#pricing" className="rounded-xl border border-slate-600 px-8 py-3.5 text-base font-semibold text-slate-300 hover:border-slate-400 hover:text-white transition">
+              Voir les offres
+            </a>
           </div>
         </div>
+
+        {/* Visuel droite — aperçu app */}
+        <div className="rounded-2xl overflow-hidden border border-slate-700 shadow-2xl">
+          {/* Barre titre */}
+          <div className="bg-slate-800 border-b border-slate-700 px-4 py-3 flex items-center gap-2">
+            <span className="h-2.5 w-2.5 rounded-full bg-red-500" />
+            <span className="h-2.5 w-2.5 rounded-full bg-yellow-500" />
+            <span className="h-2.5 w-2.5 rounded-full bg-green-500" />
+            <span className="ml-3 text-xs text-slate-400 font-mono">Inventaire des risques — Bureau Administration</span>
+          </div>
+          {/* Contenu */}
+          <div className="bg-slate-50 p-5">
+            {/* KPIs */}
+            <div className="grid grid-cols-3 gap-3 mb-4">
+              {[
+                { label: "Risques P1", value: "3", cls: "text-red-600" },
+                { label: "Actions en cours", value: "7", cls: "text-kairos" },
+                { label: "Complétude", value: "84%", cls: "text-green-600" },
+              ].map((k) => (
+                <div key={k.label} className="bg-white rounded-xl border border-slate-200 p-3 text-center">
+                  <p className={`text-2xl font-extrabold ${k.cls}`}>{k.value}</p>
+                  <p className="text-[10px] text-slate-400 mt-0.5">{k.label}</p>
+                </div>
+              ))}
+            </div>
+            {/* Tableau */}
+            <div className="rounded-xl border border-slate-200 overflow-hidden bg-white">
+              <div className="grid grid-cols-7 bg-slate-100 text-[10px] font-semibold text-slate-500 px-3 py-2">
+                {["Catégorie", "Risque", "G", "F", "M", "Score", "Prio."].map((h) => <span key={h}>{h}</span>)}
+              </div>
+              {[
+                { cat: "RPS", risk: "Conflits / tensions", g: 8, f: 6, m: 2, score: 24, p: "P1", bg: "bg-red-500" },
+                { cat: "TMS", risk: "Postures contraignantes", g: 6, f: 9, m: 3, score: 18, p: "P1", bg: "bg-red-500" },
+                { cat: "Incendie", risk: "Départ de feu", g: 10, f: 2, m: 3, score: 6, p: "P2", bg: "bg-orange-400" },
+                { cat: "Électrique", risk: "Contact indirect", g: 8, f: 2, m: 4, score: 4, p: "P3", bg: "bg-yellow-400" },
+              ].map((r, i) => (
+                <div key={r.risk} className={`grid grid-cols-7 px-3 py-2.5 text-xs items-center ${i % 2 === 1 ? "bg-slate-50" : "bg-white"} border-t border-slate-100`}>
+                  <span className="text-slate-400">{r.cat}</span>
+                  <span className="font-medium text-ink">{r.risk}</span>
+                  <span className="text-slate-500">{r.g}</span>
+                  <span className="text-slate-500">{r.f}</span>
+                  <span className="text-slate-500">{r.m}</span>
+                  <span className="font-bold text-ink">{r.score}</span>
+                  <span className={`inline-flex h-5 w-7 items-center justify-center rounded-full text-[9px] font-bold text-white ${r.bg}`}>{r.p}</span>
+                </div>
+              ))}
+            </div>
+            {/* CTA export */}
+            <div className="mt-3 flex justify-end">
+              <span className="inline-flex items-center gap-1.5 rounded-lg bg-ink px-3 py-1.5 text-xs font-bold text-white">
+                ↓ Exporter le PDF légal
+              </span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
   );
@@ -221,18 +209,14 @@ function Hero({ onSubscribe, isLoading }: { onSubscribe: SubscribeHandler; isLoa
    SOCIAL PROOF STRIP
 ------------------------------------------------------------ */
 function SocialProof() {
+  const sectors = ["BTP & construction", "Industrie & ateliers", "Services & bureaux", "Santé & médico-social", "Transport & logistique"];
   return (
-    <div className="w-full bg-slate-900 border-y border-slate-800 py-5">
-      <div className="mx-auto max-w-5xl px-6 flex flex-wrap items-center justify-center gap-8 text-sm text-slate-400">
-        <span>🏗️ BTP &amp; construction</span>
-        <span className="hidden md:block text-slate-700">|</span>
-        <span>🏭 Industrie &amp; ateliers</span>
-        <span className="hidden md:block text-slate-700">|</span>
-        <span>🏢 Services &amp; bureaux</span>
-        <span className="hidden md:block text-slate-700">|</span>
-        <span>🏥 Santé &amp; médico-social</span>
-        <span className="hidden md:block text-slate-700">|</span>
-        <span>🚚 Transport &amp; logistique</span>
+    <div className="w-full bg-slate-800 border-t border-slate-700 py-4">
+      <div className="mx-auto max-w-6xl px-6 flex flex-wrap items-center justify-center gap-6">
+        <span className="text-xs font-semibold uppercase tracking-widest text-slate-500 mr-2">Adapté à</span>
+        {sectors.map((s) => (
+          <span key={s} className="rounded-full border border-slate-600 px-4 py-1.5 text-xs font-medium text-slate-300">{s}</span>
+        ))}
       </div>
     </div>
   );
