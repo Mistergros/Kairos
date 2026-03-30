@@ -401,26 +401,40 @@ export const ActionPlan = () => {
                           )}
                         </div>
 
-                        <div className="text-right space-y-2">
-                          <PriorityBadge priority={a.priority} />
+                        <div className="text-right space-y-1.5 min-w-[140px]">
+                          <div className="flex items-center justify-end gap-2">
+                            <PriorityBadge priority={a.priority} />
+                          </div>
                           <select
-                            className="rounded-xl border border-slate/20 bg-slate/5 px-2 py-1 text-xs"
+                            className="rounded-xl border border-slate/20 bg-slate/5 px-2 py-1 text-xs w-full"
                             value={a.status}
                             onChange={(e) => updateActionStatus(a.id, e.target.value as ActionStatus)}
                           >
                             {STATUSES.map((s) => (
                               <option key={s} value={s}>
-                                {s}
+                                {s === "TO_DO" ? "À faire" : s === "IN_PROGRESS" ? "En cours" : s === "LATE" ? "En retard" : "Terminé"}
                               </option>
                             ))}
                           </select>
-                          <p className="text-xs text-slate/60">Début: {formatDate(a.startDate)}</p>
-                          <p className="text-xs text-slate/60">Fin: {formatDate(a.endDate)}</p>
+                          {a.owner && (
+                            <p className="text-xs text-slate/70 font-medium truncate" title={a.owner}>
+                              👤 {a.owner}
+                            </p>
+                          )}
+                          {(a.dueDate || a.endDate) && (
+                            <p className={`text-xs font-medium ${
+                              a.status !== "DONE" && (a.dueDate || a.endDate) && new Date(a.dueDate || a.endDate!) < new Date()
+                                ? "text-red-600"
+                                : "text-slate/60"
+                            }`}>
+                              📅 {formatDate(a.dueDate || a.endDate)}
+                            </p>
+                          )}
                           <button
                             className="text-xs text-ocean underline"
                             onClick={() => setExpanded((prev) => (prev === a.id ? null : a.id))}
                           >
-                            {expanded === a.id ? "Masquer le détail" : "Afficher le détail"}
+                            {expanded === a.id ? "Masquer" : "Modifier"}
                           </button>
                         </div>
                       </div>

@@ -2,27 +2,49 @@
   {
     "id": "A-TRAVAUX-PUB-001",
     "risk_id": "R-TRAVAUX-PUB",
-    "title": "Plan de prévention terrassement / réseaux enterrés",
+    "title": "Plan de prévention et coordination SPS (terrassement, réseaux enterrés)",
     "type": "Organisationnelle",
-    "impact": "Réduction du risque d'ensevelissement et de heurt engins",
+    "description": "Établir un plan de prévention détaillé avant tout terrassement ou travaux à proximité de réseaux. Réaliser les DT/DICT (Déclarations de Travaux / Déclarations d'Intention de Commencement de Travaux) auprès des gestionnaires de réseaux. Nommer un Coordonnateur SPS (Sécurité et Protection de la Santé) dès la conception pour les chantiers de catégorie 1 et 2. Établir le PGCSPS et mettre à jour le DIUO.",
+    "impact": "Prévention des accidents liés aux heurts de réseaux enterrés (électrocution, explosion gaz, inondation). Le non-respect des DICT est une faute pénale. Réduction des sinistres de chantier.",
     "difficulty": "Moyenne",
     "cost": "Moyen",
-    "references": [
-      "INRS",
-      "OPPBTP"
-    ]
+    "naf_specific": ["41", "42", "43"],
+    "references": ["INRS ED 941", "Décret 2012-970 réforme DT-DICT", "OPPBTP guide SPS", "Code du travail R.4532-1"]
   },
   {
     "id": "A-TRAVAUX-PUB-002",
     "risk_id": "R-TRAVAUX-PUB",
-    "title": "Balisage, DICT et consignation réseaux",
+    "title": "Balisage, signalisation et protection des tranchées ouvertes",
     "type": "Technique",
-    "impact": "Sécurise les travaux à proximité de réseaux (gaz/élec/eau)",
-    "difficulty": "Moyenne",
+    "description": "Baliser les tranchées et fouilles avec barrières de chantier rigides (Heras ou équivalent) doublées de filets de protection. Installer une signalisation lumineuse clignotante si proximité de voirie. Étayer les parois des tranchées > 1,30 m ou dont le sol est instable (argile, remblai). Installer des passerelles de franchissement avec garde-corps. Fermer ou obstruer les tranchées en fin de journée.",
+    "impact": "Prévention des chutes dans les tranchées et des effondrements de parois (risque d'ensevelissement mortel). Sécurisation du chantier pour les tiers. Conformité réglementaire chantiers BTP.",
+    "difficulty": "Faible",
     "cost": "Moyen",
-    "references": [
-      "INRS",
-      "OPPBTP"
-    ]
+    "naf_specific": ["41", "42", "43"],
+    "references": ["OPPBTP recommandation tranchées", "INRS ED 949", "Code du travail R.4534-116 à R.4534-144"]
+  },
+  {
+    "id": "A-TRAVAUX-PUB-003",
+    "risk_id": "R-TRAVAUX-PUB",
+    "title": "Gestion du risque co-activité engins/piétons sur chantier",
+    "type": "Organisationnelle",
+    "description": "Séparer physiquement les zones de circulation des engins et des piétons par des barrières fixes. Équiper les engins de systèmes de détection de personnes (radar de recul, caméra 360°). Imposer des gilets haute visibilité classe 3 (EN ISO 20471) sur tout le chantier. Mettre en place un plan de circulation validé par le coordonnateur SPS. Briefing sécurité chantier quotidien (quarter d'heure sécurité).",
+    "impact": "Réduction des accidents de heurt engin/piéton (2ème cause de mortalité en BTP). Prévention des collisions en marche arrière. Culture de sécurité renforcée sur chantier.",
+    "difficulty": "Faible",
+    "cost": "Moyen",
+    "naf_specific": ["41", "42", "43"],
+    "references": ["OPPBTP fiche co-activité", "INRS ED 949", "EN ISO 20471"]
+  },
+  {
+    "id": "A-TRAVAUX-PUB-004",
+    "risk_id": "R-TRAVAUX-PUB",
+    "title": "EPI chantier BTP complets et port obligatoire",
+    "type": "EPI",
+    "description": "Imposer le port de l'ensemble des EPI sur tout le chantier : casque EN 397 (classe P pour protection contre les chutes d'objets), gilet haute visibilité classe 3 EN ISO 20471, chaussures de sécurité S3 (embout acier, semelle anti-perforation, imperméables), genouillères EN 14404 pour les travaux au sol, protections auditives (> 80 dB(A)), lunettes EN 166 pour découpe et perçage. Vérifier et remplacer les EPI défectueux sans délai.",
+    "impact": "Protection individuelle contre les risques multiples du chantier BTP (objets tombant, écrasement, perforation, bruit, projections). Conformité aux obligations EPI chantier. Réduction des AT avec arrêt en BTP.",
+    "difficulty": "Faible",
+    "cost": "Moyen",
+    "naf_specific": ["41", "42", "43"],
+    "references": ["EN 397", "EN ISO 20471", "EN ISO 20345 S3", "OPPBTP guide EPI chantier"]
   }
 ]

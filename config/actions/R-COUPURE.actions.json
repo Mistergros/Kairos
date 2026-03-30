@@ -2,53 +2,48 @@
   {
     "id": "A-R-COUPURE-001",
     "risk_id": "R-COUPURE",
-    "title": "Mesure technique prioritaire",
+    "title": "Gants anti-coupure adaptés (norme EN 388)",
     "type": "EPI",
-    "impact": "Réduction du risque",
-    "difficulty": "Moyenne",
+    "description": "Fournir des gants résistants aux coupures EN 388 dont le niveau de résistance à la coupure (indice D ou E minimum pour les travaux à risque élevé, ex : verre, métal tranchant) est adapté à l'activité. Imposer le port pour toute manipulation d'objets coupants ou tranchants. Remplacer les gants perforés ou usés immédiatement. Former à l'enfilage et retrait corrects.",
+    "impact": "Réduction de 70-80% des coupures mains lorsque le port est systématique. Protection contre les lacérations profondes. Conformité EPI catégorie III.",
+    "difficulty": "Faible",
     "cost": "Faible",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "naf_specific": ["10", "47", "20", "24", "45"],
+    "references": ["EN 388", "INRS gants de protection", "Code du travail R.4321-4"]
   },
   {
     "id": "A-R-COUPURE-002",
     "risk_id": "R-COUPURE",
-    "title": "Procédure / organisation",
-    "type": "Organisationnelle",
-    "impact": "Réduction du risque",
+    "title": "Sécurisation des outils coupants (protège-lames, dispositifs anti-retour)",
+    "type": "Technique",
+    "description": "Équiper les couteaux et outils tranchants de protège-lames en position de repos. Utiliser des couteaux à lame rétractable automatique pour les tâches d'emballage/carton. Installer des guides et butées pour les travaux sur presses ou massicots. Interdire les ustensiles et outils cassés ou endommagés. Marquer visuellement les zones de passage des lames.",
+    "impact": "Suppression du risque de contact avec la lame lors de la manipulation et du rangement. Réduction des coupures accidentelles lors des distractions. Élimination des coupures par outil défaillant.",
     "difficulty": "Faible",
-    "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "cost": "Faible",
+    "naf_specific": ["10", "47", "52"],
+    "references": ["INRS ED 6029", "Norme EN 14183 (couteaux de sécurité)"]
   },
   {
     "id": "A-R-COUPURE-003",
     "risk_id": "R-COUPURE",
-    "title": "Formation/sensibilisation ciblée",
-    "type": "Technique",
-    "impact": "Réduction du risque",
+    "title": "Formation manipulation sécurisée des outils tranchants",
+    "type": "Formation",
+    "description": "Former les opérateurs aux techniques de découpe sécurisées : couper en s'éloignant du corps, maintenir les pièces avec des pinces ou crochets plutôt que les mains, ranger les couteaux en sécurité immédiatement après usage, ne jamais rattraper un objet coupant en chute libre. Former à l'utilisation et l'entretien des protège-mains spécifiques aux tâches.",
+    "impact": "Réduction des comportements à risque identifiés dans les accidents de travail. Personnel adoptant les bonnes pratiques de manipulation. Réduction des coupures superficielles (qui représentent 25% des AT dans les secteurs alimentaires et de distribution).",
     "difficulty": "Faible",
-    "cost": "Élevé",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "cost": "Faible",
+    "references": ["INRS fiche coupures", "Guide INRS cuisine industrielle"]
   },
   {
     "id": "A-R-COUPURE-004",
     "risk_id": "R-COUPURE",
-    "title": "EPI adaptés et contrôlés",
+    "title": "Procédure de gestion des objets piquants/tranchants (OPT) et boîtes DASRI",
     "type": "Technique",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
+    "description": "Dans les secteurs de la santé et de la restauration : utiliser systématiquement des collecteurs d'OPT homologués (boîtes jaunes DASRI). Interdire le recapuchonnage manuel des aiguilles. Utiliser des dispositifs de sécurité intégrés (aiguilles rétractables). Vider les collecteurs à 3/4 de remplissage. Former à la conduite à tenir en cas d'accident d'exposition au sang.",
+    "impact": "Élimination des piqûres accidentelles et expositions au sang. Prévention des infections (VIH, hépatite B et C) par AES. Conformité DASRI.",
+    "difficulty": "Faible",
     "cost": "Faible",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "naf_specific": ["86", "87"],
+    "references": ["INRS ED 6034", "Code de la santé publique R.1335-8", "Arrêté DASRI 2011"]
   }
 ]

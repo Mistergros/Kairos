@@ -2,40 +2,36 @@
   {
     "id": "A-CMR-001",
     "risk_id": "R-CMR",
-    "title": "Substitution / FDS à jour (CMR)",
+    "title": "Substitution des substances CMR par des alternatives moins dangereuses",
     "type": "Technique",
-    "impact": "Réduction de l'exposition aux CMR par substitution et contrôle",
-    "difficulty": "Moyenne",
+    "description": "Identifier tous les agents CMR (catégories 1A et 1B) utilisés dans l'établissement. Rechercher activement une substitution avec le fournisseur et le médecin du travail. Documenter chaque décision : substitution réalisée ou impossibilité technique justifiée par écrit. Utiliser l'outil SEIRICH (INRS) pour évaluer et comparer les substituts. Mettre à jour les FDS après chaque changement.",
+    "impact": "Élimination du risque cancérogène à la source. Réduction du risque de cancers professionnels (MP 30 bis, 36, 37). Obligation légale : la substitution doit être envisagée avant toute autre mesure.",
+    "difficulty": "Élevée",
     "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "naf_specific": ["20", "22", "23", "24", "25", "29"],
+    "references": ["INRS ED 6004", "Outil SEIRICH INRS", "Code du travail R.4412-66"]
   },
   {
     "id": "A-CMR-002",
     "risk_id": "R-CMR",
-    "title": "Mesures de confinement / ventilation (CMR)",
+    "title": "Mesures de confinement et ventilation pour les agents CMR résiduels",
     "type": "Technique",
-    "impact": "Captage à la source, ventilation adaptée pour CMR",
+    "description": "Mettre en place un confinement maximum des opérations utilisant des CMR (procédés en vase clos si possible). Installer un système d'aspiration captage à la source (débit ≥ 0,5 m/s à l'ouverture). Maintenir les concentrations en dessous des VLE/VME. Mesurer l'empoussièrement annuellement par un organisme accrédité COFRAC. Contrôler mensuellement les filtres et conduits.",
+    "impact": "Maintien des concentrations sous les valeurs limites réglementaires. Protection de l'ensemble du collectif de travail. Réduction de l'exposition cumulée sur carrière.",
     "difficulty": "Élevée",
     "cost": "Élevé",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "naf_specific": ["20", "22", "24", "29", "30"],
+    "references": ["INRS ED 695", "Code du travail R.4412-76", "Valeurs limites d'exposition professionnelle (VLEP)"]
   },
   {
     "id": "A-CMR-003",
     "risk_id": "R-CMR",
-    "title": "Suivi médical renforcé / traçabilité exposition",
-    "type": "Humaine",
-    "impact": "Réduction du risque via surveillance et traçabilité",
+    "title": "Suivi médical renforcé et traçabilité de l'exposition aux CMR",
+    "type": "Organisationnelle",
+    "description": "Mettre en place un suivi médical renforcé (SMR) pour tous les travailleurs exposés aux CMR : examen médical avant affectation au poste, puis annuel. Établir la fiche d'exposition individuelle CMR. Constituer le dossier médical de santé au travail (DMST) conservé 50 ans. Déclarer les maladies professionnelles. Informer chaque salarié de son exposition et de ses droits.",
+    "impact": "Détection précoce des pathologies cancéreuses professionnelles. Traçabilité de l'exposition pour la déclaration de MP. Conformité réglementaire (obligation de déclaration et de surveillance médicale renforcée).",
     "difficulty": "Moyenne",
     "cost": "Faible",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "references": ["Code du travail R.4412-44 à R.4412-57", "Tableau MP 30, 36, 37", "Décret 2012-134"]
   }
 ]

@@ -2,53 +2,48 @@
   {
     "id": "A-R-BRULE-001",
     "risk_id": "R-BRULE",
-    "title": "Mesure technique prioritaire",
+    "title": "Protection des surfaces chaudes et sources de brûlures thermiques",
     "type": "Technique",
-    "impact": "Réduction du risque",
+    "description": "Isoler ou calorifuger toutes les surfaces accessibles dépassant 48°C (seuil de brûlure cutanée en 1 seconde). Installer des protecteurs physiques sur les fours, étuves, tuyaux de vapeur et surfaces chauffantes. Maintenir une distance de sécurité minimale de 0,5 m autour des sources > 80°C. Apposer des pictogrammes de danger thermique visibles sur toutes les surfaces chaudes accessibles.",
+    "impact": "Réduction des brûlures thermiques superficielles et profondes. Conformité réglementaire. Prévention des brûlures accidentelles des voies respiratoires par projection de vapeur.",
     "difficulty": "Faible",
-    "cost": "Faible",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "cost": "Moyen",
+    "naf_specific": ["10", "24", "20", "56"],
+    "references": ["INRS ED 6029", "EN ISO 13732-1", "Code du travail R.4223-1"]
   },
   {
     "id": "A-R-BRULE-002",
     "risk_id": "R-BRULE",
-    "title": "Procédure / organisation",
+    "title": "Procédures de manipulation des liquides chauds et coulées",
     "type": "Organisationnelle",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
-    "cost": "Élevé",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "description": "Rédiger des modes opératoires pour toute manipulation de liquides à haute température (> 60°C) : utiliser des récipients avec couvercle et poignée isolante, transporter uniquement dans des contenants fermés, ne jamais remplir au-delà des 3/4, vérifier la solidité des anses avant manipulation. Interdire les transferts manuels de fluides chauds > 70°C sans équipement adapté.",
+    "impact": "Réduction des projections de liquides bouillants lors des manipulations. Prévention des brûlures graves par renversement. Procédures documentées engageant la responsabilité des opérateurs.",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "naf_specific": ["10", "56", "20"],
+    "references": ["INRS ED 6029", "Fiche risques cuisine professionnelle"]
   },
   {
     "id": "A-R-BRULE-003",
     "risk_id": "R-BRULE",
-    "title": "Formation/sensibilisation ciblée",
-    "type": "Humaine",
-    "impact": "Réduction du risque",
+    "title": "Formation aux premiers secours brûlures et gestes d'urgence",
+    "type": "Formation",
+    "description": "Former les salariés exposés aux premiers gestes en cas de brûlure thermique : refroidissement immédiat à l'eau fraîche (15°C) pendant 15 minutes minimum, appel des secours pour toute brûlure > 1% de la surface corporelle ou brûlure du visage/mains. S'assurer que les douches oculaires et les kits premiers secours sont accessibles en moins de 10 secondes depuis les postes à risque.",
+    "impact": "Réduction des séquelles grâce à la prise en charge immédiate. Refroidissement dans les 30 premières secondes réduit la gravité de la brûlure. Personnel capable d'agir avant l'arrivée des secours.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "references": ["INRS geste premiers secours", "Recommandations HAS brûlures", "Code du travail R.4224-14 à 16"]
   },
   {
     "id": "A-R-BRULE-004",
     "risk_id": "R-BRULE",
-    "title": "EPI adaptés et contrôlés",
+    "title": "EPI thermiques adaptés : gants, tablier, écran facial",
     "type": "EPI",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
+    "description": "Équiper les salariés exposés à des risques de brûlure de gants résistants à la chaleur EN 407 (code de performance adapté au risque : température, flamme, chaleur convective). Porter un tablier anti-chaleur ou une veste ignifugée EN ISO 11612 pour les expositions prolongées. Utiliser un écran facial EN 166 ou EN 175 pour les travaux exposant aux projections. Vérifier l'absence de dommages à chaque utilisation.",
+    "impact": "Protection individuelle efficace contre les brûlures thermiques et chimiques. Réduction de la surface corporelle exposée. EPI adapté à chaque type de brûlure (thermique, chimique, par projection).",
+    "difficulty": "Faible",
     "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "naf_specific": ["10", "24", "20", "56"],
+    "references": ["EN 407", "EN ISO 11612", "EN 166/175"]
   }
 ]

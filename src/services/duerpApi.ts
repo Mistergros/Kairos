@@ -22,14 +22,6 @@ async function http<T>(path: string, init?: RequestInit): Promise<T> {
   return (await res.json()) as T;
 }
 
-export type AssistResponse = {
-  explanations: Record<string, string>;
-  narrative: string;
-  inconsistencies: { type: "logic" | "semantic"; path: string; msg: string; fix?: string }[];
-  recommendations: { title: string; desc: string; related?: string[] }[];
-  tenantId?: string;
-};
-
 export const duerpApi = {
   getRisks: () => http<any[]>("/api/catalog/risks"),
   getActions: () => http<any[]>("/api/catalog/actions"),
@@ -39,8 +31,6 @@ export const duerpApi = {
   // Endpoint a ajouter cote API : POST /api/evaluate pour deleguer le moteur V4
   evaluateV4: (payload: Record<string, any>) =>
     http<any>("/api/evaluate", { method: "POST", body: JSON.stringify(payload) }),
-  assist: (payload: Record<string, any>) =>
-    http<AssistResponse>("/api/assist", { method: "POST", body: JSON.stringify(payload) }),
 };
 
 export default duerpApi;

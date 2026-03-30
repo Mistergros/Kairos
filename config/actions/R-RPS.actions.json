@@ -2,53 +2,48 @@
   {
     "id": "A-R-RPS-001",
     "risk_id": "R-RPS",
-    "title": "Mesure technique prioritaire",
-    "type": "Technique",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
+    "title": "Diagnostic RPS participatif (questionnaire Karasek / Siegrist)",
+    "type": "Organisationnelle",
+    "description": "Conduire un diagnostic des risques psychosociaux avec le questionnaire Karasek (demande psychologique, latitude décisionnelle, soutien social) ou Siegrist (déséquilibre efforts-récompenses). Impliquer le médecin du travail, le CHSCT/CSE et une pluralité de salariés. Restituer les résultats et co-construire un plan d'action avec les équipes. Renouveler tous les 2 ans.",
+    "impact": "Identification précise des facteurs de risque organisationnels. Plan d'action ciblé et accepté par les salariés. Réduction des arrêts maladie d'origine psychologique (25% des arrêts en France).",
+    "difficulty": "Moyenne",
     "cost": "Faible",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "naf_specific": ["62", "64", "69", "86", "87", "88", "84"],
+    "references": ["INRS ED 6139", "Accord national interprofessionnel RPS 2008", "Modèle de Karasek"]
   },
   {
     "id": "A-R-RPS-002",
     "risk_id": "R-RPS",
-    "title": "Procédure / organisation",
-    "type": "Organisationnelle",
-    "impact": "Réduction du risque",
-    "difficulty": "Moyenne",
-    "cost": "Faible",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "title": "Formation des managers à la prévention des RPS et au soutien de l'équipe",
+    "type": "Formation",
+    "description": "Former les managers de proximité (2 jours minimum) : identifier les signaux faibles de souffrance au travail, conduire un entretien de soutien, adapter la charge de travail, reconnaître les situations de harcèlement. Intégrer les RPS dans les entretiens annuels. Former un référent RPS interne. Établir une procédure de signalement et de prise en charge.",
+    "impact": "Managers capables d'intervenir précocement avant l'aggravation. Réduction des situations de burn-out déclarées. Amélioration du climat social et de l'engagement des salariés.",
+    "difficulty": "Faible",
+    "cost": "Moyen",
+    "references": ["INRS ED 6012", "ANACT guide manager", "Code du travail L.4121-1"]
   },
   {
     "id": "A-R-RPS-003",
     "risk_id": "R-RPS",
-    "title": "Formation/sensibilisation ciblée",
-    "type": "EPI",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
-    "cost": "Élevé",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "title": "Mise en place d'un dispositif de soutien psychologique (cellule d'écoute)",
+    "type": "Organisationnelle",
+    "description": "Souscrire à un programme d'aide aux employés (PAE / EAP) : ligne d'écoute téléphonique confidentielle 24h/24, 3-5 séances de suivi psychologique remboursées. Communiquer le dispositif à tous les salariés. Désigner un référent santé mentale interne. Mettre en place un protocole de retour au travail après arrêt longue durée.",
+    "impact": "Prise en charge précoce des situations de détresse psychologique. Réduction des arrêts longs (- 20% observés dans les entreprises ayant un PAE). Signal positif sur l'engagement de l'employeur.",
+    "difficulty": "Faible",
+    "cost": "Moyen",
+    "naf_specific": ["62", "64", "69", "84", "86"],
+    "references": ["INRS TJ 25", "ANACT guide PAE"]
   },
   {
     "id": "A-R-RPS-004",
     "risk_id": "R-RPS",
-    "title": "EPI adaptés et contrôlés",
-    "type": "EPI",
-    "impact": "Réduction du risque",
-    "difficulty": "Faible",
-    "cost": "Élevé",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "title": "Régulation de la charge de travail et droit à la déconnexion",
+    "type": "Organisationnelle",
+    "description": "Intégrer une revue mensuelle de charge entre manager et équipe pour identifier les surcharges. Formaliser le droit à la déconnexion dans un accord ou une charte (obligatoire > 50 salariés). Limiter les réunions en dehors des heures de travail. Encadrer le télétravail avec des plages horaires définies. Mesurer la charge déclarée via baromètre social trimestriel.",
+    "impact": "Réduction du surmenage et de l'épuisement professionnel. Amélioration de la qualité de vie au travail et de la fidélisation. Conformité à l'accord ANI sur la qualité de vie au travail.",
+    "difficulty": "Moyenne",
+    "cost": "Faible",
+    "naf_specific": ["62", "63", "64", "69", "70", "73"],
+    "references": ["ANI QVT 2013", "Code du travail L.2242-17", "INRS ED 6322"]
   }
 ]

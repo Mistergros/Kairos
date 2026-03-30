@@ -2,53 +2,45 @@
   {
     "id": "A-R-ERGONOMIE-001",
     "risk_id": "R-ERGONOMIE",
-    "title": "Mesure technique prioritaire",
+    "title": "Analyse ergonomique du travail par observation et mesure",
     "type": "Organisationnelle",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
-    "cost": "Élevé",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "description": "Conduire une analyse ergonomique des situations de travail par un ergonome certifié ou un préventeur formé PRAP : observation en situation réelle, mesures RULA/REBA des angles articulaires, évaluation de la charge cognitive, entretiens avec les salariés. Identifier les contraintes physiques, temporelles et organisationnelles. Produire des recommandations de transformation des situations de travail.",
+    "impact": "Identification exhaustive des facteurs de risque ergonomiques. Base solide pour les investissements de prévention. Implication des salariés dans l'amélioration de leurs conditions de travail.",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "references": ["INRS ED 6161", "Méthode RULA (McAtamney & Corlett)", "ANACT guide ergonomie"]
   },
   {
     "id": "A-R-ERGONOMIE-002",
     "risk_id": "R-ERGONOMIE",
-    "title": "Procédure / organisation",
-    "type": "EPI",
-    "impact": "Réduction du risque",
-    "difficulty": "Faible",
-    "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "title": "Réaménagement des postes de travail (hauteur, accessibilité, confort)",
+    "type": "Technique",
+    "description": "Adapter la hauteur des plans de travail à la morphologie des opérateurs (réglable électriquement pour les postes multi-occupants). Supprimer les zones de travail en extension ou porte-à-faux > 30 cm. Repositionner les outils, matériaux et commandes dans la zone de confort (rayon d'action < 40 cm). Installer des sièges ergonomiques avec soutien lombaire réglable pour les postes assis prolongés.",
+    "impact": "Suppression des contraintes biomécaniques à la source. Réduction immédiate de la fatigue musculaire et articulaire. Amélioration du confort et de la productivité sur les postes modifiés.",
+    "difficulty": "Moyenne",
+    "cost": "Élevé",
+    "references": ["INRS ED 6161", "NF EN ISO 9241-5 (postures de travail)", "CARSAT guide ergonomie industrie"]
   },
   {
     "id": "A-R-ERGONOMIE-003",
     "risk_id": "R-ERGONOMIE",
-    "title": "Formation/sensibilisation ciblée",
-    "type": "Organisationnelle",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
+    "title": "Formation des salariés et managers à l'ergonomie du poste",
+    "type": "Formation",
+    "description": "Former les salariés à l'ergonomie de leur poste spécifique : réglage correct du siège, de l'écran, positionnement des équipements. Former les managers à détecter les signaux d'alerte ergonomiques (plaintes, absentéisme, postures observées). Intégrer l'ergonomie dans l'accueil des nouveaux arrivants. Désigner un référent ergonomie interne formé PRAP.",
+    "impact": "Salariés capables d'optimiser eux-mêmes leur poste. Managers attentifs aux conditions de travail. Pérennisation des bonnes pratiques au-delà des interventions ponctuelles.",
+    "difficulty": "Faible",
     "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "references": ["INRS PRAP", "ANACT formation ergonomie"]
   },
   {
     "id": "A-R-ERGONOMIE-004",
     "risk_id": "R-ERGONOMIE",
-    "title": "EPI adaptés et contrôlés",
+    "title": "Intégration de l'ergonomie dans les projets d'aménagement",
     "type": "Organisationnelle",
-    "impact": "Réduction du risque",
+    "description": "Intégrer systématiquement les critères ergonomiques dans les cahiers des charges de tout nouvel équipement, aménagement ou déménagement. Impliquer les futurs utilisateurs (démarche participative) et le médecin du travail dès la phase de conception. Tester les prototypes ou maquettes avant commande définitive. Conduire un suivi à 6 mois après la mise en place pour mesurer l'efficacité des aménagements.",
+    "impact": "Prévention des contraintes ergonomiques dès la conception (10 fois moins coûteux que de corriger après installation). Équipements adaptés aux utilisateurs réels. Réduction des reconceptions coûteuses.",
     "difficulty": "Faible",
-    "cost": "Élevé",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "cost": "Faible",
+    "references": ["INRS ED 6093", "ANACT guide conception participative", "Code du travail R.4311-1"]
   }
 ]

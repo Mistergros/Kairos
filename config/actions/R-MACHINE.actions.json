@@ -2,53 +2,47 @@
   {
     "id": "A-R-MACHINE-001",
     "risk_id": "R-MACHINE",
-    "title": "Mesure technique prioritaire",
-    "type": "Humaine",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
+    "title": "Vérification de la conformité des machines (marquage CE, déclaration de conformité)",
+    "type": "Organisationnelle",
+    "description": "Vérifier que toutes les machines disposent d'un marquage CE et d'une déclaration de conformité UE (Directive Machines 2006/42/CE). Pour les machines antérieures à 1993 : faire réaliser un audit de mise en conformité par un organisme compétent. Tenir à jour le registre de maintenance et les dossiers machines. S'assurer que les manuels d'utilisation sont disponibles en français.",
+    "impact": "Garantie que les machines présentent un niveau de sécurité minimal. Engagement de la responsabilité du fabricant. Réduction des risques de blessures par les parties mobiles.",
+    "difficulty": "Faible",
     "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "naf_specific": ["10", "13", "24", "25", "28"],
+    "references": ["Directive 2006/42/CE", "INRS ED 6122", "Code du travail R.4313-1"]
   },
   {
     "id": "A-R-MACHINE-002",
     "risk_id": "R-MACHINE",
-    "title": "Procédure / organisation",
-    "type": "Organisationnelle",
-    "impact": "Réduction du risque",
-    "difficulty": "Faible",
+    "title": "Condamnation et cadenassage des protecteurs de machine",
+    "type": "Technique",
+    "description": "S'assurer que tous les protecteurs (carters, capots, barrières immatérielles) sont opérationnels et ne peuvent pas être contournés. Installer des interrupteurs de position (contacts de sécurité) sur chaque protecteur. Interdire techniquement le démarrage machine si un protecteur est ouvert ou retiré. Tester chaque protecteur mensuellement.",
+    "impact": "Suppression de l'accès aux parties dangereuses en marche. Prévention des écrasements, coupures et emportements. Mesure de protection collective conforme à la norme EN ISO 13857.",
+    "difficulty": "Moyenne",
     "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "references": ["EN ISO 12100", "EN ISO 13857", "INRS ED 807"]
   },
   {
     "id": "A-R-MACHINE-003",
     "risk_id": "R-MACHINE",
-    "title": "Formation/sensibilisation ciblée",
-    "type": "Technique",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
-    "cost": "Élevé",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "title": "Formation conduite et sécurité machine (habilitation opérateur)",
+    "type": "Formation",
+    "description": "Former et habiliter nominativement chaque opérateur sur les machines qu'il utilise. Contenu : risques spécifiques, zones dangereuses, procédures de démarrage/arrêt, conduite à tenir en cas d'anomalie, interdiction de désactiver les protecteurs. Délivrer une autorisation de conduite signée par l'employeur. Renouveler en cas de changement de machine.",
+    "impact": "Seuls les opérateurs formés et habilités utilisent les machines. Réduction des comportements à risque. Engagement de la responsabilité de l'opérateur documenté.",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "references": ["INRS ED 6124", "Code du travail R.4323-55"]
   },
   {
     "id": "A-R-MACHINE-004",
     "risk_id": "R-MACHINE",
-    "title": "EPI adaptés et contrôlés",
-    "type": "Technique",
-    "impact": "Réduction du risque",
+    "title": "Maintenance préventive planifiée et registre des interventions",
+    "type": "Organisationnelle",
+    "description": "Établir un plan de maintenance préventive pour chaque machine selon les recommandations du fabricant. Enregistrer toutes les interventions dans un registre ou GMAO. Utiliser la procédure de consignation (LOTO) pour chaque intervention. Signaler et condamner immédiatement toute machine défectueuse jusqu'à réparation validée.",
+    "impact": "Réduction des pannes et dysfonctionnements de sécurité. Traçabilité complète. Prolongation de la durée de vie des équipements. Prévention des accidents liés aux défaillances mécaniques.",
     "difficulty": "Moyenne",
-    "cost": "Élevé",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "cost": "Moyen",
+    "naf_specific": ["10", "24", "25", "28"],
+    "references": ["INRS ED 6109", "NF EN 13460", "Code du travail R.4323-22"]
   }
 ]

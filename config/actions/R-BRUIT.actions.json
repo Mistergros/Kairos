@@ -2,53 +2,47 @@
   {
     "id": "A-R-BRUIT-001",
     "risk_id": "R-BRUIT",
-    "title": "Mesure technique prioritaire",
-    "type": "Humaine",
-    "impact": "Réduction du risque",
-    "difficulty": "Moyenne",
+    "title": "Mesurage acoustique et cartographie du bruit",
+    "type": "Organisationnelle",
+    "description": "Faire réaliser une campagne de mesure acoustique par un organisme accrédité (sonomètre de classe 1). Identifier les sources > 80 dB(A) (valeur d'action inférieure) et > 85 dB(A) (valeur d'action supérieure). Produire une carte de bruit et un plan d'action priorisé. Renouveler tous les 3 ans ou en cas de modification.",
+    "impact": "Connaissance précise de l'exposition. Priorisation des investissements de réduction. Base légale solide pour le programme de prévention.",
+    "difficulty": "Faible",
     "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "naf_specific": ["10", "13", "24", "25", "41", "45"],
+    "references": ["INRS ED 6019", "Décret 2006-892", "Code du travail R.4431-1"]
   },
   {
     "id": "A-R-BRUIT-002",
     "risk_id": "R-BRUIT",
-    "title": "Procédure / organisation",
-    "type": "Humaine",
-    "impact": "Réduction du risque",
-    "difficulty": "Faible",
+    "title": "Traitement acoustique à la source (capotage, silencieux)",
+    "type": "Technique",
+    "description": "Installer des capotages insonorisants sur les machines bruyantes. Poser des amortisseurs anti-vibrations sous les équipements. Installer des silencieux sur les évents et compresseurs. Cloisonner les zones bruyantes avec des cloisons à haute masse surfacique. Viser une réduction ≥ 10 dB(A) à la source.",
+    "impact": "Réduction durable du niveau sonore à la source. Protection de l'ensemble du collectif de travail sans dépendre du port d'EPI. Prévention des surdités professionnelles (MP 42).",
+    "difficulty": "Moyenne",
     "cost": "Élevé",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "naf_specific": ["10", "13", "24", "41"],
+    "references": ["INRS ED 962", "INRS TJ 13"]
   },
   {
     "id": "A-R-BRUIT-003",
     "risk_id": "R-BRUIT",
-    "title": "Formation/sensibilisation ciblée",
-    "type": "Humaine",
-    "impact": "Réduction du risque",
-    "difficulty": "Moyenne",
+    "title": "Mise à disposition et contrôle du port des protections auditives",
+    "type": "EPI",
+    "description": "Fournir des protections auditives individuelles (bouchons moulés ou casque antibruit) adaptées au spectre sonore du poste. SNR ≥ niveau d'exposition - 80 dB(A). Afficher les zones obligatoires (> 85 dB(A)). Contrôler le port lors des rondes sécurité. Former à l'insertion correcte des bouchons.",
+    "impact": "Protection immédiate contre les traumatismes sonores. Obligation réglementaire au-dessus de 85 dB(A). Réduction des expositions en attendant les mesures techniques.",
+    "difficulty": "Faible",
     "cost": "Faible",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "references": ["INRS ED 6020", "Norme EN 352", "Code du travail R.4434-7"]
   },
   {
     "id": "A-R-BRUIT-004",
     "risk_id": "R-BRUIT",
-    "title": "EPI adaptés et contrôlés",
-    "type": "Humaine",
-    "impact": "Réduction du risque",
-    "difficulty": "Moyenne",
-    "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "title": "Suivi médical audiométrique des salariés exposés",
+    "type": "Organisationnelle",
+    "description": "Organiser un suivi médical renforcé (SMR) avec audiogramme annuel pour tous les salariés exposés > 85 dB(A). Tenir à jour la liste nominative des travailleurs exposés. Déclarer les maladies professionnelles (tableau MP 42). Informer les salariés de leurs résultats audiométriques individuels.",
+    "impact": "Détection précoce des atteintes auditives permettant de reclasser avant aggravation. Traçabilité de l'exposition. Réduction des risques de contentieux.",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "references": ["Code du travail R.4435-1", "Tableau MP 42"]
   }
 ]

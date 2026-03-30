@@ -2,53 +2,49 @@
   {
     "id": "A-R-RAYONNEMENT-001",
     "risk_id": "R-RAYONNEMENT",
-    "title": "Mesure technique prioritaire",
-    "type": "EPI",
-    "impact": "Réduction du risque",
+    "title": "Évaluation dosimétrique et classement des zones (rayonnements ionisants)",
+    "type": "Organisationnelle",
+    "description": "Faire réaliser par un expert en radioprotection (PCR - Personne Compétente en Radioprotection) le classement des zones : zone surveillée (entre 1 et 6 mSv/an) et zone contrôlée (> 6 mSv/an). Mettre en place le zonage règlementaire avec affichage et délimitation physique. Déclaration à l'ASN si utilisation de sources ionisantes. Nommer une PCR obligatoirement habilitée (formation 40h et recyclage 5 ans).",
+    "impact": "Connaissance précise des niveaux d'exposition et des zones à risque. Mise en conformité réglementaire obligatoire. Système de surveillance permettant de détecter toute dérive dosimétrique.",
     "difficulty": "Élevée",
-    "cost": "Élevé",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "cost": "Moyen",
+    "naf_specific": ["86", "71", "72"],
+    "references": ["Code de la santé publique R.1333-1", "Décret 2003-296", "IRSN guide PCR", "ASN"]
   },
   {
     "id": "A-R-RAYONNEMENT-002",
     "risk_id": "R-RAYONNEMENT",
-    "title": "Procédure / organisation",
-    "type": "EPI",
-    "impact": "Réduction du risque",
+    "title": "Dosimétrie individuelle et suivi des expositions",
+    "type": "Organisationnelle",
+    "description": "Équiper tous les travailleurs en zone surveillée ou contrôlée d'un dosimètre passif (badge TLD ou OSL) remplacé mensuellement ou trimestriellement. Utiliser un dosimètre opérationnel électronique (DOE) pour les interventions à risque élevé. Lire et analyser les résultats dosimétriques. Enquêter systématiquement pour tout dépassement de seuil d'alerte. Conserver les résultats 50 ans.",
+    "impact": "Suivi individuel de l'exposition cumulative. Détection précoce des dépassements de doses. Traçabilité réglementaire sur la durée de carrière. Alerte immédiate en cas d'exposition accidentelle.",
     "difficulty": "Faible",
     "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "naf_specific": ["86", "71", "72"],
+    "references": ["Code de la santé publique R.1333-68", "IRSN SISERI", "ASN décision 2013-DC-0349"]
   },
   {
     "id": "A-R-RAYONNEMENT-003",
     "risk_id": "R-RAYONNEMENT",
-    "title": "Formation/sensibilisation ciblée",
-    "type": "EPI",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
+    "title": "Formation à la radioprotection des travailleurs et de l'encadrement",
+    "type": "Formation",
+    "description": "Former obligatoirement tous les travailleurs exposés aux rayonnements ionisants : notions sur les rayonnements, risques biologiques, règles de protection (distance, écran, temps), règles d'hygiène spécifiques (ne pas manger/boire en zone contrôlée), conduite à tenir en cas d'incident. Formation PCR pour les responsables. Renouveler tous les 3 ans et à chaque changement de poste exposant.",
+    "impact": "Personnel conscient des risques et adoptant les comportements de radioprotection. Réduction des expositions inutiles par mauvaise pratique. Conformité réglementaire (formation obligatoire selon décret 2003-296).",
+    "difficulty": "Faible",
     "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "naf_specific": ["86", "71", "72"],
+    "references": ["Décret 2003-296 art. 35", "IRSN formation radioprotection", "INSTN"]
   },
   {
     "id": "A-R-RAYONNEMENT-004",
     "risk_id": "R-RAYONNEMENT",
-    "title": "EPI adaptés et contrôlés",
-    "type": "Organisationnelle",
-    "impact": "Réduction du risque",
-    "difficulty": "Moyenne",
-    "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "title": "Protection UV pour les travailleurs extérieurs exposés au rayonnement solaire",
+    "type": "EPI",
+    "description": "Pour les travailleurs exposés aux UV solaires (BTP, agriculture, espaces verts) : port obligatoire d'un chapeau à larges bords (> 7,5 cm), lunettes de soleil indice UV 400 (EN 172), vêtements couvrants à manches longues (UPF ≥ 40). Application d'une crème solaire SPF 50+ sur les zones exposées, à renouveler toutes les 2 heures. Organiser les travaux pour éviter l'exposition entre 12h et 16h (pic UV).",
+    "impact": "Réduction de l'exposition aux UV cancérogènes (risque de mélanome et cancers cutanés, MP tableau 40 ter). Protection des yeux contre la cataracte d'origine professionnelle. Prévention des coups de soleil répétés facteurs de risque cumulatif.",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "naf_specific": ["41", "42", "43", "01", "02", "81"],
+    "references": ["INRS ED 6113 (travail en extérieur)", "Tableau MP 40 ter", "INCa prévention UV professionnels"]
   }
 ]

@@ -2,53 +2,47 @@
   {
     "id": "A-R-MANUTENTION-001",
     "risk_id": "R-MANUTENTION",
-    "title": "Mesure technique prioritaire",
+    "title": "Mécanisation de la manutention (transpalette, chariot)",
     "type": "Technique",
-    "impact": "Réduction du risque",
+    "description": "Remplacer la manutention manuelle par des équipements mécanisés : transpalettes électriques, chariots élévateurs, convoyeurs, monte-charge. Charge maximale sans aide : 25 kg hommes, 15 kg femmes. Marquer au sol les zones de circulation engins/piétons.",
+    "impact": "Suppression des risques de lombalgies aiguës et chroniques. Élimination des TMS du rachis. Réduction des AT liés à la manutention (15% des AT en France).",
     "difficulty": "Moyenne",
-    "cost": "Faible",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "cost": "Élevé",
+    "naf_specific": ["52", "47", "10", "41", "45", "38"],
+    "references": ["INRS ED 776", "Code du travail R.4541-2"]
   },
   {
     "id": "A-R-MANUTENTION-002",
     "risk_id": "R-MANUTENTION",
-    "title": "Procédure / organisation",
-    "type": "Technique",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
-    "cost": "Élevé",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "title": "Pesage et étiquetage des charges, reorganisation du stockage",
+    "type": "Organisationnelle",
+    "description": "Peser et étiqueter toutes les charges > 10 kg avec leur masse réelle. Appliquer la méthode NIOSH pour déterminer le poids limite recommandé. Repositionner le stockage : charges lourdes entre 0,5 m et 1 m de hauteur. Afficher les limites au poste.",
+    "impact": "Réduction des mauvaises postures. Conformité réglementaire. Amélioration de la sécurité sans investissement lourd.",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "references": ["INRS outil NIOSH", "Code du travail R.4541-8"]
   },
   {
     "id": "A-R-MANUTENTION-003",
     "risk_id": "R-MANUTENTION",
-    "title": "Formation/sensibilisation ciblée",
-    "type": "Organisationnelle",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
-    "cost": "Élevé",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "title": "Formation PRAP aux gestes et postures",
+    "type": "Formation",
+    "description": "Former tous les salariés manutentionnaires à la technique de levage dos droit-genou fléchi via la certification PRAP (Prévention des Risques liés à l'Activité Physique) certifiée INRS. Inclure une mise en pratique sur poste réel. Renouveler tous les 2 ans.",
+    "impact": "Diminution immédiate des mauvaises postures dès la formation. Réduction des lombalgies professionnelles déclarées à terme.",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "references": ["INRS PRAP IBC", "CARSAT formation"]
   },
   {
     "id": "A-R-MANUTENTION-004",
     "risk_id": "R-MANUTENTION",
-    "title": "EPI adaptés et contrôlés",
+    "title": "Aménagement des allées et zones de stockage",
     "type": "Technique",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
-    "cost": "Élevé",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "description": "Maintenir les allées à 1,20 m minimum (2 m si croisement engins). Revêtement antidérapant et plat. Éclairage ≥ 150 lux. Installer des protège-angles sur les racks. Limiter la hauteur des charges à 1,60 m sans moyen de levage. Baliser les zones piéton/chariot.",
+    "impact": "Réduction des risques de chute et collision. Amélioration de l'ergonomie du poste. Conformité réglementation entrepôts.",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "naf_specific": ["52", "47", "10"],
+    "references": ["INRS ED 959", "Code du travail R.4224-2"]
   }
 ]

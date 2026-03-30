@@ -2,287 +2,287 @@
   "default": {
     "severity": 6,
     "probability": 5,
-    "control": 1
+    "control": 2
   },
   "activities": {
     "bureau": {
       "default": {
         "severity": 5,
         "probability": 4,
-        "control": 1
+        "control": 2
       },
       "R-TMS": {
         "severity": 6,
         "probability": 5,
-        "control": 1
+        "control": 2
       },
       "R-ECRAN": {
         "severity": 5,
         "probability": 5,
-        "control": 1
+        "control": 2
       },
       "R-QUALITE-AIR": {
         "severity": 5,
         "probability": 4,
-        "control": 1
+        "control": 2
       }
     },
     "cuisine": {
       "default": {
         "severity": 7,
         "probability": 6,
-        "control": 1
+        "control": 2
       },
       "R-CHIMIQUE": {
         "severity": 7,
         "probability": 6,
-        "control": 1
+        "control": 2
       },
       "R-INCENDIE": {
         "severity": 8,
         "probability": 5,
-        "control": 1
+        "control": 2
       },
       "R-GLISSADES": {
         "severity": 6,
         "probability": 7,
-        "control": 1
+        "control": 2
       },
       "R-FROID": {
         "severity": 6,
         "probability": 5,
-        "control": 1
+        "control": 2
       }
     },
     "plonge": {
       "default": {
         "severity": 6,
         "probability": 6,
-        "control": 1
+        "control": 2
       },
       "R-CHIMIQUE": {
         "severity": 7,
         "probability": 6,
-        "control": 1
+        "control": 2
       },
       "R-GLISSADES": {
         "severity": 6,
         "probability": 7,
-        "control": 1
+        "control": 2
       }
     },
     "chantier": {
       "default": {
         "severity": 8,
         "probability": 6,
-        "control": 1
+        "control": 2
       },
       "R-CHUTE-HAUTEUR": {
         "severity": 9,
         "probability": 5,
-        "control": 1
+        "control": 2
       },
       "R-BRUIT": {
         "severity": 7,
         "probability": 6,
-        "control": 1
+        "control": 2
       },
       "R-SILICE": {
         "severity": 8,
         "probability": 5,
-        "control": 1
+        "control": 2
       }
     },
     "atelier": {
       "default": {
         "severity": 7,
         "probability": 6,
-        "control": 1
+        "control": 2
       },
       "R-MACHINE": {
         "severity": 8,
         "probability": 5,
-        "control": 1
+        "control": 2
       },
       "R-POUSSIERES-BOIS": {
         "severity": 8,
         "probability": 5,
-        "control": 1
+        "control": 2
       }
     },
     "entrepot": {
       "default": {
         "severity": 7,
         "probability": 5,
-        "control": 1
+        "control": 2
       },
       "R-MANUTENTION": {
         "severity": 7,
         "probability": 6,
-        "control": 1
+        "control": 2
       },
       "R-CHUTE-HAUTEUR": {
         "severity": 7,
         "probability": 5,
-        "control": 1
+        "control": 2
       }
     },
     "magasin": {
       "default": {
         "severity": 6,
         "probability": 5,
-        "control": 1
+        "control": 2
       },
       "R-GLISSADES": {
         "severity": 6,
         "probability": 6,
-        "control": 1
+        "control": 2
       },
       "R-MANUTENTION": {
         "severity": 6,
         "probability": 5,
-        "control": 1
+        "control": 2
       }
     },
     "accueil": {
       "default": {
         "severity": 5,
         "probability": 4,
-        "control": 1
+        "control": 2
       },
       "R-AGRESSION": {
         "severity": 7,
         "probability": 4,
-        "control": 1
+        "control": 2
       },
       "R-RPS": {
         "severity": 6,
         "probability": 5,
-        "control": 1
+        "control": 2
       }
     },
     "hebergement": {
       "default": {
         "severity": 6,
         "probability": 5,
-        "control": 1
+        "control": 2
       },
       "R-GLISSADES": {
         "severity": 6,
         "probability": 6,
-        "control": 1
+        "control": 2
       },
       "R-RPS": {
         "severity": 6,
         "probability": 5,
-        "control": 1
+        "control": 2
       }
     },
     "santâ”œÂ®": {
       "default": {
         "severity": 7,
         "probability": 5,
-        "control": 1
+        "control": 2
       },
       "R-BIO": {
         "severity": 8,
         "probability": 5,
-        "control": 1
+        "control": 2
       },
       "R-DECHETS": {
         "severity": 6,
         "probability": 5,
-        "control": 1
+        "control": 2
       }
     },
     "laboratoire": {
       "default": {
         "severity": 7,
         "probability": 5,
-        "control": 1
+        "control": 2
       },
       "R-CHIMIQUE": {
         "severity": 8,
         "probability": 5,
-        "control": 1
+        "control": 2
       },
       "R-BIO": {
         "severity": 8,
         "probability": 5,
-        "control": 1
+        "control": 2
       }
     },
     "restauration": {
       "default": {
         "severity": 7,
         "probability": 6,
-        "control": 1
+        "control": 2
       },
       "R-INCENDIE": {
         "severity": 8,
         "probability": 5,
-        "control": 1
+        "control": 2
       },
       "R-GLISSADES": {
         "severity": 6,
         "probability": 7,
-        "control": 1
+        "control": 2
       },
       "R-CHIMIQUE": {
         "severity": 7,
         "probability": 6,
-        "control": 1
+        "control": 2
       }
     },
     "isolation": {
       "default": {
         "severity": 7,
         "probability": 6,
-        "control": 1
+        "control": 2
       },
       "R-CHUTE-HAUTEUR": {
         "severity": 9,
         "probability": 5,
-        "control": 1
+        "control": 2
       },
       "R-CHIMIQUE": {
         "severity": 7,
         "probability": 5,
-        "control": 1
+        "control": 2
       }
     },
     "menuiserie": {
       "default": {
         "severity": 7,
         "probability": 6,
-        "control": 1
+        "control": 2
       },
       "R-POUSSIERES-BOIS": {
         "severity": 8,
         "probability": 5,
-        "control": 1
+        "control": 2
       },
       "R-MACHINE": {
         "severity": 8,
         "probability": 5,
-        "control": 1
+        "control": 2
       }
     },
     "education": {
       "default": {
         "severity": 5,
         "probability": 4,
-        "control": 1
+        "control": 2
       },
       "R-ECRAN": {
         "severity": 5,
         "probability": 5,
-        "control": 1
+        "control": 2
       },
       "R-RPS": {
         "severity": 6,
         "probability": 4,
-        "control": 1
+        "control": 2
       }
     }
   }

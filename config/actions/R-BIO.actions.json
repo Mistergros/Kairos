@@ -2,53 +2,48 @@
   {
     "id": "A-R-BIO-001",
     "risk_id": "R-BIO",
-    "title": "Mesure technique prioritaire",
+    "title": "Mesures d'hygiène et procédures de décontamination",
     "type": "Technique",
-    "impact": "Réduction du risque",
+    "description": "Mettre en place des procédures d'hygiène strictes : lavage des mains obligatoire aux points stratégiques (savon, solution hydroalcoolique, essuie-mains à usage unique), nettoyage-désinfection des surfaces contaminées selon protocole, gestion séparée des déchets biologiques (DASRI en conteneurs à couvercle jaune). Afficher les protocoles aux postes concernés.",
+    "impact": "Réduction de la transmission des agents biologiques par contact indirect. Prévention des infections nosocomiales et professionnelles. Conformité aux recommandations des autorités sanitaires.",
     "difficulty": "Faible",
-    "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "cost": "Faible",
+    "naf_specific": ["86", "87", "88", "38", "56"],
+    "references": ["INRS ED 6034", "Code de la santé publique R.1335-1", "Norme NF EN ISO 22442"]
   },
   {
     "id": "A-R-BIO-002",
     "risk_id": "R-BIO",
-    "title": "Procédure / organisation",
+    "title": "Classification des agents biologiques et évaluation du risque",
     "type": "Organisationnelle",
-    "impact": "Réduction du risque",
+    "description": "Dresser l'inventaire des agents biologiques (bactéries, virus, parasites, champignons) potentiellement présents dans l'environnement de travail. Les classer par groupe de risque (1 à 4) selon la Directive 2000/54/CE. Évaluer la probabilité et les voies d'exposition (inhalation, contact cutané, ingestion, piqûre). Mettre à jour lors de tout changement d'activité ou d'épidémie.",
+    "impact": "Identification précise du niveau de risque biologique. Ciblage des mesures de prévention sur les agents les plus dangereux. Conformité réglementaire (Décret 94-352).",
     "difficulty": "Moyenne",
     "cost": "Faible",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "references": ["Directive 2000/54/CE", "Décret 94-352", "INRS ED 6034"]
   },
   {
     "id": "A-R-BIO-003",
     "risk_id": "R-BIO",
-    "title": "Formation/sensibilisation ciblée",
+    "title": "Vaccination du personnel exposé",
     "type": "Organisationnelle",
-    "impact": "Réduction du risque",
-    "difficulty": "Moyenne",
-    "cost": "Élevé",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "description": "Vérifier l'état vaccinal de tous les salariés exposés à des agents biologiques et proposer les vaccinations obligatoires (hépatite B pour personnel de santé) et recommandées (grippe, DTP, BCG selon exposition). Tenir le carnet de vaccination à jour. Ne pas affecter un salarié non vacciné contre l'hépatite B à un poste exposant au sang ou produits biologiques.",
+    "impact": "Protection individuelle contre les infections évitables par vaccination. Réduction du risque de transmission lors d'accidents d'exposition au sang (AES). Conformité aux obligations réglementaires (hépatite B obligatoire pour le secteur de la santé).",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "naf_specific": ["86", "87", "88"],
+    "references": ["Code de la santé publique L.3111-4", "INRS ED 6034", "Calendrier vaccinal en vigueur"]
   },
   {
     "id": "A-R-BIO-004",
     "risk_id": "R-BIO",
-    "title": "EPI adaptés et contrôlés",
-    "type": "Organisationnelle",
-    "impact": "Réduction du risque",
+    "title": "EPI biologiques : gants, masques, lunettes, sur-blouses",
+    "type": "EPI",
+    "description": "Fournir des gants de protection EN 374 catégorie III adaptés aux agents biologiques présents. Porter des masques chirurgicaux (type IIR) ou FFP2 selon les procédures générant des aérosols. Utiliser des lunettes de protection EN 166 ou visière pour tout risque de projection. Former à l'habillage/déshabillage dans l'ordre correct pour éviter l'auto-contamination.",
+    "impact": "Protection individuelle contre les expositions directes. Réduction des accidents d'exposition au sang (AES) et aux fluides biologiques. Protection contre les aérosols infectieux.",
     "difficulty": "Faible",
-    "cost": "Élevé",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "cost": "Moyen",
+    "naf_specific": ["86", "87", "88", "38"],
+    "references": ["INRS ED 6034", "EN 374", "EN 149 (FFP2)", "Précautions standard HAS"]
   }
 ]

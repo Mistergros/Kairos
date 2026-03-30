@@ -2,53 +2,48 @@
   {
     "id": "A-R-FROID-001",
     "risk_id": "R-FROID",
-    "title": "Mesure technique prioritaire",
+    "title": "EPI grand froid : vêtements multicouches, gants chauds, chaussures isolantes",
     "type": "EPI",
-    "impact": "Réduction du risque",
+    "description": "Fournir des vêtements de travail adaptés au froid selon la norme EN 342 (protection contre le froid, isolation thermique) ou EN 14058 (risque modéré). Système multicouche recommandé : sous-vêtement thermique (base-layer respirant), couche intermédiaire isolante, vêtement externe pare-vent imperméable. Gants EN 511 résistants au froid et à l'humidité. Chaussures isolantes avec semelle anti-dérapante. Couvre-chef pour prévenir les pertes de chaleur crâniennes.",
+    "impact": "Maintien de la thermorégulation corporelle. Prévention des engelures, de l'hypothermie et des maladies vasculaires du froid. Maintien de la dextérité manuelle réduisant le risque d'accidents.",
     "difficulty": "Faible",
-    "cost": "Faible",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "cost": "Moyen",
+    "naf_specific": ["10", "52", "01"],
+    "references": ["EN 342", "EN 14058", "EN 511", "INRS ED 6113"]
   },
   {
     "id": "A-R-FROID-002",
     "risk_id": "R-FROID",
-    "title": "Procédure / organisation",
-    "type": "EPI",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
-    "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "title": "Rotation des postes et limitation de l'exposition au froid",
+    "type": "Organisationnelle",
+    "description": "Limiter les expositions continues au froid intense (< 5°C) à 3-4 heures par journée. Mettre en place une rotation des postes avec alternance de tâches en zone froide et tempérée. Prévoir des zones de réchauffement accessibles en moins de 100 m (local chauffé à > 18°C). Adapter les plannings pour éviter le travail en chambre froide pendant les heures les plus froides de la journée.",
+    "impact": "Réduction de la durée d'exposition cumulée. Récupération thermique régulière. Prévention des effets du froid chronique sur les articulations et les vaisseaux sanguins.",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "naf_specific": ["10", "52"],
+    "references": ["INRS ED 6113", "Recommandations CARSAT travail au froid"]
   },
   {
     "id": "A-R-FROID-003",
     "risk_id": "R-FROID",
-    "title": "Formation/sensibilisation ciblée",
+    "title": "Maintenance et contrôle des équipements de froid (portes, isolations)",
     "type": "Technique",
-    "impact": "Réduction du risque",
+    "description": "Maintenir en bon état les systèmes d'isolation des chambres froides : vérifier l'étanchéité des joints de porte mensuellement, contrôler la résistance des rideaux de séparation (lanières PVC), s'assurer que les portes des chambres froides peuvent toujours être ouvertes de l'intérieur (poignée de secours obligatoire, éclairage de secours). Installer un système d'alarme et de communication dans les grandes chambres froides.",
+    "impact": "Prévention du risque d'enfermement accidentel dans les chambres froides (risque mortel). Maintien de l'efficacité thermique des équipements. Réduction des déperditions d'énergie.",
     "difficulty": "Faible",
-    "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "cost": "Faible",
+    "naf_specific": ["10", "52"],
+    "references": ["INRS ED 6113", "Code du travail R.4215-14", "Norme NF EN 13537"]
   },
   {
     "id": "A-R-FROID-004",
     "risk_id": "R-FROID",
-    "title": "EPI adaptés et contrôlés",
+    "title": "Surveillance médicale renforcée pour les travailleurs exposés au froid",
     "type": "Organisationnelle",
-    "impact": "Réduction du risque",
-    "difficulty": "Moyenne",
+    "description": "Organiser un suivi médical adapté pour les travailleurs régulièrement exposés aux températures < 0°C : recherche de contre-indications médicales (Raynaud, asthme, pathologies cardiovasculaires), examen annuel incluant un bilan vasculaire. Tenir informé le médecin du travail des conditions d'exposition. Ne pas affecter en chambre froide les salariés présentant une pathologie vasculaire périphérique connue.",
+    "impact": "Détection précoce des affections aggravées par le froid. Protection des salariés les plus vulnérables. Prévention des crises de Raynaud et des accidents cardio-vasculaires en milieu froid.",
+    "difficulty": "Faible",
     "cost": "Faible",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "references": ["INRS ED 6113", "Code du travail R.4624-18 SMR"]
   }
 ]

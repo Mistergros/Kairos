@@ -2,53 +2,49 @@
   {
     "id": "A-R-GLASS-001",
     "risk_id": "R-GLASS",
-    "title": "Mesure technique prioritaire",
-    "type": "Organisationnelle",
-    "impact": "Réduction du risque",
+    "title": "Remplacement du verre ordinaire par du verre de sécurité feuilleté ou trempé",
+    "type": "Technique",
+    "description": "Remplacer systématiquement les vitrages ordinaires dans les zones de circulation, de travail manuel et de contact physique par du verre feuilleté (PVB, EN ISO 12543) ou du verre trempé (EN 12150) qui se fragmente en morceaux inoffensifs. Prioriser les surfaces > 0,5 m² à hauteur d'homme. Coller un film de sécurité 4 mm sur les vitrages existants qui ne peuvent pas être remplacés immédiatement.",
+    "impact": "Suppression du risque de lacérations profondes par verre brisé. En cas de casse, le verre feuilleté reste en place et le verre trempé se fragmente en granules non coupants. Réduction des coupures graves.",
     "difficulty": "Moyenne",
-    "cost": "Faible",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "cost": "Moyen",
+    "naf_specific": ["23", "47", "56", "86"],
+    "references": ["EN ISO 12543", "EN 12150", "INRS ED 6029"]
   },
   {
     "id": "A-R-GLASS-002",
     "risk_id": "R-GLASS",
-    "title": "Procédure / organisation",
+    "title": "Procédures de collecte et d'élimination des bris de verre",
     "type": "Organisationnelle",
-    "impact": "Réduction du risque",
+    "description": "Établir une procédure formalisée de gestion des bris de verre : baliser la zone immédiatement, ne jamais ramasser le verre à mains nues, utiliser une pelle et balai spécifiques étiquetés, collecter dans des contenants résistants à la perforation (boîte cartonnée ou conteneur rigide), jamais dans les poubelles ordinaires. Former tous les salariés à cette procédure, notamment les agents d'entretien.",
+    "impact": "Élimination des coupures lors du ramassage du verre brisé. Protection des agents de collecte des déchets. Réduction des accidents secondaires liés à la mauvaise gestion des débris.",
     "difficulty": "Faible",
-    "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "cost": "Faible",
+    "naf_specific": ["56", "47", "86", "10"],
+    "references": ["INRS ED 6029", "Guide hygiène restauration collective"]
   },
   {
     "id": "A-R-GLASS-003",
     "risk_id": "R-GLASS",
-    "title": "Formation/sensibilisation ciblée",
-    "type": "Technique",
-    "impact": "Réduction du risque",
+    "title": "Formation à la manipulation sécurisée du verre",
+    "type": "Formation",
+    "description": "Former les salariés manipulant du verre (miroitiers, vitriers, restaurateurs, agents de stérilisation) aux techniques sécurisées : port de gants anti-coupure EN 388, port de lunettes EN 166 pour la découpe, tenir les plaques de verre en utilisant des ventouses, ne jamais transporter du verre en position horizontale, utiliser des chariots spéciaux avec protège-coins.",
+    "impact": "Réduction des coupures lors de la manipulation du verre. Personnel adoptant les équipements et techniques adaptés. Réduction des accidents par manipulation incorrecte de grandes surfaces vitrées.",
     "difficulty": "Faible",
-    "cost": "Élevé",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "cost": "Faible",
+    "naf_specific": ["23", "43"],
+    "references": ["INRS ED 6029", "OPPBTP fiche verre"]
   },
   {
     "id": "A-R-GLASS-004",
     "risk_id": "R-GLASS",
-    "title": "EPI adaptés et contrôlés",
+    "title": "EPI verre : gants résistants à la coupure, lunettes, chaussures de sécurité",
     "type": "EPI",
-    "impact": "Réduction du risque",
+    "description": "Imposer lors de toute manipulation ou découpe de verre : gants EN 388 niveau D ou E en résistance à la coupure, lunettes de protection EN 166 ou écran facial EN 166/175 pour la découpe générant des éclats, chaussures de sécurité S1P ou S3 avec embout acier et semelle anti-perforation. Pour les miroitiers et vitriers : tablier EN 388, manchettes résistantes aux coupures.",
+    "impact": "Protection contre les lacérations profondes et les projections d'éclats dans les yeux. Conformité EPI catégorie III. Réduction des accidents avec arrêt dans le secteur verre et vitrage.",
     "difficulty": "Faible",
-    "cost": "Élevé",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "cost": "Moyen",
+    "naf_specific": ["23", "43"],
+    "references": ["EN 388", "EN 166/175", "INRS ED 112"]
   }
 ]

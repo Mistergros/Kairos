@@ -1,16 +1,14 @@
-import { getRisksFor } from "../engine/risk-engine";
+import { RiskEngineV3, type RiskEngineV3Input } from "../engine/risk-engine.v3";
 import { matchActions, matchObligations } from "../engine/match-engine";
 import { evaluateRisk } from "../engine/score-engine";
 import { generateActionPlan } from "../engine/recommendation-engine";
 import { checkMissingObligations } from "../engine/compliance-engine";
 import type { Action, ActionPlan } from "../models/action";
 import type { ComplianceReport } from "../models/legal";
-import type { DUERP, RiskEvaluation } from "../models/duerp";
+import type { DUERP, RiskEvaluation, RiskPriority } from "../models/duerp";
 import type { Unity, UnityContext } from "../models/unity";
 import type { DUERPRepository } from "../repositories/duerp-repo";
 import { MemoryRepository } from "../repositories/memory-repo";
-import { RiskEngineV3, type RiskEngineV3Input } from "../engine/risk-engine.v3";
-import type { RiskPriority } from "../models/duerp";
 
 export interface DUERPGenerationOptions {
   companyName: string;
@@ -45,6 +43,7 @@ export class DUERPService {
 
   generate(options: DUERPGenerationOptions): DUERPBundle {
     const evaluations: RiskEvaluation[] = [];
+    const engine = new RiskEngineV3();
 
     options.units.forEach((unit) => {
       const context = {
@@ -52,8 +51,8 @@ export class DUERPService {
         ...(options.contextByUnit?.[unit.id] || {}),
       };
 
-      const risks = getRisksFor(options.nafCode, unit.name);
-      risks.forEach((risk) => {
+      const risks = engine.getRisks({ nafCode: options.nafCode, unity: unit.name });
+      risks.forEach((risk: any) => {
         const evaluation = evaluateRisk(risk, context);
         evaluation.matchedActions = matchActions(risk, options.nafCode);
         evaluation.obligations = matchObligations(risk, options.nafCode);

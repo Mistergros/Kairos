@@ -5,7 +5,11 @@
 
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useUser } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
+
+const API_BASE = import.meta.env.VITE_DUERP_API_BASE || "http://localhost:8787";
 
 /* ------------------------------------------------------------
    ICONES PERSONNALISÉES
@@ -35,6 +39,9 @@ function IconTrack(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
+type PlanId = "essential" | "consultants";
+type SubscribeHandler = (planId?: PlanId) => void;
+
 /* ------------------------------------------------------------
    BADGE DES TARIFS
 ------------------------------------------------------------ */
@@ -61,7 +68,15 @@ function Badge({
 /* ------------------------------------------------------------
    NAVBAR MARKETING
 ------------------------------------------------------------ */
-function Navbar() {
+function Navbar({
+  onSubscribe,
+  isLoading,
+  isSignedIn,
+}: {
+  onSubscribe: SubscribeHandler;
+  isLoading: boolean;
+  isSignedIn: boolean;
+}) {
   return (
     <header className="sticky top-0 z-20 w-full border-b border-white/40 bg-white/70 backdrop-blur dark:bg-slate-900/70">
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-6">
@@ -78,12 +93,29 @@ function Navbar() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <a href="/login" className="text-sm text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white">
-            Se connecter
-          </a>
-          <a href="/signup" className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700">
-            Souscrire
-          </a>
+          {isSignedIn ? (
+            <a
+              href="/mon-compte"
+              className="text-sm text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
+            >
+              Mon compte
+            </a>
+          ) : (
+            <a
+              href="/sign-in"
+              className="text-sm text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
+            >
+              Se connecter
+            </a>
+          )}
+          <button
+            type="button"
+            onClick={() => onSubscribe("essential")}
+            disabled={isLoading}
+            className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70"
+          >
+            {isLoading ? "Redirection..." : "S'abonner"}
+          </button>
         </div>
       </div>
     </header>
@@ -93,7 +125,7 @@ function Navbar() {
 /* ------------------------------------------------------------
    HERO SECTION
 ------------------------------------------------------------ */
-function Hero() {
+function Hero({ onSubscribe, isLoading }: { onSubscribe: SubscribeHandler; isLoading: boolean }) {
   return (
     <section className="w-full bg-gradient-to-b from-blue-50 to-white dark:from-slate-900 dark:to-slate-950">
       <div className="mx-auto max-w-7xl px-6 py-24 grid md:grid-cols-2 gap-16 items-center">
@@ -101,23 +133,28 @@ function Hero() {
         {/* Texte */}
         <div>
           <p className="text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">
-            KAISOS — BY MILANTE CONSULTING
+            KAIJOS — BY MILANTE CONSULTING
           </p>
 
           <h1 className="mt-4 text-5xl font-bold text-slate-900 dark:text-white leading-tight">
-            Le DUERP nouvelle génération, <br />
-            <span className="text-blue-600">assisté par IA</span>.
+            Le DUERP conforme, <br />
+            <span className="text-blue-600">en quelques minutes</span>.
           </h1>
 
           <p className="mt-6 text-lg max-w-xl text-slate-700 dark:text-slate-300">
-            Créez, mettez à jour et pilotez votre DUERP 10× plus vite, sans complexité.
-            IA embarquée, conformité automatisée, plan d’action intelligent.
+            Créez, mettez à jour et pilotez votre DUERP sans complexité.
+            Pré-remplissage automatique par secteur d’activité, plan d’action intégré, export PDF légal.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-4">
-            <a href="/signup" className="rounded-xl bg-blue-600 px-6 py-3 text-white font-semibold hover:bg-blue-700">
-              Souscrire maintenant
-            </a>
+            <button
+              type="button"
+              onClick={() => onSubscribe("essential")}
+              disabled={isLoading}
+              className="rounded-xl bg-blue-600 px-6 py-3 text-white font-semibold hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70"
+            >
+              {isLoading ? "Redirection..." : "Souscrire maintenant"}
+            </button>
 
             <a href="#pricing" className="rounded-xl border border-slate-300 px-6 py-3 font-semibold hover:bg-slate-100 dark:hover:bg-slate-800 dark:text-white">
               Voir les offres
@@ -125,7 +162,7 @@ function Hero() {
           </div>
 
           <p className="mt-4 text-sm text-slate-600 dark:text-slate-400">
-            ✓ Conforme Code du Travail • ✓ IA incluse dès le plan Pro • ✓ +300 DUERP générés
+            ✓ Conforme Code du Travail • ✓ Export PDF légal inclus • ✓ Pré-remplissage par code NAF
           </p>
         </div>
 
@@ -149,7 +186,7 @@ function VideoDemo() {
       <div className="text-center mb-12">
         <h2 className="text-4xl font-semibold text-slate-900 dark:text-white">Découvrez Kaijos en action</h2>
         <p className="mt-3 text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
-          Une démonstration claire : création d’un DUERP complet en quelques minutes, aide IA, plan d’action dynamique.
+          Une démonstration claire : création d’un DUERP complet en quelques minutes, plan d’action dynamique, export PDF.
         </p>
       </div>
 
@@ -226,8 +263,8 @@ function ValueProps() {
           <FeatureCard
             title="Analyser"
             bullets={[
-              "Génération IA des risques (NAF, activité)",
-              "Détection d’incohérences & oublis",
+              "Pré-remplissage des risques par code NAF",
+              "Détection des oublis par secteur d’activité",
             ]}
             Icon={IconAnalyze}
             accent="bg-blue-600"
@@ -307,7 +344,7 @@ const USE_CASES: UseCase[] = [
         "Plan d’actions éclaté (Excel/email), mises à jour DUERP irrégulières, difficultés à tracer les EPI.",
       beforeAfter: [
         { before: "MAJ DUERP chantier : 2 h / mois", after: "35 min / mois (-70%)" },
-        { before: "Oublis d’autorisation feu récurrents", after: "Détection IA + rappel automatique" },
+        { before: "Oublis d’autorisation feu récurrents", after: "Rappel automatique par email" },
         { before: "Exports hétérogènes", after: "PDF standardisé par chantier (SPS-ready)" },
       ],
     },
@@ -689,13 +726,13 @@ function Steps() {
         <div className="text-center mb-16">
           <h2 className="text-4xl font-semibold dark:text-white">Comment ça marche</h2>
           <p className="mt-3 text-lg text-slate-600 dark:text-slate-300">
-            Trois étapes simples guidées par l’IA.
+            Trois étapes simples, de la création à l’export.
           </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-12">
           <StepCard index={1} title="Décrire" desc="Établissements, unités, NAF en 30 secondes" />
-          <StepCard index={2} title="Valider" desc="Ajustez les risques proposés par l’IA" />
+          <StepCard index={2} title="Valider" desc="Affinez les cotations avec le questionnaire guidé" />
           <StepCard index={3} title="Piloter" desc="Assignez, suivez, exportez" />
         </div>
       </div>
@@ -717,33 +754,25 @@ const pricing = [
     badgeTone: "secondary" as const,
   },
   {
-    id: "pro",
-    name: "Pro (IA incluse)",
-    price: "99 €",
-    tagline: "Le plan standard PME",
-    bullets: [
-      "Établissements illimités",
-      "Plan d’action + rappels",
-      "5 utilisateurs",
-      "NAF sectoriel complet",
-      "IA : risques, incohérences, actions",
-      "Exports & analytics",
-    ],
-    badge: "RECOMMANDÉ",
-    badgeTone: "primary" as const,
-  },
-  {
     id: "consultants",
     name: "Consultants",
-    price: "249 €",
+    price: "149 €",
     tagline: "Pour cabinets multi-clients",
-    bullets: ["20 DUERP actifs", "Exports brandés", "Portail clients", "Support prioritaire"],
+    bullets: ["Clients illimités", "Exports PDF par client", "Support prioritaire", "Facturation mutualisée"],
     badge: "CABINET",
-    badgeTone: "secondary" as const,
+    badgeTone: "primary" as const,
   },
 ];
 
-function PricingCard({ plan }: { plan: typeof pricing[number] }) {
+function PricingCard({
+  plan,
+  onSubscribe,
+  isLoading,
+}: {
+  plan: typeof pricing[number];
+  onSubscribe: SubscribeHandler;
+  isLoading: boolean;
+}) {
   const recommended = plan.badgeTone === "primary";
 
   return (
@@ -770,34 +799,42 @@ function PricingCard({ plan }: { plan: typeof pricing[number] }) {
         ))}
       </ul>
 
-      <a
-        href="/signup"
-        className={`mt-10 block w-full rounded-xl py-3 text-center font-semibold ${
+      <button
+        type="button"
+        onClick={() => onSubscribe(plan.id as PlanId)}
+        disabled={isLoading}
+        className={`mt-10 block w-full rounded-xl py-3 text-center font-semibold disabled:cursor-not-allowed disabled:opacity-70 ${
           recommended
             ? "bg-blue-600 text-white hover:bg-blue-700"
             : "border border-slate-300 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-800 dark:text-white"
         }`}
       >
-        Choisir {plan.name.split(" ")[0]}
-      </a>
+        {isLoading ? "Redirection..." : `Choisir ${plan.name.split(" ")[0]}`}
+      </button>
     </article>
   );
 }
 
-function PricingSection() {
+function PricingSection({
+  onSubscribe,
+  isLoading,
+}: {
+  onSubscribe: SubscribeHandler;
+  isLoading: boolean;
+}) {
   return (
     <section id="pricing" className="w-full px-6 py-24 bg-slate-50 dark:bg-slate-950">
       <div className="mx-auto max-w-7xl">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-semibold dark:text-white">Tarifs</h2>
           <p className="mt-3 text-lg text-slate-600 dark:text-slate-300">
-            Résiliation mensuelle. IA incluse dès le plan Pro.
+            Résiliation mensuelle. Sans engagement.
           </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-12">
           {pricing.map((p) => (
-            <PricingCard key={p.id} plan={p} />
+            <PricingCard key={p.id} plan={p} onSubscribe={onSubscribe} isLoading={isLoading} />
           ))}
         </div>
       </div>
@@ -827,15 +864,83 @@ function Footer() {
    EXPORT PAGE
 ------------------------------------------------------------ */
 export default function LandingPage() {
+  const { isSignedIn, user } = useUser();
+  const navigate = useNavigate();
+  const [checkoutState, setCheckoutState] = useState<"idle" | "loading" | "error">("idle");
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const checkout = params.get("checkout");
+    const subscription = params.get("subscription");
+    if (checkout === "success") {
+      setNotice("Paiement confirme. Vous pouvez vous connecter.");
+    } else if (checkout === "cancel") {
+      setNotice("Paiement annule. Vous pouvez reessayer.");
+    } else if (subscription === "required") {
+      setNotice("Abonnement inactif. Merci de vous abonner pour acceder a l'application.");
+    }
+  }, []);
+
+  const startCheckout = async (planId?: PlanId) => {
+    if (checkoutState === "loading") return;
+    const status = String((user?.publicMetadata as any)?.subscriptionStatus || "");
+    const isActive = status === "active" || status === "trialing";
+    if (isSignedIn && isActive) {
+      navigate("/");
+      return;
+    }
+    setCheckoutState("loading");
+    setCheckoutError(null);
+    try {
+      const res = await fetch(`${API_BASE}/api/checkout-sessions`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          planId,
+          clerkUserId: user?.id,
+          email: user?.primaryEmailAddress?.emailAddress,
+        }),
+      });
+      if (!res.ok) {
+        const text = await res.text().catch(() => "");
+        throw new Error(text || `Checkout failed (${res.status})`);
+      }
+      const data = await res.json();
+      if (!data?.url) throw new Error("Checkout session url missing");
+      window.location.href = data.url;
+    } catch (err) {
+      console.error(err);
+      setCheckoutState("error");
+      setCheckoutError("Impossible de demarrer le paiement. Reessayez.");
+    }
+  };
+
+  const isLoading = checkoutState === "loading";
   return (
     <main className="bg-white dark:bg-slate-950">
-      <Navbar />
-      <Hero />
+      <Navbar onSubscribe={startCheckout} isLoading={isLoading} isSignedIn={Boolean(isSignedIn)} />
+      {notice && (
+        <div className="mx-auto max-w-7xl px-6 pt-6">
+          <div className="rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-sm text-blue-900">
+            {notice}
+          </div>
+        </div>
+      )}
+      {checkoutError && (
+        <div className="mx-auto max-w-7xl px-6 pt-4">
+          <div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+            {checkoutError}
+          </div>
+        </div>
+      )}
+      <Hero onSubscribe={startCheckout} isLoading={isLoading} />
       <VideoDemo />
       <ValueProps />
       <UseCasesCompact data={USE_CASES} /> {/* ← Cas pratiques compact */}
       <Steps />
-      <PricingSection />
+      <PricingSection onSubscribe={startCheckout} isLoading={isLoading} />
       <Footer />
     </main>
   );

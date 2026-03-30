@@ -28,7 +28,7 @@ export function evaluateRisk(risk: Risk, context: UnityContext): RiskEvaluation 
   const probability = Number.isFinite(context.probability) ? context.probability : scoringConfig.probability.possible;
   const control = Number.isFinite(context.control) && context.control > 0 ? context.control : scoringConfig.control.standard;
 
-  const score = Math.round(severity * probability * control);
+  const score = Math.round(severity * probability / Math.max(control, 0.5));
   const priority = computePriority(score);
 
   return {

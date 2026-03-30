@@ -2,53 +2,45 @@
   {
     "id": "A-R-ELECTRIQUE-001",
     "risk_id": "R-ELECTRIQUE",
-    "title": "Mesure technique prioritaire",
+    "title": "Vérification périodique des installations électriques (organisme accrédité)",
     "type": "Organisationnelle",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
-    "cost": "Élevé",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "description": "Faire vérifier les installations électriques par un organisme accrédité (Dekra, Bureau Veritas, Apave...) selon la périodicité réglementaire : annuelle si salariés, triennale si tertiaire. Lever les non-conformités dans les délais prescrits. Tenir le registre de sécurité à jour avec les rapports de contrôle.",
+    "impact": "Détection des défauts avant qu'ils ne causent un accident (électrocution, incendie d'origine électrique). Conformité réglementaire. Réduction des responsabilités pénales de l'employeur.",
+    "difficulty": "Faible",
+    "cost": "Moyen",
+    "references": ["Décret 88-1056", "Norme NF C 15-100", "Code du travail R.4226-14"]
   },
   {
     "id": "A-R-ELECTRIQUE-002",
     "risk_id": "R-ELECTRIQUE",
-    "title": "Procédure / organisation",
+    "title": "Consignation électrique (LOTO) avant toute intervention",
     "type": "Organisationnelle",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
-    "cost": "Élevé",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "description": "Mettre en place la procédure de consignation en 5 étapes : séparation de la source, mise hors tension vérifiée (VAT), condamnation physique (cadenas personnel), mise à la terre, balisage. Utiliser des cadenas individuels nominatifs (1 cadenas = 1 salarié). Former tous les intervenants à la procédure LOTO.",
+    "impact": "Élimination du risque d'électrocution lors des interventions de maintenance. Procédure universelle reconnue. Réduction des accidents de maintenance électrique à zéro dans les entreprises qui l'appliquent rigoureusement.",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "references": ["INRS ED 6109", "Norme NF EN 1037", "UTE C 18-510"]
   },
   {
     "id": "A-R-ELECTRIQUE-003",
     "risk_id": "R-ELECTRIQUE",
-    "title": "Formation/sensibilisation ciblée",
-    "type": "Organisationnelle",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
+    "title": "Habilitation électrique du personnel (B1V, BR, BC...)",
+    "type": "Formation",
+    "description": "Former et habiliter le personnel intervenant sur ou à proximité des installations électriques selon la norme NF C 18-510. Niveaux selon les tâches : B1V (travaux voisinage BT), BR (raccordements), BC (consignations). Délivrer les titres d'habilitation signés. Renouveler tous les 3 ans et à chaque changement de poste.",
+    "impact": "Seul le personnel compétent et habilité intervient sur les installations électriques. Réduction des comportements à risque. Conformité légale (l'employeur engage sa responsabilité pénale en cas d'intervention non habilitée).",
+    "difficulty": "Moyenne",
     "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "references": ["NF C 18-510", "UTE C 18-550", "Code du travail R.4544-9"]
   },
   {
     "id": "A-R-ELECTRIQUE-004",
     "risk_id": "R-ELECTRIQUE",
-    "title": "EPI adaptés et contrôlés",
-    "type": "Technique",
-    "impact": "Réduction du risque",
-    "difficulty": "Moyenne",
+    "title": "EPI électriques : gants isolants, outillage isolé, tapis",
+    "type": "EPI",
+    "description": "Fournir des gants isolants EN 60903 de classe adaptée à la tension (classe 1 = 7 500 V, classe 2 = 17 000 V). Utiliser exclusivement des outils isolés EN 60900. Installer des tapis isolants devant les tableaux BT. Vérifier et retester les EPI électriques tous les 6 mois. Rebuter tout EPI présentant une coupure ou perforation.",
+    "impact": "Protection individuelle contre les contacts électriques directs et indirects. Réduction du risque d'électrocution et de brûlures par arc électrique.",
+    "difficulty": "Faible",
     "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "references": ["EN 60903", "EN 60900", "INRS ED 6110"]
   }
 ]

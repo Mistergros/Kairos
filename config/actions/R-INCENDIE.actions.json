@@ -2,53 +2,46 @@
   {
     "id": "A-R-INCENDIE-001",
     "risk_id": "R-INCENDIE",
-    "title": "Mesure technique prioritaire",
-    "type": "Humaine",
-    "impact": "Réduction du risque",
+    "title": "Vérification périodique des moyens d'extinction et détection",
+    "type": "Organisationnelle",
+    "description": "Faire vérifier annuellement par un organisme agréé : extincteurs (NF S 61-919), RIA (robinets incendie armés), détecteurs incendie (NF S 61-970), portes coupe-feu (fermeture automatique), éclairage de sécurité (BAES). Tenir le registre de sécurité à jour. Remplacer ou réviser les équipements défaillants dans les 30 jours.",
+    "impact": "Garantie de l'opérabilité des moyens de lutte contre l'incendie. Conformité ERP/ERT. Réduction du risque de propagation en cas de départ de feu.",
     "difficulty": "Faible",
     "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "references": ["Code du travail R.4227-1", "Arrêté 25/06/1980 ERP", "NF S 61-919"]
   },
   {
     "id": "A-R-INCENDIE-002",
     "risk_id": "R-INCENDIE",
-    "title": "Procédure / organisation",
-    "type": "EPI",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
-    "cost": "Élevé",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "title": "Exercice d'évacuation semestriel et consignes incendie",
+    "type": "Organisationnelle",
+    "description": "Organiser un exercice d'évacuation au minimum une fois par semestre (obligatoire). Afficher les consignes incendie en chaque point de l'établissement (conduites à tenir, numéros d'urgence, emplacement extincteurs et issues). Désigner et former des équipiers de première intervention (EPI). Mettre à jour le plan d'évacuation après chaque réaménagement.",
+    "impact": "Réduction du temps d'évacuation. Personnel capable de réagir correctement en cas de départ de feu. Réduction de la panique et des comportements dangereux. Conformité réglementaire.",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "references": ["Code du travail R.4227-28 à R.4227-40", "INRS ED 970"]
   },
   {
     "id": "A-R-INCENDIE-003",
     "risk_id": "R-INCENDIE",
-    "title": "Formation/sensibilisation ciblée",
-    "type": "Humaine",
-    "impact": "Réduction du risque",
+    "title": "Formation équipiers de première intervention (EPI) et de seconde intervention (ESI)",
+    "type": "Formation",
+    "description": "Former des Équipiers de Première Intervention (EPI) : utilisation des extincteurs, alerte, évacuation (1 journée). Former des Équipiers de Seconde Intervention (ESI) si > 50 personnes ou risques particuliers : manœuvre RIA, transmission avec SDIS, équipements de protection respiratoire. Maintenir un ratio EPI de 1 pour 20 salariés.",
+    "impact": "Maîtrise des feux naissants dans 80% des cas avec un extincteur adapté. Évacuation organisée. Réduction des pertes humaines et matérielles. Personnel acteur de sa sécurité.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "references": ["INRS ED 6054", "CNPP guide EPI/ESI"]
   },
   {
     "id": "A-R-INCENDIE-004",
     "risk_id": "R-INCENDIE",
-    "title": "EPI adaptés et contrôlés",
+    "title": "Gestion des matières inflammables et permis de feu",
     "type": "Organisationnelle",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
-    "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "description": "Stocker les liquides inflammables en armoire ventilée homologuée (EN 14470-1). Limiter les quantités en zone de travail (< quantité journalière). Mettre en place un permis de feu obligatoire pour tout travail par points chauds (soudage, meulage, découpe). Faire signer le permis par le responsable du lieu avant et vérifier le site 1 heure après.",
+    "impact": "Élimination des sources d'inflammation à proximité des matières combustibles. Le permis de feu réduit de 60% les départs d'incendie liés aux travaux par points chauds.",
+    "difficulty": "Moyenne",
+    "cost": "Faible",
+    "naf_specific": ["10", "20", "24", "41", "45"],
+    "references": ["INRS ED 6030", "EN 14470-1", "Code du travail R.4462-1"]
   }
 ]

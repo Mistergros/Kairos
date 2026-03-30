@@ -157,7 +157,6 @@ const GanttDUERP: React.FC<Props> = ({
       risk: typeof items[number];
       y: number;
       rowHeight: number;
-      actionTop: number;
       actions: Array<{
         id: string;
         x1: number;
@@ -171,10 +170,6 @@ const GanttDUERP: React.FC<Props> = ({
 
     let yCursor = THEME.monthBandTop + 10;
     items.forEach((risk) => {
-      const labelLineCount = Math.max(1, Math.ceil((risk.label?.length || 0) / 18));
-      const labelHeight = 36 + (labelLineCount - 1) * 16; // taille du badge risque en fonction des lignes
-      const actionTop = Math.max(THEME.actionTopOffset, labelHeight + 12);
-
       const actions = risk.actions.map((a, ia) => {
         const shortLabel =
           typeof a.label === 'string' && a.label.length > 34
@@ -184,7 +179,7 @@ const GanttDUERP: React.FC<Props> = ({
           id: a.id,
           x1: toX(a.start as Date),
           x2: toX(a.end as Date),
-          yMid: yCursor + actionTop + ia * THEME.actionVSpace,
+          yMid: yCursor + THEME.actionTopOffset + ia * THEME.actionVSpace,
           label: a.label,
           shortLabel,
           color: a.color!,
@@ -192,9 +187,9 @@ const GanttDUERP: React.FC<Props> = ({
       });
       const dynamicHeight = Math.max(
         THEME.rowHeight,
-        actionTop + (actions.length > 0 ? (actions.length - 1) * THEME.actionVSpace : 0) + 42
+        THEME.actionTopOffset + (actions.length > 0 ? (actions.length - 1) * THEME.actionVSpace : 0) + 42
       );
-      rows.push({ risk, y: yCursor, rowHeight: dynamicHeight, actionTop, actions });
+      rows.push({ risk, y: yCursor, rowHeight: dynamicHeight, actions });
       yCursor += dynamicHeight;
     });
 
@@ -335,7 +330,7 @@ const GanttDUERP: React.FC<Props> = ({
                     key={a.id}
                     style={{
                       position: 'absolute',
-                      top: row.actionTop - 4 + idx * THEME.actionVSpace,
+                      top: THEME.actionTopOffset - 4 + idx * THEME.actionVSpace,
                       left: 10,
                       color: THEME.muted,
                       fontSize: 12.5,
@@ -369,7 +364,7 @@ const GanttDUERP: React.FC<Props> = ({
                 <div
                   style={{
                     position: 'absolute',
-                    top: row.actionTop - 4,
+                    top: THEME.actionTopOffset - 4,
                     left: 10,
                     color: THEME.muted,
                     fontSize: 12.5,

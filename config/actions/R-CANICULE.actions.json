@@ -2,53 +2,47 @@
   {
     "id": "A-R-CANICULE-001",
     "risk_id": "R-CANICULE",
-    "title": "Mesure technique prioritaire",
-    "type": "Humaine",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
+    "title": "Plan canicule d'entreprise et dispositif de surveillance",
+    "type": "Organisationnelle",
+    "description": "Établir un plan canicule opérationnel activé dès le passage en vigilance orange météo : désignation d'un référent canicule, liste des salariés vulnérables (> 55 ans, femmes enceintes, pathologies chroniques), dispositif de surveillance renforcée, procédure d'alerte. Afficher le plan canicule et les numéros d'urgence. Briefer l'encadrement à chaque épisode caniculaire.",
+    "impact": "Réduction du risque de coup de chaleur (potentiellement mortel > 40°C intérieur). Prise en charge rapide des premiers signes d'hyperthermie. Engagement de l'employeur documenté.",
+    "difficulty": "Faible",
     "cost": "Faible",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "naf_specific": ["41", "42", "43", "01", "02"],
+    "references": ["INRS canicule", "Plan national canicule DGOS", "Code du travail R.4121-1"]
   },
   {
     "id": "A-R-CANICULE-002",
     "risk_id": "R-CANICULE",
-    "title": "Procédure / organisation",
+    "title": "Aménagement des horaires et des conditions de travail par temps chaud",
     "type": "Organisationnelle",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
-    "cost": "Élevé",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "description": "Décaler les heures de travail pour les tâches extérieures ou physiques aux heures fraîches (6h-10h et 18h-21h). Réduire ou suspendre les travaux physiques intenses si la température dépasse 33°C. Augmenter la fréquence des pauses (pause fraîche de 15 min toutes les 2h). Mettre à disposition des espaces tempérés pour les pauses. Adapter le port des vêtements de travail (matières respirantes).",
+    "impact": "Réduction de la charge thermique cumulée. Prévention des hyperthermies d'effort. Maintien de la productivité dans des conditions acceptables pour les salariés.",
+    "difficulty": "Moyenne",
+    "cost": "Faible",
+    "naf_specific": ["41", "42", "43", "01", "02"],
+    "references": ["INRS canicule travail extérieur", "Recommandations DGT 2023"]
   },
   {
     "id": "A-R-CANICULE-003",
     "risk_id": "R-CANICULE",
-    "title": "Formation/sensibilisation ciblée",
+    "title": "Eau fraîche, brumisateurs et climatisation des locaux de travail",
     "type": "Technique",
-    "impact": "Réduction du risque",
+    "description": "Mettre à disposition de l'eau fraîche potable en libre accès (minimum 1 litre par salarié par heure si T° > 33°C). Installer des brumisateurs ou ventilateurs dans les zones de travail exposées. Réfrigérer ou climatiser les postes de travail fixes à l'intérieur (objectif < 26°C). Vérifier et entretenir les climatiseurs (purge annuelle, filtre HEPA pour éviter la légionellose).",
+    "impact": "Maintien de l'hydratation et de la thermorégulation du corps. Réduction de la température ambiante des postes. Prévention des coups de chaleur par hyperhydratation.",
     "difficulty": "Faible",
     "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "references": ["INRS ED 6131", "Code du travail R.4225-2 à R.4225-6"]
   },
   {
     "id": "A-R-CANICULE-004",
     "risk_id": "R-CANICULE",
-    "title": "EPI adaptés et contrôlés",
-    "type": "Technique",
-    "impact": "Réduction du risque",
+    "title": "Formation aux signes d'alerte de l'hyperthermie",
+    "type": "Formation",
+    "description": "Former l'ensemble du personnel à reconnaître les signes d'alerte du coup de chaleur (hyperthermie) : peau sèche et brûlante, confusion, maux de tête intenses, nausées, absence de transpiration malgré la chaleur. Conduite à tenir : mise à l'abri en endroit frais, hydratation, application de linges humides froids, appel du 15 si T° > 39°C ou perte de connaissance.",
+    "impact": "Reconnaissance précoce des signes permettant d'agir avant la perte de connaissance. Prise en charge rapide réduisant la mortalité par coup de chaleur (taux de mortalité réduit de 40% si refroidissement rapide).",
     "difficulty": "Faible",
     "cost": "Faible",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "references": ["INRS fiche canicule", "Samu société guide coup de chaleur", "Plan national canicule"]
   }
 ]

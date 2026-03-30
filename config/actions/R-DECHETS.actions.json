@@ -2,53 +2,46 @@
   {
     "id": "A-R-DECHETS-001",
     "risk_id": "R-DECHETS",
-    "title": "Mesure technique prioritaire",
-    "type": "Humaine",
-    "impact": "Réduction du risque",
+    "title": "Tri à la source et filières d'élimination adaptées",
+    "type": "Organisationnelle",
+    "description": "Mettre en place un système de tri à la source : bacs colorés identifiés par pictogrammes pour chaque catégorie (déchets banals, déchets dangereux DIS, DASRI, déchets recyclables). Former les salariés au tri correct. Contacter des filières agréées pour les déchets dangereux (bordereaux de suivi BSDD obligatoires). Afficher les consignes de tri à chaque point de collecte.",
+    "impact": "Réduction de l'exposition des agents de collecte aux déchets dangereux (produits chimiques, déchets biologiques). Conformité réglementaire. Réduction des coûts d'élimination par optimisation des filières.",
     "difficulty": "Faible",
-    "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "cost": "Faible",
+    "references": ["Code de l'environnement R.541-1", "Arrêté BSDD", "INRS ED 6029"]
   },
   {
     "id": "A-R-DECHETS-002",
     "risk_id": "R-DECHETS",
-    "title": "Procédure / organisation",
-    "type": "Humaine",
-    "impact": "Réduction du risque",
+    "title": "Procédures de collecte et stockage sécurisé des déchets",
+    "type": "Organisationnelle",
+    "description": "Définir des zones de stockage temporaire des déchets séparées des zones de production : zone ventilée pour les déchets dégageant des vapeurs, zone réfrigérée pour les déchets fermentescibles (restauration, santé), zone couverte et étanche pour les DIS. Limiter les volumes stockés (≤ 1 an de production). Nettoyer et désinfecter les zones de stockage mensuellement.",
+    "impact": "Réduction des nuisances olfactives et microbiologiques. Prévention des expositions chimiques lors du stockage. Conformité aux arrêtés préfectoraux (ICPE si applicable).",
     "difficulty": "Moyenne",
-    "cost": "Faible",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "cost": "Moyen",
+    "naf_specific": ["38", "56", "86", "10"],
+    "references": ["Code de l'environnement L.541-2", "INRS ED 6029", "Arrêté ICPE rubrique 2710"]
   },
   {
     "id": "A-R-DECHETS-003",
     "risk_id": "R-DECHETS",
-    "title": "Formation/sensibilisation ciblée",
-    "type": "Technique",
-    "impact": "Réduction du risque",
+    "title": "EPI pour la manipulation des déchets dangereux",
+    "type": "EPI",
+    "description": "Équiper les agents de collecte des déchets dangereux : gants EN 374 résistants aux produits chimiques, combinaison imperméable ou tablier, chaussures de sécurité à embout acier, masque FFP2 pour les déchets dégageant des poussières ou vapeurs. Pour les DASRI : gants résistants aux piqûres, sur-blouse imperméable, lunettes de protection. Former à l'habillage/déshabillage et à la décontamination.",
+    "impact": "Protection individuelle contre les expositions chimiques et biologiques lors de la manipulation des déchets. Réduction des contaminations cutanées et des ingestions accidentelles.",
     "difficulty": "Faible",
-    "cost": "Élevé",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "cost": "Moyen",
+    "references": ["INRS ED 112", "EN 374", "Code de la santé publique R.1335-8"]
   },
   {
     "id": "A-R-DECHETS-004",
     "risk_id": "R-DECHETS",
-    "title": "EPI adaptés et contrôlés",
-    "type": "Humaine",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
-    "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "title": "Formation gestion des déchets et risques associés",
+    "type": "Formation",
+    "description": "Former les salariés manipulant des déchets : classification des déchets (dangereux/non dangereux), risques associés à chaque catégorie (chimique, biologique, mécanique), procédures de tri et d'élimination, conduite à tenir en cas de déversement accidentel (kit d'urgence absorbant), obligations réglementaires de traçabilité (BSDD). Renouveler en cas de changement de procédure.",
+    "impact": "Personnel compétent réduisant les erreurs de tri et de manipulation. Réduction des incidents liés à une mauvaise gestion des déchets. Conformité réglementaire documentée.",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "references": ["INRS ED 6029", "ADEME guide déchets entreprises"]
   }
 ]

@@ -2,53 +2,49 @@
   {
     "id": "A-R-AGRESSION-001",
     "risk_id": "R-AGRESSION",
-    "title": "Mesure technique prioritaire",
-    "type": "EPI",
-    "impact": "Réduction du risque",
+    "title": "Aménagement physique anti-agression (vitrage, interphone, séparation)",
+    "type": "Technique",
+    "description": "Installer des vitrages de séparation entre le public et les agents d'accueil (guichet vitré, banque d'accueil surélevée). Mettre en place des interphones et contrôles d'accès pour les zones sensibles. Supprimer les angles morts par miroirs panoramiques ou caméras. Prévoir des boutons d'alerte silencieux reliés à un PC de sécurité ou au portable du responsable.",
+    "impact": "Réduction de l'exposition physique directe aux agressions. Dissuasion des comportements violents. Protection des salariés en contact avec le public sans réduire la qualité du service.",
     "difficulty": "Moyenne",
-    "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "cost": "Élevé",
+    "naf_specific": ["64", "84", "86", "87", "47", "56"],
+    "references": ["INRS ED 6010", "ONVS guide prévention violence", "Code du travail R.4121-1"]
   },
   {
     "id": "A-R-AGRESSION-002",
     "risk_id": "R-AGRESSION",
-    "title": "Procédure / organisation",
-    "type": "Technique",
-    "impact": "Réduction du risque",
-    "difficulty": "Moyenne",
-    "cost": "Élevé",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "title": "Procédure de déclaration et prise en charge des agressions",
+    "type": "Organisationnelle",
+    "description": "Établir une procédure formalisée de déclaration de toute agression (violence physique ou verbale) : formulaire dédié, déclaration AT systématique, soutien psychologique immédiat (cellule d'écoute), accompagnement juridique si dépôt de plainte. Former les managers à la conduite de l'entretien post-agression. Analyser les incidents collectivement pour identifier les facteurs de récurrence.",
+    "impact": "Prise en charge immédiate du salarié victime. Réduction du traumatisme secondaire. Données d'analyse permettant d'identifier les situations à risque récurrentes. Signal fort d'engagement de l'employeur.",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "naf_specific": ["64", "84", "86", "87", "56"],
+    "references": ["INRS ED 6010", "ONVS", "Code du travail R.4121-1"]
   },
   {
     "id": "A-R-AGRESSION-003",
     "risk_id": "R-AGRESSION",
-    "title": "Formation/sensibilisation ciblée",
-    "type": "Humaine",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
-    "cost": "Faible",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "title": "Formation gestion des conflits et des incivilités",
+    "type": "Formation",
+    "description": "Former les salariés en contact avec le public à la gestion des situations conflictuelles : techniques de désescalade verbale, communication non violente (CNV), détection des signaux précurseurs d'agression, conduite à tenir et procédure d'alerte. 1 à 2 jours de formation avec mises en situation. Inclure les managers dans la formation.",
+    "impact": "Salariés capables de désamorcer les situations avant l'escalade vers la violence. Réduction des agressions abouties. Réduction du stress lié à l'anticipation de l'agression.",
+    "difficulty": "Faible",
+    "cost": "Moyen",
+    "naf_specific": ["64", "84", "86", "87", "56", "88"],
+    "references": ["INRS ED 6010", "ANACT guide violence externe"]
   },
   {
     "id": "A-R-AGRESSION-004",
     "risk_id": "R-AGRESSION",
-    "title": "EPI adaptés et contrôlés",
-    "type": "Technique",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
-    "cost": "Élevé",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "title": "Sécurisation des déplacements et travail isolé",
+    "type": "Organisationnelle",
+    "description": "Pour les salariés travaillant seuls ou se déplaçant chez les clients : mettre en place un dispositif de travailleur isolé (PTI/DATI) avec alerte automatique en cas de chute ou d'immobilité. Définir une procédure d'astreinte téléphonique avec vérification à intervalles réguliers. Éviter les déplacements isolés en soirée dans les zones sensibles.",
+    "impact": "Détection rapide en cas d'agression ou de malaise. Réduction du temps d'intervention des secours. Protection des salariés les plus vulnérables (gardiens, travailleurs sociaux, visiteurs à domicile).",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "naf_specific": ["86", "87", "88", "64", "84"],
+    "references": ["INRS ED 6127", "Norme NF X 50-780 PTI", "Code du travail R.4512-13"]
   }
 ]

@@ -2,53 +2,47 @@
   {
     "id": "A-R-ECRAN-001",
     "risk_id": "R-ECRAN",
-    "title": "Mesure technique prioritaire",
-    "type": "Organisationnelle",
-    "impact": "Réduction du risque",
+    "title": "Aménagement ergonomique du poste de travail sur écran",
+    "type": "Technique",
+    "description": "Ajuster le poste selon les normes ergonomiques : écran à 50-70 cm des yeux, bord supérieur de l'écran au niveau des yeux ou légèrement en dessous, clavier et souris sur la même surface avec les coudes à 90°, soutien lombaire du siège réglé, pieds à plat au sol ou sur repose-pied. Fournir un support de document à côté de l'écran. Utiliser un écran > 22 pouces avec réglage de luminosité/contraste.",
+    "impact": "Élimination des postures forcées du cou et des épaules. Réduction des TMS cervicaux et des lombalgies liés au travail sur écran. Conformité Décret 91-451.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "naf_specific": ["62", "63", "64", "69", "70", "73", "84"],
+    "references": ["INRS ED 924", "Décret 91-451", "NF EN ISO 9241"]
   },
   {
     "id": "A-R-ECRAN-002",
     "risk_id": "R-ECRAN",
-    "title": "Procédure / organisation",
-    "type": "Humaine",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
+    "title": "Organisation du travail : règle 20-20-20 et micro-pauses",
+    "type": "Organisationnelle",
+    "description": "Appliquer la règle 20-20-20 : toutes les 20 minutes de travail sur écran, regarder pendant 20 secondes un objet à 20 pieds (6 mètres). Programmer des rappels automatiques (logiciels type WorkRave). Prévoir au minimum une pause de 5 minutes toutes les heures pour les postes à exposition continue. Alterner les tâches sur écran avec des tâches ne nécessitant pas de fixation prolongée.",
+    "impact": "Réduction de la fatigue visuelle (asthénopie) et de la sécheresse oculaire. Diminution des douleurs cervicales et des maux de tête liés au travail prolongé sur écran. Amélioration de la concentration sur la durée.",
+    "difficulty": "Faible",
     "cost": "Faible",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "references": ["INRS ED 924", "ANACT télétravail et écrans", "Recommandations ophtalmologiques SFO"]
   },
   {
     "id": "A-R-ECRAN-003",
     "risk_id": "R-ECRAN",
-    "title": "Formation/sensibilisation ciblée",
+    "title": "Suivi de la vue et remboursement des verres correcteurs écran",
     "type": "Organisationnelle",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
-    "cost": "Élevé",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "description": "Proposer un examen ophtalmologique lors de la visite médicale d'embauche pour tout poste sur écran. Rembourser les verres correcteurs spécifiques pour le travail sur écran si prescrits par l'ophtalmologiste dans le cadre du travail (distance focale intermédiaire 50-70 cm). Renouveler l'examen tous les 2 ans ou en cas de gêne visuelle déclarée. Informer les salariés de ce droit.",
+    "impact": "Correction de la vue adaptée à la distance de travail sur écran. Réduction de la tension musculaire des yeux et des maux de tête. Droit réglementaire des travailleurs sur écran (Décret 91-451).",
+    "difficulty": "Faible",
+    "cost": "Moyen",
+    "references": ["Décret 91-451 art. 22", "INRS ED 924"]
   },
   {
     "id": "A-R-ECRAN-004",
     "risk_id": "R-ECRAN",
-    "title": "EPI adaptés et contrôlés",
+    "title": "Filtres anti-lumière bleue et réglage de l'éclairage ambiant",
     "type": "Technique",
-    "impact": "Réduction du risque",
+    "description": "Activer les filtres de lumière bleue sur les écrans (mode Night Shift / Night Light ou filtre physique) pour les utilisateurs prolongés. Régler l'éclairage ambiant pour éviter les reflets sur l'écran (éclairement 300-500 lux, éviter les sources lumineuses dans le champ de vision). Positionner les postes perpendiculairement aux fenêtres. Utiliser des stores pour éviter l'éblouissement direct.",
+    "impact": "Réduction de la fatigue oculaire et des perturbations du rythme circadien. Amélioration du confort visuel. Prévention des maux de tête d'origine photique.",
     "difficulty": "Faible",
-    "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "cost": "Faible",
+    "naf_specific": ["62", "63", "64", "69", "73"],
+    "references": ["INRS ED 924", "NF EN 12464-1 (éclairage)", "ANSES rapport lumière bleue 2019"]
   }
 ]

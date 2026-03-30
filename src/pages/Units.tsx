@@ -2,12 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import { Card } from "../components/Card";
 import { useDuerpStore } from "../state/store";
 import { searchCompanies } from "../utils/api";
+import { uid } from "../utils/uid";
 import type { WorkUnit } from "../types";
-
-const uid = () =>
-  typeof crypto !== "undefined" && crypto.randomUUID
-    ? crypto.randomUUID()
-    : `id-${Math.random().toString(36).slice(2, 9)}`;
 
 const PRIMARY_FEATURE_OPTIONS: { key: string; label: string; description: string }[] = [
   { key: "solvents", label: "Solvants / COV", description: "Peintures, dégraissants, produits chimiques volatils" },
@@ -62,6 +58,8 @@ export const Units = () => {
     selectedEstablishmentId,
     setSelectedEstablishment,
     setSelectedWorkUnit,
+    prefillFromSector,
+    loadingHazards,
   } = useDuerpStore();
 
   const [establishmentForm, setEstablishmentForm] = useState({ name: "", sector: "", codeNaf: "", address: "" });
@@ -96,7 +94,7 @@ export const Units = () => {
     setEstablishmentForm({ name: "", sector: "", codeNaf: "", address: "" });
   };
 
-  const onCreateUnit = () => {
+  const onCreateUnit = async () => {
     const targetEstablishmentId = selectedEstablishmentId || establishments[0]?.id;
     if (!unitForm.name || !targetEstablishmentId) return;
     const newId = uid();
@@ -116,6 +114,8 @@ export const Units = () => {
     setSelectedFeatures([]);
     setActivity("");
     setCustomExtra("");
+    // Pré-remplissage automatique : combine NAF de l'établissement + activité de l'unité
+    await prefillFromSector(activity || undefined);
   };
 
   const onSearchCompanies = async () => {
@@ -269,7 +269,7 @@ export const Units = () => {
                 </div>
                 <div className="flex flex-col items-end gap-2 text-right">
                   <span className="pill bg-ocean/10 text-ocean-700">{e.sector || "Secteur"}</span>
-                  <button className="text-xs text-sunset hover:underline" onClick={() => removeEstablishmentAndReset(e.id)}>
+                  <button className="text-xs text-sunset hover:underline" onClick={(e2) => { e2.stopPropagation(); if (window.confirm(`Supprimer l'établissement "${e.name}" et toutes ses données ?`)) removeEstablishmentAndReset(e.id); }}>
                     Supprimer
                   </button>
                 </div>
@@ -348,7 +348,10 @@ export const Units = () => {
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="pill bg-slate/10 text-slate-700">{w.headcount ?? 0} pers.</span>
-                    <button className="text-xs text-sunset hover:underline" onClick={() => removeWorkUnitAndReset(w.id)}>
+                    <button
+                      className="text-xs text-sunset hover:underline"
+                      onClick={(e) => { e.stopPropagation(); if (window.confirm(`Supprimer l'unité "${w.name}" et tous ses risques associés ?`)) removeWorkUnitAndReset(w.id); }}
+                    >
                       Supprimer
                     </button>
                   </div>
@@ -435,10 +438,11 @@ export const Units = () => {
           </div>
           <button
             onClick={onCreateUnit}
-            className="mt-3 rounded-xl bg-ocean px-4 py-2 text-sm font-semibold text-white shadow-lg"
-            title="Ajouter l'unite a l'etablissement selectionne"
+            disabled={loadingHazards}
+            className="mt-3 rounded-xl bg-ocean px-4 py-2 text-sm font-semibold text-white shadow-lg disabled:opacity-60"
+            title="Ajouter l'unite et pré-remplir l'inventaire de risques"
           >
-            Ajouter l'unite
+            {loadingHazards ? "Analyse en cours..." : "Ajouter l'unite"}
           </button>
         </div>
       </Card>

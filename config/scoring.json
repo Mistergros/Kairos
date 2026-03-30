@@ -1,30 +1,29 @@
-{
-  "model": "GxPxFxM",
-  "severity_scale": [
-    1,
-    2,
-    3,
-    4,
-    5
-  ],
-  "probability_scale": [
-    1,
-    2,
-    3,
-    4,
-    5
-  ],
-  "frequency_scale": [
-    1,
-    2,
-    3,
-    4
-  ],
-  "control_scale": [
-    1,
-    2,
-    3,
-    4
-  ],
-  "formula": "severity * probability * frequency * control"
+{
+  "model": "GxF/M",
+  "formula": "score = gravity * frequency / max(control, 0.5)",
+  "severity": {
+    "low": 2,
+    "medium": 5,
+    "high": 8,
+    "critical": 10
+  },
+  "probability": {
+    "rare": 1,
+    "possible": 4,
+    "frequent": 7,
+    "very_frequent": 10
+  },
+  "control": {
+    "none": 0.5,
+    "weak": 2,
+    "standard": 5,
+    "strong": 8,
+    "total": 10
+  },
+  "priorityThresholds": {
+    "critical": 80,
+    "high": 50,
+    "medium": 25
+  },
+  "notes": "Maîtrise est un diviseur: plus la maîtrise est élevée, plus le score est faible. Score max = 10×10/0.5 = 200. Seuils: P1≥80, P2≥50, P3≥25, P4<25."
 }

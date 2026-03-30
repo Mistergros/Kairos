@@ -2,53 +2,48 @@
   {
     "id": "A-R-VIBRATIONS-001",
     "risk_id": "R-VIBRATIONS",
-    "title": "Mesure technique prioritaire",
-    "type": "Technique",
-    "impact": "Réduction du risque",
+    "title": "Mesure des vibrations et évaluation de l'exposition (VEM/VEJ)",
+    "type": "Organisationnelle",
+    "description": "Faire réaliser des mesures d'accélération vibratoire par un organisme accrédité (vibrations main-bras : norme EN ISO 5349, vibrations corps entier : ISO 2631). Calculer la valeur d'exposition journalière A(8) pour chaque poste et outil. Comparer aux valeurs d'action (2,5 m/s² main-bras, 0,5 m/s² corps entier) et aux valeurs limites (5 et 1,15 m/s²). Documenter les résultats et renouveler en cas de changement d'équipement.",
+    "impact": "Connaissance précise des niveaux d'exposition. Identification des postes dépassant les valeurs d'action réglementaires. Base solide pour le plan de réduction et le suivi médical.",
     "difficulty": "Moyenne",
-    "cost": "Élevé",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "cost": "Moyen",
+    "naf_specific": ["41", "42", "43", "28", "01"],
+    "references": ["EN ISO 5349", "ISO 2631", "Décret 2005-746", "INRS ED 6018"]
   },
   {
     "id": "A-R-VIBRATIONS-002",
     "risk_id": "R-VIBRATIONS",
-    "title": "Procédure / organisation",
+    "title": "Remplacement et entretien des équipements vibrants",
     "type": "Technique",
-    "impact": "Réduction du risque",
+    "description": "Remplacer les outils à moteur à explosion par des équipements électriques ou pneumatiques à plus faibles vibrations. Maintenir les outils en bon état : aiguiser régulièrement les lames, équilibrer les parties tournantes, vérifier les amortisseurs. Utiliser des poignées anti-vibrations homologuées. Entretenir la buée des pneumatiques selon les préconisations fabricant. Tenir un registre de l'état vibratoire des équipements.",
+    "impact": "Réduction des niveaux de vibrations à la source. Prévention des TMS liés aux vibrations (syndrome de Raynaud professionnel, lésions ostéo-articulaires). Économies de maintenance par détection précoce des défaillances mécaniques.",
     "difficulty": "Élevée",
-    "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "cost": "Élevé",
+    "naf_specific": ["41", "42", "43", "01", "28"],
+    "references": ["INRS ED 6018", "Guide OPPBTP vibrations chantier", "Décret 2005-746"]
   },
   {
     "id": "A-R-VIBRATIONS-003",
     "risk_id": "R-VIBRATIONS",
-    "title": "Formation/sensibilisation ciblée",
+    "title": "Organisation du travail : limitation de la durée d'exposition aux vibrations",
     "type": "Organisationnelle",
-    "impact": "Réduction du risque",
+    "description": "Planifier la rotation des postes vibrants pour limiter la durée journalière d'exposition par opérateur. Calculer les temps maximaux en fonction des niveaux mesurés pour rester sous la valeur d'action. Prévoir des pauses régulières (15 min toutes les 2h pour les outils mains-bras). Alterner les tâches vibrant avec des tâches sans vibrations. Tenir compte des vibrations cumulées sur une journée de travail.",
+    "impact": "Réduction de l'exposition cumulative sous la valeur d'action réglementaire. Prévention du syndrome des vibrations mains-bras (maladie professionnelle tableau 69C). Maintien de la productivité par répartition du travail sur plusieurs opérateurs.",
     "difficulty": "Moyenne",
-    "cost": "Élevé",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "cost": "Faible",
+    "references": ["INRS ED 6018", "Calculateur exposition vibrations INRS", "Décret 2005-746"]
   },
   {
     "id": "A-R-VIBRATIONS-004",
     "risk_id": "R-VIBRATIONS",
-    "title": "EPI adaptés et contrôlés",
-    "type": "Technique",
-    "impact": "Réduction du risque",
+    "title": "EPI anti-vibrations et suivi médical spécifique",
+    "type": "EPI",
+    "description": "Fournir des gants anti-vibrations EN ISO 10819 homologués aux utilisateurs d'outils vibrants (contrôler que l'atténuation est suffisante par rapport au niveau mesuré). Porter des vêtements chauds pour prévenir le vasospasme. Organiser un suivi médical renforcé (test de l'algésimètre, capillaroscopie, test de Phalen) annuel pour les salariés > 1 an d'exposition au-dessus de la valeur d'action.",
+    "impact": "Protection individuelle contre les vibrations résiduelles. Détection précoce des atteintes vasculaires et nerveuses. Prise en charge et reclassement avant apparition des symptômes irréversibles du syndrome vibratoire.",
     "difficulty": "Faible",
     "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "naf_specific": ["41", "42", "43", "28"],
+    "references": ["EN ISO 10819", "Tableau MP 69C", "Code du travail R.4447-1 SMR vibrations"]
   }
 ]

@@ -2,53 +2,47 @@
   {
     "id": "A-R-QUALITEAIR-001",
     "risk_id": "R-QUALITEAIR",
-    "title": "Mesure technique prioritaire",
-    "type": "Humaine",
-    "impact": "Réduction du risque",
+    "title": "Évaluation de la qualité de l'air intérieur (QAI) et métrologie",
+    "type": "Organisationnelle",
+    "description": "Faire réaliser une campagne de mesure de la qualité de l'air intérieur par un laboratoire accrédité COFRAC : mesure des COV (composés organiques volatils), CO2 (indicateur de confinement), formaldéhyde, particules PM2.5 et PM10, légionelles si climatisation ou tours aéroréfrigérantes. Comparer aux valeurs guides de l'ANSES. Renouveler tous les 3 ans ou après travaux.",
+    "impact": "Identification précise des polluants de l'air intérieur. Priorisation des mesures correctives. Réduction des symptômes du syndrome des bâtiments malsains (maux de tête, fatigue, irritations).",
     "difficulty": "Faible",
-    "cost": "Faible",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "cost": "Moyen",
+    "references": ["ANSES valeurs guides QAI", "Décret 2012-14 (ERP)", "INRS ED 6123"]
   },
   {
     "id": "A-R-QUALITEAIR-002",
     "risk_id": "R-QUALITEAIR",
-    "title": "Procédure / organisation",
-    "type": "Organisationnelle",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
+    "title": "Maintenance des systèmes de ventilation et de climatisation (VMC, CTA)",
+    "type": "Technique",
+    "description": "Établir un programme de maintenance préventive des installations de ventilation : contrôle semestriel des débits d'air (mesure avec anémomètre), remplacement des filtres selon les préconisations du fabricant (minimum annuel), nettoyage des gaines tous les 5 ans. Régler les débits de ventilation selon la norme NF EN 16798 (min. 25 m³/h/personne en tertiaire). Maintenir un carnet de maintenance à jour.",
+    "impact": "Maintien d'un renouvellement d'air suffisant. Réduction des concentrations en CO2 (objectif < 1000 ppm). Prévention du développement de moisissures et de légionelles. Amélioration du confort thermique et de la concentration.",
+    "difficulty": "Faible",
     "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "naf_specific": ["62", "64", "84", "86", "69", "70"],
+    "references": ["NF EN 16798", "INRS ED 6030", "Décret 2004-964 légionelles"]
   },
   {
     "id": "A-R-QUALITEAIR-003",
     "risk_id": "R-QUALITEAIR",
-    "title": "Formation/sensibilisation ciblée",
-    "type": "Humaine",
-    "impact": "Réduction du risque",
+    "title": "Élimination des sources de pollution intérieure",
+    "type": "Organisationnelle",
+    "description": "Identifier et supprimer les sources de polluants intérieurs : matériaux de construction émissifs (revêtements de sol, peintures, colles), produits d'entretien chimiques (remplacer par des produits écolabellisés), imprimantes laser (utiliser des toners faible émission), photocopieuses (déplacer dans une zone ventilée séparée). Appliquer les délais d'aération recommandés après utilisation de produits chimiques.",
+    "impact": "Réduction à la source des émissions de COV et de particules fines. Amélioration durable de la qualité de l'air sans nécessiter une augmentation permanente de la ventilation.",
     "difficulty": "Moyenne",
-    "cost": "Élevé",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "cost": "Faible",
+    "naf_specific": ["62", "64", "84", "41", "43"],
+    "references": ["INRS ED 6123", "ANSES guide QAI", "Label Ecolabel pour produits d'entretien"]
   },
   {
     "id": "A-R-QUALITEAIR-004",
     "risk_id": "R-QUALITEAIR",
-    "title": "EPI adaptés et contrôlés",
+    "title": "Mesures d'aération naturelle et pauses aération",
     "type": "Organisationnelle",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
-    "cost": "Élevé",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "description": "Ouvrir les fenêtres 10 minutes matin et soir pour renouveler complètement l'air des bureaux. En période de chauffe ou de froid, utiliser une ventilation en mode 'free cooling' (VMC double flux). Éviter de manger et de chauffer des repas dans les espaces de travail (odeurs, COV). Interdire le tabac à moins de 10 m des entrées. Installer des capteurs CO2 affichant en temps réel le niveau de confinement (alerte > 1000 ppm).",
+    "impact": "Réduction immédiate et à faible coût du confinement. Amélioration de la concentration et réduction de la fatigue (le CO2 > 1000 ppm réduit la productivité). Action préventive simple et reproductible.",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "references": ["INRS ED 6123", "ADEME aération logements et bureaux", "Valeur guide CO2 ANSES 1000-1500 ppm"]
   }
 ]

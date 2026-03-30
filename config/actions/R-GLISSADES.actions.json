@@ -2,53 +2,48 @@
   {
     "id": "A-R-GLISSADES-001",
     "risk_id": "R-GLISSADES",
-    "title": "Mesure technique prioritaire",
-    "type": "EPI",
-    "impact": "Réduction du risque",
-    "difficulty": "Faible",
+    "title": "Revêtements de sol antidérapants et traitement des surfaces glissantes",
+    "type": "Technique",
+    "description": "Remplacer ou traiter les revêtements de sol glissants (carrelage lisse, parquet verni) par des matériaux antidérapants dans les zones à risque : cuisine, sanitaires, zones d'entrée, quais de déchargement. Coefficient de frottement minimal R 9 (usage intérieur léger) à R 13 (zones grasses, cuisine industrielle). Appliquer des bandes antidérapantes sur les escaliers et zones de transition. Colmater les irrégularités de sol.",
+    "impact": "Suppression du facteur contributif principal des glissades (sol lisse mouillé ou gras). Les chutes de plain-pied représentent 40% des accidents avec arrêt. Réduction immédiate des glissades sur les surfaces traitées.",
+    "difficulty": "Moyenne",
     "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "naf_specific": ["56", "10", "86", "87", "52"],
+    "references": ["INRS ED 6102", "Norme DIN 51130 (coefficient R)", "Code du travail R.4224-7"]
   },
   {
     "id": "A-R-GLISSADES-002",
     "risk_id": "R-GLISSADES",
-    "title": "Procédure / organisation",
-    "type": "Technique",
-    "impact": "Réduction du risque",
+    "title": "Nettoyage immédiat des déversements et signalisation des sols mouillés",
+    "type": "Organisationnelle",
+    "description": "Mettre en place une procédure de signalisation et nettoyage immédiat de tout déversement : panneau 'sol mouillé' disponible en permanence à chaque poste, kit d'absorbants accessibles, obligation de signaler tout déversement. Former tous les salariés (y compris les non-ménagers) à l'obligation de signalement. Inclure la vérification des sols dans les rondes quotidiennes.",
+    "impact": "Réduction du temps d'exposition aux surfaces mouillées. Élimination des glissades sur déversements non signalés. Responsabilisation collective pour la sécurité des circulations.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "naf_specific": ["56", "47", "86", "10"],
+    "references": ["INRS ED 6102", "Guide restauration collective hygiène et sécurité"]
   },
   {
     "id": "A-R-GLISSADES-003",
     "risk_id": "R-GLISSADES",
-    "title": "Formation/sensibilisation ciblée",
+    "title": "Chaussures de sécurité antidérapantes adaptées au milieu de travail",
     "type": "EPI",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
+    "description": "Fournir des chaussures de sécurité avec semelle antidérapante adaptée : SRC (résistance combinée céramique + acier inox) pour les zones grasses et mouillées, S1P pour les zones sèches avec risque de perforation. Marquer au sol les zones où le port est obligatoire. Contrôler l'état des semelles tous les 3 mois (usure, colmatage des sculptures). Former les salariés au nettoyage des semelles avant d'entrer dans les zones à risque.",
+    "impact": "Réduction de 30-50% des glissades lors du port systématique de chaussures antidérapantes adaptées. Protection contre les chutes lors des déplacements en zones mouillées ou grasses.",
+    "difficulty": "Faible",
     "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "naf_specific": ["56", "10", "47"],
+    "references": ["EN ISO 20345 (classe SRC)", "INRS ED 6102"]
   },
   {
     "id": "A-R-GLISSADES-004",
     "risk_id": "R-GLISSADES",
-    "title": "EPI adaptés et contrôlés",
-    "type": "EPI",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
+    "title": "Éclairage suffisant des voies de circulation et élimination des obstacles",
+    "type": "Technique",
+    "description": "Maintenir un éclairage ≥ 200 lux dans les allées de circulation et ≥ 150 lux dans les escaliers (norme EN 12464-1). Installer des veilleuses à détection de mouvement dans les zones à circulation nocturne. Supprimer tous les obstacles en allées (câbles au sol, palettes, matériels hors de leur zone). Peindre les seuils de portes et changements de niveaux de sol en couleur contrastante (jaune ou rouge).",
+    "impact": "Meilleure visibilité des obstacles et du sol. Prévention des trébuchements en plus des glissades. Réduction des chutes de plain-pied liées aux défauts d'éclairage et d'encombrement.",
+    "difficulty": "Faible",
     "cost": "Faible",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "references": ["NF EN 12464-1", "INRS ED 6102", "Code du travail R.4224-7 à R.4224-12"]
   }
 ]

@@ -2,53 +2,47 @@
   {
     "id": "A-R-ROUTIER-001",
     "risk_id": "R-ROUTIER",
-    "title": "Mesure technique prioritaire",
-    "type": "Technique",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
+    "title": "Plan de déplacements professionnels et politique véhicule",
+    "type": "Organisationnelle",
+    "description": "Établir une politique véhicule documentée : âge et kilométrage maximaux du parc, contrôle technique à jour, vérification systématique (pneus, freins, éclairage) mensuelle. Limiter les trajets nocturnes et les déplacements > 500 km/jour. Interdire l'usage du téléphone au volant (kit mains-libres intégré obligatoire). Tracer les déplacements longue distance.",
+    "impact": "Réduction de l'exposition au risque routier (1ère cause d'accidents mortels du travail en France). Véhicules en bon état mécanique. Limitation de la fatigue des conducteurs.",
+    "difficulty": "Faible",
     "cost": "Faible",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "naf_specific": ["49", "52", "62", "69", "71", "45"],
+    "references": ["INRS ED 6028", "Code de la route L.412-6bis", "Accord de branche transport"]
   },
   {
     "id": "A-R-ROUTIER-002",
     "risk_id": "R-ROUTIER",
-    "title": "Procédure / organisation",
-    "type": "EPI",
-    "impact": "Réduction du risque",
+    "title": "Formation sécurité routière et éco-conduite",
+    "type": "Formation",
+    "description": "Organiser une formation à la conduite préventive (1 à 2 jours) pour tous les salariés grands rouleurs (> 15 000 km/an). Contenu : distance de sécurité, gestion de la fatigue, conduite sur routes mouillées, conduite de nuit. Proposer la formation à l'éco-conduite combinée (réduction des risques + économies carburant). Renouveler tous les 3 ans.",
+    "impact": "Réduction des accidents de la route professionnels de 20 à 30% sur 3 ans constatée en entreprise. Économies de carburant de 10-15%. Réduction des coûts d'assurance véhicule.",
     "difficulty": "Faible",
-    "cost": "Faible",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "cost": "Moyen",
+    "references": ["INRS ED 6028", "Référentiel conduite préventive IBSR"]
   },
   {
     "id": "A-R-ROUTIER-003",
     "risk_id": "R-ROUTIER",
-    "title": "Formation/sensibilisation ciblée",
+    "title": "Gestion du temps de conduite et planification des tournées",
     "type": "Organisationnelle",
-    "impact": "Réduction du risque",
+    "description": "Planifier les tournées pour respecter les durées maximales de conduite (transport routier : 9h/jour, 56h/semaine). Prévoir les temps de pause obligatoires (45 min après 4h30 de conduite). Intégrer les aléas dans les plannings (éviter les délais impossibles). Utiliser les outils téléphoniques pour signaler tout retard sans se mettre en danger.",
+    "impact": "Élimination de la pression temporelle comme facteur de prise de risque. Réduction de la fatigue de conduite. Conformité réglementaire (règlement CE 561/2006).",
     "difficulty": "Moyenne",
-    "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "cost": "Faible",
+    "naf_specific": ["49", "52"],
+    "references": ["Règlement CE 561/2006", "INRS ED 6084"]
   },
   {
     "id": "A-R-ROUTIER-004",
     "risk_id": "R-ROUTIER",
-    "title": "EPI adaptés et contrôlés",
+    "title": "Équipements de sécurité véhicule et kit de survie",
     "type": "EPI",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
+    "description": "Équiper chaque véhicule professionnel : gilet jaune rétroréfléchissant EN 471 accessible sans sortir du véhicule, triangle de signalisation, kit premiers secours. Pour les VUL et poids lourds : dashcam, détecteur d'angle mort, aide au maintien de voie. Contrôler le contenu du kit sécurité à chaque vérification mensuelle.",
+    "impact": "Protection lors des pannes et accidents sur route. Réduction du risque de suraccident (collision par un tiers). Conformité au code de la route.",
+    "difficulty": "Faible",
     "cost": "Faible",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "references": ["Code de la route R.416-19", "EN 471"]
   }
 ]

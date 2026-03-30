@@ -2,53 +2,47 @@
   {
     "id": "A-R-CHIMIQUE-001",
     "risk_id": "R-CHIMIQUE",
-    "title": "Mesure technique prioritaire",
+    "title": "Inventaire des produits chimiques et mise à jour des FDS",
     "type": "Organisationnelle",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
-    "cost": "Élevé",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "description": "Établir et tenir à jour l'inventaire complet des produits chimiques utilisés. Récupérer les fiches de données de sécurité (FDS) à jour (≤ 3 ans) auprès des fournisseurs. Classer les produits par danger (pictogrammes SGA/CLP). Identifier les CMR, irritants, corrosifs, inflammables. Afficher les FDS aux postes d'utilisation.",
+    "impact": "Connaissance complète des risques chimiques présents. Base indispensable pour les mesures de prévention. Conformité réglementaire (document unique et FDS accessibles).",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "references": ["INRS ED 697", "Règlement CLP (CE) 1272/2008", "Code du travail R.4412-38"]
   },
   {
     "id": "A-R-CHIMIQUE-002",
     "risk_id": "R-CHIMIQUE",
-    "title": "Procédure / organisation",
-    "type": "Organisationnelle",
-    "impact": "Réduction du risque",
-    "difficulty": "Faible",
+    "title": "Substitution des produits dangereux par des alternatives moins nocives",
+    "type": "Technique",
+    "description": "Remplacer les solvants organiques par des produits à base aqueuse. Substituer les produits classés CMR cat. 1A/1B par des alternatives non CMR dès que techniquement faisable. Consulter le fournisseur et le médecin du travail pour chaque substitution. Documenter les décisions de substitution ou les raisons d'impossibilité technique.",
+    "impact": "Élimination du risque chimique à la source. Prévention des maladies professionnelles (cancers, atteintes respiratoires, cutanées). ROI via réduction des coûts de gestion des déchets dangereux.",
+    "difficulty": "Élevée",
     "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "naf_specific": ["20", "22", "24", "28", "45"],
+    "references": ["INRS ED 6004", "Code du travail R.4412-66"]
   },
   {
     "id": "A-R-CHIMIQUE-003",
     "risk_id": "R-CHIMIQUE",
-    "title": "Formation/sensibilisation ciblée",
+    "title": "Ventilation et captage à la source des émanations",
     "type": "Technique",
-    "impact": "Réduction du risque",
+    "description": "Installer un système de ventilation général dilution (VGD) ou aspiration captage à la source (ACS) aux postes d'utilisation. Dimensionner selon les flux massiques et valeurs limites d'exposition (VLE/VME). Maintenir une dépression dans les zones polluées. Contrôler l'efficacité par mesures d'empoussièrement annuelles.",
+    "impact": "Maintien des concentrations en dessous des VLE. Protection des voies respiratoires sans EPI contraignant. Réduction des risques d'explosion pour les solvants inflammables.",
     "difficulty": "Faible",
-    "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "cost": "Élevé",
+    "naf_specific": ["20", "22", "24", "28", "30", "47"],
+    "references": ["INRS ED 695", "INRS ED 6008", "Code du travail R.4222-1"]
   },
   {
     "id": "A-R-CHIMIQUE-004",
     "risk_id": "R-CHIMIQUE",
-    "title": "EPI adaptés et contrôlés",
+    "title": "EPI chimiques adaptés : gants, masques, lunettes",
     "type": "EPI",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
+    "description": "Sélectionner les EPI selon les propriétés physico-chimiques des produits (gants EN 374, masque FFP2/FFP3 ou cartouche adaptée, lunettes EN 166). Afficher les EPI obligatoires aux postes. Vérifier les dates de péremption des cartouches filtrantes (6 mois après ouverture). Former à l'habillage/déshabillage et à la vérification d'étanchéité.",
+    "impact": "Protection individuelle efficace contre les expositions résiduelles. Réduction des dermites professionnelles et des irritations respiratoires.",
+    "difficulty": "Faible",
     "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "references": ["INRS ED 112", "Normes EN 374 / EN 166 / EN 149"]
   }
 ]

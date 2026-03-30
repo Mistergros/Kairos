@@ -19,7 +19,7 @@ function computeScore(evaluation: RiskEvaluation, action: Action, nafCode?: stri
   const base = evaluation.score || 0;
   const nafBoost = action.naf_specific && nafCode && action.naf_specific.some((code) => nafCode.startsWith(code)) ? 1.25 : 1;
   const priorityBoost = PRIORITY_WEIGHTS[evaluation.priority] ?? 1;
-  const impactBoost = action.impact ? Math.min(action.impact.length / 80, 1.3) : 1;
+  const impactBoost = action.impact ? 1 + Math.min(action.impact.length / 160, 0.3) : 1;
   return Math.round(base * nafBoost * priorityBoost * difficultyWeight(action) * impactBoost);
 }
 

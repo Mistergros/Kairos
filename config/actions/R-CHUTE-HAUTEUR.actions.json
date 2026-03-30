@@ -2,53 +2,48 @@
   {
     "id": "A-R-CHUTE-HAUTEUR-001",
     "risk_id": "R-CHUTE-HAUTEUR",
-    "title": "Mesure technique prioritaire",
-    "type": "EPI",
-    "impact": "Réduction du risque",
+    "title": "Protection collective : garde-corps, plateformes sécurisées",
+    "type": "Technique",
+    "description": "Installer des garde-corps conformes (hauteur 1 m, lisse intermédiaire à 0,45 m, plinthe à 0,10 m) sur toutes les zones en hauteur > 0,5 m. Privilégier les plateformes individuelles roulantes (PIR) ou nacelles élévatrices aux échelles. Condamner physiquement les ouvertures dans les planchers. Principes de protection collective avant EPI.",
+    "impact": "Suppression du risque de chute mortelle. Conformité réglementaire (Code du travail R.4323-58). Réduction drastique des AT graves liés aux chutes de hauteur (1ère cause de mortalité au travail).",
     "difficulty": "Faible",
-    "cost": "Faible",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "cost": "Moyen",
+    "naf_specific": ["41", "42", "43", "45", "52"],
+    "references": ["INRS ED 131", "Code du travail R.4323-58 à R.4323-90"]
   },
   {
     "id": "A-R-CHUTE-HAUTEUR-002",
     "risk_id": "R-CHUTE-HAUTEUR",
-    "title": "Procédure / organisation",
-    "type": "Humaine",
-    "impact": "Réduction du risque",
-    "difficulty": "Élevée",
-    "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "title": "Plan de prévention et permis de travail en hauteur",
+    "type": "Organisationnelle",
+    "description": "Établir un plan de prévention écrit pour toute intervention > 40h/an ou présentant des risques particuliers (chute, co-activité). Délivrer un permis de travail pour les interventions ponctuelles en hauteur. Analyser et valider les modes opératoires avant intervention. Vérifier les habilitations des intervenants extérieurs.",
+    "impact": "Préparation rigoureuse des interventions. Réduction des prises de risque liées aux urgences. Responsabilité juridique partagée et documentée.",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "naf_specific": ["41", "42", "43"],
+    "references": ["INRS ED 941", "Code du travail R.4512-6"]
   },
   {
     "id": "A-R-CHUTE-HAUTEUR-003",
     "risk_id": "R-CHUTE-HAUTEUR",
-    "title": "Formation/sensibilisation ciblée",
-    "type": "Technique",
-    "impact": "Réduction du risque",
+    "title": "Formation travail en hauteur et habilitation échafaudages",
+    "type": "Formation",
+    "description": "Former et habiliter les salariés travaillant en hauteur : montage/démontage d'échafaudages (R408 CACES ou formation constructeur), utilisation des PEMP (CACES R486 A ou B), travail sur toiture avec ligne de vie. Renouveler les CACES tous les 5 ans. Vérifier les aptitudes médicales.",
+    "impact": "Réduction des comportements à risque (utilisation incorrecte d'échelle). Conformité réglementaire (habilitation PEMP obligatoire). Personnel compétent et responsabilisé.",
     "difficulty": "Moyenne",
     "cost": "Moyen",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "references": ["CACES R408", "CACES R486", "INRS ED 6087"]
   },
   {
     "id": "A-R-CHUTE-HAUTEUR-004",
     "risk_id": "R-CHUTE-HAUTEUR",
-    "title": "EPI adaptés et contrôlés",
-    "type": "Humaine",
-    "impact": "Réduction du risque",
+    "title": "EPI antichute : harnais, longe, ligne de vie",
+    "type": "EPI",
+    "description": "En dernier recours (impossible de mettre en place une protection collective), équiper les salariés de harnais antichute EN 361 avec longe à absorption d'énergie EN 355. Installer des lignes de vie horizontales ou des points d'ancrage EN 795. Vérifier annuellement tous les EPI antichute par une personne compétente. Remplacer après tout choc.",
+    "impact": "Protection individuelle en dernier recours. Limite les conséquences d'une chute (arrêt de la chute). Conformité réglementaire pour les travaux en toiture.",
     "difficulty": "Moyenne",
-    "cost": "Élevé",
-    "references": [
-      "INRS",
-      "CARSAT"
-    ]
+    "cost": "Moyen",
+    "naf_specific": ["41", "43"],
+    "references": ["INRS ED 6087", "EN 361", "EN 795", "Code du travail R.4323-95"]
   }
 ]

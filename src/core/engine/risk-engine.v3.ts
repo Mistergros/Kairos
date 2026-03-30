@@ -554,7 +554,7 @@ export class RiskEngineV3 {
   }
 
   private baseScoreFor(risk: Risk, input: RiskEngineV3Input) {
-    const defaultBase = activityConfig.default || { severity: 7, probability: 6, control: 1 };
+    const defaultBase = activityConfig.default || { severity: 7, probability: 6, control: 2 };
     const activityKey = input.activity || "";
     const activityTable = activityKey && activityConfig.activities ? activityConfig.activities[activityKey] : undefined;
     const activityScore = activityTable?.[risk.id] || activityTable?.default || defaultBase;

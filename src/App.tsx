@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route, NavLink, Navigate } from "react-router-dom";
-import { useMemo } from "react";
-import { LayoutDashboard, Building2, ShieldCheck, ListChecks, Download, Clock3, CreditCard } from "lucide-react";
+import { useMemo, useState, useEffect, type ReactNode } from "react";
+import { useUser } from "@clerk/clerk-react";
+import { Menu, X } from "lucide-react";
+import { LayoutDashboard, Building2, ShieldCheck, ListChecks, Download, Clock3, CreditCard, UserCircle } from "lucide-react";
 import { Dashboard } from "./pages/Dashboard";
 import { Units } from "./pages/Units";
 import { Inventory } from "./pages/Inventory";
@@ -9,11 +11,12 @@ import { Exports } from "./pages/Exports";
 import { Versions } from "./pages/Versions";
 import { Pricing } from "./pages/Pricing";
 import LandingPage from "./pages/Landing";
+import AccountPage from "./pages/Account";
+import SignInPage from "./pages/SignIn";
+import SignUpPage from "./pages/SignUp";
 import { ContextSelectors } from "./components/Selectors";
+import { Onboarding } from "./components/Onboarding";
 import { useDuerpStore } from "./state/store";
-import { BlueprintDashboard } from "./app/pages/BlueprintDashboard";
-import { WizardPage } from "./app/pages/WizardPage";
-import { ActionPlanPage as BlueprintActionPlanPage } from "./app/pages/ActionPlanPage";
 import { DuerpResults } from "./pages/DuerpResults";
 
 const navItems = [
@@ -24,7 +27,38 @@ const navItems = [
   { path: "/exports", label: "Exports", icon: Download },
   { path: "/versions", label: "Versions", icon: Clock3 },
   { path: "/pricing", label: "Plans & Tarifs", icon: CreditCard },
+  { path: "/mon-compte", label: "Mon compte", icon: UserCircle },
 ];
+
+const bypassAuth = import.meta.env.VITE_BYPASS_AUTH === "true";
+
+function FullPageLoader({ label = "Chargement..." }: { label?: string }) {
+  return (
+    <div className="min-h-screen bg-white text-slate-500 flex items-center justify-center">
+      {label}
+    </div>
+  );
+}
+
+function RequireAuth({ children }: { children: ReactNode }) {
+  const { isLoaded, isSignedIn } = useUser();
+  if (bypassAuth) return <>{children}</>;
+  if (!isLoaded) return <FullPageLoader />;
+  if (!isSignedIn) return <Navigate to="/sign-in" replace />;
+  return <>{children}</>;
+}
+
+function RequireSubscription({ children }: { children: ReactNode }) {
+  const { isLoaded, isSignedIn, user } = useUser();
+  if (bypassAuth) return <>{children}</>;
+  if (!isLoaded) return <FullPageLoader />;
+  if (!isSignedIn) return <Navigate to="/landing" replace />;
+  const status = String((user?.publicMetadata as any)?.subscriptionStatus || "");
+  const hasAccess = status === "active" || status === "trialing";
+  // En test, on laisse passer si le statut est absent mais l'utilisateur est connecté
+  if (!hasAccess && status) return <Navigate to="/landing?subscription=required" replace />;
+  return <>{children}</>;
+}
 
 function DashboardRoutes() {
   const {
@@ -37,7 +71,19 @@ function DashboardRoutes() {
     assessments,
     actions,
     versions,
+    setOrgId,
+    loadFromSupabase,
+    syncStatus,
   } = useDuerpStore();
+
+  const { user } = useUser();
+
+  // Déclenche le sync Supabase dès que l'identité Clerk est disponible
+  useEffect(() => {
+    if (!user?.id) return;
+    setOrgId(user.id);
+    loadFromSupabase(user.id);
+  }, [user?.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const lastUpdate = useMemo(() => {
     const timestamps: number[] = [];
@@ -53,40 +99,72 @@ function DashboardRoutes() {
     ? lastUpdate.toLocaleDateString("fr-FR", { day: "2-digit", month: "short", year: "numeric" })
     : "Aucune mise à jour";
 
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const SidebarContent = () => (
+    <div className="px-5 py-6 h-full flex flex-col">
+      <div className="flex items-center justify-between">
+        <img src="/Kaijos_logo.png" alt="Kaijos" className="h-[160px] w-auto object-contain drop-shadow-lg" />
+        <button className="md:hidden text-white/70 hover:text-white" onClick={() => setSidebarOpen(false)}>
+          <X size={20} />
+        </button>
+      </div>
+      <div className="mt-6 space-y-2 text-sm">
+        {navItems.map((item) => {
+          const Icon = item.icon;
+          return (
+            <NavLink
+              key={item.path}
+              to={item.path}
+              end={item.end}
+              onClick={() => setSidebarOpen(false)}
+              className={({ isActive }) =>
+                `flex items-center gap-3 rounded-xl px-3 py-2 transition hover:bg-white/10 ${
+                  isActive ? "bg-white/15 font-semibold" : "text-white/80"
+                }`
+              }
+            >
+              <Icon size={18} /> {item.label}
+            </NavLink>
+          );
+        })}
+      </div>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_20%_20%,rgba(91,97,246,0.08),transparent_35%),linear-gradient(135deg,rgba(91,97,246,0.08),rgba(0,179,255,0.12))] text-ink flex">
+      {/* Sidebar desktop */}
       <aside className="hidden md:flex w-64 flex-col bg-gradient-to-b from-kairos to-azure text-white shadow-2xl">
-        <div className="px-5 py-6">
-          <div className="flex items-center gap-3">
-            <img src="/Kaijos_logo.png" alt="Kaijos" className="h-[192px] w-auto object-contain drop-shadow-lg" />
-          </div>
-          <div className="mt-6 space-y-2 text-sm">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              return (
-                <NavLink
-                  key={item.path}
-                  to={item.path}
-                  end={item.end}
-                  className={({ isActive }) =>
-                    `flex items-center gap-3 rounded-xl px-3 py-2 transition hover:bg-white/10 ${
-                      isActive ? "bg-white/15 font-semibold" : "text-white/80"
-                    }`
-                  }
-                >
-                  <Icon size={18} /> {item.label}
-                </NavLink>
-              );
-            })}
-          </div>
-        </div>
+        <SidebarContent />
       </aside>
 
-      <main className="flex-1">
-        <header className="flex flex-col gap-2 border-b border-slate/10 bg-white/70 px-6 py-4 backdrop-blur-sm md:flex-row md:items-center md:justify-between">
+      {/* Sidebar mobile : drawer + backdrop */}
+      {sidebarOpen && (
+        <div className="fixed inset-0 z-40 flex md:hidden">
+          <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onClick={() => setSidebarOpen(false)} />
+          <aside className="relative w-64 flex-col bg-gradient-to-b from-kairos to-azure text-white shadow-2xl flex z-50">
+            <SidebarContent />
+          </aside>
+        </div>
+      )}
+
+      <main className="flex-1 min-w-0">
+        <header className="flex items-center gap-3 border-b border-slate/10 bg-white/70 px-4 py-3 backdrop-blur-sm md:px-6 md:py-4">
+          <button
+            className="md:hidden rounded-lg border border-slate/20 p-2 text-slate-700 hover:bg-slate/5"
+            onClick={() => setSidebarOpen(true)}
+          >
+            <Menu size={18} />
+          </button>
+          <div className="flex-1 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
           <div>
             <p className="text-xs uppercase tracking-wide text-slate/60">Kaijos - by Milante Consulting</p>
-            <p className="text-xs text-slate/60">Dernière MAJ : {lastUpdateLabel}</p>
+            <p className="text-xs text-slate/60">
+              Dernière MAJ : {lastUpdateLabel}
+              {syncStatus === "syncing" && <span className="ml-2 text-ocean animate-pulse">● Sync…</span>}
+              {syncStatus === "error" && <span className="ml-2 text-amber-500" title="Données locales — reconnexion en attente">● Hors ligne</span>}
+            </p>
           </div>
           <ContextSelectors
             establishments={establishments}
@@ -96,8 +174,10 @@ function DashboardRoutes() {
             onSelectEstablishment={setSelectedEstablishment}
             onSelectWorkUnit={setSelectedWorkUnit}
           />
+          </div>
         </header>
 
+        <Onboarding />
         <div className="px-4 py-6 md:px-8">
           <Routes>
             <Route path="/" element={<Dashboard />} />
@@ -108,9 +188,6 @@ function DashboardRoutes() {
             <Route path="/versions" element={<Versions />} />
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/duerp-results" element={<DuerpResults />} />
-            <Route path="/blueprint" element={<BlueprintDashboard />} />
-            <Route path="/blueprint/wizard" element={<WizardPage />} />
-            <Route path="/blueprint/plan" element={<BlueprintActionPlanPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
@@ -124,7 +201,24 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/landing" element={<LandingPage />} />
-        <Route path="/*" element={<DashboardRoutes />} />
+        <Route path="/sign-in/*" element={<SignInPage />} />
+        <Route path="/sign-up/*" element={<SignUpPage />} />
+        <Route
+          path="/mon-compte"
+          element={
+            <RequireAuth>
+              <AccountPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/*"
+          element={
+            <RequireSubscription>
+              <DashboardRoutes />
+            </RequireSubscription>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

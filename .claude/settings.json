@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \":*)",
+      "Bash(find /c/Users/PierreMAREY-SEMPER/DUERP/duerp-app/src/pages -type f -name *.tsx -o -name *.ts)",
+      "Bash(find /c/Users/PierreMAREY-SEMPER/DUERP/duerp-app/src/components -type f -name *.tsx -o -name *.ts)"
+    ]
+  }
+}
