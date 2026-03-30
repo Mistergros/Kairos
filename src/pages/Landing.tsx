@@ -451,23 +451,6 @@ const USE_CASES: UseCase[] = [
 ============================================================ */
 
 /* Icônes légères (inline SVG) */
-function IconBadge(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" {...props}>
-      <path d="M12 3l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.9 6.8 19l1-5.8-4.2-4.1 5.8-.8L12 3Z"
-        stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>
-  );
-}
-function IconBriefcase(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" {...props}>
-      <rect x="3" y="7" width="18" height="12" rx="2.2" stroke="currentColor" strokeWidth="1.8"/>
-      <path d="M9 7V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1" stroke="currentColor" strokeWidth="1.8"/>
-      <path d="M3 12h18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
-    </svg>
-  );
-}
 function IconSwitch(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" {...props}>
@@ -496,59 +479,6 @@ function IconStarList(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-const Dot = () => (
-  <span className="inline-block h-2 w-2 rounded-full bg-emerald-500 mt-1.5 shrink-0" />
-);
-
-/* Tuile générique avec en-tête icône + titre + accent doux */
-function Tile({
-  title,
-  icon,
-  children,
-}: {
-  title: string;
-  icon: React.ReactNode;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="rounded-2xl border border-slate-200 dark:border-slate-700 p-6 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition">
-      <div className="flex items-center gap-2">
-        <span className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">
-          {icon}
-        </span>
-        <h4 className="text-[15px] font-semibold tracking-wide text-slate-900 dark:text-white">{title}</h4>
-      </div>
-      <div className="mt-3 text-[15px] leading-relaxed text-slate-700 dark:text-slate-300">{children}</div>
-    </div>
-  );
-}
-
-/* Carte KPI plus “premium” */
-function KpiCard({ value, label }: { value: string; label: string }) {
-  return (
-    <div className="rounded-2xl bg-white dark:bg-slate-950 ring-1 ring-slate-200 dark:ring-slate-800 px-4 py-5 text-center">
-      <div className="mx-auto mb-2 flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-300">
-        <IconBadge className="h-4 w-4" />
-      </div>
-      <div className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">{value}</div>
-      <div className="mt-1 text-[12px] leading-5 text-slate-600 dark:text-slate-400">{label}</div>
-    </div>
-  );
-}
-
-/* Bandeau titre + badge secteur harmonisé */
-function SectorRibbon({ label, accent, headline }: { label: string; accent: string; headline: string }) {
-  return (
-    <div className="flex flex-wrap items-center justify-center gap-3">
-      <span
-        className={`inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold text-white ${accent}`}
-      >
-        {label}
-      </span>
-      <span className="text-sm text-slate-600 dark:text-slate-300">{headline}</span>
-    </div>
-  );
-}
 
 /* ====== Composant principal ====== */
 export function UseCasesCompact({ data }: { data?: UseCase[] }) {
@@ -563,107 +493,134 @@ export function UseCasesCompact({ data }: { data?: UseCase[] }) {
 
   const current = React.useMemo(() => SOURCE.find((c) => c.id === tab)!, [SOURCE, tab]);
 
+  const accentColors: Record<string, string> = {
+    "bg-amber-600": "border-amber-400 text-amber-700 bg-amber-50",
+    "bg-indigo-600": "border-indigo-400 text-indigo-700 bg-indigo-50",
+    "bg-emerald-600": "border-emerald-400 text-emerald-700 bg-emerald-50",
+  };
+  const accentBtn = accentColors[current.accent] || "border-kairos text-kairos bg-kairos/5";
+
   return (
-    <section id="use-cases" className="w-full px-6 md:px-10 xl:px-16 py-24 bg-white dark:bg-slate-950">
-      <div className="mx-auto max-w-7xl">
-        {/* Titre section */}
-        <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl font-semibold text-slate-900 dark:text-white">Cas pratiques par secteur</h2>
-          <p className="mt-2 text-base md:text-lg text-slate-600 dark:text-slate-300">
-            Exemples anonymisés + aperçu DUERP, présentés de façon claire et rapide.
-          </p>
+    <section id="use-cases" className="w-full px-6 py-24 bg-white">
+      <div className="mx-auto max-w-6xl">
+
+        {/* Titre */}
+        <div className="text-center mb-12">
+          <span className="inline-block rounded-full bg-kairos/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-kairos mb-4">Cas pratiques</span>
+          <h2 className="text-4xl font-extrabold text-ink">Ils utilisent Kaijos dans leur secteur</h2>
+          <p className="mt-4 text-lg text-slate-500 max-w-2xl mx-auto">Exemples anonymisés — contexte, résultats et extraits du DUERP produit.</p>
         </div>
 
-        {/* Onglets secteurs */}
-        <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-8">
-          {SOURCE.map((c) => {
-            const selected = c.id === tab;
-            return (
-              <button
-                key={c.id}
-                onClick={() => setTab(c.id)}
-                className={`px-4 md:px-5 py-2 rounded-full text-[13px] md:text-[15px] font-semibold ring-1 transition
-                  ${selected
-                    ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900 ring-slate-900/10 dark:ring-white/10"
-                    : "bg-white text-slate-800 dark:bg-slate-800 dark:text-slate-200 ring-slate-300 dark:ring-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700"
-                  }`}
-              >
-                {c.label}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Bandeau secteur */}
-        <SectorRibbon label={current.label} accent={current.accent} headline={current.headline} />
-
-        {/* KPIs */}
-        <div className="mx-auto max-w-4xl mt-6">
-          <div className="grid grid-cols-3 gap-4">
-            {current.kpis.map((k) => (
-              <KpiCard key={k.label} value={k.value} label={k.label} />
-            ))}
-          </div>
-          <p className="mt-4 text-center text-[13px] text-slate-600 dark:text-slate-400">{current.sub}</p>
-        </div>
-
-        {/* 4 tuiles : Contexte / Avant→Après / DUERP / Points clés */}
-        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {/* Contexte */}
-          <Tile title="Contexte" icon={<IconBriefcase className="h-4 w-4" />}>
-            <div className="text-[12px] text-slate-500 dark:text-slate-400">
-              {current.case.org} • {current.case.size}
-            </div>
-            <p className="mt-2">{current.case.context}</p>
-          </Tile>
-
-          {/* Avant → Après */}
-          <Tile title="Avant → Après" icon={<IconSwitch className="h-4 w-4" />}>
-            <ul className="space-y-2">
-              {current.case.beforeAfter.slice(0, 3).map((x, idx) => (
-                <li key={idx} className="flex items-start gap-2">
-                  <Dot />
-                  <span>
-                    <span className="text-slate-500 dark:text-slate-400">Avant :</span> {x.before}
-                    <span className="text-slate-500 dark:text-slate-400"> → Après :</span> {x.after}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </Tile>
-
-          {/* DUERP (aperçu) */}
-          <Tile title="DUERP (aperçu)" icon={<IconDoc className="h-4 w-4" />}>
-            <div className="text-[12px] text-slate-500 dark:text-slate-400">{current.duerp.title}</div>
-            <ul className="mt-2 space-y-1">
-              {current.duerp.highlights.slice(0, 3).map((h) => (
-                <li key={h} className="flex items-start gap-2">
-                  <Dot />
-                  <span>{h}</span>
-                </li>
-              ))}
-            </ul>
-            <a
-              href={current.duerp.downloadUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-3 inline-flex text-sm font-semibold text-blue-600 hover:underline"
+        {/* Onglets */}
+        <div className="flex flex-wrap justify-center gap-3 mb-10">
+          {SOURCE.map((c) => (
+            <button
+              key={c.id}
+              onClick={() => setTab(c.id)}
+              className={`px-5 py-2 rounded-full text-sm font-semibold border transition ${
+                c.id === tab
+                  ? "bg-ink text-white border-ink"
+                  : "bg-white text-slate-600 border-slate-200 hover:border-slate-400"
+              }`}
             >
-              Télécharger un exemple →
-            </a>
-          </Tile>
+              {c.label}
+            </button>
+          ))}
+        </div>
 
-          {/* Points clés */}
-          <Tile title="Points clés" icon={<IconStarList className="h-4 w-4" />}>
-            <ul className="space-y-1">
-              {current.bullets.slice(0, 4).map((b) => (
-                <li key={b} className="flex items-start gap-2">
-                  <Dot />
-                  <span>{b}</span>
-                </li>
+        {/* Contenu — 2 colonnes */}
+        <div className="grid md:grid-cols-2 gap-8">
+
+          {/* Colonne gauche : contexte + avant/après */}
+          <div className="space-y-6">
+            {/* Contexte */}
+            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <span className={`rounded-full border px-3 py-1 text-xs font-bold ${accentBtn}`}>{current.label}</span>
+                <h3 className="font-bold text-ink text-lg">{current.headline}</h3>
+              </div>
+              <p className="text-xs text-slate-400 mb-1">{current.case.org} — {current.case.size}</p>
+              <p className="text-slate-600 leading-relaxed">{current.case.context}</p>
+            </div>
+
+            {/* KPIs */}
+            <div className="grid grid-cols-3 gap-4">
+              {current.kpis.map((k) => (
+                <div key={k.label} className="rounded-xl bg-ink text-white p-4 text-center">
+                  <p className="text-2xl font-extrabold text-kairos">{k.value}</p>
+                  <p className="text-xs text-slate-400 mt-1 leading-tight">{k.label}</p>
+                </div>
               ))}
-            </ul>
-          </Tile>
+            </div>
+
+            {/* Avant → Après */}
+            <div className="rounded-2xl border border-slate-200 bg-white p-6">
+              <h4 className="font-bold text-ink mb-4 flex items-center gap-2">
+                <IconSwitch className="h-4 w-4 text-kairos" /> Avant / Après Kaijos
+              </h4>
+              <div className="space-y-3">
+                {current.case.beforeAfter.slice(0, 3).map((x, i) => (
+                  <div key={i} className="grid grid-cols-2 gap-3 text-sm">
+                    <div className="rounded-lg bg-red-50 border border-red-100 px-3 py-2">
+                      <p className="text-[10px] font-bold uppercase text-red-400 mb-1">Avant</p>
+                      <p className="text-slate-600">{x.before}</p>
+                    </div>
+                    <div className="rounded-lg bg-green-50 border border-green-100 px-3 py-2">
+                      <p className="text-[10px] font-bold uppercase text-green-500 mb-1">Après</p>
+                      <p className="text-slate-700 font-medium">{x.after}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Colonne droite : ce que Kaijos gère + aperçu DUERP */}
+          <div className="space-y-6">
+            {/* Points clés */}
+            <div className="rounded-2xl border border-slate-200 bg-white p-6">
+              <h4 className="font-bold text-ink mb-4 flex items-center gap-2">
+                <IconStarList className="h-4 w-4 text-kairos" /> Ce que Kaijos gère pour ce secteur
+              </h4>
+              <ul className="space-y-2.5">
+                {current.bullets.slice(0, 4).map((b) => (
+                  <li key={b} className="flex items-start gap-3 text-sm text-slate-600">
+                    <span className="mt-0.5 h-5 w-5 shrink-0 rounded-full bg-kairos/10 text-kairos flex items-center justify-center text-[10px] font-bold">✓</span>
+                    {b}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Aperçu DUERP */}
+            <div className="rounded-2xl border border-slate-200 overflow-hidden">
+              <div className="bg-ink px-5 py-4 flex items-center justify-between">
+                <div>
+                  <p className="text-xs text-slate-400 uppercase tracking-widest mb-0.5">Document produit</p>
+                  <p className="text-white font-bold text-sm">{current.duerp.title}</p>
+                </div>
+                <IconDoc className="h-6 w-6 text-slate-400" />
+              </div>
+              <div className="bg-white p-5">
+                <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-3">Points couverts</p>
+                <ul className="space-y-2 mb-4">
+                  {current.duerp.highlights.map((h) => (
+                    <li key={h} className="flex items-start gap-2 text-sm text-slate-600">
+                      <span className="mt-1 h-1.5 w-1.5 rounded-full bg-kairos shrink-0" />
+                      {h}
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-2">Table des matières</p>
+                <ol className="space-y-1">
+                  {current.duerp.toc.slice(0, 5).map((t) => (
+                    <li key={t} className="text-xs text-slate-500">{t}</li>
+                  ))}
+                </ol>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
