@@ -85,7 +85,7 @@ function Navbar({
             disabled={isLoading}
             className="rounded-lg bg-kairos px-5 py-2 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50 transition"
           >
-            {isLoading ? "…" : "Essayer"}
+            {isLoading ? "…" : "Démarrer"}
           </button>
         </div>
       </div>
