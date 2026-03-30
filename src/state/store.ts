@@ -56,6 +56,7 @@ interface DUERPState {
   removeAssessment: (id: string) => void;
   updateAssessment: (id: string, payload: Partial<AssessmentInput>) => void;
   addAction: (payload: ActionInput) => void;
+  removeAction: (id: string) => void;
   updateAction: (id: string, payload: Partial<ActionItem>) => void;
   updateActionStatus: (id: string, status: ActionItem["status"]) => void;
   toggleActionStep: (actionId: string, stepId: string) => void;
@@ -272,6 +273,12 @@ export const useDuerpStore = create<DUERPState>()(
         set({ actions: [...state.actions, newAction] });
         const { orgId } = get();
         if (orgId) sync(() => upsertAction(orgId, newAction));
+      },
+
+      removeAction: (id) => {
+        set((state) => ({ actions: state.actions.filter((a) => a.id !== id) }));
+        const { orgId } = get();
+        if (orgId) sync(() => deleteAction(orgId, id));
       },
 
       updateAction: (id, payload) => {

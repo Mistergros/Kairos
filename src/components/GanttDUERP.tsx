@@ -18,15 +18,15 @@ export type GanttActionItem = {
   label: string;
   start: string | Date;
   end: string | Date;
-  color?: string; // si vide, dérivée du risque
+  color?: string;
 };
 
 export type GanttRiskItem = {
   riskId: string;
   label: string;
-  start: string | Date;   // sert à cadrer l’échelle
+  start: string | Date;
   end: string | Date;
-  color?: string;         // si vide, palette automatique
+  color?: string;
   actions: GanttActionItem[];
 };
 
@@ -39,8 +39,8 @@ export type GanttDUERPInput = {
 
 type Props = {
   data: GanttDUERPInput;
-  monthWidth?: number;   // largeur d’un mois (défaut 160 px)
-  showHeader?: boolean;  // défaut false
+  monthWidth?: number;
+  showHeader?: boolean;
 };
 
 /* ----------------- Thème & utils ----------------- */
@@ -49,31 +49,28 @@ const THEME = {
   gridA: '#F6F9FC',
   gridB: '#EEF3F7',
   muted: '#6B7683',
+  border: '#E8EEF3',
 
-  // colonne gauche compacte
-  leftCol: 240,
-  rightPad: 64,
-  monthBandTop: 96,
-  rowHeight: 120,
+  leftCol: 256,
+  rightPad: 32,
+  monthBandH: 88,  // hauteur de la bande mois en haut du SVG
 
-  // lignes d’action
-  baselineColor: 'rgba(0,0,0,0.18)',
-  baselineW: 2,
-  lineW: 4,
-  dotR: 5,
-  actionTopOffset: 48,
-  actionVSpace: 30,
+  riskHeaderH: 40, // hauteur de l'en-tête risque (label pill)
+  actionRowH: 34,  // hauteur par ligne d'action
+  rowPad: 8,       // padding bas de chaque groupe risque
+
+  barH: 18,        // hauteur des barres d'action dans le SVG
+  barR: 9,         // border-radius des barres
 };
 
-// palette variée
 const PALETTE = [
-  '#FF5A58', '#22A9F1', '#7C5CFF', '#46C37B',
-  '#F6C146', '#E26BD2', '#00B3A4', '#FF8A00',
+  '#5B61F6', '#22A9F1', '#46C37B', '#F6C146',
+  '#FF5A58', '#E26BD2', '#00B3A4', '#FF8A00',
 ];
 
 const parseDate = (v: Date | string) => (v instanceof Date ? v : new Date(v));
 
-const lighten = (hex: string, ratio = 0.35) => {
+const lighten = (hex: string, ratio = 0.9) => {
   const h = hex.replace('#', '');
   const v = h.length === 3 ? h.split('').map(c => c + c).join('') : h;
   const r = parseInt(v.slice(0, 2), 16);
@@ -95,10 +92,9 @@ const GanttDUERP: React.FC<Props> = ({
   const svgRef = useRef<SVGSVGElement | null>(null);
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
-  const view = useMemo(() => {
+  const finalView = useMemo(() => {
     if (!data.items?.length) return null;
 
-    // normalisation + couleurs
     const items = data.items.map((r, i) => {
       const riskColor = colorForRisk(i, r.color);
       return {
@@ -110,12 +106,11 @@ const GanttDUERP: React.FC<Props> = ({
           ...a,
           start: parseDate(a.start),
           end: parseDate(a.end),
-          color: a.color ?? lighten(riskColor, 0.25),
+          color: a.color ?? riskColor,
         })),
       };
     });
 
-    // bornes réelles
     const realMin = dfMin([
       parseDate(data.start),
       ...items.map(r => r.start as Date),
@@ -127,32 +122,27 @@ const GanttDUERP: React.FC<Props> = ({
       ...items.flatMap(r => r.actions.map(a => a.end as Date)),
     ]);
 
-    // timeline total = 1er janv (min) → 31 déc (max)
     const timelineStart = startOfYear(realMin);
     const timelineEnd   = endOfYear(realMax);
 
-    // mois couvrant tout le timeline
     const months = eachMonthOfInterval({ start: timelineStart, end: timelineEnd }).map((m, i, arr) => ({
-      label: format(m, 'MMMM', { locale: fr }).toUpperCase(),
+      label: format(m, 'MMM', { locale: fr }).toUpperCase(),
       start: i === 0 ? timelineStart : m,
       end: i === arr.length - 1 ? timelineEnd : endOfMonth(m),
       year: m.getFullYear(),
-      monthIndex: m.getMonth(), // 0..11
+      monthIndex: m.getMonth(),
     }));
 
-    // géométrie horizontale
     const leftPad = THEME.leftCol;
-    const rightPad = THEME.rightPad;
     const totalMonths = months.length;
     const timelinePixelWidth = totalMonths * monthWidth;
-    const widthPx = leftPad + rightPad + timelinePixelWidth;
+    const widthPx = leftPad + THEME.rightPad + timelinePixelWidth;
 
-    // mapping date -> x
     const totalDays = Math.max(1, differenceInDays(timelineEnd, timelineStart));
     const toX = (d: Date) =>
       leftPad + (differenceInDays(d, timelineStart) / totalDays) * timelinePixelWidth;
 
-    // lignes (par risque) avec hauteur adaptÇ¸e au nombre d'actions
+    // Chaque risque = 1 en-tête (riskHeaderH) + N lignes d'action (actionRowH) + rowPad
     const rows: Array<{
       risk: typeof items[number];
       y: number;
@@ -168,64 +158,58 @@ const GanttDUERP: React.FC<Props> = ({
       }>;
     }> = [];
 
-    let yCursor = THEME.monthBandTop + 10;
+    let yCursor = THEME.monthBandH;
     items.forEach((risk) => {
+      const numActions = Math.max(1, risk.actions.length);
+      const rowHeight = THEME.riskHeaderH + numActions * THEME.actionRowH + THEME.rowPad;
+
       const actions = risk.actions.map((a, ia) => {
         const shortLabel =
-          typeof a.label === 'string' && a.label.length > 34
-            ? `${a.label.slice(0, 34).trim()}…`
+          typeof a.label === 'string' && a.label.length > 32
+            ? `${a.label.slice(0, 32).trim()}…`
             : a.label;
+        const yMid = yCursor + THEME.riskHeaderH + ia * THEME.actionRowH + THEME.actionRowH / 2;
         return {
           id: a.id,
           x1: toX(a.start as Date),
           x2: toX(a.end as Date),
-          yMid: yCursor + THEME.actionTopOffset + ia * THEME.actionVSpace,
+          yMid,
           label: a.label,
           shortLabel,
           color: a.color!,
         };
       });
-      const dynamicHeight = Math.max(
-        THEME.rowHeight,
-        THEME.actionTopOffset + (actions.length > 0 ? (actions.length - 1) * THEME.actionVSpace : 0) + 42
-      );
-      rows.push({ risk, y: yCursor, rowHeight: dynamicHeight, actions });
-      yCursor += dynamicHeight;
+
+      rows.push({ risk, y: yCursor, rowHeight, actions });
+      yCursor += rowHeight;
     });
 
-    // dimension verticale
-    const lastRow = rows[rows.length - 1];
-    const lastY = lastRow ? lastRow.y + lastRow.rowHeight : THEME.monthBandTop + 36;
-    const heightPx = Math.max(lastY + 110, THEME.monthBandTop + 340);
-    const gridHeight = heightPx - THEME.monthBandTop - 70;
+    const heightPx = Math.max(yCursor + 40, THEME.monthBandH + 200);
 
-    // index du mois courant dans la frise
     const today = new Date();
+    const todayX = toX(today);
     let currentMonthIndex = Math.floor(differenceInDays(startOfMonth(today), timelineStart) / 30.4375);
-    // borne dans [0, totalMonths-1]
     currentMonthIndex = Math.max(0, Math.min(totalMonths - 1, currentMonthIndex));
 
     return {
       months,
       widthPx,
       heightPx,
-      gridHeight,
       toX,
       leftPad,
-      rightPad,
       rows,
       monthWidth,
       currentMonthIndex,
+      todayX,
+      timelinePixelWidth,
     };
   }, [data, monthWidth]);
 
-  // Auto-scroll pour démarrer sur le mois courant
   useEffect(() => {
-    if (!view || !scrollRef.current) return;
-    const target = view.currentMonthIndex * view.monthWidth;
-    // petit offset pour coller le mois courant à gauche
+    if (!finalView || !scrollRef.current) return;
+    const target = Math.max(0, finalView.currentMonthIndex * finalView.monthWidth - 20);
     scrollRef.current.scrollLeft = target;
-  }, [view]);
+  }, [finalView]);
 
   const exportSVG = () => {
     if (!svgRef.current) return;
@@ -239,7 +223,7 @@ const GanttDUERP: React.FC<Props> = ({
   };
 
   const exportPNG = () => {
-    if (!svgRef.current) return;
+    if (!svgRef.current || !finalView) return;
     const serializer = new XMLSerializer();
     const source = serializer.serializeToString(svgRef.current);
     const svgBlob = new Blob([source], { type: 'image/svg+xml;charset=utf-8' });
@@ -247,12 +231,11 @@ const GanttDUERP: React.FC<Props> = ({
     const img = new Image();
     img.onload = () => {
       const canvas = document.createElement('canvas');
-      const width = svgRef.current?.viewBox.baseVal.width || svgRef.current?.clientWidth || view!.widthPx;
-      const height = svgRef.current?.viewBox.baseVal.height || svgRef.current?.clientHeight || view!.heightPx;
-      canvas.width = width; canvas.height = height;
+      canvas.width = finalView.widthPx;
+      canvas.height = finalView.heightPx;
       const ctx = canvas.getContext('2d'); if (!ctx) return;
-      ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, width, height);
-      ctx.drawImage(img, 0, 0, width, height);
+      ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       canvas.toBlob((b) => {
         if (!b) return;
         const a = document.createElement('a');
@@ -264,10 +247,12 @@ const GanttDUERP: React.FC<Props> = ({
     img.src = url;
   };
 
-  if (!view) {
-    return <div style={{ color: THEME.ink, fontFamily: 'system-ui, -apple-system, Segoe UI, Roboto, sans-serif' }}>
-      <p style={{ color: THEME.muted }}>Aucune donnée pour le Gantt.</p>
-    </div>;
+  if (!finalView) {
+    return (
+      <div style={{ fontFamily: 'system-ui, sans-serif', color: THEME.muted, padding: 16 }}>
+        Aucune donnée pour le Gantt.
+      </div>
+    );
   }
 
   return (
@@ -277,182 +262,145 @@ const GanttDUERP: React.FC<Props> = ({
         gridTemplateColumns: `${THEME.leftCol}px 1fr`,
         borderRadius: 16,
         background: '#fff',
-        boxShadow: '0 8px 24px rgba(15,34,51,0.08)',
-        border: '1px solid #E8EEF3',
+        boxShadow: '0 4px 20px rgba(15,34,51,0.07)',
+        border: `1px solid ${THEME.border}`,
         fontFamily: 'system-ui, -apple-system, Segoe UI, Roboto, sans-serif',
         color: THEME.ink,
-        width: '100%',            // <— ne déborde pas du layout
+        width: '100%',
         maxWidth: '100%',
+        overflow: 'hidden',
       }}
     >
-      {/* Colonne gauche compacte */}
-      <div style={{ padding: '12px 8px 8px 12px' }}>
-        {showHeader ? (
-          <div style={{ marginBottom: 8 }}>
-            <strong style={{ fontSize: 16 }}>Roadmap (Gantt) par unité</strong>
+      {/* ── Colonne gauche : labels fixes ── */}
+      <div style={{ borderRight: `1px solid ${THEME.border}`, background: '#FAFBFD' }}>
+        {showHeader && (
+          <div style={{ padding: '12px 14px 8px', borderBottom: `1px solid ${THEME.border}` }}>
+            <strong style={{ fontSize: 15, color: THEME.ink }}>Roadmap DUERP</strong>
             <div style={{ marginTop: 6, display: 'flex', gap: 12 }}>
-              <button onClick={exportSVG} style={{ background: 'none', border: 'none', color: '#22A9F1', cursor: 'pointer', fontWeight: 600 }}>
-                Exporter SVG
+              <button onClick={exportSVG} style={{ background: 'none', border: 'none', color: '#5B61F6', cursor: 'pointer', fontSize: 13, fontWeight: 600 }}>
+                ↓ SVG
               </button>
-              <button onClick={exportPNG} style={{ background: 'none', border: 'none', color: '#22A9F1', cursor: 'pointer', fontWeight: 600 }}>
-                Exporter PNG
+              <button onClick={exportPNG} style={{ background: 'none', border: 'none', color: '#5B61F6', cursor: 'pointer', fontSize: 13, fontWeight: 600 }}>
+                ↓ PNG
               </button>
             </div>
           </div>
-        ) : null}
+        )}
 
-        <div style={{ paddingTop: THEME.monthBandTop + 10 }}>
-          {view.rows.map(row => (
-            <div key={row.risk.riskId} style={{ height: row.rowHeight, position: 'relative' }}>
-              <div
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 2,
-                  background: row.risk.color,
-                  color: '#fff',
-                  fontWeight: 800,
-                  fontSize: 13.5,
-                  padding: '8px 12px',
-                  borderRadius: 16,
-                  display: 'inline-block',
-                  maxWidth: THEME.leftCol - 22,
-                  lineHeight: 1.25,
-                  whiteSpace: 'normal',
-                  wordBreak: 'break-word',
-                }}
-              >
-                {row.risk.label}
-              </div>
-              {row.actions.length > 0 ? (
-                row.actions.map((a, idx) => (
-                  <div
-                    key={a.id}
-                    style={{
-                      position: 'absolute',
-                      top: THEME.actionTopOffset - 4 + idx * THEME.actionVSpace,
-                      left: 10,
-                      color: THEME.muted,
-                      fontSize: 12.5,
-                      maxWidth: THEME.leftCol - 22,
-                      lineHeight: 1.35,
-                      whiteSpace: 'nowrap',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      display: 'grid',
-                      gridTemplateColumns: '16px 1fr',
-                      alignItems: 'start',
-                      gap: 8,
-                    }}
-                    title={a.label}
-                  >
-                    <span
-                      aria-hidden="true"
-                      style={{
-                        width: 10,
-                        height: 10,
-                        borderRadius: '50%',
-                        background: a.color,
-                        display: 'inline-block',
-                        marginTop: 4,
-                      }}
-                    />
-                    <span>{a.shortLabel}</span>
-                  </div>
-                ))
-              ) : (
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: THEME.actionTopOffset - 4,
-                    left: 10,
-                    color: THEME.muted,
-                    fontSize: 12.5,
-                    maxWidth: THEME.leftCol - 22,
-                    lineHeight: 1.35,
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    display: 'grid',
-                    gridTemplateColumns: '16px 1fr',
-                    alignItems: 'start',
-                    gap: 8,
-                  }}
-                  title={`Action prioritaire sur ${row.risk.label}`}
-                >
-                  <span
-                    aria-hidden="true"
-                    style={{
-                      width: 10,
-                      height: 10,
-                      borderRadius: '50%',
-                      background: row.risk.color,
-                      display: 'inline-block',
-                      marginTop: 4,
-                    }}
-                  />
-                  <span>Action prioritaire sur {row.risk.label}</span>
-                </div>
-              )}
-            </div>
-          ))}
+        {/* En-tête vide aligné avec la bande mois du SVG */}
+        <div style={{ height: THEME.monthBandH, display: 'flex', alignItems: 'flex-end', padding: '0 14px 12px' }}>
+          <span style={{ fontSize: 11, fontWeight: 700, color: THEME.muted, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+            Risques
+          </span>
         </div>
+
+        {/* Lignes risque */}
+        {finalView.rows.map((row) => (
+          <div
+            key={row.risk.riskId}
+            style={{
+              height: row.rowHeight,
+              borderTop: `1px solid ${THEME.border}`,
+              padding: '6px 10px 0',
+            }}
+          >
+            {/* Pill risque */}
+            <div
+              style={{
+                height: THEME.riskHeaderH - 8,
+                display: 'flex',
+                alignItems: 'center',
+                background: row.risk.color,
+                color: '#fff',
+                fontWeight: 700,
+                fontSize: 12,
+                padding: '0 10px',
+                borderRadius: 20,
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
+                textOverflow: 'ellipsis',
+              }}
+              title={row.risk.label}
+            >
+              {row.risk.label}
+            </div>
+
+            {/* Labels actions */}
+            {row.actions.length === 0 ? (
+              <div style={{ height: THEME.actionRowH, display: 'flex', alignItems: 'center', paddingLeft: 4, gap: 6 }}>
+                <span style={{ width: 7, height: 7, borderRadius: '50%', background: row.risk.color, flexShrink: 0, display: 'inline-block' }} />
+                <span style={{ fontSize: 11.5, color: THEME.muted, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  Action prioritaire
+                </span>
+              </div>
+            ) : (
+              row.actions.map((a) => (
+                <div
+                  key={a.id}
+                  style={{ height: THEME.actionRowH, display: 'flex', alignItems: 'center', paddingLeft: 4, gap: 6 }}
+                  title={a.label}
+                >
+                  <span style={{ width: 7, height: 7, borderRadius: '50%', background: a.color, flexShrink: 0, display: 'inline-block' }} />
+                  <span style={{ fontSize: 11.5, color: THEME.muted, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    {a.shortLabel}
+                  </span>
+                </div>
+              ))
+            )}
+          </div>
+        ))}
       </div>
 
-      {/* Colonne droite : responsive, 100% largeur, scroll si besoin */}
+      {/* ── Colonne droite : SVG scrollable ── */}
       <div
         ref={scrollRef}
-        style={{
-          padding: '12px 12px 8px 0',
-          overflowX: 'auto',
-          width: '100%',     // <— prend la largeur dispo de l’écran
-          maxWidth: '100%',
-        }}
+        style={{ overflowX: 'auto', overflowY: 'hidden', width: '100%', maxWidth: '100%' }}
       >
         <svg
           ref={svgRef}
-          width={view.widthPx}      // contenu peut être plus large → scroll
-          height={view.heightPx}
-          viewBox={`0 0 ${view.widthPx} ${view.heightPx}`}
+          width={finalView.widthPx}
+          height={finalView.heightPx}
+          viewBox={`0 0 ${finalView.widthPx} ${finalView.heightPx}`}
           role="img"
           aria-label="Diagramme de Gantt DUERP"
           shapeRendering="geometricPrecision"
+          style={{ display: 'block' }}
         >
-          {/* fond */}
-          <rect x={0} y={0} width={view.widthPx} height={view.heightPx} rx={16} fill="#ffffff" />
+          <rect x={0} y={0} width={finalView.widthPx} height={finalView.heightPx} fill="#ffffff" />
 
-          {/* Grille mensuelle sur toute la frise */}
-          {view.months.map((m, idx) => {
-            const x1 = THEME.leftCol + idx * view.monthWidth;
-            const w = view.monthWidth;
-            const isJanuary = m.monthIndex === 0;
+          {/* Grille alternée + labels mois */}
+          {finalView.months.map((m, idx) => {
+            const x1 = idx * finalView.monthWidth;
+            const w = finalView.monthWidth;
             return (
               <g key={`${m.year}-${m.monthIndex}`}>
                 <rect
                   x={x1}
-                  y={THEME.monthBandTop}
+                  y={THEME.monthBandH}
                   width={w}
-                  height={view.gridHeight}
+                  height={finalView.heightPx - THEME.monthBandH}
                   fill={idx % 2 === 0 ? THEME.gridA : THEME.gridB}
                 />
+                <line x1={x1} y1={0} x2={x1} y2={finalView.heightPx} stroke={THEME.border} strokeWidth={1} />
                 <text
                   x={x1 + w / 2}
-                  y={THEME.monthBandTop - 12}
+                  y={THEME.monthBandH - 18}
                   textAnchor="middle"
-                  fontSize={12}
-                  fontWeight={800}
-                  fill={THEME.ink}
+                  fontSize={11}
+                  fontWeight={700}
+                  fill={THEME.muted}
+                  letterSpacing="0.04em"
                 >
                   {m.label}
                 </text>
-                {isJanuary && (
+                {m.monthIndex === 0 && (
                   <text
                     x={x1 + 6}
-                    y={THEME.monthBandTop - 30}
+                    y={THEME.monthBandH - 36}
                     textAnchor="start"
                     fontSize={12}
                     fontWeight={800}
-                    fill={THEME.muted}
+                    fill={THEME.ink}
                   >
                     {m.year}
                   </text>
@@ -461,41 +409,91 @@ const GanttDUERP: React.FC<Props> = ({
             );
           })}
 
-          {/* Actions */}
-          {view.rows.map(row => (
-            <g key={row.risk.riskId}>
+          {/* Fond coloré des en-têtes risque + séparateurs */}
+          {finalView.rows.map((row) => (
+            <g key={`bg-${row.risk.riskId}`}>
+              <rect
+                x={0}
+                y={row.y}
+                width={finalView.widthPx}
+                height={THEME.riskHeaderH}
+                fill={lighten(row.risk.color, 0.9)}
+              />
+              <line
+                x1={0} y1={row.y + row.rowHeight}
+                x2={finalView.widthPx} y2={row.y + row.rowHeight}
+                stroke={THEME.border} strokeWidth={1}
+              />
+            </g>
+          ))}
+
+          {/* Barres d'action */}
+          {finalView.rows.map(row => (
+            <g key={`actions-${row.risk.riskId}`}>
               {row.actions.map(a => {
-                const y = Math.round(a.yMid) + 0.5;
-                const xBaseline1 = THEME.leftCol;
-                const xBaseline2 = view.widthPx - THEME.rightPad;
+                const y = a.yMid;
+                const x1 = Math.min(a.x1, a.x2);
+                const rawW = Math.abs(a.x2 - a.x1);
+                const barW = Math.max(rawW, THEME.barH * 2);
+                const barY = y - THEME.barH / 2;
 
                 return (
                   <g key={a.id}>
                     <line
-                      x1={xBaseline1}
-                      y1={y}
-                      x2={xBaseline2}
-                      y2={y}
-                      stroke={THEME.baselineColor}
-                      strokeWidth={THEME.baselineW}
-                      strokeLinecap="round"
+                      x1={0} y1={y} x2={finalView.widthPx} y2={y}
+                      stroke={THEME.border} strokeWidth={1}
                     />
-                    <line
-                      x1={a.x1}
-                      y1={y}
-                      x2={a.x2}
-                      y2={y}
-                      stroke={a.color}
-                      strokeWidth={THEME.lineW}
-                      strokeLinecap="round"
+                    <rect
+                      x={x1}
+                      y={barY}
+                      width={barW}
+                      height={THEME.barH}
+                      rx={THEME.barR}
+                      fill={a.color}
+                      opacity={0.88}
                     />
-                    <circle cx={a.x1} cy={y} r={THEME.dotR} fill={a.color} stroke="#fff" strokeWidth={2} />
-                    <circle cx={a.x2} cy={y} r={THEME.dotR} fill={a.color} stroke="#fff" strokeWidth={2} />
+                    <circle cx={x1} cy={y} r={4} fill="#fff" stroke={a.color} strokeWidth={2} />
+                    <circle cx={x1 + barW} cy={y} r={4} fill={a.color} stroke="#fff" strokeWidth={1.5} />
+                    {barW > 56 && (
+                      <text
+                        x={x1 + barW / 2}
+                        y={y + 4}
+                        textAnchor="middle"
+                        fontSize={10}
+                        fontWeight={600}
+                        fill="#fff"
+                        style={{ pointerEvents: 'none', userSelect: 'none' }}
+                      >
+                        {a.shortLabel.length > 22 ? `${a.shortLabel.slice(0, 22)}…` : a.shortLabel}
+                      </text>
+                    )}
                   </g>
                 );
               })}
             </g>
           ))}
+
+          {/* Ligne "aujourd'hui" */}
+          {finalView.todayX >= 0 && finalView.todayX <= finalView.widthPx && (
+            <g>
+              <line
+                x1={finalView.todayX} y1={THEME.monthBandH - 8}
+                x2={finalView.todayX} y2={finalView.heightPx}
+                stroke="#FF5A58"
+                strokeWidth={2}
+                strokeDasharray="4 3"
+              />
+              <text
+                x={finalView.todayX + 5}
+                y={THEME.monthBandH - 14}
+                fontSize={10}
+                fill="#FF5A58"
+                fontWeight={700}
+              >
+                Aujourd'hui
+              </text>
+            </g>
+          )}
         </svg>
       </div>
     </div>

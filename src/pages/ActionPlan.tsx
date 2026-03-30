@@ -26,6 +26,7 @@ export const ActionPlan = () => {
     selectedEstablishmentId,
     setSelectedWorkUnit,
     addAction,
+    removeAction,
     updateAction,
     updateActionStatus,
     toggleActionStep,
@@ -430,12 +431,20 @@ export const ActionPlan = () => {
                               📅 {formatDate(a.dueDate || a.endDate)}
                             </p>
                           )}
-                          <button
-                            className="text-xs text-ocean underline"
-                            onClick={() => setExpanded((prev) => (prev === a.id ? null : a.id))}
-                          >
-                            {expanded === a.id ? "Masquer" : "Modifier"}
-                          </button>
+                          <div className="flex items-center justify-end gap-3">
+                            <button
+                              className="text-xs text-ocean underline"
+                              onClick={() => setExpanded((prev) => (prev === a.id ? null : a.id))}
+                            >
+                              {expanded === a.id ? "Masquer" : "Modifier"}
+                            </button>
+                            <button
+                              className="text-xs text-red-500 underline"
+                              onClick={() => { if (window.confirm(`Supprimer l'action "${a.title || formatActionTitle(a.title, a.assessmentId ? assessmentById.get(a.assessmentId) : undefined)}" ?`)) removeAction(a.id); }}
+                            >
+                              Supprimer
+                            </button>
+                          </div>
                         </div>
                       </div>
 

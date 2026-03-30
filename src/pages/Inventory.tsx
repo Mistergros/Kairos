@@ -499,7 +499,7 @@ export const Inventory = () => {
                             >
                               Questionnaire (pondération)
                             </button>
-                            <button className="text-sunset text-xs hover:underline" onClick={() => removeAssessment(a.id)}>
+                            <button className="text-sunset text-xs hover:underline" onClick={() => { if (window.confirm(`Supprimer le risque "${a.riskLabel}" et toutes ses données ?`)) removeAssessment(a.id); }}>
                               Supprimer
                             </button>
                           </div>
