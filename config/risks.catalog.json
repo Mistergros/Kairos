@@ -1,690 +1,690 @@
-[
-  {
-    "id": "R-CHIMIQUE",
-    "name": "Risque chimique",
-    "category": "Chimique",
-    "description": "Exposition Ã¢â€Å“ÃƒÂ¡ des substances dangereuses (nettoyants, solvants, dÃ¢â€Å“Ã‚Â®graissants, CMR).",
-    "naf_specific": [
-      "10",
-      "20",
-      "22",
-      "56",
-      "43.33",
-      "47.11D"
-    ],
-    "units": [
-      "Cuisine",
-      "Plonge",
-      "Atelier",
-      "Laboratoire"
-    ],
-    "sources": [
-      "INRS",
-      "EU-OSHA"
-    ],
-    "questions": [
-      "Inventaire des produits et FDS Ã¢â€Å“ÃƒÂ¡ jour ?",
-      "Substitution Ã¢â€Å“Ã‚Â®tudiÃ¢â€Å“Ã‚Â®e ?",
-      "Ventilation/local aspiration Ã¢â€Å“ÃƒÂ¡ la source ?"
-    ],
-    "subrisks": [
-      "Solvants",
-      "AÃ¢â€Å“Ã‚Â®rosols",
-      "CMR"
-    ],
-    "tags": [
-      "chimique",
-      "CMR",
-      "substitution"
-    ]
-  },
-  {
-    "id": "R-ATEX",
-    "name": "AtmosphÃ¢â€Å“Ã‚Â¿res explosives",
-    "category": "Accident majeur",
-    "description": "PrÃ¢â€Å“Ã‚Â®sence de vapeurs, gaz ou poussiÃ¢â€Å“Ã‚Â¿res inflammables crÃ¢â€Å“Ã‚Â®ant des zones ATEX.",
-    "naf_specific": [
-      "10",
-      "20",
-      "22",
-      "56",
-      "43.33"
-    ],
-    "units": [
-      "Cuisine",
-      "Atelier",
-      "Chantier",
-      "Stockage"
-    ],
-    "sources": [
-      "INRS",
-      "EU-OSHA"
-    ],
-    "questions": [
-      "Zonage ATEX rÃ¢â€Å“Ã‚Â®alisÃ¢â€Å“Ã‚Â® ?",
-      "MatÃ¢â€Å“Ã‚Â®riel et installations conformes ATEX ?"
-    ],
-    "subrisks": [
-      "Gaz",
-      "Vapeurs",
-      "PoussiÃ¢â€Å“Ã‚Â¿res combustibles"
-    ],
-    "tags": [
-      "ATEX",
-      "explosion",
-      "inflammable"
-    ]
-  },
-  {
-    "id": "R-INCENDIE",
-    "name": "Incendie",
-    "category": "Accident majeur",
-    "description": "DÃ¢â€Å“Ã‚Â®part de feu liÃ¢â€Å“Ã‚Â® Ã¢â€Å“ÃƒÂ¡ sources d'ignition, installations, charges calorifiques.",
-    "naf_specific": [
-      "56",
-      "47",
-      "41",
-      "43",
-      "49",
-      "52",
-      "55"
-    ],
-    "units": [
-      "Tous"
-    ],
-    "sources": [
-      "INRS"
-    ],
-    "questions": [
-      "Consignes d'Ã¢â€Å“Ã‚Â®vacuation et exercices ?",
-      "Moyens de secours vÃ¢â€Å“Ã‚Â®rifiÃ¢â€Å“Ã‚Â®s ?"
-    ],
-    "subrisks": [
-      "Explosion",
-      "FumÃ¢â€Å“Ã‚Â®es"
-    ],
-    "tags": [
-      "incendie",
-      "Ã¢â€Å“Ã‚Â®vacuation",
-      "extincteurs"
-    ]
-  },
-  {
-    "id": "R-GLISSADES",
-    "name": "Chutes de plain-pied",
-    "category": "Accidentel",
-    "description": "Sols gras, mouillÃ¢â€Å“Ã‚Â®s, encombrement, dÃ¢â€Å“Ã‚Â®nivelÃ¢â€Å“Ã‚Â®s.",
-    "naf_specific": [
-      "56",
-      "47",
-      "55"
-    ],
-    "units": [
-      "Cuisine",
-      "Plonge",
-      "Salle",
-      "Magasin"
-    ],
-    "sources": [
-      "INRS"
-    ],
-    "questions": [
-      "Plan de nettoyage et signalisation ?",
-      "Chaussures antidÃ¢â€Å“Ã‚Â®rapantes ?"
-    ],
-    "tags": [
-      "chute",
-      "glissade",
-      "propretÃ¢â€Å“Ã‚Â®"
-    ]
-  },
-  {
-    "id": "R-CHUTE-HAUTEUR",
-    "name": "Chutes de hauteur",
-    "category": "Accidentel",
-    "description": "Travaux en Ã¢â€Å“Ã‚Â®lÃ¢â€Å“Ã‚Â®vation, escabeaux, Ã¢â€Å“Ã‚Â®chafaudages, toitures.",
-    "naf_specific": [
-      "41",
-      "42",
-      "43"
-    ],
-    "units": [
-      "Chantier",
-      "EntrepÃ¢â€Å“Ã¢â€Â¤t"
-    ],
-    "sources": [
-      "INRS"
-    ],
-    "questions": [
-      "Protection collective en place ?",
-      "VÃ¢â€Å“Ã‚Â®rification Ã¢â€Å“Ã‚Â®chafaudages/harnais ?"
-    ],
-    "tags": [
-      "hauteur",
-      "Ã¢â€Å“Ã‚Â®chafaudage",
-      "antichute"
-    ]
-  },
-  {
-    "id": "R-COUPURE",
-    "name": "Coupures/LacÃ¢â€Å“Ã‚Â®rations",
-    "category": "Accidentel",
-    "description": "Lames, couteaux, trancheuses, verre cassÃ¢â€Å“Ã‚Â®.",
-    "naf_specific": [
-      "56",
-      "47.11D",
-      "10",
-      "43.32A"
-    ],
-    "units": [
-      "Cuisine",
-      "Atelier",
-      "Magasin"
-    ],
-    "sources": [
-      "INRS"
-    ],
-    "questions": [
-      "Protections machines ?",
-      "Gants anti-coupure ?"
-    ],
-    "tags": [
-      "coupure",
-      "tranchant"
-    ]
-  },
-  {
-    "id": "R-BRUIT",
-    "name": "Bruit",
-    "category": "Physique",
-    "description": "Exposition Ã¢â€Å“ÃƒÂ¡ des niveaux sonores Ã¢â€Å“Ã‚Â®levÃ¢â€Å“Ã‚Â®s (machines, impacts).",
-    "naf_specific": [
-      "41",
-      "43",
-      "10",
-      "22",
-      "52"
-    ],
-    "units": [
-      "Atelier",
-      "Chantier",
-      "EntrepÃ¢â€Å“Ã¢â€Â¤t"
-    ],
-    "sources": [
-      "INRS"
-    ],
-    "questions": [
-      "Mesures LEX,8h rÃ¢â€Å“Ã‚Â®alisÃ¢â€Å“Ã‚Â®es ?",
-      "RÃ¢â€Å“Ã‚Â®duction Ã¢â€Å“ÃƒÂ¡ la source ?"
-    ],
-    "tags": [
-      "bruit",
-      "mesures",
-      "audiomÃ¢â€Å“Ã‚Â®trie"
-    ]
-  },
-  {
-    "id": "R-VIBRATIONS",
-    "name": "Vibrations",
-    "category": "Physique",
-    "description": "Outils vibrants, engins, HAVS.",
-    "naf_specific": [
-      "41",
-      "43"
-    ],
-    "units": [
-      "Chantier",
-      "Atelier"
-    ],
-    "sources": [
-      "INRS"
-    ],
-    "questions": [
-      "Inventaire des outils vibrants ?",
-      "Limitation du temps d'exposition ?"
-    ],
-    "tags": [
-      "vibrations",
-      "outillage"
-    ]
-  },
-  {
-    "id": "R-ECRAN",
-    "name": "Travail sur Ã¢â€Å“Ã‚Â®cran",
-    "category": "Ergonomique",
-    "description": "Postes VDT prolongÃ¢â€Å“Ã‚Â®s, contraintes visuelles et posturales.",
-    "naf_specific": [
-      "62",
-      "65",
-      "66",
-      "84"
-    ],
-    "units": [
-      "Bureau"
-    ],
-    "sources": [
-      "INRS"
-    ],
-    "questions": [
-      "RÃ¢â€Å“Ã‚Â®glage ergonomique du poste ?",
-      "Pauses visuelles ?"
-    ],
-    "tags": [
-      "Ã¢â€Å“Ã‚Â®cran",
-      "ergonomie"
-    ]
-  },
-  {
-    "id": "R-TMS",
-    "name": "Troubles musculo-squelettiques",
-    "category": "Physique",
-    "description": "Gestes rÃ¢â€Å“Ã‚Â®pÃ¢â€Å“Ã‚Â®titifs, postures contraignantes, manutentions lÃ¢â€Å“Ã‚Â®gÃ¢â€Å“Ã‚Â¿res rÃ¢â€Å“Ã‚Â®pÃ¢â€Å“Ã‚Â®tÃ¢â€Å“Ã‚Â®es.",
-    "naf_specific": [
-      "56",
-      "47",
-      "10",
-      "22",
-      "62"
-    ],
-    "units": [
-      "Cuisine",
-      "Bureau",
-      "Atelier",
-      "Magasin"
-    ],
-    "sources": [
-      "INRS"
-    ],
-    "questions": [
-      "Analyse des postes ?",
-      "Rotation des tÃ¢â€Å“ÃƒÂ³ches ?"
-    ],
-    "tags": [
-      "TMS",
-      "ergonomie"
-    ]
-  },
-  {
-    "id": "R-RPS",
-    "name": "RPS / Stress",
-    "category": "Organisationnel",
-    "description": "Charge de travail, exigences Ã¢â€Å“Ã‚Â®motionnelles, horaires atypiques.",
-    "naf_specific": [
-      "56",
-      "62",
-      "65",
-      "55",
-      "86"
-    ],
-    "units": [
-      "Bureau",
-      "Accueil",
-      "Salle"
-    ],
-    "sources": [
-      "INRS",
-      "ANACT"
-    ],
-    "questions": [
-      "Ã¢â€Å“ÃƒÂ«valuation RPS ?",
-      "Dispositif d'alerte/agression ?"
-    ],
-    "tags": [
-      "RPS",
-      "organisation"
-    ]
-  },
-  {
-    "id": "R-BIO",
-    "name": "Risque biologique",
-    "category": "Biologique",
-    "description": "Exposition Ã¢â€Å“ÃƒÂ¡ agents biologiques (denrÃ¢â€Å“Ã‚Â®es, dÃ¢â€Å“Ã‚Â®chets, patients).",
-    "naf_specific": [
-      "56",
-      "10",
-      "86",
-      "87"
-    ],
-    "units": [
-      "Cuisine",
-      "SantÃ¢â€Å“Ã‚Â®",
-      "Laboratoire"
-    ],
-    "sources": [
-      "INRS"
-    ],
-    "questions": [
-      "PMS/HACCP ?",
-      "DASRI/chaÃ¢â€Å“Ã‚Â«ne du froid ?"
-    ],
-    "tags": [
-      "biologique",
-      "HACCP",
-      "DASRI"
-    ]
-  },
-  {
-    "id": "R-FROID",
-    "name": "Froid",
-    "category": "Physique",
-    "description": "Exposition en chambre froide ou milieux rÃ¢â€Å“Ã‚Â®frigÃ¢â€Å“Ã‚Â®rÃ¢â€Å“Ã‚Â®s.",
-    "naf_specific": [
-      "56",
-      "10",
-      "47"
-    ],
-    "units": [
-      "Chambre froide",
-      "Cuisine"
-    ],
-    "sources": [
-      "INRS"
-    ],
-    "questions": [
-      "EPI anti-froid ?",
-      "Limitation temps d'exposition ?"
-    ],
-    "tags": [
-      "froid",
-      "tempÃ¢â€Å“Ã‚Â®rature"
-    ]
-  },
-  {
-    "id": "R-CANICULE",
-    "name": "Chaleur / canicule",
-    "category": "Physique",
-    "description": "TempÃ¢â€Å“Ã‚Â®ratures Ã¢â€Å“Ã‚Â®levÃ¢â€Å“Ã‚Â®es en cuisine, extÃ¢â€Å“Ã‚Â®rieur, verriÃ¢â€Å“Ã‚Â¿res.",
-    "naf_specific": [
-      "56",
-      "41",
-      "43"
-    ],
-    "units": [
-      "Cuisine",
-      "Chantier"
-    ],
-    "sources": [
-      "INRS"
-    ],
-    "questions": [
-      "Plan canicule ?",
-      "Apport d'air/ombrage ?"
-    ],
-    "tags": [
-      "chaleur",
-      "canicule"
-    ]
-  },
-  {
-    "id": "R-ELECTRIQUE",
-    "name": "Risque Ã¢â€Å“Ã‚Â®lectrique",
-    "category": "Accidentel",
-    "description": "Contacts directs/indirects, bricolage, maintenance.",
-    "naf_specific": [
-      "41",
-      "43",
-      "56",
-      "47"
-    ],
-    "units": [
-      "Chantier",
-      "Cuisine",
-      "Atelier"
-    ],
-    "sources": [
-      "INRS"
-    ],
-    "questions": [
-      "VÃ¢â€Å“Ã‚Â®rifs pÃ¢â€Å“Ã‚Â®riodiques ?",
-      "Habilitations ?"
-    ],
-    "tags": [
-      "Ã¢â€Å“Ã‚Â®lectricitÃ¢â€Å“Ã‚Â®",
-      "habilitation"
-    ]
-  },
-  {
-    "id": "R-MACHINE",
-    "name": "Machines / piÃ¢â€Å“Ã‚Â¿ces en mouvement",
-    "category": "Accidentel",
-    "description": "Carter, interverrouillage, arrÃ¢â€Å“Ã‚Â¬t d'urgence, LOTO.",
-    "naf_specific": [
-      "10",
-      "22",
-      "43.32A",
-      "43.32B"
-    ],
-    "units": [
-      "Atelier",
-      "Chantier"
-    ],
-    "sources": [
-      "INRS"
-    ],
-    "questions": [
-      "Protections en place ?",
-      "ProcÃ¢â€Å“Ã‚Â®dure LOTO ?"
-    ],
-    "tags": [
-      "machine",
-      "LOTO"
-    ]
-  },
-  {
-    "id": "R-MANUTENTION",
-    "name": "Manutentions manuelles",
-    "category": "Physique",
-    "description": "Port, traction, poussÃ¢â€Å“Ã‚Â®e de charges.",
-    "naf_specific": [
-      "56",
-      "47",
-      "52",
-      "41",
-      "43"
-    ],
-    "units": [
-      "Cuisine",
-      "EntrepÃ¢â€Å“Ã¢â€Â¤t",
-      "Chantier",
-      "Magasin"
-    ],
-    "sources": [
-      "INRS"
-    ],
-    "questions": [
-      "Aides mÃ¢â€Å“Ã‚Â®caniques ?",
-      "Formation gestes/postures ?"
-    ],
-    "tags": [
-      "manutention",
-      "charges"
-    ]
-  },
-  {
-    "id": "R-RAYONNEMENT-UV",
-    "name": "Rayonnements UV (soleil)",
-    "category": "Physique",
-    "description": "Exposition solaire en extÃ¢â€Å“Ã‚Â®rieur.",
-    "naf_specific": [
-      "41",
-      "43",
-      "49"
-    ],
-    "units": [
-      "Chantier",
-      "Terrain"
-    ],
-    "sources": [
-      "INRS"
-    ],
-    "questions": [
-      "Protection UV ?",
-      "Organisation horaires ?"
-    ],
-    "tags": [
-      "UV",
-      "extÃ¢â€Å“Ã‚Â®rieur"
-    ]
-  },
-  {
-    "id": "R-POUSSIERES-BOIS",
-    "name": "PoussiÃ¢â€Å“Ã‚Â¿res de bois",
-    "category": "Chimique",
-    "description": "Exposition aux poussiÃ¢â€Å“Ã‚Â¿res de bois, risque CMR.",
-    "naf_specific": [
-      "43.32A"
-    ],
-    "units": [
-      "Atelier"
-    ],
-    "sources": [
-      "INRS"
-    ],
-    "questions": [
-      "Aspiration Ã¢â€Å“ÃƒÂ¡ la source ?",
-      "Nettoyage adaptÃ¢â€Å“Ã‚Â® (pas de soufflage) ?"
-    ],
-    "tags": [
-      "bois",
-      "poussiÃ¢â€Å“Ã‚Â¿res",
-      "CMR"
-    ]
-  },
-  {
-    "id": "R-SILICE",
-    "name": "Silice cristalline",
-    "category": "Chimique",
-    "description": "DÃ¢â€Å“Ã‚Â®coupe, perÃ¢â€Å“Ã‚Âºage bÃ¢â€Å“Ã‚Â®ton/pierre gÃ¢â€Å“Ã‚Â®nÃ¢â€Å“Ã‚Â®rant poussiÃ¢â€Å“Ã‚Â¿res silice.",
-    "naf_specific": [
-      "41",
-      "43"
-    ],
-    "units": [
-      "Chantier",
-      "Atelier"
-    ],
-    "sources": [
-      "INRS"
-    ],
-    "questions": [
-      "Aspiration/mouillage ?",
-      "Masques adaptÃ¢â€Å“Ã‚Â®s ?"
-    ],
-    "tags": [
-      "silice",
-      "poussiÃ¢â€Å“Ã‚Â¿res",
-      "CMR"
-    ]
-  },
-  {
-    "id": "R-ROUTIER",
-    "name": "Risque routier",
-    "category": "Accidentel",
-    "description": "DÃ¢â€Å“Ã‚Â®placements professionnels, livraison, taxi.",
-    "naf_specific": [
-      "49",
-      "52",
-      "56"
-    ],
-    "units": [
-      "Terrain",
-      "Livraison"
-    ],
-    "sources": [
-      "INRS"
-    ],
-    "questions": [
-      "Plan de prÃ¢â€Å“Ã‚Â®vention routier ?",
-      "Temps de repos ?"
-    ],
-    "tags": [
-      "routier",
-      "conduite"
-    ]
-  },
-  {
-    "id": "R-AGRESSION",
-    "name": "Agressions/incivilitÃ¢â€Å“Ã‚Â®s",
-    "category": "SÃ¢â€Å“Ã‚Â®curitÃ¢â€Å“Ã‚Â®",
-    "description": "Relation client/usager, manipulation d'espÃ¢â€Å“Ã‚Â¿ces, horaires tardifs.",
-    "naf_specific": [
-      "56",
-      "47",
-      "65",
-      "93"
-    ],
-    "units": [
-      "Accueil",
-      "Salle",
-      "Guichet"
-    ],
-    "sources": [
-      "INRS"
-    ],
-    "questions": [
-      "Formation gestion de conflit ?",
-      "PTI/alarme ?"
-    ],
-    "tags": [
-      "agression",
-      "public"
-    ]
-  },
-  {
-    "id": "R-QUALITE-AIR",
-    "name": "QualitÃ¢â€Å“Ã‚Â® de l'air intÃ¢â€Å“Ã‚Â®rieur",
-    "category": "Environnemental",
-    "description": "CO2 Ã¢â€Å“Ã‚Â®levÃ¢â€Å“Ã‚Â®, ventilation insuffisante.",
-    "naf_specific": [
-      "62",
-      "65",
-      "66",
-      "84",
-      "55"
-    ],
-    "units": [
-      "Bureau",
-      "Salle",
-      "Accueil"
-    ],
-    "sources": [
-      "INRS"
-    ],
-    "questions": [
-      "Mesures CO2 ?",
-      "Taux de renouvellement d'air ?"
-    ],
-    "tags": [
-      "air",
-      "CO2",
-      "ventilation"
-    ]
-  },
-  {
-    "id": "R-DECHETS",
-    "name": "DÃ¢â€Å“Ã‚Â®chets (DASRI/biodÃ¢â€Å“Ã‚Â®chets)",
-    "category": "Organisationnel",
-    "description": "Tri, stockage, Ã¢â€Å“Ã‚Â®limination conforme.",
-    "naf_specific": [
-      "56",
-      "86",
-      "87"
-    ],
-    "units": [
-      "Cuisine",
-      "SantÃ¢â€Å“Ã‚Â®"
-    ],
-    "sources": [
-      "INRS"
-    ],
-    "questions": [
-      "Circuit dÃ¢â€Å“Ã‚Â®chets tracÃ¢â€Å“Ã‚Â® ?",
-      "Prestataire habilitÃ¢â€Å“Ã‚Â® ?"
-    ],
-    "tags": [
-      "dÃ¢â€Å“Ã‚Â®chets",
-      "DASRI",
-      "biodÃ¢â€Å“Ã‚Â®chets"
-    ]
-  }
+[
+  {
+    "id": "R-CHIMIQUE",
+    "name": "Agents chimiques dangereux",
+    "category": "Chimique",
+    "description": "Produits de nettoyage, solvants, désinfectants, colles, CMR.",
+    "naf_specific": [
+      "10",
+      "20",
+      "22",
+      "56",
+      "43.33",
+      "47.11D"
+    ],
+    "units": [
+      "Cuisine",
+      "Plonge",
+      "Atelier",
+      "Laboratoire"
+    ],
+    "sources": [
+      "INRS",
+      "EU-OSHA"
+    ],
+    "questions": [
+      "Inventaire des produits et FDS Ã¢â€Å“ÃƒÂ¡ jour ?",
+      "Substitution Ã¢â€Å“Ã‚Â®tudiÃ¢â€Å“Ã‚Â®e ?",
+      "Ventilation/local aspiration Ã¢â€Å“ÃƒÂ¡ la source ?"
+    ],
+    "subrisks": [
+      "Solvants",
+      "AÃ¢â€Å“Ã‚Â®rosols",
+      "CMR"
+    ],
+    "tags": [
+      "chimique",
+      "CMR",
+      "substitution"
+    ]
+  },
+  {
+    "id": "R-ATEX",
+    "name": "Atmosphères explosives (ATEX)",
+    "category": "Accident majeur",
+    "description": "Gaz/vapeurs/poussières inflammables, zones ATEX.",
+    "naf_specific": [
+      "10",
+      "20",
+      "22",
+      "56",
+      "43.33"
+    ],
+    "units": [
+      "Cuisine",
+      "Atelier",
+      "Chantier",
+      "Stockage"
+    ],
+    "sources": [
+      "INRS",
+      "EU-OSHA"
+    ],
+    "questions": [
+      "Zonage ATEX rÃ¢â€Å“Ã‚Â®alisÃ¢â€Å“Ã‚Â® ?",
+      "MatÃ¢â€Å“Ã‚Â®riel et installations conformes ATEX ?"
+    ],
+    "subrisks": [
+      "Gaz",
+      "Vapeurs",
+      "PoussiÃ¢â€Å“Ã‚Â¿res combustibles"
+    ],
+    "tags": [
+      "ATEX",
+      "explosion",
+      "inflammable"
+    ]
+  },
+  {
+    "id": "R-INCENDIE",
+    "name": "Incendie / explosion",
+    "category": "Accident majeur",
+    "description": "Sources d’ignition, ATEX, stockages, cuisine, électricité.",
+    "naf_specific": [
+      "56",
+      "47",
+      "41",
+      "43",
+      "49",
+      "52",
+      "55"
+    ],
+    "units": [
+      "Tous"
+    ],
+    "sources": [
+      "INRS"
+    ],
+    "questions": [
+      "Consignes d'Ã¢â€Å“Ã‚Â®vacuation et exercices ?",
+      "Moyens de secours vÃ¢â€Å“Ã‚Â®rifiÃ¢â€Å“Ã‚Â®s ?"
+    ],
+    "subrisks": [
+      "Explosion",
+      "FumÃ¢â€Å“Ã‚Â®es"
+    ],
+    "tags": [
+      "incendie",
+      "Ã¢â€Å“Ã‚Â®vacuation",
+      "extincteurs"
+    ]
+  },
+  {
+    "id": "R-GLISSADES",
+    "name": "Chutes de plain-pied",
+    "category": "Accidentel",
+    "description": "Sols glissants, mouillés, encombrement, dénivellation.",
+    "naf_specific": [
+      "56",
+      "47",
+      "55"
+    ],
+    "units": [
+      "Cuisine",
+      "Plonge",
+      "Salle",
+      "Magasin"
+    ],
+    "sources": [
+      "INRS"
+    ],
+    "questions": [
+      "Plan de nettoyage et signalisation ?",
+      "Chaussures antidÃ¢â€Å“Ã‚Â®rapantes ?"
+    ],
+    "tags": [
+      "chute",
+      "glissade",
+      "propretÃ¢â€Å“Ã‚Â®"
+    ]
+  },
+  {
+    "id": "R-CHUTE-HAUTEUR",
+    "name": "Chutes de hauteur",
+    "category": "Accidentel",
+    "description": "Travaux en hauteur, escabeaux, toitures, échafaudages.",
+    "naf_specific": [
+      "41",
+      "42",
+      "43"
+    ],
+    "units": [
+      "Chantier",
+      "EntrepÃ¢â€Å“Ã¢â€Â¤t"
+    ],
+    "sources": [
+      "INRS"
+    ],
+    "questions": [
+      "Protection collective en place ?",
+      "VÃ¢â€Å“Ã‚Â®rification Ã¢â€Å“Ã‚Â®chafaudages/harnais ?"
+    ],
+    "tags": [
+      "hauteur",
+      "Ã¢â€Å“Ã‚Â®chafaudage",
+      "antichute"
+    ]
+  },
+  {
+    "id": "R-COUPURE",
+    "name": "Coupures et lacérations",
+    "category": "Accidentel",
+    "description": "Outils tranchants, lames, machines de découpe, verrerie.",
+    "naf_specific": [
+      "56",
+      "47.11D",
+      "10",
+      "43.32A"
+    ],
+    "units": [
+      "Cuisine",
+      "Atelier",
+      "Magasin"
+    ],
+    "sources": [
+      "INRS"
+    ],
+    "questions": [
+      "Protections machines ?",
+      "Gants anti-coupure ?"
+    ],
+    "tags": [
+      "coupure",
+      "tranchant"
+    ]
+  },
+  {
+    "id": "R-BRUIT",
+    "name": "Bruit",
+    "category": "Physique",
+    "description": "Ambiance sonore élevée, machines, ventilation.",
+    "naf_specific": [
+      "41",
+      "43",
+      "10",
+      "22",
+      "52"
+    ],
+    "units": [
+      "Atelier",
+      "Chantier",
+      "EntrepÃ¢â€Å“Ã¢â€Â¤t"
+    ],
+    "sources": [
+      "INRS"
+    ],
+    "questions": [
+      "Mesures LEX,8h rÃ¢â€Å“Ã‚Â®alisÃ¢â€Å“Ã‚Â®es ?",
+      "RÃ¢â€Å“Ã‚Â®duction Ã¢â€Å“ÃƒÂ¡ la source ?"
+    ],
+    "tags": [
+      "bruit",
+      "mesures",
+      "audiomÃ¢â€Å“Ã‚Â®trie"
+    ]
+  },
+  {
+    "id": "R-VIBRATIONS",
+    "name": "Vibrations",
+    "category": "Physique",
+    "description": "Outils vibrants, conduite d’engins.",
+    "naf_specific": [
+      "41",
+      "43"
+    ],
+    "units": [
+      "Chantier",
+      "Atelier"
+    ],
+    "sources": [
+      "INRS"
+    ],
+    "questions": [
+      "Inventaire des outils vibrants ?",
+      "Limitation du temps d'exposition ?"
+    ],
+    "tags": [
+      "vibrations",
+      "outillage"
+    ]
+  },
+  {
+    "id": "R-ECRAN",
+    "name": "Travail sur écran",
+    "category": "Ergonomique",
+    "description": "Poste informatique, ergonomie, éclairage.",
+    "naf_specific": [
+      "62",
+      "65",
+      "66",
+      "84"
+    ],
+    "units": [
+      "Bureau"
+    ],
+    "sources": [
+      "INRS"
+    ],
+    "questions": [
+      "RÃ¢â€Å“Ã‚Â®glage ergonomique du poste ?",
+      "Pauses visuelles ?"
+    ],
+    "tags": [
+      "Ã¢â€Å“Ã‚Â®cran",
+      "ergonomie"
+    ]
+  },
+  {
+    "id": "R-TMS",
+    "name": "Troubles musculo-squelettiques",
+    "category": "Physique",
+    "description": "Gestes répétitifs, postures statiques ou contraintes, manutentions.",
+    "naf_specific": [
+      "56",
+      "47",
+      "10",
+      "22",
+      "62"
+    ],
+    "units": [
+      "Cuisine",
+      "Bureau",
+      "Atelier",
+      "Magasin"
+    ],
+    "sources": [
+      "INRS"
+    ],
+    "questions": [
+      "Analyse des postes ?",
+      "Rotation des tÃ¢â€Å“ÃƒÂ³ches ?"
+    ],
+    "tags": [
+      "TMS",
+      "ergonomie"
+    ]
+  },
+  {
+    "id": "R-RPS",
+    "name": "Risque psychosocial (RPS)",
+    "category": "Organisationnel",
+    "description": "Charge de travail, horaires décalés, agressions, stress.",
+    "naf_specific": [
+      "56",
+      "62",
+      "65",
+      "55",
+      "86"
+    ],
+    "units": [
+      "Bureau",
+      "Accueil",
+      "Salle"
+    ],
+    "sources": [
+      "INRS",
+      "ANACT"
+    ],
+    "questions": [
+      "Ã¢â€Å“ÃƒÂ«valuation RPS ?",
+      "Dispositif d'alerte/agression ?"
+    ],
+    "tags": [
+      "RPS",
+      "organisation"
+    ]
+  },
+  {
+    "id": "R-BIO",
+    "name": "Risque biologique",
+    "category": "Biologique",
+    "description": "Exposition à agents biologiques (soins, aide à la personne, déchets).",
+    "naf_specific": [
+      "56",
+      "10",
+      "86",
+      "87"
+    ],
+    "units": [
+      "Cuisine",
+      "SantÃ¢â€Å“Ã‚Â®",
+      "Laboratoire"
+    ],
+    "sources": [
+      "INRS"
+    ],
+    "questions": [
+      "PMS/HACCP ?",
+      "DASRI/chaÃ¢â€Å“Ã‚Â«ne du froid ?"
+    ],
+    "tags": [
+      "biologique",
+      "HACCP",
+      "DASRI"
+    ]
+  },
+  {
+    "id": "R-FROID",
+    "name": "Froid / chambre froide",
+    "category": "Physique",
+    "description": "Exposition au froid, chambres froides, espaces réfrigérés.",
+    "naf_specific": [
+      "56",
+      "10",
+      "47"
+    ],
+    "units": [
+      "Chambre froide",
+      "Cuisine"
+    ],
+    "sources": [
+      "INRS"
+    ],
+    "questions": [
+      "EPI anti-froid ?",
+      "Limitation temps d'exposition ?"
+    ],
+    "tags": [
+      "froid",
+      "tempÃ¢â€Å“Ã‚Â®rature"
+    ]
+  },
+  {
+    "id": "R-CANICULE",
+    "name": "Chaleur / canicule",
+    "category": "Physique",
+    "description": "Températures élevées, cuisine, extérieurs en été.",
+    "naf_specific": [
+      "56",
+      "41",
+      "43"
+    ],
+    "units": [
+      "Cuisine",
+      "Chantier"
+    ],
+    "sources": [
+      "INRS"
+    ],
+    "questions": [
+      "Plan canicule ?",
+      "Apport d'air/ombrage ?"
+    ],
+    "tags": [
+      "chaleur",
+      "canicule"
+    ]
+  },
+  {
+    "id": "R-ELECTRIQUE",
+    "name": "Risque électrique",
+    "category": "Accidentel",
+    "description": "Interventions électriques, matériels défectueux, rallonges.",
+    "naf_specific": [
+      "41",
+      "43",
+      "56",
+      "47"
+    ],
+    "units": [
+      "Chantier",
+      "Cuisine",
+      "Atelier"
+    ],
+    "sources": [
+      "INRS"
+    ],
+    "questions": [
+      "VÃ¢â€Å“Ã‚Â®rifs pÃ¢â€Å“Ã‚Â®riodiques ?",
+      "Habilitations ?"
+    ],
+    "tags": [
+      "Ã¢â€Å“Ã‚Â®lectricitÃ¢â€Å“Ã‚Â®",
+      "habilitation"
+    ]
+  },
+  {
+    "id": "R-MACHINE",
+    "name": "Machines / pièces en mouvement",
+    "category": "Accidentel",
+    "description": "Contact avec pièces en mouvement, enclenchements, protections absentes.",
+    "naf_specific": [
+      "10",
+      "22",
+      "43.32A",
+      "43.32B"
+    ],
+    "units": [
+      "Atelier",
+      "Chantier"
+    ],
+    "sources": [
+      "INRS"
+    ],
+    "questions": [
+      "Protections en place ?",
+      "ProcÃ¢â€Å“Ã‚Â®dure LOTO ?"
+    ],
+    "tags": [
+      "machine",
+      "LOTO"
+    ]
+  },
+  {
+    "id": "R-MANUTENTION",
+    "name": "Manutentions manuelles",
+    "category": "Physique",
+    "description": "Port de charges, approvisionnement, livraison, soins.",
+    "naf_specific": [
+      "56",
+      "47",
+      "52",
+      "41",
+      "43"
+    ],
+    "units": [
+      "Cuisine",
+      "EntrepÃ¢â€Å“Ã¢â€Â¤t",
+      "Chantier",
+      "Magasin"
+    ],
+    "sources": [
+      "INRS"
+    ],
+    "questions": [
+      "Aides mÃ¢â€Å“Ã‚Â®caniques ?",
+      "Formation gestes/postures ?"
+    ],
+    "tags": [
+      "manutention",
+      "charges"
+    ]
+  },
+  {
+    "id": "R-RAYONNEMENT-UV",
+    "name": "Rayonnements UV (soleil)",
+    "category": "Physique",
+    "description": "Exposition solaire en extérieur.",
+    "naf_specific": [
+      "41",
+      "43",
+      "49"
+    ],
+    "units": [
+      "Chantier",
+      "Terrain"
+    ],
+    "sources": [
+      "INRS"
+    ],
+    "questions": [
+      "Protection UV ?",
+      "Organisation horaires ?"
+    ],
+    "tags": [
+      "UV",
+      "extÃ¢â€Å“Ã‚Â®rieur"
+    ]
+  },
+  {
+    "id": "R-POUSSIERES-BOIS",
+    "name": "Poussières de bois",
+    "category": "Chimique",
+    "description": "Exposition aux poussières de bois, risque CMR.",
+    "naf_specific": [
+      "43.32A"
+    ],
+    "units": [
+      "Atelier"
+    ],
+    "sources": [
+      "INRS"
+    ],
+    "questions": [
+      "Aspiration Ã¢â€Å“ÃƒÂ¡ la source ?",
+      "Nettoyage adaptÃ¢â€Å“Ã‚Â® (pas de soufflage) ?"
+    ],
+    "tags": [
+      "bois",
+      "poussiÃ¢â€Å“Ã‚Â¿res",
+      "CMR"
+    ]
+  },
+  {
+    "id": "R-SILICE",
+    "name": "Silice cristalline",
+    "category": "Chimique",
+    "description": "Découpe, perçage béton/pierre, silicose.",
+    "naf_specific": [
+      "41",
+      "43"
+    ],
+    "units": [
+      "Chantier",
+      "Atelier"
+    ],
+    "sources": [
+      "INRS"
+    ],
+    "questions": [
+      "Aspiration/mouillage ?",
+      "Masques adaptÃ¢â€Å“Ã‚Â®s ?"
+    ],
+    "tags": [
+      "silice",
+      "poussiÃ¢â€Å“Ã‚Â¿res",
+      "CMR"
+    ]
+  },
+  {
+    "id": "R-ROUTIER",
+    "name": "Risque routier professionnel",
+    "category": "Accidentel",
+    "description": "Déplacements pour livraisons, interventions, clientèle.",
+    "naf_specific": [
+      "49",
+      "52",
+      "56"
+    ],
+    "units": [
+      "Terrain",
+      "Livraison"
+    ],
+    "sources": [
+      "INRS"
+    ],
+    "questions": [
+      "Plan de prÃ¢â€Å“Ã‚Â®vention routier ?",
+      "Temps de repos ?"
+    ],
+    "tags": [
+      "routier",
+      "conduite"
+    ]
+  },
+  {
+    "id": "R-AGRESSION",
+    "name": "Agression / incivilités",
+    "category": "SÃ¢â€Å“Ã‚Â®curitÃ¢â€Å“Ã‚Â®",
+    "description": "Relations clients/usagers difficiles, guichet, encaissement.",
+    "naf_specific": [
+      "56",
+      "47",
+      "65",
+      "93"
+    ],
+    "units": [
+      "Accueil",
+      "Salle",
+      "Guichet"
+    ],
+    "sources": [
+      "INRS"
+    ],
+    "questions": [
+      "Formation gestion de conflit ?",
+      "PTI/alarme ?"
+    ],
+    "tags": [
+      "agression",
+      "public"
+    ]
+  },
+  {
+    "id": "R-QUALITE-AIR",
+    "name": "Qualité de l'air intérieur",
+    "category": "Environnemental",
+    "description": "CO2 élevé, ventilation insuffisante.",
+    "naf_specific": [
+      "62",
+      "65",
+      "66",
+      "84",
+      "55"
+    ],
+    "units": [
+      "Bureau",
+      "Salle",
+      "Accueil"
+    ],
+    "sources": [
+      "INRS"
+    ],
+    "questions": [
+      "Mesures CO2 ?",
+      "Taux de renouvellement d'air ?"
+    ],
+    "tags": [
+      "air",
+      "CO2",
+      "ventilation"
+    ]
+  },
+  {
+    "id": "R-DECHETS",
+    "name": "Déchets (DASRI/biodéchets)",
+    "category": "Organisationnel",
+    "description": "Tri, stockage, élimination conforme.",
+    "naf_specific": [
+      "56",
+      "86",
+      "87"
+    ],
+    "units": [
+      "Cuisine",
+      "SantÃ¢â€Å“Ã‚Â®"
+    ],
+    "sources": [
+      "INRS"
+    ],
+    "questions": [
+      "Circuit dÃ¢â€Å“Ã‚Â®chets tracÃ¢â€Å“Ã‚Â® ?",
+      "Prestataire habilitÃ¢â€Å“Ã‚Â® ?"
+    ],
+    "tags": [
+      "dÃ¢â€Å“Ã‚Â®chets",
+      "DASRI",
+      "biodÃ¢â€Å“Ã‚Â®chets"
+    ]
+  }
 ]
