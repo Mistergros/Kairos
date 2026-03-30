@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import * as XLSX from "xlsx";
 import { Card } from "../components/Card";
 import { PriorityBadge } from "../components/Badge";
 import actionsCatalog from "../../config/actions.catalog.json";
@@ -34,6 +35,7 @@ export const ActionPlan = () => {
 
   const [filter, setFilter] = useState<ActionStatus | "">("");
   const [unitTab, setUnitTab] = useState<string>("all");
+  const [viewMode, setViewMode] = useState<"unit" | "owner">("unit");
   const [expanded, setExpanded] = useState<string | null>(null);
   const [form, setForm] = useState({
     title: "",
@@ -203,6 +205,71 @@ export const ActionPlan = () => {
     return Array.from(map.values()).sort((a, b) => a.unitLabel.localeCompare(b.unitLabel));
   }, [filtered, assessments, workUnitById]);
 
+  const groupedByOwner = useMemo(() => {
+    const map = new Map<string, typeof filtered>();
+    filtered.forEach((action) => {
+      const owner = action.owner?.trim() || "À affecter";
+      if (!map.has(owner)) map.set(owner, []);
+      map.get(owner)!.push(action);
+    });
+    // Sort: named owners first alphabetically, "À affecter" last
+    return Array.from(map.entries())
+      .sort(([a], [b]) => {
+        if (a === "À affecter") return 1;
+        if (b === "À affecter") return -1;
+        return a.localeCompare(b, "fr");
+      })
+      .map(([owner, items]) => ({ owner, items }));
+  }, [filtered]);
+
+  const exportXLSX = () => {
+    const wb = XLSX.utils.book_new();
+    const statusLabel = (s: string) =>
+      s === "TO_DO" ? "À faire" : s === "IN_PROGRESS" ? "En cours" : s === "LATE" ? "En retard" : "Terminé";
+    const priorityLabel = (p?: number) => p ? `P${p}` : "—";
+
+    const buildRows = (items: typeof filtered) =>
+      items
+        .sort((a, b) => (a.priority ?? 9) - (b.priority ?? 9))
+        .map((a) => {
+          const linked = a.assessmentId ? assessmentById.get(a.assessmentId) : undefined;
+          const unit = linked ? workUnitById.get(linked.workUnitId) : undefined;
+          return {
+            Responsable: a.owner?.trim() || "À affecter",
+            "Unité de travail": unit?.name || "—",
+            Risque: linked?.riskLabel || "—",
+            Action: formatActionTitle(a.title, linked),
+            Description: formatActionDescription(a.description, linked),
+            Priorité: priorityLabel(a.priority),
+            Statut: statusLabel(a.status),
+            Début: a.startDate ? new Date(a.startDate).toLocaleDateString("fr-FR") : "—",
+            Échéance: a.dueDate || a.endDate
+              ? new Date(a.dueDate || a.endDate!).toLocaleDateString("fr-FR")
+              : "—",
+          };
+        });
+
+    // One sheet per owner
+    groupedByOwner.forEach(({ owner, items }) => {
+      const ws = XLSX.utils.json_to_sheet(buildRows(items));
+      // Column widths
+      ws["!cols"] = [20, 20, 25, 35, 45, 10, 14, 12, 12].map((w) => ({ wch: w }));
+      const safeName = owner.slice(0, 31).replace(/[:\\/?*[\]]/g, "_");
+      XLSX.utils.book_append_sheet(wb, ws, safeName);
+    });
+
+    // Summary sheet with all actions
+    const allRows = buildRows(filtered);
+    if (allRows.length) {
+      const wsAll = XLSX.utils.json_to_sheet(allRows);
+      wsAll["!cols"] = [20, 20, 25, 35, 45, 10, 14, 12, 12].map((w) => ({ wch: w }));
+      XLSX.utils.book_append_sheet(wb, wsAll, "Toutes les actions");
+    }
+
+    const date = new Date().toLocaleDateString("fr-FR").replace(/\//g, "-");
+    XLSX.writeFile(wb, `Plan_action_${date}.xlsx`);
+  };
+
   const stats = useMemo(() => {
     const total = filtered.length;
     const done = filtered.filter((a) => a.status === "DONE").length;
@@ -278,52 +345,80 @@ export const ActionPlan = () => {
     <div className="space-y-5">
       <Card
         title="Plan d'action"
-        subtitle="Actions regroupées par unité et priorisées"
+        subtitle="Actions regroupées et priorisées"
         corner={
-          <select
-            className="rounded-xl border border-slate/20 bg-white px-3 py-2 text-sm"
-            value={filter}
-            onChange={(e) => setFilter(e.target.value as ActionStatus | "")}
-          >
-            <option value="">Tous les statuts</option>
-            {STATUSES.map((s) => (
-              <option key={s} value={s}>
-                {s}
-              </option>
-            ))}
-          </select>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={exportXLSX}
+              className="flex items-center gap-1.5 rounded-xl bg-ink px-3 py-2 text-sm font-semibold text-white shadow hover:bg-slate/80 transition"
+              title="Exporter en Excel"
+            >
+              ↓ Export XLSX
+            </button>
+            <select
+              className="rounded-xl border border-slate/20 bg-white px-3 py-2 text-sm"
+              value={filter}
+              onChange={(e) => setFilter(e.target.value as ActionStatus | "")}
+            >
+              <option value="">Tous les statuts</option>
+              {STATUSES.map((s) => (
+                <option key={s} value={s}>
+                  {s === "TO_DO" ? "À faire" : s === "IN_PROGRESS" ? "En cours" : s === "LATE" ? "En retard" : "Terminé"}
+                </option>
+              ))}
+            </select>
+          </div>
         }
       >
-        <div className="mb-3 flex flex-wrap items-center gap-2 text-sm">
+        {/* Switch de vue */}
+        <div className="mb-4 flex items-center gap-1 rounded-xl border border-slate/15 bg-slate/5 p-1 w-fit">
           <button
-            className={`rounded-full border px-3 py-1 ${
-              unitTab === "all"
-                ? "border-ocean bg-ocean/10 text-ocean font-semibold"
-                : "border-slate/20 bg-white text-slate-700 hover:border-slate/40"
-            }`}
-            onClick={() => setUnitTab("all")}
+            className={`rounded-lg px-4 py-1.5 text-sm font-medium transition ${viewMode === "unit" ? "bg-white text-ink shadow-sm" : "text-slate/60 hover:text-slate"}`}
+            onClick={() => setViewMode("unit")}
           >
-            Toutes les unités
+            Par unité de travail
           </button>
-          {workUnits
-            .filter((u) => !selectedEstablishmentId || u.establishmentId === selectedEstablishmentId)
-            .map((u) => (
-              <button
-                key={u.id}
-                className={`rounded-full border px-3 py-1 ${
-                  unitTab === u.id
-                    ? "border-ocean bg-ocean/10 text-ocean font-semibold"
-                    : "border-slate/20 bg-white text-slate-700 hover:border-slate/40"
-                }`}
-                onClick={() => {
-                  setUnitTab(u.id);
-                  setSelectedWorkUnit(u.id);
-                }}
-              >
-                {u.name} {u.headcount ? `(${u.headcount} pers.)` : ""}
-              </button>
-            ))}
+          <button
+            className={`rounded-lg px-4 py-1.5 text-sm font-medium transition ${viewMode === "owner" ? "bg-white text-ink shadow-sm" : "text-slate/60 hover:text-slate"}`}
+            onClick={() => setViewMode("owner")}
+          >
+            Par responsable
+          </button>
         </div>
+
+        {/* Filtre unités (uniquement en mode "par unité") */}
+        {viewMode === "unit" && (
+          <div className="mb-3 flex flex-wrap items-center gap-2 text-sm">
+            <button
+              className={`rounded-full border px-3 py-1 ${
+                unitTab === "all"
+                  ? "border-ocean bg-ocean/10 text-ocean font-semibold"
+                  : "border-slate/20 bg-white text-slate-700 hover:border-slate/40"
+              }`}
+              onClick={() => setUnitTab("all")}
+            >
+              Toutes les unités
+            </button>
+            {workUnits
+              .filter((u) => !selectedEstablishmentId || u.establishmentId === selectedEstablishmentId)
+              .map((u) => (
+                <button
+                  key={u.id}
+                  className={`rounded-full border px-3 py-1 ${
+                    unitTab === u.id
+                      ? "border-ocean bg-ocean/10 text-ocean font-semibold"
+                      : "border-slate/20 bg-white text-slate-700 hover:border-slate/40"
+                  }`}
+                  onClick={() => {
+                    setUnitTab(u.id);
+                    setSelectedWorkUnit(u.id);
+                  }}
+                >
+                  {u.name} {u.headcount ? `(${u.headcount} pers.)` : ""}
+                </button>
+              ))}
+          </div>
+        )}
 
         <div className="mb-4 grid gap-3 md:grid-cols-4">
           <div className="rounded-xl bg-slate/5 px-3 py-2 text-sm">
@@ -344,6 +439,97 @@ export const ActionPlan = () => {
           </div>
         </div>
 
+        {/* Vue par responsable */}
+        {viewMode === "owner" && (
+          <div className="space-y-4">
+            {groupedByOwner.length === 0 && (
+              <p className="text-sm text-slate/70">Aucune action pour ce filtre.</p>
+            )}
+            {groupedByOwner.map(({ owner, items }) => {
+              const done = items.filter(a => a.status === "DONE").length;
+              const progress = items.length ? Math.round((done / items.length) * 100) : 0;
+              const isUnassigned = owner === "À affecter";
+              return (
+                <div key={owner} className={`rounded-2xl border p-4 shadow-sm ${isUnassigned ? "border-amber-200 bg-amber-50" : "border-slate/10 bg-white"}`}>
+                  <div className="mb-3 flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2">
+                      <span className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold text-white ${isUnassigned ? "bg-amber-400" : "bg-kairos"}`}>
+                        {isUnassigned ? "?" : owner.charAt(0).toUpperCase()}
+                      </span>
+                      <div>
+                        <p className="font-semibold text-slate">{owner}</p>
+                        <p className="text-xs text-slate/60">{items.length} action{items.length > 1 ? "s" : ""} · {progress}% terminées</p>
+                      </div>
+                    </div>
+                    {/* Barre de progression */}
+                    <div className="hidden md:flex items-center gap-2">
+                      <div className="w-32 h-2 rounded-full bg-slate/10 overflow-hidden">
+                        <div className="h-full rounded-full bg-lime transition-all" style={{ width: `${progress}%` }} />
+                      </div>
+                      <span className="text-xs text-slate/60 w-8 text-right">{progress}%</span>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    {items
+                      .sort((a, b) => (a.priority ?? 9) - (b.priority ?? 9))
+                      .map((a) => {
+                        const linked = a.assessmentId ? assessmentById.get(a.assessmentId) : undefined;
+                        const unit = linked ? workUnitById.get(linked.workUnitId) : undefined;
+                        const statusColors: Record<string, string> = {
+                          TO_DO: "bg-slate/10 text-slate/60",
+                          IN_PROGRESS: "bg-ocean/10 text-ocean",
+                          LATE: "bg-red-100 text-red-600",
+                          DONE: "bg-lime/20 text-lime-700",
+                        };
+                        const statusLabels: Record<string, string> = {
+                          TO_DO: "À faire", IN_PROGRESS: "En cours", LATE: "En retard", DONE: "Terminé",
+                        };
+                        return (
+                          <div key={a.id} className="flex items-start gap-3 rounded-xl border border-slate/10 bg-slate/3 p-3">
+                            <PriorityBadge priority={a.priority} />
+                            <div className="flex-1 min-w-0">
+                              <p className="font-medium text-sm text-slate truncate">{formatActionTitle(a.title, linked)}</p>
+                              <div className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-slate/60">
+                                {linked && <span>🎯 {linked.riskLabel}</span>}
+                                {unit && <span>🏢 {unit.name}</span>}
+                                {(a.dueDate || a.endDate) && (
+                                  <span className={a.status !== "DONE" && new Date(a.dueDate || a.endDate!) < new Date() ? "text-red-500 font-medium" : ""}>
+                                    📅 {new Date(a.dueDate || a.endDate!).toLocaleDateString("fr-FR")}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-2 shrink-0">
+                              <select
+                                className={`rounded-lg border-0 px-2 py-1 text-xs font-medium ${statusColors[a.status] || "bg-slate/10"}`}
+                                value={a.status}
+                                onChange={(e) => updateActionStatus(a.id, e.target.value as ActionStatus)}
+                              >
+                                {STATUSES.map((s) => (
+                                  <option key={s} value={s}>{statusLabels[s]}</option>
+                                ))}
+                              </select>
+                              <button
+                                className="text-xs text-red-400 hover:text-red-600"
+                                onClick={() => { if (window.confirm(`Supprimer cette action ?`)) removeAction(a.id); }}
+                                title="Supprimer"
+                              >
+                                ✕
+                              </button>
+                            </div>
+                          </div>
+                        );
+                      })}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Vue par unité (existante) */}
+        {viewMode === "unit" && (
         <div className="space-y-4">
           {grouped.map((group) => (
             <div
@@ -521,6 +707,7 @@ export const ActionPlan = () => {
             <p className="text-sm text-slate/70">Aucune action pour ce filtre.</p>
           )}
         </div>
+        )}
       </Card>
 
       <Card title="Proposer une action" subtitle="Aligner les actions sur la priorité du risque">
