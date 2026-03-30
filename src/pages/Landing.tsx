@@ -45,25 +45,6 @@ type SubscribeHandler = (planId?: PlanId) => void;
 /* ------------------------------------------------------------
    BADGE DES TARIFS
 ------------------------------------------------------------ */
-function Badge({
-  tone,
-  children,
-}: {
-  tone: "primary" | "secondary";
-  children: string;
-}) {
-  return (
-    <span
-      className={`absolute right-4 top-4 rounded-full px-3 py-1 text-xs font-semibold tracking-wide ${
-        tone === "primary"
-          ? "bg-blue-600 text-white"
-          : "bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-white"
-      }`}
-    >
-      {children}
-    </span>
-  );
-}
 
 /* ------------------------------------------------------------
    NAVBAR MARKETING
@@ -258,88 +239,49 @@ function SocialProof() {
 }
 
 /* ------------------------------------------------------------
-   FEATURE CARDS (LARGES + AÉRÉES)
+   FEATURE CARDS
 ------------------------------------------------------------ */
-function FeatureCard({
-  title,
-  bullets,
-  Icon,
-  accent,
-}: {
-  title: string;
-  bullets: string[];
-  Icon: any;
-  accent: string;
-}) {
-  return (
-    <div
-      className="group relative rounded-[28px] p-10 shadow-xl ring-1
-      bg-white dark:bg-slate-900 ring-slate-200 dark:ring-slate-700
-      hover:-translate-y-1 hover:shadow-2xl transition"
-    >
-      <div className={`absolute -right-6 -top-6 h-28 w-28 rounded-full blur-2xl opacity-30 ${accent}`} />
-      
-      <div className="flex items-start gap-6">
-        <div className={`rounded-2xl p-4 text-white shadow-md ${accent}`}>
-          <Icon className="h-8 w-8" />
-        </div>
-
-        <div>
-          <h3 className="text-2xl font-semibold text-slate-900 dark:text-white">{title}</h3>
-
-          <ul className="mt-4 space-y-2 text-lg text-slate-700 dark:text-slate-300">
-            {bullets.map((b) => (
-              <li key={b} className="flex items-start gap-3">
-                <span className="mt-2 inline-block h-2.5 w-2.5 rounded-full bg-green-500" />
-                <span>{b}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function ValueProps() {
+  const features = [
+    {
+      icon: <IconAnalyze className="h-6 w-6" />,
+      color: "bg-[#5b61f6]",
+      title: "Pré-remplissage par secteur",
+      desc: "Saisissez votre code NAF et Kaijos charge automatiquement les risques typiques de votre activité. Vous validez, vous n’inventez pas.",
+    },
+    {
+      icon: <IconAct className="h-6 w-6" />,
+      color: "bg-[#0ea5e9]",
+      title: "Plan d’action intégré",
+      desc: "Chaque risque génère une action. Assignez un responsable, fixez une échéance, recevez un rappel. Tout dans le même outil.",
+    },
+    {
+      icon: <IconTrack className="h-6 w-6" />,
+      color: "bg-emerald-500",
+      title: "Export PDF légal en 1 clic",
+      desc: "Le document est mis en page selon les exigences de l’art. R.4121-1 du Code du travail. Prêt à signer, prêt à archiver.",
+    },
+  ];
   return (
-    <section id="features" className="w-full px-6 py-24">
-      <div className="mx-auto max-w-7xl">
+    <section id="features" className="w-full bg-[#FAF8F5] px-6 py-24">
+      <div className="mx-auto max-w-5xl">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-semibold dark:text-white">L’essentiel, sans complexité</h2>
-          <p className="mt-3 text-lg text-slate-600 dark:text-slate-300">
-            Trois blocs couvrent tout votre cycle DUERP.
+          <span className="inline-block rounded-full bg-[#5b61f6]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[#5b61f6] mb-4">Fonctionnalités</span>
+          <h2 className="text-4xl font-extrabold text-[#0f172a]">L’essentiel, sans complexité</h2>
+          <p className="mt-4 text-lg text-slate-500 max-w-xl mx-auto">
+            Tout ce qu’il faut pour être conforme — rien de superflu.
           </p>
         </div>
-
-        <div className="grid md:grid-cols-3 gap-12">
-          <FeatureCard
-            title="Analyser"
-            bullets={[
-              "Pré-remplissage des risques par code NAF",
-              "Détection des oublis par secteur d’activité",
-            ]}
-            Icon={IconAnalyze}
-            accent="bg-blue-600"
-          />
-          <FeatureCard
-            title="Agir"
-            bullets={[
-              "Suggestions d’actions prioritaires",
-              "Plan d’action + rappels automatiques",
-            ]}
-            Icon={IconAct}
-            accent="bg-violet-600"
-          />
-          <FeatureCard
-            title="Suivre"
-            bullets={[
-              "Tableau de bord clair",
-              "Export PDF conforme en 1 clic",
-            ]}
-            Icon={IconTrack}
-            accent="bg-emerald-600"
-          />
+        <div className="grid md:grid-cols-3 gap-8">
+          {features.map((f) => (
+            <div key={f.title} className="rounded-[24px] bg-white p-8 shadow-sm hover:shadow-md transition border border-slate-100">
+              <div className={`inline-flex h-12 w-12 items-center justify-center rounded-2xl text-white ${f.color} mb-5`}>
+                {f.icon}
+              </div>
+              <h3 className="text-xl font-bold text-[#0f172a] mb-3">{f.title}</h3>
+              <p className="text-slate-500 leading-relaxed">{f.desc}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -747,46 +689,32 @@ export function UseCasesCompact({ data }: { data?: UseCase[] }) {
 /* ------------------------------------------------------------
    STEPS — PROCESS
 ------------------------------------------------------------ */
-function StepCard({
-  index,
-  title,
-  desc,
-}: {
-  index: number;
-  title: string;
-  desc: string;
-}) {
-  return (
-    <div
-      className="rounded-[24px] p-10 shadow-xl ring-1
-      bg-white dark:bg-slate-900 ring-slate-200 dark:ring-slate-700
-      hover:-translate-y-1 hover:shadow-2xl transition"
-    >
-      <div className="mb-5 h-12 w-12 rounded-full bg-blue-600 text-white flex items-center justify-center text-lg font-bold">
-        {index}
-      </div>
-
-      <h3 className="text-2xl font-semibold dark:text-white">{title}</h3>
-      <p className="mt-2 text-lg text-slate-600 dark:text-slate-300">{desc}</p>
-    </div>
-  );
-}
 
 function Steps() {
+  const steps = [
+    { n: "01", title: "Décrivez votre entreprise", desc: "Renseignez votre code NAF, vos établissements et vos unités de travail. 2 minutes chrono." },
+    { n: "02", title: "Validez l’inventaire des risques", desc: "Kaijos pré-remplit les risques. Répondez à 4 questions par risque pour affiner la cotation." },
+    { n: "03", title: "Pilotez et exportez", desc: "Suivez votre plan d’action, assignez des responsables, téléchargez le PDF légal prêt à signer." },
+  ];
   return (
-    <section id="how" className="w-full px-6 py-24">
-      <div className="mx-auto max-w-7xl">
+    <section id="how" className="w-full bg-white px-6 py-24">
+      <div className="mx-auto max-w-5xl">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-semibold dark:text-white">Comment ça marche</h2>
-          <p className="mt-3 text-lg text-slate-600 dark:text-slate-300">
-            Trois étapes simples, de la création à l’export.
-          </p>
+          <span className="inline-block rounded-full bg-[#0ea5e9]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[#0ea5e9] mb-4">Étapes</span>
+          <h2 className="text-4xl font-extrabold text-[#0f172a]">Prêt en moins d’une heure</h2>
+          <p className="mt-4 text-lg text-slate-500">Pas de formation, pas d’intégration longue.</p>
         </div>
-
-        <div className="grid md:grid-cols-3 gap-12">
-          <StepCard index={1} title="Décrire" desc="Établissements, unités, NAF en 30 secondes" />
-          <StepCard index={2} title="Valider" desc="Affinez les cotations avec le questionnaire guidé" />
-          <StepCard index={3} title="Piloter" desc="Assignez, suivez, exportez" />
+        <div className="relative">
+          <div className="absolute top-6 left-0 right-0 h-px bg-slate-200 hidden md:block" />
+          <div className="grid md:grid-cols-3 gap-8 relative">
+            {steps.map((s) => (
+              <div key={s.n} className="bg-[#FAF8F5] rounded-[24px] p-8 border border-slate-100">
+                <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#5b61f6] text-white font-extrabold text-lg mb-5">{s.n}</div>
+                <h3 className="text-xl font-bold text-[#0f172a] mb-3">{s.title}</h3>
+                <p className="text-slate-500 leading-relaxed">{s.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -817,57 +745,6 @@ const pricing = [
   },
 ];
 
-function PricingCard({
-  plan,
-  onSubscribe,
-  isLoading,
-}: {
-  plan: typeof pricing[number];
-  onSubscribe: SubscribeHandler;
-  isLoading: boolean;
-}) {
-  const recommended = plan.badgeTone === "primary";
-
-  return (
-    <article
-      className={`relative w-full rounded-3xl border shadow-xl p-10 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 ${
-        recommended ? "ring-2 ring-blue-600" : ""
-      }`}
-    >
-      <Badge tone={plan.badgeTone}>{plan.badge}</Badge>
-
-      <h3 className="text-2xl font-bold dark:text-white">{plan.name}</h3>
-      <p className="text-slate-500 dark:text-slate-300">{plan.tagline}</p>
-
-      <div className="text-4xl font-bold mt-6 dark:text-white">
-        {plan.price} <span className="text-lg text-slate-500">/ mois</span>
-      </div>
-
-      <ul className="mt-6 space-y-2 text-lg text-slate-700 dark:text-slate-300">
-        {plan.bullets.map((b) => (
-          <li key={b} className="flex gap-3">
-            <span className="mt-2 h-2.5 w-2.5 bg-green-500 rounded-full" />
-            {b}
-          </li>
-        ))}
-      </ul>
-
-      <button
-        type="button"
-        onClick={() => onSubscribe(plan.id as PlanId)}
-        disabled={isLoading}
-        className={`mt-10 block w-full rounded-xl py-3 text-center font-semibold disabled:cursor-not-allowed disabled:opacity-70 ${
-          recommended
-            ? "bg-blue-600 text-white hover:bg-blue-700"
-            : "border border-slate-300 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-800 dark:text-white"
-        }`}
-      >
-        {isLoading ? "Redirection..." : `Choisir ${plan.name.split(" ")[0]}`}
-      </button>
-    </article>
-  );
-}
-
 function PricingSection({
   onSubscribe,
   isLoading,
@@ -876,19 +753,60 @@ function PricingSection({
   isLoading: boolean;
 }) {
   return (
-    <section id="pricing" className="w-full px-6 py-24 bg-slate-50 dark:bg-slate-950">
-      <div className="mx-auto max-w-7xl">
+    <section id="pricing" className="w-full bg-[#FAF8F5] px-6 py-24">
+      <div className="mx-auto max-w-3xl">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-semibold dark:text-white">Tarifs</h2>
-          <p className="mt-3 text-lg text-slate-600 dark:text-slate-300">
-            Résiliation mensuelle. Sans engagement.
-          </p>
+          <span className="inline-block rounded-full bg-[#5b61f6]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[#5b61f6] mb-4">Tarifs</span>
+          <h2 className="text-4xl font-extrabold text-[#0f172a]">Simple. Transparent. Sans engagement.</h2>
+          <p className="mt-4 text-lg text-slate-500">Résiliation à tout moment.</p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-12">
-          {pricing.map((p) => (
-            <PricingCard key={p.id} plan={p} onSubscribe={onSubscribe} isLoading={isLoading} />
-          ))}
+        <div className="grid md:grid-cols-2 gap-8">
+          {pricing.map((p) => {
+            const recommended = p.badgeTone === "primary";
+            return (
+              <article
+                key={p.id}
+                className={`relative rounded-[28px] bg-white p-10 border transition ${
+                  recommended
+                    ? "border-[#5b61f6] shadow-lg shadow-[#5b61f6]/10"
+                    : "border-slate-200 shadow-sm"
+                }`}
+              >
+                {recommended && (
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[#5b61f6] px-4 py-1 text-xs font-bold text-white">
+                    {p.badge}
+                  </span>
+                )}
+                <h3 className="text-2xl font-extrabold text-[#0f172a]">{p.name}</h3>
+                <p className="text-slate-500 mt-1">{p.tagline}</p>
+                <div className="mt-6 flex items-end gap-2">
+                  <span className="text-5xl font-extrabold text-[#0f172a]">{p.price}</span>
+                  <span className="text-slate-400 mb-2">/ mois</span>
+                </div>
+                <ul className="mt-8 space-y-3">
+                  {p.bullets.map((b) => (
+                    <li key={b} className="flex items-center gap-3 text-slate-600">
+                      <span className="h-5 w-5 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-xs font-bold">✓</span>
+                      {b}
+                    </li>
+                  ))}
+                </ul>
+                <button
+                  type="button"
+                  onClick={() => onSubscribe(p.id as PlanId)}
+                  disabled={isLoading}
+                  className={`mt-10 w-full rounded-2xl py-3.5 font-bold text-base transition disabled:opacity-60 ${
+                    recommended
+                      ? "bg-[#5b61f6] text-white hover:bg-[#4a50e0]"
+                      : "border-2 border-[#0f172a] text-[#0f172a] hover:bg-[#0f172a] hover:text-white"
+                  }`}
+                >
+                  {isLoading ? "Redirection…" : `Choisir ${p.name}`}
+                </button>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>
