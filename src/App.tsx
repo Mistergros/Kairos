@@ -53,10 +53,7 @@ function RequireSubscription({ children }: { children: ReactNode }) {
   if (bypassAuth) return <>{children}</>;
   if (!isLoaded) return <FullPageLoader />;
   if (!isSignedIn) return <Navigate to="/landing" replace />;
-  const status = String((user?.publicMetadata as any)?.subscriptionStatus || "");
-  const hasAccess = status === "active" || status === "trialing";
-  // En test, on laisse passer si le statut est absent mais l'utilisateur est connecté
-  if (!hasAccess && status) return <Navigate to="/landing?subscription=required" replace />;
+  // Toujours laisser passer si connecté — le paywall sera géré plus tard
   return <>{children}</>;
 }
 
