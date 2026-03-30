@@ -459,7 +459,15 @@ export const ActionPlan = () => {
                                   type="date"
                                   className="mt-1 w-full rounded-lg border border-slate/20 px-2 py-1 text-sm"
                                   value={a.startDate ? a.startDate.slice(0, 10) : ""}
-                                  onChange={(e) => updateAction(a.id, { startDate: e.target.value })}
+                                  onChange={(e) => {
+                                    const newStart = e.target.value;
+                                    const end = a.endDate ? a.endDate.slice(0, 10) : "";
+                                    if (end && newStart > end) {
+                                      updateAction(a.id, { startDate: newStart, endDate: newStart });
+                                    } else {
+                                      updateAction(a.id, { startDate: newStart });
+                                    }
+                                  }}
                                 />
                               </label>
                               <label className="block text-xs text-slate/60">
@@ -468,7 +476,13 @@ export const ActionPlan = () => {
                                   type="date"
                                   className="mt-1 w-full rounded-lg border border-slate/20 px-2 py-1 text-sm"
                                   value={a.endDate ? a.endDate.slice(0, 10) : ""}
-                                  onChange={(e) => updateAction(a.id, { endDate: e.target.value })}
+                                  min={a.startDate ? a.startDate.slice(0, 10) : undefined}
+                                  onChange={(e) => {
+                                    const newEnd = e.target.value;
+                                    const start = a.startDate ? a.startDate.slice(0, 10) : "";
+                                    if (start && newEnd < start) return;
+                                    updateAction(a.id, { endDate: newEnd });
+                                  }}
                                 />
                               </label>
                             </div>
@@ -547,14 +561,26 @@ export const ActionPlan = () => {
             placeholder="Date de début"
             type="date"
             value={form.startDate}
-            onChange={(e) => setForm((v) => ({ ...v, startDate: e.target.value }))}
+            onChange={(e) => {
+              const newStart = e.target.value;
+              setForm((v) => ({
+                ...v,
+                startDate: newStart,
+                endDate: v.endDate && v.endDate < newStart ? newStart : v.endDate,
+              }));
+            }}
             title="Format JJ/MM/AA"
           />
           <input
             type="date"
             className="rounded-xl border border-slate/20 px-3 py-2"
             value={form.endDate}
-            onChange={(e) => setForm((v) => ({ ...v, endDate: e.target.value }))}
+            min={form.startDate || undefined}
+            onChange={(e) => {
+              const newEnd = e.target.value;
+              if (form.startDate && newEnd < form.startDate) return;
+              setForm((v) => ({ ...v, endDate: newEnd }));
+            }}
             title="Format JJ/MM/AA"
           />
           <textarea

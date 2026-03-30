@@ -99,7 +99,7 @@ export const makeActionForAssessment = (a: Assessment, establishmentId?: string)
       { id: uid(), label: "Definir mesures et responsable", done: false },
       { id: uid(), label: "Mettre en oeuvre", done: false },
     ],
-    owner: "A definir",
+    owner: "",
     dueDate: new Date(Date.now() + 14 * 24 * 3600 * 1000).toISOString(),
     status: "TO_DO",
     priority: a.priority,
