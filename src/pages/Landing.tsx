@@ -112,7 +112,7 @@ function Hero({ onSubscribe, isLoading }: { onSubscribe: SubscribeHandler; isLoa
             <span className="text-kairos">conforme et à jour.</span>
           </h1>
 
-          <p className="mt-6 text-lg text-slate-300 leading-relaxed">
+          <p className="mt-6 text-lg text-gray-300 leading-relaxed">
             Kaijos structure votre évaluation des risques professionnels, pré-remplit l’inventaire selon votre secteur NAF et génère le document légal prêt à signer.
           </p>
 
@@ -123,7 +123,7 @@ function Hero({ onSubscribe, isLoading }: { onSubscribe: SubscribeHandler; isLoa
               "Plan d’action avec responsables et échéances",
               "Export PDF légal en un clic",
             ].map((t) => (
-              <div key={t} className="flex items-center gap-2 text-sm text-slate-300">
+              <div key={t} className="flex items-center gap-2 text-sm text-white">
                 <span className="h-4 w-4 rounded-full bg-lime flex items-center justify-center text-white text-[10px] font-bold shrink-0">✓</span>
                 {t}
               </div>
@@ -139,7 +139,7 @@ function Hero({ onSubscribe, isLoading }: { onSubscribe: SubscribeHandler; isLoa
             >
               {isLoading ? "Redirection…" : "Démarrer maintenant"}
             </button>
-            <a href="#pricing" className="rounded-xl border border-slate-600 px-8 py-3.5 text-base font-semibold text-slate-300 hover:border-slate-400 hover:text-white transition">
+            <a href="#pricing" className="rounded-xl border border-gray-500 px-8 py-3.5 text-base font-semibold text-white hover:border-white transition">
               Voir les offres
             </a>
           </div>
