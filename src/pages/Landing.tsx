@@ -127,49 +127,108 @@ function Navbar({
 ------------------------------------------------------------ */
 function Hero({ onSubscribe, isLoading }: { onSubscribe: SubscribeHandler; isLoading: boolean }) {
   return (
-    <section className="w-full bg-gradient-to-b from-blue-50 to-white dark:from-slate-900 dark:to-slate-950">
-      <div className="mx-auto max-w-7xl px-6 py-24 grid md:grid-cols-2 gap-16 items-center">
-        
-        {/* Texte */}
-        <div>
-          <p className="text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">
-            KAIJOS — BY MILANTE CONSULTING
-          </p>
+    <section className="w-full bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white">
+      <div className="mx-auto max-w-7xl px-6 pt-20 pb-0 flex flex-col items-center text-center">
 
-          <h1 className="mt-4 text-5xl font-bold text-slate-900 dark:text-white leading-tight">
-            Le DUERP conforme, <br />
-            <span className="text-blue-600">en quelques minutes</span>.
-          </h1>
+        <span className="inline-flex items-center gap-2 rounded-full border border-blue-400/30 bg-blue-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-blue-300 mb-6">
+          Kaijos · by Milante Consulting
+        </span>
 
-          <p className="mt-6 text-lg max-w-xl text-slate-700 dark:text-slate-300">
-            Créez, mettez à jour et pilotez votre DUERP sans complexité.
-            Pré-remplissage automatique par secteur d’activité, plan d’action intégré, export PDF légal.
-          </p>
+        <h1 className="text-5xl md:text-6xl font-extrabold leading-tight max-w-3xl">
+          Votre DUERP conforme,{" "}
+          <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+            sans Excel, sans galère.
+          </span>
+        </h1>
 
-          <div className="mt-8 flex flex-wrap gap-4">
-            <button
-              type="button"
-              onClick={() => onSubscribe("essential")}
-              disabled={isLoading}
-              className="rounded-xl bg-blue-600 px-6 py-3 text-white font-semibold hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70"
-            >
-              {isLoading ? "Redirection..." : "Souscrire maintenant"}
-            </button>
+        <p className="mt-6 text-lg md:text-xl text-slate-300 max-w-2xl">
+          Kaijos pré-remplit votre inventaire des risques selon votre code NAF, génère le PDF légal et suit votre plan d’action — en quelques minutes, pas en quelques jours.
+        </p>
 
-            <a href="#pricing" className="rounded-xl border border-slate-300 px-6 py-3 font-semibold hover:bg-slate-100 dark:hover:bg-slate-800 dark:text-white">
-              Voir les offres
-            </a>
-          </div>
-
-          <p className="mt-4 text-sm text-slate-600 dark:text-slate-400">
-            ✓ Conforme Code du Travail • ✓ Export PDF légal inclus • ✓ Pré-remplissage par code NAF
-          </p>
+        <div className="mt-10 flex flex-wrap justify-center gap-4">
+          <button
+            type="button"
+            onClick={() => onSubscribe("essential")}
+            disabled={isLoading}
+            className="rounded-xl bg-blue-500 px-8 py-3.5 text-base font-bold text-white shadow-lg shadow-blue-500/30 hover:bg-blue-400 disabled:opacity-60 transition"
+          >
+            {isLoading ? "Redirection…" : "Commencer gratuitement →"}
+          </button>
+          <a href="#pricing" className="rounded-xl border border-white/20 bg-white/5 px-8 py-3.5 text-base font-semibold hover:bg-white/10 transition">
+            Voir les offres
+          </a>
         </div>
 
-        {/* Visuel */}
-        <div className="flex justify-center">
-          <div className="relative w-full max-w-md rounded-3xl bg-white dark:bg-slate-900 shadow-2xl p-6 ring-1 ring-slate-200 dark:ring-slate-800">
-            <div className="h-64 rounded-2xl bg-gradient-to-br from-blue-100 to-indigo-100 dark:from-slate-700 dark:to-slate-600" />
+        <p className="mt-5 text-sm text-slate-400">
+          ✓ Conforme art. R.4121-1 du Code du travail &nbsp;·&nbsp; ✓ Export PDF légal inclus &nbsp;·&nbsp; ✓ Sans installation
+        </p>
+
+        {/* Aperçu interface */}
+        <div className="mt-16 w-full max-w-5xl rounded-t-3xl overflow-hidden shadow-2xl ring-1 ring-white/10">
+          {/* Barre de fenêtre */}
+          <div className="flex items-center gap-2 bg-slate-800 px-4 py-3">
+            <span className="h-3 w-3 rounded-full bg-red-400" />
+            <span className="h-3 w-3 rounded-full bg-yellow-400" />
+            <span className="h-3 w-3 rounded-full bg-green-400" />
+            <span className="ml-4 flex-1 rounded bg-slate-700 px-3 py-1 text-xs text-slate-400">app.kaijos.com</span>
+          </div>
+          {/* Simulation inventaire */}
+          <div className="bg-slate-50 p-6">
+            <div className="mb-4 flex items-center justify-between">
+              <div className="flex gap-2">
+                <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-700">Bureau — Administration</span>
+                <span className="rounded-full bg-slate-200 px-3 py-1 text-xs text-slate-600">Atelier — Production</span>
+              </div>
+              <span className="rounded-lg bg-blue-600 px-4 py-1.5 text-xs font-bold text-white">Pré-remplir risques (NAF)</span>
+            </div>
+            <div className="overflow-hidden rounded-xl border border-slate-200 bg-white">
+              <table className="w-full text-xs">
+                <thead className="bg-slate-100 text-slate-500">
+                  <tr>
+                    {["Catégorie", "Risque", "G", "F", "M", "Score", "Priorité"].map((h) => (
+                      <th key={h} className="px-3 py-2 text-left font-semibold">{h}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 text-slate-700">
+                  {[
+                    { cat: "RPS", risk: "Conflits / tensions", g: 8, f: 6, m: 2, score: 24, p: "P1", color: "bg-red-500" },
+                    { cat: "TMS", risk: "Postures contraignantes", g: 6, f: 9, m: 3, score: 18, p: "P1", color: "bg-red-500" },
+                    { cat: "Électrique", risk: "Contact indirect", g: 8, f: 2, m: 4, score: 4, p: "P3", color: "bg-yellow-400" },
+                    { cat: "Incendie", risk: "Départ de feu", g: 10, f: 2, m: 3, score: 6, p: "P2", color: "bg-orange-400" },
+                  ].map((r) => (
+                    <tr key={r.risk} className="hover:bg-slate-50">
+                      <td className="px-3 py-2 text-slate-500">{r.cat}</td>
+                      <td className="px-3 py-2 font-medium">{r.risk}</td>
+                      <td className="px-3 py-2">{r.g}</td>
+                      <td className="px-3 py-2">{r.f}</td>
+                      <td className="px-3 py-2">{r.m}</td>
+                      <td className="px-3 py-2 font-bold">{r.score}</td>
+                      <td className="px-3 py-2">
+                        <span className={`inline-flex h-6 w-8 items-center justify-center rounded-full text-[10px] font-bold text-white ${r.color}`}>{r.p}</span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="mt-3 flex gap-3">
+              <div className="flex-1 rounded-lg border border-slate-200 bg-white p-3">
+                <p className="text-[10px] font-semibold uppercase text-slate-400 mb-1">Actions en cours</p>
+                <p className="text-2xl font-bold text-slate-800">7</p>
+              </div>
+              <div className="flex-1 rounded-lg border border-slate-200 bg-white p-3">
+                <p className="text-[10px] font-semibold uppercase text-slate-400 mb-1">Risques P1</p>
+                <p className="text-2xl font-bold text-red-600">2</p>
+              </div>
+              <div className="flex-1 rounded-lg border border-slate-200 bg-white p-3">
+                <p className="text-[10px] font-semibold uppercase text-slate-400 mb-1">Complétude</p>
+                <p className="text-2xl font-bold text-green-600">84%</p>
+              </div>
+              <div className="flex-1 rounded-lg border border-green-100 bg-green-50 p-3 flex items-center justify-center">
+                <span className="text-xs font-bold text-green-700">↓ Export PDF</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -178,29 +237,23 @@ function Hero({ onSubscribe, isLoading }: { onSubscribe: SubscribeHandler; isLoa
 }
 
 /* ------------------------------------------------------------
-   VIDEO DEMO
+   SOCIAL PROOF STRIP
 ------------------------------------------------------------ */
-function VideoDemo() {
+function SocialProof() {
   return (
-    <section className="w-full px-6 py-24 mx-auto max-w-7xl">
-      <div className="text-center mb-12">
-        <h2 className="text-4xl font-semibold text-slate-900 dark:text-white">Découvrez Kaijos en action</h2>
-        <p className="mt-3 text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
-          Une démonstration claire : création d’un DUERP complet en quelques minutes, plan d’action dynamique, export PDF.
-        </p>
+    <div className="w-full bg-slate-900 border-y border-slate-800 py-5">
+      <div className="mx-auto max-w-5xl px-6 flex flex-wrap items-center justify-center gap-8 text-sm text-slate-400">
+        <span>🏗️ BTP &amp; construction</span>
+        <span className="hidden md:block text-slate-700">|</span>
+        <span>🏭 Industrie &amp; ateliers</span>
+        <span className="hidden md:block text-slate-700">|</span>
+        <span>🏢 Services &amp; bureaux</span>
+        <span className="hidden md:block text-slate-700">|</span>
+        <span>🏥 Santé &amp; médico-social</span>
+        <span className="hidden md:block text-slate-700">|</span>
+        <span>🚚 Transport &amp; logistique</span>
       </div>
-
-      <div className="relative mx-auto max-w-5xl rounded-3xl overflow-hidden shadow-2xl ring-1 ring-slate-200 dark:ring-slate-800">
-        <iframe
-          className="w-full aspect-video"
-          src="https://www.youtube.com/embed/XXXXXXXX"
-          title="Démo Kaijos"
-          loading="lazy"
-          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        />
-      </div>
-    </section>
+    </div>
   );
 }
 
@@ -936,7 +989,7 @@ export default function LandingPage() {
         </div>
       )}
       <Hero onSubscribe={startCheckout} isLoading={isLoading} />
-      <VideoDemo />
+      <SocialProof />
       <ValueProps />
       <UseCasesCompact data={USE_CASES} /> {/* ← Cas pratiques compact */}
       <Steps />
