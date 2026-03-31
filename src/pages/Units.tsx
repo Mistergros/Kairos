@@ -4,6 +4,7 @@ import { useDuerpStore } from "../state/store";
 import { searchCompanies } from "../utils/api";
 import { uid } from "../utils/uid";
 import type { WorkUnit } from "../types";
+import { usePlan } from "../hooks/usePlan";
 
 const PRIMARY_FEATURE_OPTIONS: { key: string; label: string; description: string }[] = [
   { key: "solvents", label: "Solvants / COV", description: "Peintures, dégraissants, produits chimiques volatils" },
@@ -62,6 +63,10 @@ export const Units = () => {
     loadingHazards,
   } = useDuerpStore();
 
+  const plan = usePlan();
+  const reachedUnitLimit = plan.maxWorkUnits !== -1 && workUnits.length >= plan.maxWorkUnits;
+  const reachedEstabLimit = plan.maxEstablishments !== -1 && establishments.length >= plan.maxEstablishments;
+
   const [establishmentForm, setEstablishmentForm] = useState({ name: "", sector: "", codeNaf: "", address: "" });
   const [unitForm, setUnitForm] = useState({ name: "", description: "", headcount: 0 });
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
@@ -84,6 +89,7 @@ export const Units = () => {
 
   const onCreateEstablishment = () => {
     if (!establishmentForm.name) return;
+    if (reachedEstabLimit) return;
     addEstablishment({
       id: uid(),
       name: establishmentForm.name,
@@ -97,6 +103,7 @@ export const Units = () => {
   const onCreateUnit = async () => {
     const targetEstablishmentId = selectedEstablishmentId || establishments[0]?.id;
     if (!unitForm.name || !targetEstablishmentId) return;
+    if (reachedUnitLimit) return;
     const newId = uid();
     const payload: WorkUnit = {
       id: newId,
@@ -310,9 +317,16 @@ export const Units = () => {
               onChange={(e) => setEstablishmentForm((v) => ({ ...v, address: e.target.value }))}
             />
           </div>
+          {reachedEstabLimit && (
+            <p className="mt-2 rounded-xl bg-amber-50 border border-amber-200 px-3 py-2 text-xs text-amber-700">
+              Limite de {plan.maxEstablishments} établissement{plan.maxEstablishments > 1 ? "s" : ""} atteinte (offre {plan.label}).{" "}
+              <a href="/pricing" className="font-semibold underline">Passer à l'offre supérieure →</a>
+            </p>
+          )}
           <button
             onClick={onCreateEstablishment}
-            className="mt-3 rounded-xl bg-ink px-4 py-2 text-sm font-semibold text-white shadow-lg"
+            disabled={reachedEstabLimit}
+            className="mt-3 rounded-xl bg-ink px-4 py-2 text-sm font-semibold text-white shadow-lg disabled:opacity-40 disabled:cursor-not-allowed"
             title="Ajouter l'etablissement"
           >
             Ajouter
@@ -436,10 +450,16 @@ export const Units = () => {
               </select>
             </div>
           </div>
+          {reachedUnitLimit && (
+            <p className="mt-2 rounded-xl bg-amber-50 border border-amber-200 px-3 py-2 text-xs text-amber-700">
+              Limite de {plan.maxWorkUnits} unités atteinte (offre {plan.label}).{" "}
+              <a href="/pricing" className="font-semibold underline">Passer à l'offre supérieure →</a>
+            </p>
+          )}
           <button
             onClick={onCreateUnit}
-            disabled={loadingHazards}
-            className="mt-3 rounded-xl bg-ocean px-4 py-2 text-sm font-semibold text-white shadow-lg disabled:opacity-60"
+            disabled={loadingHazards || reachedUnitLimit}
+            className="mt-3 rounded-xl bg-ocean px-4 py-2 text-sm font-semibold text-white shadow-lg disabled:opacity-40 disabled:cursor-not-allowed"
             title="Ajouter l'unite et pré-remplir l'inventaire de risques"
           >
             {loadingHazards ? "Analyse en cours..." : "Ajouter l'unite"}

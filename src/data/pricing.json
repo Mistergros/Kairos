@@ -1,54 +1,60 @@
 {
   "currency": "EUR",
-  "yearly_discount": 0.15,
   "plans": [
     {
-      "id": "essential",
-      "name": "Essentiel",
-      "priceMonthly": 29,
-      "priceYearly": 295,
-      "tagline": "DUERP simple et conforme",
+      "id": "starter",
+      "name": "Starter",
+      "priceMonthly": 39,
+      "priceYearly": 390,
+      "tagline": "DUERP simple et conforme pour les TPE",
+      "maxWorkUnits": 5,
+      "maxEstablishments": 1,
       "bullets": [
         "1 établissement",
-        "2 unités",
-        "50 risques max",
+        "5 unités de travail",
+        "Inventaire des risques illimité",
+        "Plan d'action & Gantt",
         "Export PDF"
       ],
-      "cta": "Choisir Essentiel",
+      "cta": "Choisir Starter",
       "mostPopular": false
     },
     {
-      "id": "pro",
-      "name": "Pro (IA incluse)",
-      "priceMonthly": 99,
-      "priceYearly": 995,
-      "tagline": "Le plan standard pour PME",
+      "id": "pme",
+      "name": "PME",
+      "priceMonthly": 89,
+      "priceYearly": 890,
+      "tagline": "Pour les PME et les équipes HSE internes",
+      "maxWorkUnits": 20,
+      "maxEstablishments": 5,
       "bullets": [
-        "Établissements & unités illimités",
-        "Plan d’action complet + rappels",
-        "Collaboration (jusqu’à 5 utilisateurs)",
-        "Bibliothèques sectorielles (NAF)",
-        "IA : génération de risques, détection d’incohérences, suggestions d’actions",
-        "Connecteurs API (PowerBI, Notion…)",
-        "Analytics"
+        "Jusqu'à 5 établissements",
+        "20 unités de travail",
+        "Export XLSX par responsable",
+        "Rappels automatiques (annuel légal)",
+        "Historique des versions complet",
+        "Support email prioritaire"
       ],
-      "cta": "Choisir Pro",
+      "cta": "Choisir PME",
       "mostPopular": true
     },
     {
       "id": "consultants",
       "name": "Consultants",
-      "priceMonthly": 249,
-      "priceYearly": 2490,
+      "priceMonthly": 199,
+      "priceYearly": 1990,
       "tagline": "Pour cabinets RH / HSE multi-clients",
+      "maxWorkUnits": -1,
+      "maxEstablishments": -1,
       "bullets": [
-        "Jusqu’à 20 DUERP actifs",
-        "Exports brandés",
-        "Portail clients",
-        "Support prioritaire",
-        "IA incluse"
+        "Établissements & unités illimités",
+        "Multi-clients (jusqu'à 50 DUERP actifs)",
+        "Export XLSX & PDF par client",
+        "Historique complet + preuves légales",
+        "Support prioritaire dédié",
+        "Accès bêta aux nouvelles fonctionnalités"
       ],
-      "cta": "Choisir Licence",
+      "cta": "Choisir Consultants",
       "mostPopular": false
     }
   ]

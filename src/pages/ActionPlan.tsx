@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import * as XLSX from "xlsx";
+import { usePlan } from "../hooks/usePlan";
 import { Card } from "../components/Card";
 import { PriorityBadge } from "../components/Badge";
 import actionsCatalog from "../../config/actions.catalog.json";
@@ -33,6 +34,7 @@ export const ActionPlan = () => {
     toggleActionStep,
   } = useDuerpStore();
 
+  const plan = usePlan();
   const [filter, setFilter] = useState<ActionStatus | "">("");
   const [unitTab, setUnitTab] = useState<string>("all");
   const [viewMode, setViewMode] = useState<"unit" | "owner">("unit");
@@ -348,13 +350,23 @@ export const ActionPlan = () => {
         subtitle="Actions regroupées et priorisées"
         corner={
           <div className="flex items-center gap-2">
-            <button
-              onClick={exportXLSX}
-              className="flex items-center gap-1.5 rounded-xl bg-ink px-3 py-2 text-sm font-semibold text-white shadow hover:bg-slate/80 transition"
-              title="Exporter en Excel"
-            >
-              ↓ Export XLSX
-            </button>
+            {plan.canExportXLSX ? (
+              <button
+                onClick={exportXLSX}
+                className="flex items-center gap-1.5 rounded-xl bg-ink px-3 py-2 text-sm font-semibold text-white shadow hover:bg-slate/80 transition"
+                title="Exporter en Excel"
+              >
+                ↓ Export XLSX
+              </button>
+            ) : (
+              <a
+                href="/pricing"
+                className="flex items-center gap-1.5 rounded-xl border border-amber-300 bg-amber-50 px-3 py-2 text-sm font-semibold text-amber-700 hover:bg-amber-100 transition"
+                title="Fonctionnalité PME et Consultants"
+              >
+                ↓ Export XLSX — offre PME
+              </a>
+            )}
             <select
               className="rounded-xl border border-slate/20 bg-white px-3 py-2 text-sm"
               value={filter}

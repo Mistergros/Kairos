@@ -39,7 +39,7 @@ function IconTrack(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-type PlanId = "essential" | "consultants";
+type PlanId = "starter" | "pme" | "consultants";
 type SubscribeHandler = (planId?: PlanId) => void;
 
 /* ------------------------------------------------------------
@@ -81,7 +81,7 @@ function Navbar({
           )}
           <button
             type="button"
-            onClick={() => onSubscribe("essential")}
+            onClick={() => onSubscribe("starter")}
             disabled={isLoading}
             className="rounded-lg bg-kairos px-5 py-2 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50 transition"
           >
@@ -133,7 +133,7 @@ function Hero({ onSubscribe, isLoading }: { onSubscribe: SubscribeHandler; isLoa
           <div className="mt-10 flex flex-wrap gap-4">
             <button
               type="button"
-              onClick={() => onSubscribe("essential")}
+              onClick={() => onSubscribe("starter")}
               disabled={isLoading}
               className="rounded-xl bg-kairos px-8 py-3.5 text-base font-bold text-white hover:opacity-90 disabled:opacity-50 transition"
             >
@@ -665,24 +665,36 @@ function Steps() {
 /* ------------------------------------------------------------
    PRICING
 ------------------------------------------------------------ */
-const pricing = [
+const PRICING_PLANS = [
   {
-    id: "essential",
-    name: "Essentiel",
-    price: "29 €",
-    tagline: "DUERP simple et conforme",
-    bullets: ["1 établissement", "2 unités", "50 risques max", "Export PDF"],
+    id: "starter" as PlanId,
+    name: "Starter",
+    priceMonthly: 39,
+    priceYearly: 390,
+    tagline: "DUERP simple et conforme pour les TPE",
+    bullets: ["1 établissement", "5 unités de travail", "Inventaire des risques illimité", "Plan d'action & Gantt", "Export PDF"],
     badge: "TPE",
-    badgeTone: "secondary" as const,
+    recommended: false,
   },
   {
-    id: "consultants",
+    id: "pme" as PlanId,
+    name: "PME",
+    priceMonthly: 89,
+    priceYearly: 890,
+    tagline: "Pour les PME et équipes HSE internes",
+    bullets: ["Jusqu'à 5 établissements", "20 unités de travail", "Export XLSX par responsable", "Rappels révision annuelle", "Historique des versions"],
+    badge: "RECOMMANDÉ",
+    recommended: true,
+  },
+  {
+    id: "consultants" as PlanId,
     name: "Consultants",
-    price: "149 €",
-    tagline: "Pour cabinets multi-clients",
-    bullets: ["Clients illimités", "Exports PDF par client", "Support prioritaire", "Facturation mutualisée"],
+    priceMonthly: 199,
+    priceYearly: 1990,
+    tagline: "Pour cabinets RH / HSE multi-clients",
+    bullets: ["Établissements & unités illimités", "Multi-clients (50 DUERP actifs)", "Export XLSX & PDF par client", "Support prioritaire dédié"],
     badge: "CABINET",
-    badgeTone: "primary" as const,
+    recommended: false,
   },
 ];
 
@@ -693,52 +705,74 @@ function PricingSection({
   onSubscribe: SubscribeHandler;
   isLoading: boolean;
 }) {
+  const [annual, setAnnual] = React.useState(false);
+
   return (
     <section id="pricing" className="w-full bg-[#FAF8F5] px-6 py-24">
-      <div className="mx-auto max-w-3xl">
-        <div className="text-center mb-16">
+      <div className="mx-auto max-w-5xl">
+        <div className="text-center mb-12">
           <span className="inline-block rounded-full bg-[#5b61f6]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[#5b61f6] mb-4">Tarifs</span>
-          <h2 className="text-4xl font-extrabold text-[#0f172a]">Simple. Transparent. Sans engagement.</h2>
-          <p className="mt-4 text-lg text-slate-500">Résiliation à tout moment.</p>
+          <h2 className="text-4xl font-extrabold text-[#0f172a]">Simple. Transparent.</h2>
+          <p className="mt-3 text-lg text-slate-500">Résiliation à tout moment — 2 mois offerts sur l'abonnement annuel.</p>
+
+          {/* Toggle mensuel / annuel */}
+          <div className="mt-6 inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white p-1.5 shadow-sm">
+            <button
+              className={`rounded-xl px-5 py-2 text-sm font-semibold transition ${!annual ? "bg-[#0f172a] text-white shadow" : "text-slate-500 hover:text-slate-700"}`}
+              onClick={() => setAnnual(false)}
+            >
+              Mensuel
+            </button>
+            <button
+              className={`rounded-xl px-5 py-2 text-sm font-semibold transition ${annual ? "bg-[#0f172a] text-white shadow" : "text-slate-500 hover:text-slate-700"}`}
+              onClick={() => setAnnual(true)}
+            >
+              Annuel
+              <span className="ml-2 rounded-full bg-emerald-100 px-2 py-0.5 text-xs text-emerald-700 font-bold">−2 mois</span>
+            </button>
+          </div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
-          {pricing.map((p) => {
-            const recommended = p.badgeTone === "primary";
+        <div className="grid md:grid-cols-3 gap-6">
+          {PRICING_PLANS.map((p) => {
+            const price = annual ? Math.round(p.priceYearly / 12) : p.priceMonthly;
             return (
               <article
                 key={p.id}
-                className={`relative rounded-[28px] bg-white p-10 border transition ${
-                  recommended
-                    ? "border-[#5b61f6] shadow-lg shadow-[#5b61f6]/10"
+                className={`relative flex flex-col rounded-[28px] bg-white p-8 border transition ${
+                  p.recommended
+                    ? "border-[#5b61f6] shadow-xl shadow-[#5b61f6]/10"
                     : "border-slate-200 shadow-sm"
                 }`}
               >
-                {recommended && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[#5b61f6] px-4 py-1 text-xs font-bold text-white">
-                    {p.badge}
-                  </span>
-                )}
-                <h3 className="text-2xl font-extrabold text-[#0f172a]">{p.name}</h3>
-                <p className="text-slate-500 mt-1">{p.tagline}</p>
-                <div className="mt-6 flex items-end gap-2">
-                  <span className="text-5xl font-extrabold text-[#0f172a]">{p.price}</span>
-                  <span className="text-slate-400 mb-2">/ mois</span>
+                <span className={`absolute -top-3 left-6 rounded-full px-3 py-1 text-xs font-bold ${
+                  p.recommended ? "bg-[#5b61f6] text-white" : "bg-slate-100 text-slate-600"
+                }`}>
+                  {p.badge}
+                </span>
+                <h3 className="text-2xl font-extrabold text-[#0f172a] mt-2">{p.name}</h3>
+                <p className="text-slate-500 mt-1 text-sm">{p.tagline}</p>
+                <div className="mt-5 flex items-end gap-1.5">
+                  <span className="text-4xl font-extrabold text-[#0f172a]">{price} €</span>
+                  <span className="text-slate-400 mb-1 text-sm">/ mois</span>
                 </div>
-                <ul className="mt-8 space-y-3">
+                {annual && (
+                  <p className="text-xs text-slate-400 mt-0.5">soit {p.priceYearly} € / an</p>
+                )}
+                <ul className="mt-6 space-y-3 flex-1">
                   {p.bullets.map((b) => (
-                    <li key={b} className="flex items-center gap-3 text-slate-600">
-                      <span className="h-5 w-5 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-xs font-bold">✓</span>
+                    <li key={b} className="flex items-start gap-3 text-sm text-slate-600">
+                      <span className="mt-0.5 h-4 w-4 shrink-0 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-[9px] font-bold">✓</span>
                       {b}
                     </li>
                   ))}
                 </ul>
                 <button
                   type="button"
-                  onClick={() => onSubscribe(p.id as PlanId)}
+                  onClick={() => onSubscribe(p.id)}
                   disabled={isLoading}
-                  className={`mt-10 w-full rounded-2xl py-3.5 font-bold text-base transition disabled:opacity-60 ${
-                    recommended
+                  className={`mt-8 w-full rounded-2xl py-3.5 font-bold text-base transition disabled:opacity-60 ${
+                    p.recommended
                       ? "bg-[#5b61f6] text-white hover:bg-[#4a50e0]"
                       : "border-2 border-[#0f172a] text-[#0f172a] hover:bg-[#0f172a] hover:text-white"
                   }`}
@@ -749,6 +783,10 @@ function PricingSection({
             );
           })}
         </div>
+
+        <p className="text-center text-xs text-slate-400 mt-8">
+          Paiement sécurisé par Stripe · Résiliation en 1 clic · TVA non applicable (Art. 293B du CGI)
+        </p>
       </div>
     </section>
   );

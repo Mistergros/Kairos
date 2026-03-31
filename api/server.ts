@@ -22,8 +22,12 @@ const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET;
 const STRIPE_SUCCESS_URL = process.env.STRIPE_SUCCESS_URL || "http://localhost:5173/landing?checkout=success";
 const STRIPE_CANCEL_URL = process.env.STRIPE_CANCEL_URL || "http://localhost:5173/landing?checkout=cancel";
 const STRIPE_PORTAL_RETURN_URL = process.env.STRIPE_PORTAL_RETURN_URL || "http://localhost:5173/mon-compte";
-const STRIPE_PRICE_ID_ESSENTIAL = process.env.STRIPE_PRICE_ID_ESSENTIAL;
-const STRIPE_PRICE_ID_CONSULTANTS = process.env.STRIPE_PRICE_ID_CONSULTANTS;
+const STRIPE_PRICE_ID_STARTER          = process.env.STRIPE_PRICE_ID_STARTER;
+const STRIPE_PRICE_ID_STARTER_ANNUAL   = process.env.STRIPE_PRICE_ID_STARTER_ANNUAL;
+const STRIPE_PRICE_ID_PME              = process.env.STRIPE_PRICE_ID_PME;
+const STRIPE_PRICE_ID_PME_ANNUAL       = process.env.STRIPE_PRICE_ID_PME_ANNUAL;
+const STRIPE_PRICE_ID_CONSULTANTS      = process.env.STRIPE_PRICE_ID_CONSULTANTS;
+const STRIPE_PRICE_ID_CONSULTANTS_ANNUAL = process.env.STRIPE_PRICE_ID_CONSULTANTS_ANNUAL;
 const stripe = STRIPE_SECRET_KEY ? new Stripe(STRIPE_SECRET_KEY, { apiVersion: "2023-10-16" }) : null;
 const CLERK_SECRET_KEY = process.env.CLERK_SECRET_KEY;
 const clerkEnabled = Boolean(CLERK_SECRET_KEY);
@@ -51,10 +55,13 @@ const error = (res: any, err: any) => {
   json(res, { error: "Internal error" }, 500);
 };
 
-const getStripePriceId = (planId?: string | null) => {
-  const plan = (planId || "").toLowerCase();
-  if (plan === "consultants") return STRIPE_PRICE_ID_CONSULTANTS || STRIPE_PRICE_ID_ESSENTIAL;
-  return STRIPE_PRICE_ID_ESSENTIAL || STRIPE_PRICE_ID_CONSULTANTS;
+const getStripePriceId = (planId?: string | null, billing?: string | null) => {
+  const plan = (planId || "starter").toLowerCase();
+  const isAnnual = billing === "annual";
+  if (plan === "consultants") return isAnnual ? (STRIPE_PRICE_ID_CONSULTANTS_ANNUAL || STRIPE_PRICE_ID_CONSULTANTS) : STRIPE_PRICE_ID_CONSULTANTS;
+  if (plan === "pme")         return isAnnual ? (STRIPE_PRICE_ID_PME_ANNUAL || STRIPE_PRICE_ID_PME) : STRIPE_PRICE_ID_PME;
+  // starter (default)
+  return isAnnual ? (STRIPE_PRICE_ID_STARTER_ANNUAL || STRIPE_PRICE_ID_STARTER) : STRIPE_PRICE_ID_STARTER;
 };
 
 const readRawBody = async (req: any) =>
@@ -519,7 +526,8 @@ createServer(async (req, res) => {
       if (!stripe) return json(res, { error: "Stripe not configured" }, 500);
       const body = await readBody(req).catch(() => null);
       const planId = typeof body?.planId === "string" ? body.planId : typeof body?.plan === "string" ? body.plan : null;
-      const priceId = (typeof body?.priceId === "string" && body.priceId) || getStripePriceId(planId);
+      const billing = typeof body?.billing === "string" ? body.billing : null;
+      const priceId = (typeof body?.priceId === "string" && body.priceId) || getStripePriceId(planId, billing);
       if (!priceId) return json(res, { error: "Stripe price not configured" }, 500);
       const customerEmail = typeof body?.email === "string" ? body.email : undefined;
       const clerkUserId = typeof body?.clerkUserId === "string" ? body.clerkUserId : undefined;
