@@ -30,7 +30,7 @@ const STEPS = [
 ];
 
 export function Onboarding() {
-  const { establishments } = useDuerpStore();
+  const { establishments, loadDemoData } = useDuerpStore();
   const navigate = useNavigate();
   const [dismissed, setDismissed] = useState(false);
 
@@ -74,6 +74,13 @@ export function Onboarding() {
             onClick={() => { setDismissed(true); navigate("/units"); }}
           >
             Créer mon établissement →
+          </button>
+
+          <button
+            className="mt-2 w-full rounded-2xl border border-slate/15 py-3 text-sm font-semibold text-slate-700 hover:bg-slate/5 transition"
+            onClick={() => { loadDemoData(); setDismissed(true); navigate("/"); }}
+          >
+            Voir un exemple rempli (boulangerie fictive)
           </button>
 
           <p className="mt-3 text-center text-xs text-slate/40">

@@ -1,6 +1,6 @@
 {
   "code": "55.10Z",
-  "label": "H├┤tels et h├®bergement similaire",
+  "label": "Hôtels et hébergement similaire",
   "risk_tags": [
     "hebergement",
     "accueil"
@@ -15,11 +15,11 @@
   "activities": [
     {
       "id": "hebergement",
-      "label": "├ëtages/chambres"
+      "label": "Étages/chambres"
     },
     {
       "id": "accueil",
-      "label": "R├®ception/accueil"
+      "label": "Réception/accueil"
     }
   ]
 }

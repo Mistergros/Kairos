@@ -1,6 +1,6 @@
 {
   "code": "87.10A",
-  "label": "H├®bergement m├®dicalis├® (EHPAD)",
+  "label": "Hébergement médicalisé (EHPAD)",
   "risk_tags": [
     "soins",
     "manutention",
@@ -17,7 +17,7 @@
   "activities": [
     {
       "id": "soins",
-      "label": "Soins/r├®sidents"
+      "label": "Soins/résidents"
     },
     {
       "id": "cuisine",

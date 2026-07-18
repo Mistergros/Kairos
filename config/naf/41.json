@@ -1,10 +1,10 @@
 {
   "code": "41",
-  "label": "Construction de b├ótiments (pr├®fixe)",
+  "label": "Construction de bâtiments (préfixe)",
   "risk_tags": [
     "chantier",
     "hauteur",
-    "├®lectricit├®"
+    "électricité"
   ],
   "risks_priority": [
     "R-CHUTE-HAUTEUR",

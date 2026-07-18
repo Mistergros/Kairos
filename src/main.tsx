@@ -10,7 +10,7 @@ if (!clerkPublishableKey) {
   throw new Error("Missing VITE_CLERK_PUBLISHABLE_KEY");
 }
 
-const enableServiceWorker = (import.meta as any)?.env?.VITE_ENABLE_SW === "true";
+const enableServiceWorker = import.meta.env.VITE_ENABLE_SW === "true";
 if (enableServiceWorker && "serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("/sw.js").catch(() => {

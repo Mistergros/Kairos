@@ -2,11 +2,31 @@ import fs from "fs";
 import path from "path";
 import type { Risk, Action, Obligation, UnityContext, RiskEvaluation, ActionPlan, ActionPlanItem } from "../models";
 
-type ScoringCfg = { model: string; severity_scale: number[]; probability_scale: number[]; frequency_scale: number[]; control_scale: number[]; formula: string; };
+// Les 28 fichiers config/risks/*.json ne portent pas de gravité/fréquence/
+// maîtrise par défaut (contrairement au catalogue duerp_pro_spec/seed). Ces
+// valeurs de base par catégorie sont des estimations raisonnables — pas
+// encore sourcées individuellement — sur la même échelle (G×F/max(M,0.5))
+// que le reste de l'app (src/services/prefillService.ts, seuils dans
+// src/utils/score.ts : P1>=80, P2>=50, P3>=25, P4<25). À affiner par risque
+// une fois le travail de sourcing (phase 2) fait.
+const CATEGORY_DEFAULTS: Record<string, { gravity: number; frequency: number; control: number }> = {
+  "Accident majeur": { gravity: 9, frequency: 4, control: 1 },
+  "Sécurité": { gravity: 7, frequency: 5, control: 2 },
+  "Accident": { gravity: 7, frequency: 5, control: 2 },
+  "Accidentel": { gravity: 7, frequency: 5, control: 2 },
+  "Biologique": { gravity: 6, frequency: 4, control: 2 },
+  "Chimique": { gravity: 7, frequency: 5, control: 1.5 },
+  "Physique": { gravity: 4, frequency: 6, control: 2 },
+  "Organisationnel": { gravity: 6, frequency: 5, control: 1 },
+  "Ergonomique": { gravity: 5, frequency: 7, control: 1 },
+  "Environnemental": { gravity: 4, frequency: 4, control: 2 },
+};
+// Repli générique : mêmes valeurs que le fallback déjà utilisé côté front
+// (voir prefillService.ts : gravity ?? 7, frequency ?? 6, control ?? 2).
+const DEFAULT_WEIGHTS = { gravity: 7, frequency: 6, control: 2 };
 
 export class RiskEngineV4 {
   private baseConfigPath: string;
-  private scoring: ScoringCfg;
   private risks: Map<string,Risk> = new Map();
   private actionsByRisk: Map<string,Action[]> = new Map();
   private generalOblig: Obligation[] = [];
@@ -16,7 +36,6 @@ export class RiskEngineV4 {
 
   constructor(baseConfigPath?: string){
     this.baseConfigPath = baseConfigPath || path.join(process.cwd(),'config');
-    this.scoring = this.loadJSON<ScoringCfg>('scoring.json');
     this.loadAll();
   }
   private parseJSON<T>(raw: string): T {
@@ -55,7 +74,7 @@ export class RiskEngineV4 {
   public getNAFProfile(nafCode?: string){
     const code = nafCode || "";
     const all = this.listNaf();
-    return all.find(n => String(code).startsWith(String(n.naf))) || null;
+    return all.find(n => String(code).startsWith(String(n.code))) || null;
   }
   private applyRules(ctx: UnityContext, riskIds: Set<string>, actionIds: Set<string>, obligIds: Set<string>){
     if (!this.rules) return;
@@ -85,13 +104,17 @@ export class RiskEngineV4 {
   public evaluateRisk(risk: Risk, ctx: UnityContext): RiskEvaluation {
     const u = this.unitsModifiers[ctx.unity] || {};
     const mod = (ctx.modifiers?.[risk.id] ?? 0) + (u[risk.id] ?? 0);
-    const clamp = (v:number,arr:number[]) => Math.min(Math.max(v,arr[0]),arr[arr.length-1]);
-    const sev = clamp(3 + mod, this.scoring.severity_scale);
-    const pro = clamp(3 + mod, this.scoring.probability_scale);
-    const freq = clamp(2 + mod, this.scoring.frequency_scale);
-    const ctl = clamp(2 + (mod<0?-mod:0), this.scoring.control_scale);
-    const score = sev * pro * freq * ctl;
-    return { risk, severity: sev, probability: pro, frequency: freq, control: ctl, score };
+    const base = CATEGORY_DEFAULTS[risk.category] || DEFAULT_WEIGHTS;
+    const clamp = (v: number, min: number, max: number) => Math.min(Math.max(v, min), max);
+
+    // Même modèle que le reste de l'app : G x F / max(M, 0.5). Un modificateur
+    // positif (contexte plus exposé) augmente gravité/fréquence ; un
+    // modificateur négatif (mesures déjà en place) réduit la maîtrise.
+    const sev = clamp(base.gravity + mod, 1, 10);
+    const freq = clamp(base.frequency + mod, 1, 10);
+    const ctl = clamp(base.control - (mod < 0 ? -mod : 0), 0.5, 10);
+    const score = (sev * freq) / Math.max(ctl, 0.5);
+    return { risk, severity: sev, probability: freq, frequency: freq, control: ctl, score };
   }
   public matchActions(risk: Risk, nafCode: string, ctx?: UnityContext): Action[] {
     return this.actionsByRisk.get(risk.id) || [];

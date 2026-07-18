@@ -1,10 +1,10 @@
 {
   "code": "10.11Z",
-  "label": "Fabrication de produits de boulangerie-p├ótisserie frais",
+  "label": "Fabrication de produits de boulangerie-pâtisserie frais",
   "risk_tags": [
     "agro",
     "four",
-    "poussi├¿res farine"
+    "poussières farine"
   ],
   "risks_priority": [
     "R-BRULE",

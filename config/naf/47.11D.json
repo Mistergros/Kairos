@@ -1,6 +1,6 @@
 {
   "code": "47.11D",
-  "label": "Sup├®rettes",
+  "label": "Supérettes",
   "risk_tags": [
     "magasin",
     "manutention"
@@ -21,7 +21,7 @@
     },
     {
       "id": "reserve",
-      "label": "R├®serve / back-office"
+      "label": "Réserve / back-office"
     }
   ]
 }

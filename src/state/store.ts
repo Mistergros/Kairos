@@ -63,6 +63,14 @@ interface DUERPState {
   createVersion: (label: string, reason?: string) => void;
   loadingHazards: boolean;
   prefillFromSector: (sector?: string) => Promise<void>;
+  // Non-null quand le dernier préremplissage a dû se rabattre sur la bibliothèque
+  // générique (catalogue distant/Supabase indisponible) plutôt qu'une analyse
+  // ciblée par secteur NAF — permet à l'UI de le signaler au lieu de rester muette.
+  prefillWarning: string | null;
+  dismissPrefillWarning: () => void;
+  // Charge un établissement fictif pré-rempli, pour laisser visiter l'app
+  // avant de s'engager à créer ses propres données.
+  loadDemoData: () => void;
 }
 
 const sync = (fn: () => void) => {
@@ -356,8 +364,13 @@ export const useDuerpStore = create<DUERPState>()(
 
         set({ loadingHazards: true });
         try {
-          const result = await buildPrefillData(naf, sector, targetUnits, state.hazardLibrary, state.assessments, state.actions, state.selectedEstablishmentId);
-          set(result);
+          const { usedGenericFallback, ...result } = await buildPrefillData(naf, sector, targetUnits, state.hazardLibrary, state.assessments, state.actions, state.selectedEstablishmentId);
+          set({
+            ...result,
+            prefillWarning: usedGenericFallback
+              ? "Catalogue de risques par secteur indisponible pour le moment : liste générique proposée ci-dessous, à affiner manuellement."
+              : null,
+          });
           // Sync new assessments + actions to Supabase
           const { orgId } = get();
           if (orgId) {
@@ -367,6 +380,87 @@ export const useDuerpStore = create<DUERPState>()(
         } finally {
           set({ loadingHazards: false });
         }
+      },
+
+      prefillWarning: null,
+      dismissPrefillWarning: () => set({ prefillWarning: null }),
+
+      loadDemoData: () => {
+        const estId = "demo-est-1";
+        const unitFournilId = "demo-unit-fournil";
+        const unitVenteId = "demo-unit-vente";
+        const now = new Date().toISOString();
+        const establishments: Establishment[] = [
+          {
+            id: estId,
+            name: "Boulangerie Dupont (exemple)",
+            siret: "12345678900011",
+            codeNaf: "10.71C",
+            sector: "Boulangerie-pâtisserie",
+            address: "12 rue de la République, 69002 Lyon",
+            headcount: 4,
+          },
+        ];
+        const workUnits: WorkUnit[] = [
+          { id: unitFournilId, establishmentId: estId, name: "Fournil", activity: "Production", features: ["vibrating_tools", "cold_room"] },
+          { id: unitVenteId, establishmentId: estId, name: "Vente / Accueil", activity: "Vente au comptoir", features: ["public_facing"] },
+        ];
+        const mkAssessment = (a: Omit<Assessment, "score" | "priority" | "createdAt" | "updatedAt">): Assessment => {
+          const score = a.gravity * a.frequency / Math.max(a.control, 0.5);
+          return { ...a, score, priority: computePriority(score), createdAt: now, updatedAt: now };
+        };
+        const brulure = mkAssessment({ id: uid(), workUnitId: unitFournilId, hazardId: "haz-brulure", hazardCategory: "Risque thermique", riskLabel: "Brûlure au contact du four", damages: "Brûlure cutanée", existingMeasures: "Gants isolants fournis, procédure d'ouverture du four affichée", proposedMeasures: "", gravity: 6, frequency: 7, control: 5 });
+        const manutention = mkAssessment({ id: uid(), workUnitId: unitFournilId, hazardId: "haz-tms", hazardCategory: "TMS", riskLabel: "Manutention de sacs de farine (25 kg)", damages: "Lombalgie, troubles musculo-squelettiques", existingMeasures: "", proposedMeasures: "Diable de manutention, formation gestes et postures", gravity: 5, frequency: 6, control: 1 });
+        const coupure = mkAssessment({ id: uid(), workUnitId: unitFournilId, hazardId: "haz-coupure", hazardCategory: "Risque mécanique", riskLabel: "Coupure au trancheur à pain", damages: "Coupure, amputation partielle", existingMeasures: "Carter de protection, arrêt d'urgence", proposedMeasures: "", gravity: 8, frequency: 3, control: 6 });
+        const atex = mkAssessment({ id: uid(), workUnitId: unitFournilId, hazardId: "haz-atex", hazardCategory: "Risque incendie / explosion", riskLabel: "Explosion de poussières de farine (atmosphère explosive)", damages: "Brûlures graves, explosion, décès possible", existingMeasures: "Nettoyage quotidien du fournil", proposedMeasures: "Zonage ATEX, aspiration centralisée des poussières, suppression des sources d'inflammation", gravity: 10, frequency: 4, control: 0.5 });
+        const chimique = mkAssessment({ id: uid(), workUnitId: unitFournilId, hazardId: "haz-chimique", hazardCategory: "Risque chimique", riskLabel: "Exposition aux produits de nettoyage et désinfection", damages: "Irritation cutanée, respiratoire, brûlure chimique", existingMeasures: "", proposedMeasures: "Fiches de données de sécurité affichées, gants et lunettes, amélioration de la ventilation", gravity: 8, frequency: 7, control: 1 });
+        const bruit = mkAssessment({ id: uid(), workUnitId: unitFournilId, hazardId: "haz-bruit", hazardCategory: "Risque physique", riskLabel: "Bruit (pétrin, four, hotte d'extraction)", damages: "Fatigue auditive, à terme surdité professionnelle", existingMeasures: "", proposedMeasures: "Mesurage sonométrique, protections auditives si seuil dépassé", gravity: 4, frequency: 6, control: 2 });
+        const electrique = mkAssessment({ id: uid(), workUnitId: unitFournilId, hazardId: "haz-electrique", hazardCategory: "Risque électrique", riskLabel: "Défaut électrique (armoire four, pétrin)", damages: "Électrisation, électrocution", existingMeasures: "Contrôle électrique annuel par organisme agréé", proposedMeasures: "", gravity: 7, frequency: 2, control: 6 });
+        const agression = mkAssessment({ id: uid(), workUnitId: unitVenteId, hazardId: "haz-agression", hazardCategory: "Risque psychosocial", riskLabel: "Agression verbale ou physique de la clientèle", damages: "Stress, mal-être au travail, traumatisme", existingMeasures: "", proposedMeasures: "Formation gestion des conflits, procédure d'alerte", gravity: 5, frequency: 5, control: 1 });
+        const chute = mkAssessment({ id: uid(), workUnitId: unitVenteId, hazardId: "haz-chute", hazardCategory: "Risques pour la sécurité (accidents)", riskLabel: "Chute de plain-pied", damages: "Entorse, fracture", existingMeasures: "Sol antidérapant en zone de vente", proposedMeasures: "", gravity: 5, frequency: 3, control: 6 });
+        const ergonomie = mkAssessment({ id: uid(), workUnitId: unitVenteId, hazardId: "haz-station-debout", hazardCategory: "TMS", riskLabel: "Station debout prolongée au comptoir", damages: "Troubles posturaux, jambes lourdes, TMS", existingMeasures: "", proposedMeasures: "Tapis anti-fatigue, assise assis-debout, pauses régulières", gravity: 4, frequency: 7, control: 1 });
+        const assessments: Assessment[] = [brulure, manutention, coupure, atex, chimique, bruit, electrique, agression, chute, ergonomie];
+
+        const mkAction = (a: Omit<ActionItem, "createdAt">): ActionItem => ({ ...a, createdAt: now });
+        const actions: ActionItem[] = [
+          mkAction({ id: uid(), establishmentId: estId, assessmentId: atex.id, title: "Mettre en place un zonage ATEX et une aspiration centralisée des poussières", description: "Réduire le risque d'explosion lié aux poussières de farine en suspension dans le fournil.", owner: "M. Dupont", startDate: "2026-08-01", endDate: "2026-09-15", dueDate: "2026-09-15", status: "TO_DO", priority: atex.priority, steps: [
+            { id: uid(), label: "Faire réaliser un diagnostic ATEX par un organisme agréé", done: false },
+            { id: uid(), label: "Installer un système d'aspiration centralisée au fournil", done: false },
+            { id: uid(), label: "Former l'équipe aux zones à risque d'explosion", done: false },
+          ] }),
+          mkAction({ id: uid(), establishmentId: estId, assessmentId: chimique.id, title: "Sécuriser l'usage des produits de nettoyage et désinfection", description: "Limiter l'exposition cutanée et respiratoire aux produits chimiques utilisés quotidiennement.", owner: "Mme Dupont", startDate: "2026-08-10", endDate: "2026-09-01", dueDate: "2026-09-01", status: "IN_PROGRESS", priority: chimique.priority, steps: [
+            { id: uid(), label: "Afficher les fiches de données de sécurité (FDS)", done: true },
+            { id: uid(), label: "Équiper le poste de gants et lunettes de protection", done: false },
+            { id: uid(), label: "Améliorer la ventilation de la zone de nettoyage", done: false },
+          ] }),
+          mkAction({ id: uid(), establishmentId: estId, assessmentId: manutention.id, title: "Acheter un diable de manutention pour les sacs de farine", description: "Réduire les manipulations manuelles de sacs de 25 kg à l'origine de troubles musculo-squelettiques.", owner: "M. Dupont", startDate: "2026-08-05", endDate: "2026-09-01", dueDate: "2026-09-01", status: "TO_DO", priority: manutention.priority, steps: [
+            { id: uid(), label: "Comparer les modèles adaptés aux sacs de 25 kg", done: false },
+            { id: uid(), label: "Commander l'équipement", done: false },
+            { id: uid(), label: "Former l'équipe à son utilisation", done: false },
+          ] }),
+          mkAction({ id: uid(), establishmentId: estId, assessmentId: agression.id, title: "Former l'équipe vente à la gestion des conflits", description: "Donner à l'équipe au contact de la clientèle des outils pour désamorcer les situations tendues.", owner: "Mme Dupont", startDate: "2026-09-01", endDate: "2026-10-15", dueDate: "2026-10-15", status: "IN_PROGRESS", priority: agression.priority, steps: [
+            { id: uid(), label: "Identifier un organisme de formation", done: true },
+            { id: uid(), label: "Planifier la session avec l'équipe", done: false },
+            { id: uid(), label: "Mettre en place une procédure d'alerte", done: false },
+          ] }),
+          mkAction({ id: uid(), establishmentId: estId, assessmentId: ergonomie.id, title: "Aménager le poste de vente contre la station debout prolongée", description: "Limiter la fatigue posturale liée aux longues périodes debout au comptoir.", owner: "M. Dupont", startDate: "2026-09-15", endDate: "2026-11-01", dueDate: "2026-11-01", status: "TO_DO", priority: ergonomie.priority, steps: [
+            { id: uid(), label: "Installer un tapis anti-fatigue", done: false },
+            { id: uid(), label: "Mettre à disposition une assise assis-debout", done: false },
+          ] }),
+          mkAction({ id: uid(), establishmentId: estId, assessmentId: electrique.id, title: "Vérifier annuellement les installations électriques du fournil", description: "Contrôle réglementaire périodique des installations électriques du four et du pétrin.", owner: "M. Dupont", startDate: "2026-07-01", endDate: "2026-07-20", dueDate: "2026-07-20", status: "DONE", priority: electrique.priority, steps: [
+            { id: uid(), label: "Faire intervenir un organisme agréé (Qualifelec)", done: true },
+            { id: uid(), label: "Corriger les non-conformités relevées", done: true },
+            { id: uid(), label: "Archiver le rapport de contrôle", done: true },
+          ] }),
+        ];
+        set({
+          establishments,
+          workUnits,
+          assessments,
+          actions,
+          selectedEstablishmentId: estId,
+          selectedWorkUnitId: unitFournilId,
+        });
       },
     }),
     {

@@ -11,7 +11,7 @@ import { makeActionForAssessment } from "./actionCatalogService";
 import { getTemplateHazards } from "./templateService";
 import type { Assessment, ActionItem, Hazard, WorkUnit } from "../types";
 
-const USE_REMOTE_ENGINE = (import.meta as any)?.env?.VITE_USE_REMOTE_ENGINE === "true";
+const USE_REMOTE_ENGINE = import.meta.env.VITE_USE_REMOTE_ENGINE === "true";
 
 type PresetHazard = Hazard & { gravity?: number; frequency?: number; control?: number };
 
@@ -54,6 +54,7 @@ export type PrefillResult = {
   hazardLibrary: Hazard[];
   assessments: Assessment[];
   actions: ActionItem[];
+  usedGenericFallback: boolean;
 };
 
 function buildV3Context(unit: WorkUnit | undefined, naf: string | undefined, sector: string | undefined) {
@@ -111,7 +112,14 @@ export async function buildPrefillData(
   const mappingHazards = buildHazardsFromMapping(naf);
   const presetFromJson = nafPresets[nafPrefix]?.hazards || [];
   const fallbackPreset = hazardByNafPrefix[nafPrefix] || [];
-  const fetched = await fetchHazardsFromSources(sector, naf);
+  let fetched: Hazard[] = [];
+  let remoteCatalogFailed = false;
+  try {
+    fetched = await fetchHazardsFromSources(sector, naf);
+  } catch (err) {
+    console.warn("Catalogue de risques distant indisponible, repli sur les sources locales", err);
+    remoteCatalogFailed = true;
+  }
 
   // Pipeline de merge : templates > moteur > mapping > presets > fallback > bibliothèque
   const merged: Hazard[] = [];
@@ -119,13 +127,27 @@ export async function buildPrefillData(
 
   if (templateHazards.length) pushAll(templateHazards);
   if (engineHazards.length) pushAll(engineHazards);
-  if (merged.length < 8 && mappingHazards.length) pushAll(mappingHazards);
+  // Les couches suivantes ne doivent que compléter, pas noyer, les résultats
+  // des couches prioritaires : le mapping NAF (kairos_duerp_naf_mapping.json)
+  // peut renvoyer des dizaines d'entrées génériques avec un score artificiel
+  // uniforme (~50) qui écraserait sinon les résultats plus fins du moteur
+  // (template/V3/V4) dans le tri final par score. On ne prend que ce qu'il
+  // faut pour atteindre un total confortable, avec une petite marge.
+  const topUp = (list: Hazard[]) => {
+    const room = Math.max(8 - merged.length, 4);
+    pushAll(list.slice(0, room));
+  };
+  if (merged.length < 8 && mappingHazards.length) topUp(mappingHazards);
   if (merged.length < 8 && (presetFromJson.length || fallbackPreset.length || fetched.length)) {
-    pushAll(presetFromJson);
-    pushAll(fallbackPreset);
-    pushAll(fetched);
+    topUp(presetFromJson);
+    topUp(fallbackPreset);
+    topUp(fetched);
   }
   if (merged.length < 8) pushAll(riskLibrary);
+  // Le catalogue distant (Supabase) n'a pas pu être interrogé : les risques
+  // affichés viennent uniquement des sources locales, potentiellement moins
+  // précises que l'analyse par secteur habituelle — à signaler à l'utilisateur.
+  const usedGenericFallback = remoteCatalogFailed;
 
   const safeId = (h: Hazard) => h.id || `haz-${h.risk.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
 
@@ -134,9 +156,16 @@ export async function buildPrefillData(
   existingLibrary.forEach((h) => hazardMap.set(safeId(h), h));
   const hazardLibrary = Array.from(hazardMap.values());
 
+  const MAX_RISKS = 12;
   const candidates = Array.from(
     new Map(merged.map((h) => [safeId(h), { ...h, id: safeId(h) }])).values()
-  ).sort((a, b) => `${a.category}-${a.risk}`.localeCompare(`${b.category}-${b.risk}`));
+  )
+    .sort((a, b) => {
+      const scoreA = ((a as PresetHazard).gravity ?? 7) * ((a as PresetHazard).frequency ?? 6) / Math.max((a as PresetHazard).control ?? 2, 0.5);
+      const scoreB = ((b as PresetHazard).gravity ?? 7) * ((b as PresetHazard).frequency ?? 6) / Math.max((b as PresetHazard).control ?? 2, 0.5);
+      return scoreB - scoreA;
+    })
+    .slice(0, MAX_RISKS);
 
   const targetUnitIds = new Set(targetUnits.map((u) => u.id));
   const remainingAssessments = existingAssessments.filter((a) => !targetUnitIds.has(a.workUnitId));
@@ -172,11 +201,33 @@ export async function buildPrefillData(
     });
   });
 
-  const newActions = assessmentsToAdd.map((a) => makeActionForAssessment(a, targetEstablishmentId));
+  // Limite à 2 actions générées max par danger (les plus prioritaires en premier)
+  const hazardActionCount = new Map<string, number>();
+  const actionableAssessments = [...assessmentsToAdd]
+    .sort((a, b) => (b.score ?? 0) - (a.score ?? 0))
+    .filter((a) => {
+      const key = a.hazardId || a.riskLabel;
+      const count = hazardActionCount.get(key) ?? 0;
+      if (count >= 2) return false;
+      hazardActionCount.set(key, count + 1);
+      return true;
+    });
+  // Dédupliquer par titre d'action généré : un seul "Plan RPS" même si 5 sous-risques RPS
+  const allNewActions = actionableAssessments.map((a) => makeActionForAssessment(a, targetEstablishmentId));
+  const titleSeenPerUnit = new Map<string, boolean>();
+  const newActions = allNewActions.filter((action) => {
+    const assessment = assessmentsToAdd.find((a) => a.id === action.assessmentId);
+    const unitId = assessment?.workUnitId ?? action.establishmentId ?? "";
+    const key = `${unitId}::${action.title}`;
+    if (titleSeenPerUnit.has(key)) return false;
+    titleSeenPerUnit.set(key, true);
+    return true;
+  });
 
   return {
     hazardLibrary,
     assessments: [...remainingAssessments, ...assessmentsToAdd],
     actions: [...remainingActions, ...newActions],
+    usedGenericFallback,
   };
 }

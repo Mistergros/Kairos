@@ -1,6 +1,6 @@
 const API_BASE = import.meta.env.VITE_DUERP_API_BASE || "http://localhost:8787";
-const API_TOKEN = (import.meta as any)?.env?.VITE_DUERP_API_TOKEN;
-const TENANT_ID = (import.meta as any)?.env?.VITE_DUERP_TENANT_ID;
+const API_TOKEN = import.meta.env.VITE_DUERP_API_TOKEN;
+const TENANT_ID = import.meta.env.VITE_DUERP_TENANT_ID;
 
 async function http<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`${API_BASE}${path}`, {

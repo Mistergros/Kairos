@@ -27,6 +27,8 @@ export const Inventory = () => {
     removeAssessment,
     prefillFromSector,
     loadingHazards,
+    prefillWarning,
+    dismissPrefillWarning,
   } = useDuerpStore();
 
   const currentEstablishment = establishments.find((e) => e.id === selectedEstablishmentId);
@@ -393,10 +395,32 @@ export const Inventory = () => {
           )}
         </div>
 
+        {/* Empty state quand aucun risque */}
+        {assessments.length === 0 && (
+          <div className="mb-4 rounded-2xl border-2 border-dashed border-kairos/25 bg-kairos/3 px-6 py-8 text-center">
+            <p className="text-3xl mb-2">🔍</p>
+            <p className="font-semibold text-ink text-base mb-1">Aucun risque identifié</p>
+            <p className="text-sm text-slate/60 mb-4">
+              Saisissez votre code NAF ci-dessous et cliquez sur « Pré-remplir » pour générer automatiquement les risques
+              adaptés à votre secteur d'activité.
+            </p>
+            <p className="text-xs text-slate/40">Vous pourrez ensuite ajuster, supprimer ou ajouter des risques manuellement.</p>
+          </div>
+        )}
+
         <div className="mb-3 rounded-xl bg-slate/5 px-3 py-2 text-xs text-slate/70">
-          Astuce : 1) Saisissez le code NAF/secteur puis "Pre-remplir" pour charger des risques proposés. 2) Ajustez G/F/P
-          ou utilisez le "Questionnaire (pondération)" pour appliquer une pondération guidée. 3) Supprimez les risques non pertinents.
+          Astuce : 1) Saisissez le code NAF/secteur puis « Pré-remplir » pour charger les risques de votre secteur. 2) Ajustez G/F/P
+          ou utilisez le questionnaire de pondération. 3) Supprimez les risques non pertinents.
         </div>
+
+        {prefillWarning && (
+          <div className="mb-3 flex items-start justify-between gap-3 rounded-xl border border-amber-300 bg-amber-50 px-3 py-2 text-xs text-amber-800">
+            <span>⚠️ {prefillWarning}</span>
+            <button className="shrink-0 font-semibold underline hover:no-underline" onClick={dismissPrefillWarning}>
+              Masquer
+            </button>
+          </div>
+        )}
 
         <div className="flex flex-wrap items-center gap-3">
           <div className="flex items-center gap-2">
@@ -453,61 +477,118 @@ export const Inventory = () => {
 
         <div className="mt-4 overflow-x-auto rounded-xl border border-slate/10 bg-white shadow-sm">
           <table className="min-w-full divide-y divide-slate/10">
+            <thead>
+              <tr className="text-xs font-semibold uppercase tracking-wide text-slate/50">
+                <th className="px-4 py-2 text-left">Risque</th>
+                <th className="px-4 py-2 text-left">Priorité</th>
+                <th className="px-4 py-2 text-left">Mesures</th>
+                <th className="px-4 py-2"></th>
+              </tr>
+            </thead>
             <tbody className="divide-y divide-slate/10 text-sm">
               {groupedByCategory.map(([cat, items]) => (
                 <tr key={cat} className="bg-slate/5 text-xs font-semibold uppercase tracking-wide text-slate/60">
-                  <td className="px-4 py-2" colSpan={9}>
+                  <td className="px-4 py-2" colSpan={4}>
                     {cat}
                   </td>
                 </tr>
               )).length === 0 && (
                 <tr>
-                  <td className="px-4 py-6 text-center text-slate/50" colSpan={9}>
-                    Aucun risque. Pre-remplissez via le NAF/secteur ou ajoutez depuis la bibliothèque.
+                  <td className="px-4 py-6 text-center text-slate/50" colSpan={4}>
+                    Aucun risque identifié. Utilisez « Pré-remplir » ci-dessus pour générer automatiquement les risques de votre secteur.
                   </td>
                 </tr>
               )}
               {groupedByCategory.map(([cat, items]) => (
                 <Fragment key={cat}>
-                  {items.map((a) => (
+                  {items.map((a) => {
+                    const hasMeasures = Boolean(a.existingMeasures?.trim() || a.proposedMeasures?.trim());
+                    const isOpen = expandedId === a.id;
+                    return (
                     <Fragment key={a.id}>
-                      <tr className="hover:bg-slate/5 transition">
-                        <td className="px-4 py-3 text-slate/70">{cat}</td>
-                        <td className="px-4 py-3 font-semibold text-slate-900">{a.riskLabel}</td>
-                        <td className="px-4 py-3 text-slate/70">{a.damages}</td>
-                        {(["gravity", "frequency", "control"] as const).map((field) => (
-                          <td key={field} className="px-4 py-3">
-                            <input
-                              type="number"
-                              className="w-16 rounded-lg border border-slate/20 px-2 py-1 text-sm"
-                              value={field === "gravity" ? a.gravity : field === "frequency" ? a.frequency : a.control}
-                              onChange={(e: ChangeEvent<HTMLInputElement>) => onChangeScore(a, field, Number(e.target.value))}
-                            />
-                          </td>
-                        ))}
-                        <td className="px-4 py-3 font-semibold text-slate-900">{a.score}</td>
+                      <tr
+                        className="hover:bg-slate/5 transition cursor-pointer"
+                        onClick={() => openQuestionnaire(a.id)}
+                      >
+                        <td className="px-4 py-3">
+                          <div className="font-semibold text-slate-900">{a.riskLabel}</div>
+                          <div className="text-xs text-slate/50">{cat}</div>
+                        </td>
                         <td className="px-4 py-3">
                           <PriorityBadge priority={a.priority} />
                         </td>
-                        <td className="px-4 py-3 text-xs text-slate/60">
-                          <div>Existantes: {a.existingMeasures || "—"}</div>
-                          <div className="mt-1">A proposer: {a.proposedMeasures || "—"}</div>
-                          <div className="mt-2 flex flex-wrap items-center gap-2">
-                            <button
-                              className="text-ocean text-xs hover:underline"
-                              onClick={() => openQuestionnaire(a.id)}
-                            >
-                              Questionnaire (pondération)
-                            </button>
-                            <button className="text-sunset text-xs hover:underline" onClick={() => { if (window.confirm(`Supprimer le risque "${a.riskLabel}" et toutes ses données ?`)) removeAssessment(a.id); }}>
-                              Supprimer
-                            </button>
-                          </div>
+                        <td className="px-4 py-3">
+                          <span
+                            className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
+                              hasMeasures ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-700"
+                            }`}
+                          >
+                            {hasMeasures ? "Mesures définies" : "À définir"}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 text-right">
+                          <button
+                            className="text-ocean text-xs font-semibold hover:underline"
+                            onClick={(e) => { e.stopPropagation(); openQuestionnaire(a.id); }}
+                          >
+                            {isOpen ? "Réduire ▲" : "Ajuster ▼"}
+                          </button>
                         </td>
                       </tr>
-                      {expandedId === a.id && (
+                      {isOpen && (
                         <tr className="bg-slate/5">
-                          <td className="px-4 py-4" colSpan={9}>
+                          <td className="px-4 py-4" colSpan={4}>
+                            <div className="mb-4 grid gap-4 sm:grid-cols-2">
+                              <div className="rounded-xl border border-slate/10 bg-white p-3">
+                                <p className="text-xs font-semibold uppercase tracking-wide text-slate/50 mb-2">
+                                  Cotation (G × F / M)
+                                </p>
+                                {a.damages && <p className="text-xs text-slate/60 mb-3">{a.damages}</p>}
+                                <div className="flex flex-wrap items-end gap-3">
+                                  {(["gravity", "frequency", "control"] as const).map((field) => (
+                                    <label key={field} className="text-xs text-slate/60">
+                                      {field === "gravity" ? "Gravité" : field === "frequency" ? "Fréquence" : "Maîtrise"}
+                                      <input
+                                        type="number"
+                                        className="mt-1 block w-16 rounded-lg border border-slate/20 px-2 py-1 text-sm"
+                                        value={field === "gravity" ? a.gravity : field === "frequency" ? a.frequency : a.control}
+                                        onChange={(e: ChangeEvent<HTMLInputElement>) => onChangeScore(a, field, Number(e.target.value))}
+                                        onClick={(e) => e.stopPropagation()}
+                                      />
+                                    </label>
+                                  ))}
+                                  <div className="text-xs text-slate/60">
+                                    Score
+                                    <div className="mt-1 font-semibold text-slate-900">{a.score}</div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="rounded-xl border border-slate/10 bg-white p-3">
+                                <p className="text-xs font-semibold uppercase tracking-wide text-slate/50 mb-2">
+                                  Mesures
+                                </p>
+                                <label className="block text-xs text-slate/60 mb-2">
+                                  Existantes
+                                  <textarea
+                                    className="mt-1 w-full rounded-lg border border-slate/20 px-2 py-1 text-sm"
+                                    rows={2}
+                                    value={a.existingMeasures || ""}
+                                    onChange={(e) => updateAssessment(a.id, { existingMeasures: e.target.value })}
+                                    onClick={(e) => e.stopPropagation()}
+                                  />
+                                </label>
+                                <label className="block text-xs text-slate/60">
+                                  À proposer
+                                  <textarea
+                                    className="mt-1 w-full rounded-lg border border-slate/20 px-2 py-1 text-sm"
+                                    rows={2}
+                                    value={a.proposedMeasures || ""}
+                                    onChange={(e) => updateAssessment(a.id, { proposedMeasures: e.target.value })}
+                                    onClick={(e) => e.stopPropagation()}
+                                  />
+                                </label>
+                              </div>
+                            </div>
                             {(() => {
                               const ans = questAnswers[a.id] || { q1: "", q2: "", q3: "", q4: "" };
                               const setAns = (key: keyof QAnswers, val: string) => {
@@ -633,7 +714,13 @@ export const Inventory = () => {
                                     </div>
                                   )}
 
-                                  <div className="text-right">
+                                  <div className="flex items-center justify-between">
+                                    <button
+                                      className="text-sunset text-xs hover:underline"
+                                      onClick={() => { if (window.confirm(`Supprimer le risque "${a.riskLabel}" et toutes ses données ?`)) removeAssessment(a.id); }}
+                                    >
+                                      Supprimer ce risque
+                                    </button>
                                     <button className="text-ocean text-xs underline" onClick={() => setExpandedId(null)}>
                                       Fermer
                                     </button>
@@ -645,7 +732,8 @@ export const Inventory = () => {
                         </tr>
                       )}
                     </Fragment>
-                  ))}
+                  );
+                  })}
                 </Fragment>
               ))}
             </tbody>
