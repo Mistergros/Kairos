@@ -1,18 +1,20 @@
 /**
  * supabaseSync.ts
  *
- * Stratégie : localStorage = source principale (UX rapide, offline).
- * Supabase = persistance cloud, synchronisation en arrière-plan.
+ * Nom historique — ne parle plus à Supabase directement. Depuis la migration
+ * vers Neon (juillet 2026), les repos (`src/repos/*.ts`) passent par l'API
+ * de l'app (`api/server.ts`), authentifiée par un vrai jeton de session Clerk
+ * vérifié côté serveur (voir `getClerkOrgId` dans api/server.ts) — plus sûr
+ * que l'ancien accès direct au client Supabase avec la clé anon.
  *
- * loadAll(orgId)     — charge toutes les données depuis Supabase.
- * pushAll(orgId, …)  — migration initiale : pousse localStorage → Supabase.
+ * Stratégie inchangée : localStorage = source principale (UX rapide, offline).
+ * La base distante = persistance cloud, synchronisation en arrière-plan.
+ *
+ * loadAll(orgId)     — charge toutes les données depuis l'API.
+ * pushAll(orgId, …)  — migration initiale : pousse localStorage → l'API.
  *
  * Chaque mutation du store appelle upsert/delete en fire-and-forget.
- * Les erreurs Supabase ne bloquent jamais l'UI.
- *
- * ⚠️  Sécurité MVP : utilise la clé anon avec org_id côté client.
- *     Avant mise en production : configurer Supabase RLS avec le JWT Clerk.
- *     Doc : https://supabase.com/docs/guides/auth/third-party/clerk
+ * Les erreurs réseau ne bloquent jamais l'UI.
  */
 
 import {

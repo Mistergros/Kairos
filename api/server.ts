@@ -3,7 +3,7 @@ import { URL } from "url";
 import path from "path";
 import crypto from "crypto";
 import Stripe from "stripe";
-import { clerkClient } from "@clerk/clerk-sdk-node";
+import { clerkClient, verifyToken } from "@clerk/clerk-sdk-node";
 import dotenv from "dotenv";
 dotenv.config({ path: ".env.local" });
 dotenv.config();
@@ -265,108 +265,136 @@ const getNafDetail = async (code: string) => {
   return { ...naf.rows[0], unit_templates: unitTemplates.rows };
 };
 
-const applyTenant = (tenantId: string | null, params: any[] = []) => {
-  if (!tenantId) return { clause: "", params };
-  return { clause: " WHERE tenant_id = $1", params: [tenantId, ...params] };
-};
+// --- App data (establishments/work_units/assessments/actions/versions) ---
+// Consolidated onto Neon, scoped by the real Clerk user id (orgId), replacing
+// the old company_unit/unit_risk_assessment/corrective_action routes (dead:
+// nothing in src/ ever called them) and the direct browser->Supabase writes.
 
-const getUnits = async (tenantId: string | null) => {
-  const { clause, params } = applyTenant(tenantId);
-  const sql = `SELECT id, company_id, tenant_id, name, description, headcount, naf_code FROM company_unit${clause} ORDER BY name`;
-  const res = await query(sql, params);
+const listEstablishmentsDb = async (orgId: string) => {
+  const res = await query(
+    `SELECT id, name, siren, siret, code_naf, sector, address, headcount FROM establishments WHERE org_id=$1 ORDER BY name`,
+    [orgId]
+  );
   return res.rows;
 };
+const upsertEstablishmentDb = async (orgId: string, e: any) => {
+  const res = await query(
+    `INSERT INTO establishments (id, org_id, name, siren, siret, code_naf, sector, address, headcount)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
+     ON CONFLICT (id) DO UPDATE SET name=EXCLUDED.name, siren=EXCLUDED.siren, siret=EXCLUDED.siret,
+       code_naf=EXCLUDED.code_naf, sector=EXCLUDED.sector, address=EXCLUDED.address, headcount=EXCLUDED.headcount
+     WHERE establishments.org_id = $2
+     RETURNING *`,
+    [e.id, orgId, e.name, e.siren ?? null, e.siret ?? null, e.codeNaf ?? null, e.sector ?? null, e.address ?? null, e.headcount ?? null]
+  );
+  return res.rows[0];
+};
+const deleteEstablishmentDb = async (orgId: string, id: string) => {
+  await query(`DELETE FROM establishments WHERE id=$1 AND org_id=$2`, [id, orgId]);
+};
 
-const getAssessments = async (tenantId: string | null) => {
-  const { clause, params } = applyTenant(tenantId);
-  const sql = `SELECT id, unit_id, tenant_id, risk_id, context, existing_measures, severity, frequency, mastery, score FROM unit_risk_assessment${clause} ORDER BY score DESC NULLS LAST`;
-  const res = await query(sql, params);
+const listWorkUnitsDb = async (orgId: string) => {
+  const res = await query(
+    `SELECT id, establishment_id, name, description, location, headcount, activity, features, tags, measurements FROM work_units WHERE org_id=$1 ORDER BY name`,
+    [orgId]
+  );
   return res.rows;
 };
-
-const getCorrectiveActions = async (tenantId: string | null) => {
-  const { clause, params } = applyTenant(tenantId);
-  const sql = `SELECT id, assessment_id, tenant_id, action_id, owner, due_date, status FROM corrective_action${clause} ORDER BY due_date NULLS LAST`;
-  const res = await query(sql, params);
-  const now = new Date().getTime();
-  return res.rows.map((row: any) => {
-    const due = row.due_date ? new Date(row.due_date).getTime() : null;
-    const computed_status =
-      due && row.status !== "done" && due < now ? "late" : row.status || "todo";
-    return { ...row, computed_status };
-  });
-};
-
-const upsertUnit = async (payload: any, tenantId: string | null) => {
-  const id = payload.id || crypto.randomUUID();
-  const sql = `
-    INSERT INTO company_unit (id, company_id, tenant_id, name, description, headcount, naf_code)
-    VALUES ($1,$2,$3,$4,$5,$6,$7)
-    ON CONFLICT (id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, headcount=EXCLUDED.headcount, naf_code=EXCLUDED.naf_code, tenant_id=EXCLUDED.tenant_id
-    RETURNING *`;
-  const res = await query(sql, [
-    id,
-    payload.company_id || payload.companyId || crypto.randomUUID(),
-    tenantId,
-    payload.name,
-    payload.description || null,
-    payload.headcount ?? 0,
-    payload.naf_code || payload.nafCode || null,
-  ]);
+const upsertWorkUnitDb = async (orgId: string, u: any) => {
+  const res = await query(
+    `INSERT INTO work_units (id, org_id, establishment_id, name, description, location, headcount, activity, features, tags, measurements)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
+     ON CONFLICT (id) DO UPDATE SET establishment_id=EXCLUDED.establishment_id, name=EXCLUDED.name, description=EXCLUDED.description,
+       location=EXCLUDED.location, headcount=EXCLUDED.headcount, activity=EXCLUDED.activity, features=EXCLUDED.features,
+       tags=EXCLUDED.tags, measurements=EXCLUDED.measurements
+     WHERE work_units.org_id = $2
+     RETURNING *`,
+    [u.id, orgId, u.establishmentId, u.name, u.description ?? null, u.location ?? null, u.headcount ?? null,
+     u.activity ?? null, u.features ?? [], u.tags ?? [], JSON.stringify(u.measurements ?? {})]
+  );
   return res.rows[0];
 };
-
-const upsertAssessment = async (payload: any, tenantId: string | null) => {
-  const id = payload.id || crypto.randomUUID();
-  const sql = `
-    INSERT INTO unit_risk_assessment (id, unit_id, tenant_id, risk_id, context, existing_measures, severity, frequency, mastery)
-    VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
-    ON CONFLICT (id) DO UPDATE SET
-      unit_id=EXCLUDED.unit_id,
-      tenant_id=EXCLUDED.tenant_id,
-      risk_id=EXCLUDED.risk_id,
-      context=EXCLUDED.context,
-      existing_measures=EXCLUDED.existing_measures,
-      severity=EXCLUDED.severity,
-      frequency=EXCLUDED.frequency,
-      mastery=EXCLUDED.mastery
-    RETURNING *`;
-  const res = await query(sql, [
-    id,
-    payload.unit_id || payload.unitId,
-    tenantId,
-    payload.risk_id || payload.riskId,
-    payload.context || null,
-    payload.existing_measures || payload.existingMeasures || null,
-    payload.severity,
-    payload.frequency,
-    payload.mastery,
-  ]);
-  return res.rows[0];
+const deleteWorkUnitDb = async (orgId: string, id: string) => {
+  await query(`DELETE FROM work_units WHERE id=$1 AND org_id=$2`, [id, orgId]);
 };
 
-const upsertCorrectiveAction = async (payload: any, tenantId: string | null) => {
-  const id = payload.id || crypto.randomUUID();
-  const sql = `
-    INSERT INTO corrective_action (id, assessment_id, tenant_id, action_id, owner, due_date, status)
-    VALUES ($1,$2,$3,$4,$5,$6,$7)
-    ON CONFLICT (id) DO UPDATE SET
-      assessment_id=EXCLUDED.assessment_id,
-      tenant_id=EXCLUDED.tenant_id,
-      action_id=EXCLUDED.action_id,
-      owner=EXCLUDED.owner,
-      due_date=EXCLUDED.due_date,
-      status=EXCLUDED.status
-    RETURNING *`;
-  const res = await query(sql, [
-    id,
-    payload.assessment_id || payload.assessmentId,
-    tenantId,
-    payload.action_id || payload.actionId,
-    payload.owner || null,
-    payload.due_date || payload.dueDate || null,
-    payload.status || "todo",
-  ]);
+const listAssessmentsDb = async (orgId: string) => {
+  const res = await query(
+    `SELECT id, work_unit_id, hazard_id, hazard_category, risk_label, damages, existing_measures, proposed_measures,
+            gravity, frequency, control, score, priority, created_at, updated_at
+     FROM assessments WHERE org_id=$1 ORDER BY created_at`,
+    [orgId]
+  );
+  return res.rows;
+};
+const upsertAssessmentDb = async (orgId: string, a: any) => {
+  const res = await query(
+    `INSERT INTO assessments (id, org_id, work_unit_id, hazard_id, hazard_category, risk_label, damages,
+       existing_measures, proposed_measures, gravity, frequency, control, score, priority, created_at, updated_at)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)
+     ON CONFLICT (id) DO UPDATE SET work_unit_id=EXCLUDED.work_unit_id, hazard_id=EXCLUDED.hazard_id,
+       hazard_category=EXCLUDED.hazard_category, risk_label=EXCLUDED.risk_label, damages=EXCLUDED.damages,
+       existing_measures=EXCLUDED.existing_measures, proposed_measures=EXCLUDED.proposed_measures,
+       gravity=EXCLUDED.gravity, frequency=EXCLUDED.frequency, control=EXCLUDED.control, score=EXCLUDED.score,
+       priority=EXCLUDED.priority, updated_at=EXCLUDED.updated_at
+     WHERE assessments.org_id = $2
+     RETURNING *`,
+    [a.id, orgId, a.workUnitId, a.hazardId ?? null, a.hazardCategory ?? null, a.riskLabel ?? null, a.damages ?? null,
+     a.existingMeasures ?? null, a.proposedMeasures ?? null, a.gravity, a.frequency, a.control, a.score, a.priority,
+     a.createdAt ?? new Date().toISOString(), a.updatedAt ?? new Date().toISOString()]
+  );
+  return res.rows[0];
+};
+const deleteAssessmentDb = async (orgId: string, id: string) => {
+  await query(`DELETE FROM assessments WHERE id=$1 AND org_id=$2`, [id, orgId]);
+};
+
+const listActionsDb = async (orgId: string) => {
+  const res = await query(
+    `SELECT id, establishment_id, assessment_id, title, description, owner, start_date, due_date, end_date, how,
+            status, priority, cost, evidence_url, steps, created_at
+     FROM actions WHERE org_id=$1 ORDER BY created_at`,
+    [orgId]
+  );
+  return res.rows;
+};
+const upsertActionDb = async (orgId: string, a: any) => {
+  const res = await query(
+    `INSERT INTO actions (id, org_id, establishment_id, assessment_id, title, description, owner, start_date,
+       due_date, end_date, how, status, priority, cost, evidence_url, steps, created_at)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)
+     ON CONFLICT (id) DO UPDATE SET establishment_id=EXCLUDED.establishment_id, assessment_id=EXCLUDED.assessment_id,
+       title=EXCLUDED.title, description=EXCLUDED.description, owner=EXCLUDED.owner, start_date=EXCLUDED.start_date,
+       due_date=EXCLUDED.due_date, end_date=EXCLUDED.end_date, how=EXCLUDED.how, status=EXCLUDED.status,
+       priority=EXCLUDED.priority, cost=EXCLUDED.cost, evidence_url=EXCLUDED.evidence_url, steps=EXCLUDED.steps
+     WHERE actions.org_id = $2
+     RETURNING *`,
+    [a.id, orgId, a.establishmentId ?? null, a.assessmentId ?? null, a.title, a.description ?? null, a.owner ?? null,
+     a.startDate ?? null, a.dueDate ?? null, a.endDate ?? null, a.how ?? null, a.status ?? "TO_DO", a.priority ?? null,
+     a.cost ?? null, a.evidenceUrl ?? null, JSON.stringify(a.steps ?? []), a.createdAt ?? new Date().toISOString()]
+  );
+  return res.rows[0];
+};
+const deleteActionDb = async (orgId: string, id: string) => {
+  await query(`DELETE FROM actions WHERE id=$1 AND org_id=$2`, [id, orgId]);
+};
+
+const listVersionsDb = async (orgId: string) => {
+  const res = await query(
+    `SELECT id, establishment_id, label, reason, hash, created_at FROM duerp_versions WHERE org_id=$1 ORDER BY created_at DESC`,
+    [orgId]
+  );
+  return res.rows;
+};
+const upsertVersionDb = async (orgId: string, v: any) => {
+  const res = await query(
+    `INSERT INTO duerp_versions (id, org_id, establishment_id, label, reason, hash, created_at)
+     VALUES ($1,$2,$3,$4,$5,$6,$7)
+     ON CONFLICT (id) DO UPDATE SET label=EXCLUDED.label, reason=EXCLUDED.reason, hash=EXCLUDED.hash
+     WHERE duerp_versions.org_id = $2
+     RETURNING *`,
+    [v.id, orgId, v.establishmentId, v.label, v.reason ?? null, v.hash ?? null, v.createdAt ?? new Date().toISOString()]
+  );
   return res.rows[0];
 };
 
@@ -451,6 +479,28 @@ const requiresRole = (current: Role | undefined, required: Role): boolean => {
 };
 
 const requireTenant = process.env.API_REQUIRE_TENANT === "true";
+
+// Auth for the per-user app-data routes (establishments/work-units/assessments/
+// actions/versions): a real Clerk session token, verified server-side, is the
+// org scope — NOT the static shared API_TOKEN_* scheme above (that's for the
+// public catalog/nafs/evaluate routes and would put every user in one bucket).
+const clerkOrgCache = new Map<string, { orgId: string; expires: number }>();
+const getClerkOrgId = async (req: any): Promise<string | null> => {
+  const header = req.headers["authorization"] || req.headers["Authorization"];
+  if (!header || typeof header !== "string" || !header.startsWith("Bearer ")) return null;
+  const token = header.slice("Bearer ".length).trim();
+  const cached = clerkOrgCache.get(token);
+  if (cached && cached.expires > Date.now()) return cached.orgId;
+  try {
+    const payload = await verifyToken(token, { secretKey: CLERK_SECRET_KEY });
+    const orgId = payload.sub;
+    if (!orgId) return null;
+    clerkOrgCache.set(token, { orgId, expires: Date.now() + 60_000 });
+    return orgId;
+  } catch {
+    return null;
+  }
+};
 
 type RateBucket = { count: number; windowStart: number };
 const rateStore = new Map<string, RateBucket>();
@@ -601,51 +651,77 @@ createServer(async (req, res) => {
       return json(res, naf);
     }
 
-    if (req.method === "GET" && basePath === "/api/units") {
-      if (!auth.ok || !requiresRole(auth.role, "viewer")) return json(res, { error: "Unauthorized" }, 401);
-      const tenantId = getTenant(req, auth.tenant);
-      if (requireTenant && !tenantId) return json(res, { error: "Tenant required" }, 400);
-      return json(res, await getUnits(tenantId));
+    // --- App data: establishments / work-units / assessments / actions / versions ---
+    // All scoped to the real signed-in Clerk user (see getClerkOrgId above).
+    if (basePath === "/api/establishments" || basePath.startsWith("/api/establishments/")) {
+      const orgId = await getClerkOrgId(req);
+      if (!orgId) return json(res, { error: "Unauthorized" }, 401);
+      if (req.method === "GET") return json(res, await listEstablishmentsDb(orgId));
+      if (req.method === "POST") {
+        const body = await readBody(req).catch(() => null);
+        if (!body?.id || !body?.name) return json(res, { error: "Bad Request" }, 400);
+        return json(res, await upsertEstablishmentDb(orgId, body), 201);
+      }
+      if (req.method === "DELETE") {
+        const id = decodeURIComponent(basePath.replace("/api/establishments/", ""));
+        await deleteEstablishmentDb(orgId, id);
+        return json(res, { ok: true });
+      }
     }
-    if (req.method === "POST" && basePath === "/api/units") {
-      if (!auth.ok || !requiresRole(auth.role, "contrib")) return json(res, { error: "Unauthorized" }, 401);
-      const tenantId = getTenant(req, auth.tenant);
-      if (requireTenant && !tenantId) return json(res, { error: "Tenant required" }, 400);
-      const body = await readBody(req).catch(() => null);
-      if (!body?.name) return json(res, { error: "Bad Request" }, 400);
-      const created = await upsertUnit(body, tenantId);
-      return json(res, created, 201);
+    if (basePath === "/api/work-units" || basePath.startsWith("/api/work-units/")) {
+      const orgId = await getClerkOrgId(req);
+      if (!orgId) return json(res, { error: "Unauthorized" }, 401);
+      if (req.method === "GET") return json(res, await listWorkUnitsDb(orgId));
+      if (req.method === "POST") {
+        const body = await readBody(req).catch(() => null);
+        if (!body?.id || !body?.name || !body?.establishmentId) return json(res, { error: "Bad Request" }, 400);
+        return json(res, await upsertWorkUnitDb(orgId, body), 201);
+      }
+      if (req.method === "DELETE") {
+        const id = decodeURIComponent(basePath.replace("/api/work-units/", ""));
+        await deleteWorkUnitDb(orgId, id);
+        return json(res, { ok: true });
+      }
     }
-    if (req.method === "GET" && basePath === "/api/assessments") {
-      if (!auth.ok || !requiresRole(auth.role, "contrib")) return json(res, { error: "Unauthorized" }, 401);
-      const tenantId = getTenant(req, auth.tenant);
-      if (requireTenant && !tenantId) return json(res, { error: "Tenant required" }, 400);
-      return json(res, await getAssessments(tenantId));
+    if (basePath === "/api/assessments" || basePath.startsWith("/api/assessments/")) {
+      const orgId = await getClerkOrgId(req);
+      if (!orgId) return json(res, { error: "Unauthorized" }, 401);
+      if (req.method === "GET") return json(res, await listAssessmentsDb(orgId));
+      if (req.method === "POST") {
+        const body = await readBody(req).catch(() => null);
+        if (!body?.id || !body?.workUnitId) return json(res, { error: "Bad Request" }, 400);
+        return json(res, await upsertAssessmentDb(orgId, body), 201);
+      }
+      if (req.method === "DELETE") {
+        const id = decodeURIComponent(basePath.replace("/api/assessments/", ""));
+        await deleteAssessmentDb(orgId, id);
+        return json(res, { ok: true });
+      }
     }
-    if (req.method === "POST" && basePath === "/api/assessments") {
-      if (!auth.ok || !requiresRole(auth.role, "contrib")) return json(res, { error: "Unauthorized" }, 401);
-      const tenantId = getTenant(req, auth.tenant);
-      if (requireTenant && !tenantId) return json(res, { error: "Tenant required" }, 400);
-      const body = await readBody(req).catch(() => null);
-      if (!body?.unit_id && !body?.unitId) return json(res, { error: "Bad Request" }, 400);
-      if (!body?.risk_id && !body?.riskId) return json(res, { error: "Bad Request" }, 400);
-      const created = await upsertAssessment(body, tenantId);
-      return json(res, created, 201);
+    if (basePath === "/api/actions" || basePath.startsWith("/api/actions/")) {
+      const orgId = await getClerkOrgId(req);
+      if (!orgId) return json(res, { error: "Unauthorized" }, 401);
+      if (req.method === "GET") return json(res, await listActionsDb(orgId));
+      if (req.method === "POST") {
+        const body = await readBody(req).catch(() => null);
+        if (!body?.id || !body?.title) return json(res, { error: "Bad Request" }, 400);
+        return json(res, await upsertActionDb(orgId, body), 201);
+      }
+      if (req.method === "DELETE") {
+        const id = decodeURIComponent(basePath.replace("/api/actions/", ""));
+        await deleteActionDb(orgId, id);
+        return json(res, { ok: true });
+      }
     }
-    if (req.method === "GET" && basePath === "/api/actions-plan") {
-      if (!auth.ok || !requiresRole(auth.role, "contrib")) return json(res, { error: "Unauthorized" }, 401);
-      const tenantId = getTenant(req, auth.tenant);
-      if (requireTenant && !tenantId) return json(res, { error: "Tenant required" }, 400);
-      return json(res, await getCorrectiveActions(tenantId));
-    }
-    if (req.method === "POST" && basePath === "/api/actions-plan") {
-      if (!auth.ok || !requiresRole(auth.role, "contrib")) return json(res, { error: "Unauthorized" }, 401);
-      const tenantId = getTenant(req, auth.tenant);
-      if (requireTenant && !tenantId) return json(res, { error: "Tenant required" }, 400);
-      const body = await readBody(req).catch(() => null);
-      if (!body?.assessment_id && !body?.assessmentId) return json(res, { error: "Bad Request" }, 400);
-      const created = await upsertCorrectiveAction(body, tenantId);
-      return json(res, created, 201);
+    if (basePath === "/api/versions") {
+      const orgId = await getClerkOrgId(req);
+      if (!orgId) return json(res, { error: "Unauthorized" }, 401);
+      if (req.method === "GET") return json(res, await listVersionsDb(orgId));
+      if (req.method === "POST") {
+        const body = await readBody(req).catch(() => null);
+        if (!body?.id || !body?.establishmentId || !body?.label) return json(res, { error: "Bad Request" }, 400);
+        return json(res, await upsertVersionDb(orgId, body), 201);
+      }
     }
 
     if (req.method === "POST" && basePath === "/api/evaluate") {

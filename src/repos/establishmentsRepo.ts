@@ -1,4 +1,4 @@
-import { supabase } from "../lib/supabase";
+import { apiGet, apiPost, apiDelete } from "../utils/apiClient";
 import type { Establishment } from "../types";
 
 export function dbToEstablishment(row: any): Establishment {
@@ -14,32 +14,15 @@ export function dbToEstablishment(row: any): Establishment {
   };
 }
 
-function toDb(orgId: string, e: Establishment) {
-  return {
-    id: e.id,
-    org_id: orgId,
-    name: e.name,
-    siren: e.siren ?? null,
-    siret: e.siret ?? null,
-    code_naf: e.codeNaf ?? null,
-    sector: e.sector ?? null,
-    address: e.address ?? null,
-    headcount: e.headcount ?? null,
-  };
+export async function upsertEstablishment(_orgId: string, e: Establishment) {
+  await apiPost("/api/establishments", e);
 }
 
-export async function upsertEstablishment(orgId: string, e: Establishment) {
-  const { error } = await supabase.from("establishments").upsert(toDb(orgId, e), { onConflict: "id" });
-  if (error) throw error;
+export async function deleteEstablishment(_orgId: string, id: string) {
+  await apiDelete(`/api/establishments/${encodeURIComponent(id)}`);
 }
 
-export async function deleteEstablishment(orgId: string, id: string) {
-  const { error } = await supabase.from("establishments").delete().eq("id", id).eq("org_id", orgId);
-  if (error) throw error;
-}
-
-export async function listEstablishments(orgId: string): Promise<Establishment[]> {
-  const { data, error } = await supabase.from("establishments").select("*").eq("org_id", orgId);
-  if (error) throw error;
-  return (data || []).map(dbToEstablishment);
+export async function listEstablishments(_orgId: string): Promise<Establishment[]> {
+  const rows = await apiGet<any[]>("/api/establishments");
+  return (rows || []).map(dbToEstablishment);
 }

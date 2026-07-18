@@ -1,4 +1,4 @@
-import { supabase } from "../lib/supabase";
+import { apiGet, apiPost, apiDelete } from "../utils/apiClient";
 import type { ActionItem } from "../types";
 
 export function dbToAction(row: any): ActionItem {
@@ -22,40 +22,15 @@ export function dbToAction(row: any): ActionItem {
   };
 }
 
-function toDb(orgId: string, a: ActionItem) {
-  return {
-    id: a.id,
-    org_id: orgId,
-    establishment_id: a.establishmentId ?? null,
-    assessment_id: a.assessmentId ?? null,
-    title: a.title,
-    description: a.description ?? null,
-    owner: a.owner ?? null,
-    start_date: a.startDate ?? null,
-    due_date: a.dueDate ?? null,
-    end_date: a.endDate ?? null,
-    how: a.how ?? null,
-    status: a.status,
-    priority: a.priority,
-    cost: a.cost ?? null,
-    evidence_url: a.evidenceUrl ?? null,
-    steps: a.steps ?? [],
-    created_at: a.createdAt,
-  };
+export async function upsertAction(_orgId: string, a: ActionItem) {
+  await apiPost("/api/actions", a);
 }
 
-export async function upsertAction(orgId: string, a: ActionItem) {
-  const { error } = await supabase.from("actions").upsert(toDb(orgId, a), { onConflict: "id" });
-  if (error) throw error;
+export async function deleteAction(_orgId: string, id: string) {
+  await apiDelete(`/api/actions/${encodeURIComponent(id)}`);
 }
 
-export async function deleteAction(orgId: string, id: string) {
-  const { error } = await supabase.from("actions").delete().eq("id", id).eq("org_id", orgId);
-  if (error) throw error;
-}
-
-export async function listActions(orgId: string): Promise<ActionItem[]> {
-  const { data, error } = await supabase.from("actions").select("*").eq("org_id", orgId);
-  if (error) throw error;
-  return (data || []).map(dbToAction);
+export async function listActions(_orgId: string): Promise<ActionItem[]> {
+  const rows = await apiGet<any[]>("/api/actions");
+  return (rows || []).map(dbToAction);
 }
