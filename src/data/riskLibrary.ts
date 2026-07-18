@@ -1,5 +1,9 @@
 import { Hazard } from '../types';
 
+// Bibliothèque générique de repli (dernier filet de sécurité du pipeline de
+// préremplissage, voir src/services/prefillService.ts). Sourcée le
+// 2026-07-19 en reprenant, par thème, les mêmes documents officiels que le
+// catalogue sectoriel V4 (config/risks/*.json) — voir REFERENTIELS.md.
 export const riskLibrary: Hazard[] = [
   {
     id: 'hazard-chem-1',
@@ -7,6 +11,8 @@ export const riskLibrary: Hazard[] = [
     risk: 'Utilisation de produits corrosifs/irritants',
     damages: 'Brûlure, irritation, allergie',
     example_prevention: 'Substitution produit; captage à la source; EPI (gants, lunettes); information',
+    source: "INRS ED 6150 — Travailler avec des produits chimiques. Pensez prévention des risques !",
+    source_verified: '2026-07-19',
   },
   {
     id: 'hazard-chem-2',
@@ -14,6 +20,8 @@ export const riskLibrary: Hazard[] = [
     risk: 'Émission de gaz/produits volatils',
     damages: 'Intoxication, céphalées',
     example_prevention: 'Ventilation/aspiration; confinement; EPI',
+    source: "INRS ED 6150 — Travailler avec des produits chimiques. Pensez prévention des risques !",
+    source_verified: '2026-07-19',
   },
   {
     id: 'hazard-chem-3',
@@ -21,6 +29,8 @@ export const riskLibrary: Hazard[] = [
     risk: 'Stockage inadapté/incompatible',
     damages: 'Incendie, intoxication',
     example_prevention: 'Séparer, aérer, rétention, compatibilités',
+    source: "INRS ED 6150 — Travailler avec des produits chimiques. Pensez prévention des risques !",
+    source_verified: '2026-07-19',
   },
   {
     id: 'hazard-mach-1',
@@ -28,6 +38,8 @@ export const riskLibrary: Hazard[] = [
     risk: 'Accès zone dangereuse machine',
     damages: 'Coupure, écrasement',
     example_prevention: 'Carter, arrêt d’urgence, formation',
+    source: "INRS ED 6122 — Sécurité des équipements de travail",
+    source_verified: '2026-07-19',
   },
   {
     id: 'hazard-mach-2',
@@ -35,6 +47,8 @@ export const riskLibrary: Hazard[] = [
     risk: 'Outils tranchants/portatifs',
     damages: 'Coupures, projections',
     example_prevention: 'EPI, consignes, formation, conformité CE',
+    source: "INRS ED 6501 — Risques de coupures : solutions de prévention",
+    source_verified: '2026-07-19',
   },
   {
     id: 'hazard-elec-1',
@@ -42,6 +56,8 @@ export const riskLibrary: Hazard[] = [
     risk: 'Conducteurs nus/armoires ouvertes',
     damages: 'Électrocution, brûlures',
     example_prevention: 'Habilitation, contrôles périodiques, consignation',
+    source: "INRS ED 6187 — La prévention du risque électrique",
+    source_verified: '2026-07-19',
   },
   {
     id: 'hazard-elec-2',
@@ -49,6 +65,8 @@ export const riskLibrary: Hazard[] = [
     risk: 'Câbles détériorés',
     damages: 'Incendie',
     example_prevention: 'Remplacement, vérification visuelle, GMAO',
+    source: "INRS ED 6187 — La prévention du risque électrique",
+    source_verified: '2026-07-19',
   },
   {
     id: 'hazard-fire-1',
@@ -56,6 +74,8 @@ export const riskLibrary: Hazard[] = [
     risk: 'Produits inflammables/comburants',
     damages: 'Brûlures, intoxication',
     example_prevention: 'Suppression sources ignition, mise à la terre, extincteurs',
+    source: "INRS ED 4702 — Incendie et explosion sur le lieu de travail",
+    source_verified: '2026-07-19',
   },
   {
     id: 'hazard-fire-2',
@@ -63,6 +83,8 @@ export const riskLibrary: Hazard[] = [
     risk: 'Mélanges incompatibles',
     damages: 'Explosion',
     example_prevention: 'Séparation, procédures, FDS disponibles',
+    source: "INRS ED 4702 — Incendie et explosion sur le lieu de travail",
+    source_verified: '2026-07-19',
   },
   {
     id: 'hazard-manu-1',
@@ -70,6 +92,8 @@ export const riskLibrary: Hazard[] = [
     risk: 'Charges lourdes/répétitives',
     damages: 'TMS, lombalgies',
     example_prevention: 'Aides mécaniques, PRAP, réorganisation',
+    source: "INRS ED 6518 — Démarche de prévention des troubles musculosquelettiques (TMS)",
+    source_verified: '2026-07-19',
   },
   {
     id: 'hazard-manu-2',
@@ -77,6 +101,8 @@ export const riskLibrary: Hazard[] = [
     risk: 'Postures contraignantes',
     damages: 'Fatigue, chute',
     example_prevention: 'Aménagement poste, formation gestes/postures',
+    source: "INRS ED 6518 — Démarche de prévention des troubles musculosquelettiques (TMS)",
+    source_verified: '2026-07-19',
   },
   {
     id: 'hazard-eng-1',
@@ -84,6 +110,8 @@ export const riskLibrary: Hazard[] = [
     risk: 'Conduite zones exigües',
     damages: 'Collision, écrasement',
     example_prevention: 'Vitesse limitée, marquage, seules personnes habilitées',
+    source: "INRS ED 6122 — Sécurité des équipements de travail",
+    source_verified: '2026-07-19',
   },
   {
     id: 'hazard-eng-2',
@@ -91,6 +119,8 @@ export const riskLibrary: Hazard[] = [
     risk: 'Instabilité charge/sol',
     damages: 'Chute de charge',
     example_prevention: 'Contrôle sol, arrimage, vérifications réglementaires',
+    source: "INRS ED 6468 — Risques de choc ou d'écrasement, solutions de prévention",
+    source_verified: '2026-07-19',
   },
   {
     id: 'hazard-fall-1',
@@ -98,6 +128,8 @@ export const riskLibrary: Hazard[] = [
     risk: 'Sol glissant/encombré',
     damages: 'Entorses, fractures',
     example_prevention: 'Entretien, dégagement, éclairage, chaussures',
+    source: "INRS ED 6053 — Chutes de plain-pied et de hauteur (+ CARSAT Prévention chutes)",
+    source_verified: '2026-07-19',
   },
   {
     id: 'hazard-fall-2',
@@ -105,6 +137,8 @@ export const riskLibrary: Hazard[] = [
     risk: 'Accès en hauteur (échelles)',
     damages: 'Chute de hauteur',
     example_prevention: 'Garde-corps, EPI antichute, escabeaux sécurisés',
+    source: "INRS ED 6110 — Prévention des risques de chutes de hauteur",
+    source_verified: '2026-07-19',
   },
   {
     id: 'hazard-collapse-1',
@@ -112,6 +146,8 @@ export const riskLibrary: Hazard[] = [
     risk: 'Stockage en hauteur/empilement',
     damages: 'Blessures par chute d’objet',
     example_prevention: 'Limite hauteurs, protections, palettes adaptées',
+    source: "INRS ED 6468 — Risques de choc ou d'écrasement, solutions de prévention",
+    source_verified: '2026-07-19',
   },
   {
     id: 'hazard-hyg-1',
@@ -119,6 +155,8 @@ export const riskLibrary: Hazard[] = [
     risk: 'Sanitaires/vestiaires insuffisants',
     damages: 'Risque sanitaire/contamination',
     example_prevention: 'Mise en conformité, entretien, eau potable',
+    source: "Code du travail, art. R.4228-1 — Vestiaires et installations sanitaires",
+    source_verified: '2026-07-19',
   },
   {
     id: 'hazard-screen-1',
@@ -126,6 +164,8 @@ export const riskLibrary: Hazard[] = [
     risk: 'Reflets/luminosité',
     damages: 'Fatigue visuelle, erreurs',
     example_prevention: 'Stores, positionnement, réglages',
+    source: "INRS ED 6538 — Le travail sur écran, guide pratique pour la prévention des risques",
+    source_verified: '2026-07-19',
   },
   {
     id: 'hazard-screen-2',
@@ -133,6 +173,8 @@ export const riskLibrary: Hazard[] = [
     risk: 'Mobilier inadapté',
     damages: 'TMS, stress',
     example_prevention: 'Sièges réglables, supports, repose-pieds',
+    source: "INRS ED 6538 — Le travail sur écran, guide pratique pour la prévention des risques",
+    source_verified: '2026-07-19',
   },
   {
     id: 'hazard-noise-1',
@@ -140,6 +182,8 @@ export const riskLibrary: Hazard[] = [
     risk: 'Bureaux partagés/réunions',
     damages: 'Inconfort, baisse concentration',
     example_prevention: 'Traitement acoustique, bouchons, isolement',
+    source: "INRS ED 6035 — Évaluer et mesurer l'exposition professionnelle au bruit",
+    source_verified: '2026-07-19',
   },
   {
     id: 'hazard-vib-1',
@@ -147,6 +191,8 @@ export const riskLibrary: Hazard[] = [
     risk: 'Outils/engins vibrants',
     damages: 'Lésions ostéoarticulaires',
     example_prevention: 'Outils antivibratiles, sièges adaptés, pauses',
+    source: "INRS ED 6342 — Vibrations mains-bras",
+    source_verified: '2026-07-19',
   },
   {
     id: 'hazard-bio-1',
@@ -154,6 +200,8 @@ export const riskLibrary: Hazard[] = [
     risk: 'Contact personnes malades/animaux',
     damages: 'Maladie infectieuse',
     example_prevention: 'Vaccination, EPI, procédures de décontamination',
+    source: "INRS ED 6034 — Les risques biologiques en milieu professionnel",
+    source_verified: '2026-07-19',
   },
   {
     id: 'hazard-rps-1',
@@ -161,6 +209,8 @@ export const riskLibrary: Hazard[] = [
     risk: 'Charge/sous-effectif',
     damages: 'Stress, épuisement',
     example_prevention: 'Organisation, priorisation, cellule d’écoute',
+    source: "INRS ED 6349 — Risques psychosociaux, comment agir en prévention ?",
+    source_verified: '2026-07-19',
   },
   {
     id: 'hazard-rps-2',
@@ -168,6 +218,8 @@ export const riskLibrary: Hazard[] = [
     risk: 'Violences internes/externes',
     damages: 'Choc psy, harcèlement',
     example_prevention: 'Signalement, médiation, procédures, formation',
+    source: "INRS — Agressions et violences externes, démarche de prévention",
+    source_verified: '2026-07-19',
   },
   {
     id: 'hazard-posture-1',
@@ -175,6 +227,8 @@ export const riskLibrary: Hazard[] = [
     risk: 'Positions répétées/inadaptées',
     damages: 'TMS, chutes',
     example_prevention: 'Aménagement, alternance tâches, PRAP',
+    source: "INRS ED 79 — Conception et aménagement des postes de travail",
+    source_verified: '2026-07-19',
   },
   {
     id: 'hazard-road-1',
@@ -182,6 +236,8 @@ export const riskLibrary: Hazard[] = [
     risk: 'Temps de route important',
     damages: 'Accident routier',
     example_prevention: 'Planning, télétravail, entretien véhicule',
+    source: "INRS ED 6545 — Le risque routier, les déplacements pour le travail",
+    source_verified: '2026-07-19',
   },
   {
     id: 'hazard-road-2',
@@ -189,5 +245,7 @@ export const riskLibrary: Hazard[] = [
     risk: 'Délais insuffisants',
     damages: 'Accident',
     example_prevention: 'Marge planning, politique sécurité',
+    source: "INRS ED 6545 — Le risque routier, les déplacements pour le travail",
+    source_verified: '2026-07-19',
   },
 ];

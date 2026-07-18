@@ -2,8 +2,12 @@ import { Card } from "../components/Card";
 import { useDuerpStore } from "../state/store";
 import { printDuerpDocument, printDuerpSimplified, printDuerpMultiSites } from "../services/printService";
 
+// Le BOM UTF-8 (U+FEFF) est nécessaire pour qu'Excel sur Windows détecte
+// l'encodage correctement — sans lui, les caractères accentués (é, è, à...)
+// s'affichent mal à l'ouverture d'un .csv (Excel se rabat sur l'ANSI local).
 const downloadText = (filename: string, data: string, mime = "text/plain;charset=utf-8") => {
-  const blob = new Blob([data], { type: mime });
+  const withBom = mime.startsWith("text/csv") ? "﻿" + data : data;
+  const blob = new Blob([withBom], { type: mime });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;

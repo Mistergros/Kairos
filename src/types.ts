@@ -31,7 +31,10 @@ export interface Hazard {
   risk: string;
   damages?: string;
   example_prevention?: string;
+  // Document officiel précis (ex. "INRS ED 6490 — ...") + date de dernière
+  // vérification (AAAA-MM-JJ). Voir REFERENTIELS.md pour l'état du sourcing.
   source?: string;
+  source_verified?: string;
   sector?: string;
 }
 

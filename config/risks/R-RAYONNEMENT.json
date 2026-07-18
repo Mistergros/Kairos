@@ -13,8 +13,7 @@
   ],
   "factors": [],
   "sources": [
-    "INRS",
-    "CARSAT",
-    "EU-OSHA"
-  ]
+    "INRS ED 4202 — Les sources de rayonnements non ionisants (jusqu'à 60 GHz)"
+  ],
+  "sources_verified": "2026-07-19"
 }

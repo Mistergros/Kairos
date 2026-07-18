@@ -1,0 +1,216 @@
+[
+  {
+    "risk_id": "R-RPS",
+    "tasks": [
+      "Réaliser un diagnostic RPS (questionnaire, entretiens collectifs)",
+      "Former les managers à la détection des signaux faibles",
+      "Mettre en place des entretiens individuels réguliers",
+      "Créer une cellule d'écoute ou désigner un référent RPS",
+      "Revoir la répartition de la charge de travail",
+      "Mettre en place un dispositif de signalement confidentiel",
+      "Planifier des réunions d'équipe sur les conditions de travail"
+    ]
+  },
+  {
+    "risk_id": "R-INCENDIE",
+    "tasks": [
+      "Vérifier et dater les extincteurs et RIA",
+      "Afficher les consignes d'évacuation dans chaque local",
+      "Former les équipiers de première intervention (EPI)",
+      "Réaliser un exercice d'évacuation annuel",
+      "Contrôler les dégagements et issues de secours",
+      "Mettre à jour le registre de sécurité incendie"
+    ]
+  },
+  {
+    "risk_id": "R-ATEX",
+    "tasks": [
+      "Mettre à jour le document de protection contre les explosions (DRPCE)",
+      "Vérifier et classer les zones ATEX",
+      "Contrôler la conformité des équipements en zone ATEX",
+      "Former les intervenants en zone ATEX",
+      "Vérifier la ventilation et les détecteurs de gaz"
+    ]
+  },
+  {
+    "risk_id": "R-CHIMIQUE",
+    "tasks": [
+      "Collecter et mettre à jour toutes les fiches de données de sécurité (FDS)",
+      "Évaluer la possibilité de substitution par des produits moins dangereux",
+      "Vérifier l'étiquetage et les conditions de stockage des produits",
+      "Contrôler l'efficacité de la ventilation et du captage à la source",
+      "Équiper les opérateurs en EPI adaptés (gants, masques, lunettes)",
+      "Former les salariés à la manipulation des produits chimiques"
+    ]
+  },
+  {
+    "risk_id": "R-MACHINE",
+    "tasks": [
+      "Vérifier la présence et l'état de tous les protecteurs de machines",
+      "Rédiger et afficher les procédures de consignation/déconsignation",
+      "Former les opérateurs aux règles de sécurité machines",
+      "Planifier la maintenance préventive des équipements",
+      "Contrôler les dispositifs d'arrêt d'urgence"
+    ]
+  },
+  {
+    "risk_id": "R-CHUTE-HAUTEUR",
+    "tasks": [
+      "Vérifier la conformité des garde-corps et protections collectives",
+      "Inspecter les équipements de travail en hauteur (EPI, échafaudages, nacelles)",
+      "Former les salariés au travail en hauteur",
+      "Élaborer un plan de prévention spécifique",
+      "Contrôler les ancrages et lignes de vie"
+    ]
+  },
+  {
+    "risk_id": "R-GLISSADES",
+    "tasks": [
+      "Identifier et traiter toutes les zones glissantes",
+      "Remplacer ou traiter les revêtements de sol défectueux",
+      "Mettre en place une signalétique 'sol mouillé'",
+      "Vérifier les chaussures de sécurité antidérapantes",
+      "Nettoyer régulièrement les voies de circulation"
+    ]
+  },
+  {
+    "risk_id": "R-MANUTENTION",
+    "tasks": [
+      "Analyser les postes avec charges lourdes (fréquence, poids, distance)",
+      "Former les salariés aux gestes et postures",
+      "Équiper les postes en aides à la manutention (transpalettes, chariots)",
+      "Réorganiser les flux pour réduire les distances de port de charges",
+      "Planifier la rotation des postes à forte sollicitation"
+    ]
+  },
+  {
+    "risk_id": "R-BRUIT",
+    "tasks": [
+      "Réaliser une mesure de bruit par sonomètre sur les postes exposés",
+      "Identifier les sources de bruit et mettre en place un traitement acoustique",
+      "Fournir et contrôler le port des protections auditives (bouchons, casques)",
+      "Planifier un audiogramme pour les salariés exposés",
+      "Définir les zones à port obligatoire de protections auditives"
+    ]
+  },
+  {
+    "risk_id": "R-VIBRATIONS",
+    "tasks": [
+      "Identifier les engins et outils vibrants et mesurer les niveaux d'exposition",
+      "Contrôler le respect des durées d'exposition journalières",
+      "Maintenir et remplacer les équipements vieillissants",
+      "Former les opérateurs à la bonne utilisation des outils vibrants",
+      "Planifier une surveillance médicale renforcée"
+    ]
+  },
+  {
+    "risk_id": "R-TMS",
+    "tasks": [
+      "Réaliser une analyse ergonomique des postes à risque",
+      "Adapter les hauteurs de plan de travail, sièges et outils",
+      "Mettre en place la rotation des postes répétitifs",
+      "Former les salariés à la reconnaissance et prévention des TMS",
+      "Équiper les postes en aides ergonomiques (bras articulés, tapis anti-fatigue)"
+    ]
+  },
+  {
+    "risk_id": "R-BIO",
+    "tasks": [
+      "Identifier les agents biologiques présents dans l'environnement de travail",
+      "Renforcer les protocoles d'hygiène (lavage des mains, tenues dédiées)",
+      "Vérifier les vaccinations obligatoires ou recommandées",
+      "Former les salariés aux risques biologiques et aux précautions",
+      "Mettre en place des vestiaires et douches si nécessaire"
+    ]
+  },
+  {
+    "risk_id": "R-ELECTRIQUE",
+    "tasks": [
+      "Faire réaliser un bilan électrique par un électricien habilité",
+      "Vérifier la conformité des tableaux électriques et prises de terre",
+      "Former et habiliter les intervenants électriques (habilitation BR/BC)",
+      "Mettre à jour le registre des vérifications électriques périodiques",
+      "Remplacer les câbles et équipements défectueux"
+    ]
+  },
+  {
+    "risk_id": "R-ROUTIER",
+    "tasks": [
+      "Rédiger ou mettre à jour le plan de déplacements professionnels",
+      "Former les conducteurs à l'éco-conduite et à la vigilance",
+      "Instaurer une règle zéro téléphone au volant",
+      "Contrôler l'état des véhicules (carnet d'entretien à jour)",
+      "Planifier des pauses sur les longs trajets"
+    ]
+  },
+  {
+    "risk_id": "R-ECRAN",
+    "tasks": [
+      "Réaliser un diagnostic ergonomique des postes écran",
+      "Ajuster moniteurs, claviers et sièges selon les normes ergonomiques",
+      "Sensibiliser aux pauses visuelles (règle 20-20-20)",
+      "Planifier une visite ophtalmologique pour les utilisateurs intensifs",
+      "Réduire la lumière bleue (filtres, réglage des écrans)"
+    ]
+  },
+  {
+    "risk_id": "R-NIGHT",
+    "tasks": [
+      "Établir un calendrier des rotations limitant les nuits consécutives",
+      "Mettre en place un suivi médical renforcé (surveillance du sommeil)",
+      "Informer les salariés sur l'hygiène du sommeil",
+      "Organiser des temps de récupération adaptés après les nuits",
+      "Aménager une salle de repos avec lumière tamisée"
+    ]
+  },
+  {
+    "risk_id": "R-QUALITEAIR",
+    "tasks": [
+      "Mesurer les polluants intérieurs (CO2, COV, formaldéhyde, humidité)",
+      "Vérifier et entretenir la VMC et les systèmes de ventilation",
+      "Limiter les sources d'émission (mobilier, peintures, produits ménagers)",
+      "Aérer régulièrement les locaux (10 min matin et midi)",
+      "Remplacer les filtres de climatisation et ventilation"
+    ]
+  },
+  {
+    "risk_id": "R-POUSSIERES-BOIS",
+    "tasks": [
+      "Installer ou contrôler l'aspiration à la source sur les machines bois",
+      "Vérifier le port du masque P3 par les opérateurs",
+      "Contrôler la concentration en poussières de bois (limite : 1 mg/m³)",
+      "Planifier une surveillance médicale spécifique (cancer des sinus)",
+      "Entretenir et vider régulièrement les systèmes d'aspiration"
+    ]
+  },
+  {
+    "risk_id": "R-SILICE",
+    "tasks": [
+      "Mesurer la concentration en silice cristalline sur les postes",
+      "Mettre en place une humidification ou aspiration à la source",
+      "Fournir des masques respiratoires FFP3 ou P3",
+      "Déclarer les salariés au régime de surveillance médicale renforcée",
+      "Former les salariés aux risques de silicose"
+    ]
+  },
+  {
+    "risk_id": "R-CMR",
+    "tasks": [
+      "Mettre à jour l'inventaire des produits CMR avec les FDS",
+      "Évaluer les possibilités de substitution par des produits moins dangereux",
+      "Mettre en place le confinement et la ventilation adaptée",
+      "Tenir le registre d'exposition individuelle",
+      "Organiser le suivi médical renforcé et post-professionnel"
+    ]
+  },
+  {
+    "risk_id": "R-TRAVAUX-PUB",
+    "tasks": [
+      "Effectuer les DICT avant tout terrassement",
+      "Mettre en place le balisage et la signalisation de chantier",
+      "Rédiger le plan de prévention avec les sous-traitants",
+      "Vérifier les EPI des intervenants",
+      "Organiser un briefing sécurité avant démarrage"
+    ]
+  }
+]

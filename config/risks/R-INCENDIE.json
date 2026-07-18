@@ -2,7 +2,7 @@
   "id": "R-INCENDIE",
   "name": "Incendie / explosion",
   "category": "Accident majeur",
-  "description": "Sources dâ€™ignition, stockages, gaz.",
+  "description": "Sources d'ignition, stockages, gaz.",
   "units": [
     "Cuisine",
     "Entrepôt"
@@ -13,8 +13,7 @@
   ],
   "factors": [],
   "sources": [
-    "INRS",
-    "CARSAT",
-    "EU-OSHA"
-  ]
+    "INRS ED 4702 — Incendie et explosion sur le lieu de travail"
+  ],
+  "sources_verified": "2026-07-19"
 }
