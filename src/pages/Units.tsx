@@ -268,11 +268,18 @@ export const Units = () => {
         <div className="space-y-3">
           {establishments.map((e) => (
             <div key={e.id} className="rounded-xl border border-slate/10 bg-white p-4 shadow-sm">
+              {/* Alerte NAF manquant */}
+              {!e.codeNaf && (
+                <div className="mb-2 flex items-center gap-2 rounded-lg border border-amber-200 bg-amber-50 px-3 py-1.5 text-xs text-amber-700">
+                  <span>⚠</span>
+                  <span>Code NAF manquant — renseignez-le pour améliorer la pertinence de l'analyse des risques.</span>
+                </div>
+              )}
               <div className="flex items-center justify-between gap-3">
                 <div className="space-y-1">
                   <p className="text-base font-semibold text-slate">{e.name}</p>
-                  <p className="text-sm text-slate/60">{e.address || "Adresse a completer"}</p>
-                  <p className="text-xs text-slate/60">{e.codeNaf ? `NAF ${e.codeNaf}` : "NAF a renseigner"}</p>
+                  <p className="text-sm text-slate/60">{e.address || "Adresse à compléter"}</p>
+                  <p className="text-xs text-slate/60">{e.codeNaf ? `NAF ${e.codeNaf}` : <span className="text-amber-600 font-medium">NAF à renseigner</span>}</p>
                 </div>
                 <div className="flex flex-col items-end gap-2 text-right">
                   <span className="pill bg-ocean/10 text-ocean-700">{e.sector || "Secteur"}</span>

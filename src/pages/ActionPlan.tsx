@@ -4,6 +4,7 @@ import { usePlan } from "../hooks/usePlan";
 import { Card } from "../components/Card";
 import { PriorityBadge } from "../components/Badge";
 import actionsCatalog from "../../config/actions.catalog.json";
+import tasksCatalog from "../../config/tasks.catalog.json";
 import { useDuerpStore } from "../state/store";
 import type { ActionStatus, Priority, Assessment, WorkUnit, ActionItem } from "../types";
 
@@ -39,6 +40,10 @@ export const ActionPlan = () => {
   const [unitTab, setUnitTab] = useState<string>("all");
   const [viewMode, setViewMode] = useState<"unit" | "owner">("unit");
   const [expanded, setExpanded] = useState<string | null>(null);
+  const [newStepText, setNewStepText] = useState<Record<string, string>>({});
+  const [localDates, setLocalDates] = useState<Record<string, { start?: string; end?: string }>>({});
+  const getLocalDate = (id: string, field: "start" | "end", fallback?: string) =>
+    localDates[id]?.[field] ?? (fallback ? fallback.slice(0, 10) : "");
   const [form, setForm] = useState({
     title: "",
     description: "",
@@ -138,6 +143,16 @@ export const ActionPlan = () => {
     "tms": "r-tms",
     "risques psychosociaux": "r-rps",
     "risques psychosociaux rps": "r-rps",
+    // Sous-risques RPS
+    "charge mentale": "r-rps",
+    "conflits tensions": "r-rps",
+    "conflits et tensions": "r-rps",
+    "violence externe": "r-rps",
+    "organisation du travail": "r-rps",
+    "equilibre vie pro perso": "r-rps",
+    "harcelement": "r-rps",
+    "stress": "r-rps",
+    "burn out": "r-rps",
     "travail sur ecran": "r-ecran",
     "horaires atypiques travail de nuit": "r-night",
     "travail de nuit equipes alternantes": "r-night",
@@ -147,18 +162,54 @@ export const ActionPlan = () => {
     "agents chimiques dangereux": "r-chimique",
     "biologique": "r-bio",
     "glissades": "r-glissades",
-    "travail de nuit": "r-night"
+    "travail de nuit": "r-night",
+    "qualite de l air interieur": "r-qualiteair",
+    "qualite de l air": "r-qualiteair",
   };
 
   const categoryToRiskId: Record<string, string> = {
     "manutention manuelle": "r-manutention",
     "ergonomie": "r-tms",
     "organisation": "r-rps",
+    "organisationnel": "r-rps",
     "travail sur ecran": "r-ecran",
     "bruit": "r-bruit",
     "vibrations": "r-vibrations",
     "risques psychosociaux": "r-rps",
     "travail de nuit": "r-night",
+    "physique": "r-tms",
+    "accidentel": "r-chute-hauteur",
+    "chimique": "r-chimique",
+    "biologique": "r-bio",
+    "environnemental": "r-qualiteair",
+  };
+
+  const tasksByRiskId = useMemo(() => {
+    const map = new Map<string, string[]>();
+    (tasksCatalog as { risk_id: string; tasks: string[] }[]).forEach((entry) => {
+      map.set(normalize(entry.risk_id), entry.tasks);
+    });
+    return map;
+  }, []);
+
+  const getTasksForAssessment = (assessment?: Assessment): string[] => {
+    if (!assessment) return [];
+    const riskId = normalize(assessment.hazardId || "");
+    const riskLabel = normalize(assessment.riskLabel || "");
+    const riskCategory = normalize(assessment.hazardCategory || "");
+
+    const byId = riskId ? tasksByRiskId.get(riskId) : undefined;
+    if (byId?.length) return byId;
+
+    const aliasId = labelToRiskId[riskLabel];
+    const byAlias = aliasId ? tasksByRiskId.get(normalize(aliasId)) : undefined;
+    if (byAlias?.length) return byAlias;
+
+    const catId = categoryToRiskId[riskCategory];
+    const byCat = catId ? tasksByRiskId.get(normalize(catId)) : undefined;
+    if (byCat?.length) return byCat;
+
+    return [];
   };
 
   const getCatalogForAssessment = (assessment?: Assessment) => {
@@ -294,7 +345,15 @@ export const ActionPlan = () => {
     const catalog = getCatalogForAssessment(linked);
     const catalogTitle = catalog?.[0]?.title;
 
-    if (generic && catalogTitle) return catalogTitle;
+    if (generic && catalogTitle) {
+      // Si le titre catalogue est générique (ne contient pas le label du risque), on précise
+      const catalogNorm = normalize(catalogTitle);
+      const riskNorm = normalize(linked.riskLabel);
+      if (!catalogNorm.includes(riskNorm) && !riskNorm.includes(catalogNorm)) {
+        return `${catalogTitle} — ${linked.riskLabel}`;
+      }
+      return catalogTitle;
+    }
     if (generic) return `Mettre en œuvre les mesures pour ${linked.riskLabel}`;
     return base || "Définir une action";
   };
@@ -454,8 +513,24 @@ export const ActionPlan = () => {
         {/* Vue par responsable */}
         {viewMode === "owner" && (
           <div className="space-y-4">
-            {groupedByOwner.length === 0 && (
+            {groupedByOwner.length === 0 && actions.length === 0 && (
+              <div className="rounded-2xl border-2 border-dashed border-slate/20 px-6 py-8 text-center">
+                <p className="text-3xl mb-2">📋</p>
+                <p className="font-semibold text-ink text-base mb-1">Aucune action générée</p>
+                <p className="text-sm text-slate/60 mb-4">Commencez par renseigner l'inventaire des risques, puis les actions seront générées automatiquement.</p>
+                <a href="/inventaire" className="inline-block rounded-xl bg-kairos px-4 py-2 text-sm font-semibold text-white hover:bg-[#4a50e0] transition">
+                  Aller à l'inventaire →
+                </a>
+              </div>
+            )}
+            {groupedByOwner.length === 0 && actions.length > 0 && (
               <p className="text-sm text-slate/70">Aucune action pour ce filtre.</p>
+            )}
+            {groupedByOwner.length > 0 && groupedByOwner.every(g => g.owner === "À affecter") && (
+              <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800 flex items-start gap-2">
+                <span className="text-lg shrink-0">⚠</span>
+                <p>Toutes les actions sont non affectées. Ouvrez chaque action (▼ tâches) et renseignez le champ <strong>Qui ?</strong> pour les assigner à un responsable.</p>
+              </div>
             )}
             {groupedByOwner.map(({ owner, items }) => {
               const done = items.filter(a => a.status === "DONE").length;
@@ -497,39 +572,135 @@ export const ActionPlan = () => {
                         const statusLabels: Record<string, string> = {
                           TO_DO: "À faire", IN_PROGRESS: "En cours", LATE: "En retard", DONE: "Terminé",
                         };
+                        const steps = a.steps || [];
+                        const stepsDone = steps.filter(s => s.done).length;
+                        const isExpanded = expanded === a.id;
                         return (
-                          <div key={a.id} className="flex items-start gap-3 rounded-xl border border-slate/10 bg-slate/3 p-3">
-                            <PriorityBadge priority={a.priority} />
-                            <div className="flex-1 min-w-0">
-                              <p className="font-medium text-sm text-slate truncate">{formatActionTitle(a.title, linked)}</p>
-                              <div className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-slate/60">
-                                {linked && <span>🎯 {linked.riskLabel}</span>}
-                                {unit && <span>🏢 {unit.name}</span>}
-                                {(a.dueDate || a.endDate) && (
-                                  <span className={a.status !== "DONE" && new Date(a.dueDate || a.endDate!) < new Date() ? "text-red-500 font-medium" : ""}>
-                                    📅 {new Date(a.dueDate || a.endDate!).toLocaleDateString("fr-FR")}
-                                  </span>
-                                )}
+                          <div key={a.id} className="rounded-xl border border-slate/10 bg-slate/3 p-3">
+                            {/* Action header row */}
+                            <div className="flex items-start gap-3">
+                              <PriorityBadge priority={a.priority} />
+                              <div className="flex-1 min-w-0">
+                                <p className="font-medium text-sm text-slate">{formatActionTitle(a.title, linked)}</p>
+                                <div className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-slate/60">
+                                  {linked && <span>🎯 {linked.riskLabel}</span>}
+                                  {unit && <span>🏢 {unit.name}</span>}
+                                  {(a.dueDate || a.endDate) && (
+                                    <span className={a.status !== "DONE" && new Date(a.dueDate || a.endDate!) < new Date() ? "text-red-500 font-medium" : ""}>
+                                      📅 {new Date(a.dueDate || a.endDate!).toLocaleDateString("fr-FR")}
+                                    </span>
+                                  )}
+                                  {steps.length > 0 && (
+                                    <span className="text-slate/50">{stepsDone}/{steps.length} tâches</span>
+                                  )}
+                                </div>
+                              </div>
+                              <div className="flex items-center gap-2 shrink-0">
+                                <select
+                                  className={`rounded-lg border-0 px-2 py-1 text-xs font-medium ${statusColors[a.status] || "bg-slate/10"}`}
+                                  value={a.status}
+                                  onChange={(e) => updateActionStatus(a.id, e.target.value as ActionStatus)}
+                                >
+                                  {STATUSES.map((s) => (
+                                    <option key={s} value={s}>{statusLabels[s]}</option>
+                                  ))}
+                                </select>
+                                <button
+                                  className="text-xs text-ocean/70 hover:text-ocean px-1"
+                                  onClick={() => setExpanded(isExpanded ? null : a.id)}
+                                  title="Tâches"
+                                >
+                                  {isExpanded ? "▲" : "▼"} tâches
+                                </button>
+                                <button
+                                  className="text-xs text-red-400 hover:text-red-600"
+                                  onClick={() => { if (window.confirm(`Supprimer cette action ?`)) removeAction(a.id); }}
+                                  title="Supprimer"
+                                >
+                                  ✕
+                                </button>
                               </div>
                             </div>
-                            <div className="flex items-center gap-2 shrink-0">
-                              <select
-                                className={`rounded-lg border-0 px-2 py-1 text-xs font-medium ${statusColors[a.status] || "bg-slate/10"}`}
-                                value={a.status}
-                                onChange={(e) => updateActionStatus(a.id, e.target.value as ActionStatus)}
-                              >
-                                {STATUSES.map((s) => (
-                                  <option key={s} value={s}>{statusLabels[s]}</option>
+
+                            {/* Steps panel */}
+                            {isExpanded && (
+                              <div className="mt-3 space-y-1.5 border-t border-slate/10 pt-3">
+                                {steps.length === 0 && (
+                                  <p className="text-xs text-slate/40 italic mb-1">Aucune tâche. Ajoutez-en ci-dessous.</p>
+                                )}
+                                {steps.map((step) => (
+                                  <div key={step.id} className="flex items-center gap-2">
+                                    <input
+                                      type="checkbox"
+                                      checked={step.done}
+                                      onChange={() => toggleActionStep(a.id, step.id)}
+                                      className="h-3.5 w-3.5 rounded accent-kairos cursor-pointer"
+                                    />
+                                    <span className={`flex-1 text-xs ${step.done ? "line-through text-slate/35" : "text-slate/70"}`}>
+                                      {step.label}
+                                    </span>
+                                    <button
+                                      className="text-xs text-red-300 hover:text-red-500"
+                                      onClick={() => updateAction(a.id, { steps: steps.filter(s => s.id !== step.id) })}
+                                      title="Supprimer la tâche"
+                                    >
+                                      ✕
+                                    </button>
+                                  </div>
                                 ))}
-                              </select>
-                              <button
-                                className="text-xs text-red-400 hover:text-red-600"
-                                onClick={() => { if (window.confirm(`Supprimer cette action ?`)) removeAction(a.id); }}
-                                title="Supprimer"
-                              >
-                                ✕
-                              </button>
-                            </div>
+                                {/* Tâches suggérées depuis le catalogue */}
+                                {(() => {
+                                  const suggestions = getTasksForAssessment(linked)
+                                    .filter(t => !steps.some(s => s.label === t));
+                                  if (!suggestions.length) return null;
+                                  return (
+                                    <select
+                                      className="mt-1 w-full rounded-lg border border-kairos/30 bg-kairos/5 px-2 py-1 text-xs text-kairos cursor-pointer"
+                                      value=""
+                                      onChange={(e) => {
+                                        const label = e.target.value;
+                                        if (!label) return;
+                                        updateAction(a.id, { steps: [...steps, { id: crypto.randomUUID(), label, done: false }] });
+                                      }}
+                                    >
+                                      <option value="">— Ajouter une tâche suggérée —</option>
+                                      {suggestions.map((s) => (
+                                        <option key={s} value={s}>{s}</option>
+                                      ))}
+                                    </select>
+                                  );
+                                })()}
+                                {/* Ajout libre */}
+                                <div className="flex items-center gap-1.5 mt-1.5">
+                                  <input
+                                    type="text"
+                                    className="flex-1 rounded-lg border border-slate/20 bg-white px-2 py-1 text-xs placeholder:text-slate/30"
+                                    placeholder="Nouvelle tâche libre..."
+                                    value={newStepText[a.id] || ""}
+                                    onChange={(e) => setNewStepText(prev => ({ ...prev, [a.id]: e.target.value }))}
+                                    onKeyDown={(e) => {
+                                      if (e.key === "Enter") {
+                                        const label = (newStepText[a.id] || "").trim();
+                                        if (!label) return;
+                                        updateAction(a.id, { steps: [...steps, { id: crypto.randomUUID(), label, done: false }] });
+                                        setNewStepText(prev => ({ ...prev, [a.id]: "" }));
+                                      }
+                                    }}
+                                  />
+                                  <button
+                                    className="rounded-lg bg-kairos/10 px-2 py-1 text-xs font-medium text-kairos hover:bg-kairos/20 transition"
+                                    onClick={() => {
+                                      const label = (newStepText[a.id] || "").trim();
+                                      if (!label) return;
+                                      updateAction(a.id, { steps: [...steps, { id: crypto.randomUUID(), label, done: false }] });
+                                      setNewStepText(prev => ({ ...prev, [a.id]: "" }));
+                                    }}
+                                  >
+                                    + Ajouter
+                                  </button>
+                                </div>
+                              </div>
+                            )}
                           </div>
                         );
                       })}
@@ -652,36 +823,45 @@ export const ActionPlan = () => {
                             <div className="space-y-2">
                               <p className="font-semibold text-slate">Quand ?</p>
                               <label className="block text-xs text-slate/60">
-                                Début (JJ/MM/AA)
+                                Début
                                 <input
                                   type="date"
                                   className="mt-1 w-full rounded-lg border border-slate/20 px-2 py-1 text-sm"
-                                  value={a.startDate ? a.startDate.slice(0, 10) : ""}
-                                  onChange={(e) => {
-                                    const newStart = e.target.value;
-                                    const end = a.endDate ? a.endDate.slice(0, 10) : "";
-                                    if (end && newStart > end) {
-                                      updateAction(a.id, { startDate: newStart, endDate: newStart });
-                                    } else {
-                                      updateAction(a.id, { startDate: newStart });
-                                    }
+                                  value={getLocalDate(a.id, "start", a.startDate)}
+                                  onChange={(e) => setLocalDates(prev => ({ ...prev, [a.id]: { ...prev[a.id], start: e.target.value } }))}
+                                  onBlur={(e) => {
+                                    const v = e.target.value;
+                                    if (!v || v.length < 10) return;
+                                    updateAction(a.id, { startDate: v });
                                   }}
                                 />
                               </label>
                               <label className="block text-xs text-slate/60">
-                                Fin (JJ/MM/AA)
-                                <input
-                                  type="date"
-                                  className="mt-1 w-full rounded-lg border border-slate/20 px-2 py-1 text-sm"
-                                  value={a.endDate ? a.endDate.slice(0, 10) : ""}
-                                  min={a.startDate ? a.startDate.slice(0, 10) : undefined}
-                                  onChange={(e) => {
-                                    const newEnd = e.target.value;
-                                    const start = a.startDate ? a.startDate.slice(0, 10) : "";
-                                    if (start && newEnd < start) return;
-                                    updateAction(a.id, { endDate: newEnd });
-                                  }}
-                                />
+                                Fin
+                                {(() => {
+                                  const localEnd = getLocalDate(a.id, "end", a.endDate);
+                                  const localStart = getLocalDate(a.id, "start", a.startDate);
+                                  const invalid = !!localEnd && !!localStart && localEnd < localStart;
+                                  return (
+                                    <>
+                                      <input
+                                        type="date"
+                                        className={`mt-1 w-full rounded-lg border px-2 py-1 text-sm ${invalid ? "border-red-400 bg-red-50" : "border-slate/20"}`}
+                                        value={localEnd}
+                                        min={localStart || undefined}
+                                        onChange={(e) => setLocalDates(prev => ({ ...prev, [a.id]: { ...prev[a.id], end: e.target.value } }))}
+                                        onBlur={(e) => {
+                                          const v = e.target.value;
+                                          if (!v || v.length < 10) return;
+                                          const start = getLocalDate(a.id, "start", a.startDate);
+                                          if (start && v < start) return;
+                                          updateAction(a.id, { endDate: v });
+                                        }}
+                                      />
+                                      {invalid && <p className="mt-0.5 text-xs text-red-500">La date de fin doit être ≥ à la date de début.</p>}
+                                    </>
+                                  );
+                                })()}
                               </label>
                             </div>
                             <div className="space-y-2">
@@ -715,7 +895,19 @@ export const ActionPlan = () => {
             </div>
           ))}
 
-          {filtered.length === 0 && (
+          {filtered.length === 0 && actions.length === 0 && (
+            <div className="rounded-2xl border-2 border-dashed border-slate/20 px-6 py-8 text-center">
+              <p className="text-3xl mb-2">📋</p>
+              <p className="font-semibold text-ink text-base mb-1">Aucune action générée</p>
+              <p className="text-sm text-slate/60 mb-4">
+                Les actions sont générées automatiquement depuis l'inventaire. Commencez par pré-remplir vos risques.
+              </p>
+              <a href="/inventaire" className="inline-block rounded-xl bg-kairos px-4 py-2 text-sm font-semibold text-white hover:bg-[#4a50e0] transition">
+                Aller à l'inventaire →
+              </a>
+            </div>
+          )}
+          {filtered.length === 0 && actions.length > 0 && (
             <p className="text-sm text-slate/70">Aucune action pour ce filtre.</p>
           )}
         </div>

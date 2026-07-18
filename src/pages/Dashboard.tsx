@@ -2,6 +2,7 @@ import { differenceInDays, differenceInMonths, format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { useMemo, useState, useEffect, useCallback } from 'react';
 import { useUser } from '@clerk/clerk-react';
+import { useNavigate } from 'react-router-dom';
 import { Card } from '../components/Card';
 import { PriorityBadge } from '../components/Badge';
 import { useDuerpStore } from '../state/store';
@@ -47,10 +48,19 @@ const riskPalette: Record<string, string> = {
 
 const API_BASE = import.meta.env.VITE_DUERP_API_BASE || "http://localhost:8787";
 
+const ONBOARDING_KEY = 'kaijos_welcome_dismissed';
+
 export const Dashboard = () => {
   const { assessments, actions, workUnits, versions, selectedEstablishmentId, establishments } = useDuerpStore();
   const { user } = useUser();
+  const navigate = useNavigate();
   const [reminderStatus, setReminderStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [welcomeDismissed, setWelcomeDismissed] = useState(() => !!localStorage.getItem(ONBOARDING_KEY));
+
+  const dismissWelcome = () => {
+    localStorage.setItem(ONBOARDING_KEY, '1');
+    setWelcomeDismissed(true);
+  };
 
   const currentEstablishment = establishments.find((e) => e.id === selectedEstablishmentId) || establishments[0];
 
@@ -202,8 +212,62 @@ export const Dashboard = () => {
     critical: { label: "Action requise", color: "bg-red-50 text-red-800 border-red-200", dot: "bg-red-500" },
   };
 
+  // Étapes d'onboarding
+  const hasEstablishment = establishments.length > 0;
+  const hasUnit = workUnits.length > 0;
+  const hasAssessments = assessments.length > 0;
+  const hasOwners = actions.some(a => !!a.owner);
+  const onboardingDone = hasEstablishment && hasUnit && hasAssessments && hasOwners;
+
+  const onboardingSteps = [
+    { label: "Créer un établissement", done: hasEstablishment, path: "/unites", hint: "Renseignez votre raison sociale, code NAF et adresse." },
+    { label: "Créer une unité de travail", done: hasUnit, path: "/unites", hint: "Découpez l'entreprise par atelier, équipe ou poste." },
+    { label: "Lancer l'analyse automatique", done: hasAssessments, path: "/inventaire", hint: "Cliquez sur « Pré-remplir » dans l'inventaire pour générer les risques." },
+    { label: "Valider l'inventaire des risques", done: hasAssessments && assessments.some(a => a.updatedAt !== a.createdAt), path: "/inventaire", hint: "Ajustez les scores G/F/P et supprimez les risques non pertinents." },
+    { label: "Affecter les actions à des responsables", done: hasOwners, path: "/plan", hint: "Dans « Par responsable », assignez chaque action à une personne." },
+  ];
+
   return (
     <div className="space-y-5">
+
+      {/* Bannière de bienvenue (une seule fois) */}
+      {!welcomeDismissed && (
+        <div className="relative rounded-2xl border border-kairos/20 bg-gradient-to-r from-kairos/5 to-white px-5 py-4 shadow-sm">
+          <button onClick={dismissWelcome} className="absolute right-3 top-3 text-slate/40 hover:text-slate/70 text-lg leading-none">✕</button>
+          <p className="font-bold text-ink text-base mb-1">Bienvenue sur Kaijos 👋</p>
+          <p className="text-sm text-slate/70">
+            Kaijos vous accompagne dans la réalisation de votre Document Unique d'Évaluation des Risques Professionnels (DUERP).
+            Suivez les étapes ci-dessous pour démarrer en 5 minutes.
+          </p>
+        </div>
+      )}
+
+      {/* Stepper d'onboarding */}
+      {!onboardingDone && (
+        <div className="rounded-2xl border border-slate/10 bg-white px-5 py-4 shadow-sm">
+          <p className="text-sm font-semibold text-ink mb-3">Démarrage — {onboardingSteps.filter(s => s.done).length}/{onboardingSteps.length} étapes complètes</p>
+          <div className="space-y-2">
+            {onboardingSteps.map((step, i) => (
+              <div
+                key={i}
+                className={`flex items-start gap-3 rounded-xl px-3 py-2.5 transition cursor-pointer ${step.done ? 'bg-lime/5 border border-lime/20' : 'bg-slate/3 border border-slate/10 hover:border-kairos/30 hover:bg-kairos/5'}`}
+                onClick={() => !step.done && navigate(step.path)}
+              >
+                <span className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-xs font-bold ${step.done ? 'bg-lime/20 text-lime-700' : 'bg-slate/10 text-slate/50'}`}>
+                  {step.done ? '✓' : i + 1}
+                </span>
+                <div className="flex-1 min-w-0">
+                  <p className={`text-sm font-medium ${step.done ? 'line-through text-slate/40' : 'text-slate'}`}>{step.label}</p>
+                  {!step.done && <p className="text-xs text-slate/50 mt-0.5">{step.hint}</p>}
+                </div>
+                {!step.done && (
+                  <span className="text-xs text-kairos font-semibold shrink-0">→ Aller</span>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Widget dirigeant */}
       {assessments.length > 0 && (
