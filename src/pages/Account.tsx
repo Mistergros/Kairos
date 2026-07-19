@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { useDuerpStore } from "../state/store";
+import { PLAN_CONFIG, type PlanId } from "../hooks/usePlan";
+import { apiGet, apiPost } from "../utils/apiClient";
 
 const API_BASE = import.meta.env.VITE_DUERP_API_BASE || "http://localhost:8787";
 
@@ -23,8 +25,7 @@ export default function AccountPage() {
 
   useEffect(() => {
     if (!user?.id) return;
-    fetch(`${API_BASE}/api/invites?clerkUserId=${user.id}`)
-      .then((r) => r.json())
+    apiGet<{ invites: Invite[] }>("/api/invites")
       .then((d) => setInvites(d.invites || []))
       .catch(() => null);
   }, [user?.id]);
@@ -34,27 +35,18 @@ export default function AccountPage() {
     setInviteLoading(true);
     setInviteMsg(null);
     try {
-      const res = await fetch(`${API_BASE}/api/invites`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ownerClerkId: user.id,
-          ownerName: user.fullName || user.primaryEmailAddress?.emailAddress,
-          email: inviteEmail.trim(),
-          role: inviteRole,
-          establishmentName: currentEstablishment?.name || "",
-        }),
+      await apiPost("/api/invites", {
+        ownerName: user.fullName || user.primaryEmailAddress?.emailAddress,
+        email: inviteEmail.trim(),
+        role: inviteRole,
+        establishmentName: currentEstablishment?.name || "",
       });
-      if (res.ok) {
-        setInviteMsg({ ok: true, text: "Invitation envoyée." });
-        setInviteEmail("");
-        const updated = await fetch(`${API_BASE}/api/invites?clerkUserId=${user.id}`).then((r) => r.json()).catch(() => ({ invites: [] }));
-        setInvites(updated.invites || []);
-      } else {
-        setInviteMsg({ ok: false, text: "Erreur lors de l'envoi." });
-      }
+      setInviteMsg({ ok: true, text: "Invitation envoyée." });
+      setInviteEmail("");
+      const updated = await apiGet<{ invites: Invite[] }>("/api/invites").catch(() => ({ invites: [] }));
+      setInvites(updated.invites || []);
     } catch {
-      setInviteMsg({ ok: false, text: "Erreur réseau." });
+      setInviteMsg({ ok: false, text: "Erreur lors de l'envoi." });
     } finally {
       setInviteLoading(false);
     }
@@ -62,16 +54,13 @@ export default function AccountPage() {
 
   const revokeInvite = async (email: string) => {
     if (!user?.id) return;
-    await fetch(`${API_BASE}/api/invites/revoke`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ownerClerkId: user.id, email }),
-    }).catch(() => null);
+    await apiPost("/api/invites/revoke", { email }).catch(() => null);
     setInvites((prev) => prev.filter((i) => i.invitee_email !== email));
   };
 
   const status = String((user?.publicMetadata as any)?.subscriptionStatus || "inactive");
-  const planId = String((user?.publicMetadata as any)?.planId || "essential");
+  const rawPlanId = (user?.publicMetadata as any)?.planId as string | undefined;
+  const planLabel = rawPlanId && rawPlanId in PLAN_CONFIG ? PLAN_CONFIG[rawPlanId as PlanId].label : null;
   const customerId = String((user?.publicMetadata as any)?.stripeCustomerId || "");
   const portalAvailable = Boolean(customerId);
 
@@ -116,8 +105,8 @@ export default function AccountPage() {
         <div className="mt-8 grid gap-6 md:grid-cols-2">
           <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6">
             <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Abonnement</p>
-            <div className="mt-4 text-lg font-semibold">Plan {planId}</div>
-            <div className="mt-2 text-sm text-slate-600">Statut: {status}</div>
+            <div className="mt-4 text-lg font-semibold">{planLabel ? `Plan ${planLabel}` : "Aucun abonnement actif"}</div>
+            {planLabel && <div className="mt-2 text-sm text-slate-600">Statut : {status === "active" ? "Actif" : status === "canceled" ? "Résilié" : status === "past_due" ? "Paiement en retard" : status}</div>}
             {customerId && <div className="mt-2 text-xs text-slate-400">Client Stripe: {customerId}</div>}
           </div>
 

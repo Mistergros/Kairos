@@ -9,6 +9,7 @@ export function dbToVersion(row: any): VersionEntry {
     reason: row.reason,
     hash: row.hash,
     createdAt: row.created_at,
+    snapshot: row.snapshot || undefined,
   };
 }
 

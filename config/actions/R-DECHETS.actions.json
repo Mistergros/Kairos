@@ -8,7 +8,16 @@
     "impact": "Réduction de l'exposition des agents de collecte aux déchets dangereux (produits chimiques, déchets biologiques). Conformité réglementaire. Réduction des coûts d'élimination par optimisation des filières.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "references": ["Code de l'environnement R.541-1", "Arrêté BSDD", "INRS ED 6029"]
+    "references": [
+      "Code de l'environnement R.541-1",
+      "Arrêté BSDD",
+      "INRS ED 6029"
+    ],
+    "referenceUrls": [
+      "",
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6029"
+    ]
   },
   {
     "id": "A-R-DECHETS-002",
@@ -19,8 +28,22 @@
     "impact": "Réduction des nuisances olfactives et microbiologiques. Prévention des expositions chimiques lors du stockage. Conformité aux arrêtés préfectoraux (ICPE si applicable).",
     "difficulty": "Moyenne",
     "cost": "Moyen",
-    "naf_specific": ["38", "56", "86", "10"],
-    "references": ["Code de l'environnement L.541-2", "INRS ED 6029", "Arrêté ICPE rubrique 2710"]
+    "naf_specific": [
+      "38",
+      "56",
+      "86",
+      "10"
+    ],
+    "references": [
+      "Code de l'environnement L.541-2",
+      "INRS ED 6029",
+      "Arrêté ICPE rubrique 2710"
+    ],
+    "referenceUrls": [
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6029",
+      ""
+    ]
   },
   {
     "id": "A-R-DECHETS-003",
@@ -31,7 +54,16 @@
     "impact": "Protection individuelle contre les expositions chimiques et biologiques lors de la manipulation des déchets. Réduction des contaminations cutanées et des ingestions accidentelles.",
     "difficulty": "Faible",
     "cost": "Moyen",
-    "references": ["INRS ED 112", "EN 374", "Code de la santé publique R.1335-8"]
+    "references": [
+      "INRS ED 112",
+      "EN 374",
+      "Code de la santé publique R.1335-8"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+112",
+      "",
+      ""
+    ]
   },
   {
     "id": "A-R-DECHETS-004",
@@ -42,6 +74,13 @@
     "impact": "Personnel compétent réduisant les erreurs de tri et de manipulation. Réduction des incidents liés à une mauvaise gestion des déchets. Conformité réglementaire documentée.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "references": ["INRS ED 6029", "ADEME guide déchets entreprises"]
+    "references": [
+      "INRS ED 6029",
+      "ADEME guide déchets entreprises"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6029",
+      ""
+    ]
   }
 ]

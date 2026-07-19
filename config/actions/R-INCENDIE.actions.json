@@ -8,7 +8,16 @@
     "impact": "Garantie de l'opérabilité des moyens de lutte contre l'incendie. Conformité ERP/ERT. Réduction du risque de propagation en cas de départ de feu.",
     "difficulty": "Faible",
     "cost": "Moyen",
-    "references": ["Code du travail R.4227-1", "Arrêté 25/06/1980 ERP", "NF S 61-919"]
+    "references": [
+      "Code du travail R.4227-1",
+      "Arrêté 25/06/1980 ERP",
+      "NF S 61-919"
+    ],
+    "referenceUrls": [
+      "",
+      "",
+      ""
+    ]
   },
   {
     "id": "A-R-INCENDIE-002",
@@ -19,7 +28,14 @@
     "impact": "Réduction du temps d'évacuation. Personnel capable de réagir correctement en cas de départ de feu. Réduction de la panique et des comportements dangereux. Conformité réglementaire.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "references": ["Code du travail R.4227-28 à R.4227-40", "INRS ED 970"]
+    "references": [
+      "Code du travail R.4227-28 à R.4227-40",
+      "INRS ED 970"
+    ],
+    "referenceUrls": [
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+970"
+    ]
   },
   {
     "id": "A-R-INCENDIE-003",
@@ -30,7 +46,14 @@
     "impact": "Maîtrise des feux naissants dans 80% des cas avec un extincteur adapté. Évacuation organisée. Réduction des pertes humaines et matérielles. Personnel acteur de sa sécurité.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "references": ["INRS ED 6054", "CNPP guide EPI/ESI"]
+    "references": [
+      "INRS ED 6054",
+      "CNPP guide EPI/ESI"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6054",
+      ""
+    ]
   },
   {
     "id": "A-R-INCENDIE-004",
@@ -41,7 +64,22 @@
     "impact": "Élimination des sources d'inflammation à proximité des matières combustibles. Le permis de feu réduit de 60% les départs d'incendie liés aux travaux par points chauds.",
     "difficulty": "Moyenne",
     "cost": "Faible",
-    "naf_specific": ["10", "20", "24", "41", "45"],
-    "references": ["INRS ED 6030", "EN 14470-1", "Code du travail R.4462-1"]
+    "naf_specific": [
+      "10",
+      "20",
+      "24",
+      "41",
+      "45"
+    ],
+    "references": [
+      "INRS ED 6030",
+      "EN 14470-1",
+      "Code du travail R.4462-1"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6030",
+      "",
+      ""
+    ]
   }
 ]

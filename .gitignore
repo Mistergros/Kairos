@@ -8,3 +8,5 @@ tsconfig.node.tsbuildinfo
 npm-debug.log*
 yarn.lock
 pnpm-lock.yaml
+*.backup
+Pasted Image*

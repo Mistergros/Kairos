@@ -8,8 +8,23 @@
     "impact": "Garantie que les machines présentent un niveau de sécurité minimal. Engagement de la responsabilité du fabricant. Réduction des risques de blessures par les parties mobiles.",
     "difficulty": "Faible",
     "cost": "Moyen",
-    "naf_specific": ["10", "13", "24", "25", "28"],
-    "references": ["Directive 2006/42/CE", "INRS ED 6122", "Code du travail R.4313-1"]
+    "naf_specific": [
+      "10",
+      "13",
+      "24",
+      "25",
+      "28"
+    ],
+    "references": [
+      "Directive 2006/42/CE",
+      "INRS ED 6122",
+      "Code du travail R.4313-1"
+    ],
+    "referenceUrls": [
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6122",
+      ""
+    ]
   },
   {
     "id": "A-R-MACHINE-002",
@@ -20,7 +35,16 @@
     "impact": "Suppression de l'accès aux parties dangereuses en marche. Prévention des écrasements, coupures et emportements. Mesure de protection collective conforme à la norme EN ISO 13857.",
     "difficulty": "Moyenne",
     "cost": "Moyen",
-    "references": ["EN ISO 12100", "EN ISO 13857", "INRS ED 807"]
+    "references": [
+      "EN ISO 12100",
+      "EN ISO 13857",
+      "INRS ED 807"
+    ],
+    "referenceUrls": [
+      "",
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+807"
+    ]
   },
   {
     "id": "A-R-MACHINE-003",
@@ -31,7 +55,14 @@
     "impact": "Seuls les opérateurs formés et habilités utilisent les machines. Réduction des comportements à risque. Engagement de la responsabilité de l'opérateur documenté.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "references": ["INRS ED 6124", "Code du travail R.4323-55"]
+    "references": [
+      "INRS ED 6124",
+      "Code du travail R.4323-55"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6124",
+      ""
+    ]
   },
   {
     "id": "A-R-MACHINE-004",
@@ -42,7 +73,21 @@
     "impact": "Réduction des pannes et dysfonctionnements de sécurité. Traçabilité complète. Prolongation de la durée de vie des équipements. Prévention des accidents liés aux défaillances mécaniques.",
     "difficulty": "Moyenne",
     "cost": "Moyen",
-    "naf_specific": ["10", "24", "25", "28"],
-    "references": ["INRS ED 6109", "NF EN 13460", "Code du travail R.4323-22"]
+    "naf_specific": [
+      "10",
+      "24",
+      "25",
+      "28"
+    ],
+    "references": [
+      "INRS ED 6109",
+      "NF EN 13460",
+      "Code du travail R.4323-22"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6109",
+      "",
+      ""
+    ]
   }
 ]

@@ -8,7 +8,16 @@
     "impact": "Connaissance complète des risques chimiques présents. Base indispensable pour les mesures de prévention. Conformité réglementaire (document unique et FDS accessibles).",
     "difficulty": "Faible",
     "cost": "Faible",
-    "references": ["INRS ED 697", "Règlement CLP (CE) 1272/2008", "Code du travail R.4412-38"]
+    "references": [
+      "INRS ED 6483 — La fiche de données de sécurité",
+      "Règlement CLP (CE) 1272/2008",
+      "Code du travail R.4412-38"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6483",
+      "",
+      ""
+    ]
   },
   {
     "id": "A-R-CHIMIQUE-002",
@@ -19,8 +28,21 @@
     "impact": "Élimination du risque chimique à la source. Prévention des maladies professionnelles (cancers, atteintes respiratoires, cutanées). ROI via réduction des coûts de gestion des déchets dangereux.",
     "difficulty": "Élevée",
     "cost": "Moyen",
-    "naf_specific": ["20", "22", "24", "28", "45"],
-    "references": ["INRS ED 6004", "Code du travail R.4412-66"]
+    "naf_specific": [
+      "20",
+      "22",
+      "24",
+      "28",
+      "45"
+    ],
+    "references": [
+      "INRS ED 6004",
+      "Code du travail R.4412-66"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6004",
+      ""
+    ]
   },
   {
     "id": "A-R-CHIMIQUE-003",
@@ -31,8 +53,24 @@
     "impact": "Maintien des concentrations en dessous des VLE. Protection des voies respiratoires sans EPI contraignant. Réduction des risques d'explosion pour les solvants inflammables.",
     "difficulty": "Faible",
     "cost": "Élevé",
-    "naf_specific": ["20", "22", "24", "28", "30", "47"],
-    "references": ["INRS ED 695", "INRS ED 6008", "Code du travail R.4222-1"]
+    "naf_specific": [
+      "20",
+      "22",
+      "24",
+      "28",
+      "30",
+      "47"
+    ],
+    "references": [
+      "INRS ED 695",
+      "INRS ED 6008",
+      "Code du travail R.4222-1"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+695",
+      "https://www.inrs.fr/media.html?refINRS=ED+6008",
+      ""
+    ]
   },
   {
     "id": "A-R-CHIMIQUE-004",
@@ -43,6 +81,13 @@
     "impact": "Protection individuelle efficace contre les expositions résiduelles. Réduction des dermites professionnelles et des irritations respiratoires.",
     "difficulty": "Faible",
     "cost": "Moyen",
-    "references": ["INRS ED 112", "Normes EN 374 / EN 166 / EN 149"]
+    "references": [
+      "INRS ED 112",
+      "Normes EN 374 / EN 166 / EN 149"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+112",
+      ""
+    ]
   }
 ]

@@ -138,7 +138,7 @@ const handleStripeCheckoutCompleted = async (session: Stripe.Checkout.Session) =
   if (customerId) {
     await setStripeCustomerClerkId(customerId, clerkUserId);
   }
-  const planId = (session.metadata?.planId as string | undefined) || (session.metadata?.plan as string | undefined) || "pro";
+  const planId = (session.metadata?.planId as string | undefined) || (session.metadata?.plan as string | undefined) || "starter";
   const patch: Record<string, any> = {
     subscriptionStatus: "active",
     planId,
@@ -226,45 +226,6 @@ const handleStripeEvent = async (event: Stripe.Event) => {
   }
 };
 
-const getRisks = async () => {
-  const res = await query(
-    `SELECT id, family, name, description, default_severity, default_frequency, default_mastery FROM risk ORDER BY name`
-  );
-  return res.rows;
-};
-
-const getActions = async () => {
-  const res = await query(`SELECT id, type, label, details FROM action ORDER BY label`);
-  return res.rows;
-};
-
-const getObligations = async () => {
-  const res = await query(`SELECT id, source, title, reference, summary FROM obligation ORDER BY source, title`);
-  return res.rows;
-};
-
-const getNafs = async (q?: string) => {
-  if (q) {
-    return (
-      await query(
-        `SELECT code, label, risk_tags FROM naf WHERE code ILIKE $1 OR label ILIKE $1 ORDER BY code LIMIT 100`,
-        [`%${q}%`]
-      )
-    ).rows;
-  }
-  return (await query(`SELECT code, label, risk_tags FROM naf ORDER BY code LIMIT 200`)).rows;
-};
-
-const getNafDetail = async (code: string) => {
-  const naf = await query(`SELECT code, label, risk_tags FROM naf WHERE code = $1`, [code]);
-  if (naf.rowCount === 0) return null;
-  const unitTemplates = await query(
-    `SELECT id, name, description, default_risk_ids, suggested FROM unit_template WHERE naf_code = $1 ORDER BY suggested DESC, name ASC`,
-    [code]
-  );
-  return { ...naf.rows[0], unit_templates: unitTemplates.rows };
-};
-
 // --- App data (establishments/work_units/assessments/actions/versions) ---
 // Consolidated onto Neon, scoped by the real Clerk user id (orgId), replacing
 // the old company_unit/unit_risk_assessment/corrective_action routes (dead:
@@ -321,7 +282,7 @@ const deleteWorkUnitDb = async (orgId: string, id: string) => {
 const listAssessmentsDb = async (orgId: string) => {
   const res = await query(
     `SELECT id, work_unit_id, hazard_id, hazard_category, risk_label, damages, existing_measures, proposed_measures,
-            gravity, frequency, control, score, priority, created_at, updated_at
+            gravity, frequency, control, score, priority, created_at, updated_at, source, source_url
      FROM assessments WHERE org_id=$1 ORDER BY created_at`,
     [orgId]
   );
@@ -330,18 +291,19 @@ const listAssessmentsDb = async (orgId: string) => {
 const upsertAssessmentDb = async (orgId: string, a: any) => {
   const res = await query(
     `INSERT INTO assessments (id, org_id, work_unit_id, hazard_id, hazard_category, risk_label, damages,
-       existing_measures, proposed_measures, gravity, frequency, control, score, priority, created_at, updated_at)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)
+       existing_measures, proposed_measures, gravity, frequency, control, score, priority, created_at, updated_at,
+       source, source_url)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18)
      ON CONFLICT (id) DO UPDATE SET work_unit_id=EXCLUDED.work_unit_id, hazard_id=EXCLUDED.hazard_id,
        hazard_category=EXCLUDED.hazard_category, risk_label=EXCLUDED.risk_label, damages=EXCLUDED.damages,
        existing_measures=EXCLUDED.existing_measures, proposed_measures=EXCLUDED.proposed_measures,
        gravity=EXCLUDED.gravity, frequency=EXCLUDED.frequency, control=EXCLUDED.control, score=EXCLUDED.score,
-       priority=EXCLUDED.priority, updated_at=EXCLUDED.updated_at
+       priority=EXCLUDED.priority, updated_at=EXCLUDED.updated_at, source=EXCLUDED.source, source_url=EXCLUDED.source_url
      WHERE assessments.org_id = $2
      RETURNING *`,
     [a.id, orgId, a.workUnitId, a.hazardId ?? null, a.hazardCategory ?? null, a.riskLabel ?? null, a.damages ?? null,
      a.existingMeasures ?? null, a.proposedMeasures ?? null, a.gravity, a.frequency, a.control, a.score, a.priority,
-     a.createdAt ?? new Date().toISOString(), a.updatedAt ?? new Date().toISOString()]
+     a.createdAt ?? new Date().toISOString(), a.updatedAt ?? new Date().toISOString(), a.source ?? null, a.sourceUrl ?? null]
   );
   return res.rows[0];
 };
@@ -381,19 +343,19 @@ const deleteActionDb = async (orgId: string, id: string) => {
 
 const listVersionsDb = async (orgId: string) => {
   const res = await query(
-    `SELECT id, establishment_id, label, reason, hash, created_at FROM duerp_versions WHERE org_id=$1 ORDER BY created_at DESC`,
+    `SELECT id, establishment_id, label, reason, hash, snapshot, created_at FROM duerp_versions WHERE org_id=$1 ORDER BY created_at DESC`,
     [orgId]
   );
   return res.rows;
 };
 const upsertVersionDb = async (orgId: string, v: any) => {
   const res = await query(
-    `INSERT INTO duerp_versions (id, org_id, establishment_id, label, reason, hash, created_at)
-     VALUES ($1,$2,$3,$4,$5,$6,$7)
-     ON CONFLICT (id) DO UPDATE SET label=EXCLUDED.label, reason=EXCLUDED.reason, hash=EXCLUDED.hash
+    `INSERT INTO duerp_versions (id, org_id, establishment_id, label, reason, hash, snapshot, created_at)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8)
+     ON CONFLICT (id) DO UPDATE SET label=EXCLUDED.label, reason=EXCLUDED.reason, hash=EXCLUDED.hash, snapshot=EXCLUDED.snapshot
      WHERE duerp_versions.org_id = $2
      RETURNING *`,
-    [v.id, orgId, v.establishmentId, v.label, v.reason ?? null, v.hash ?? null, v.createdAt ?? new Date().toISOString()]
+    [v.id, orgId, v.establishmentId, v.label, v.reason ?? null, v.hash ?? null, v.snapshot ? JSON.stringify(v.snapshot) : null, v.createdAt ?? new Date().toISOString()]
   );
   return res.rows[0];
 };
@@ -631,26 +593,6 @@ createServer(async (req, res) => {
       return json(res, { url: session.url });
     }
 
-    if (req.method === "GET" && basePath === "/api/catalog/risks") {
-      return json(res, await getRisks());
-    }
-    if (req.method === "GET" && basePath === "/api/catalog/actions") {
-      return json(res, await getActions());
-    }
-    if (req.method === "GET" && basePath === "/api/catalog/obligations") {
-      return json(res, await getObligations());
-    }
-    if (req.method === "GET" && basePath === "/api/nafs") {
-      const q = (url.searchParams.get("q") || "").trim();
-      return json(res, await getNafs(q || undefined));
-    }
-    if (req.method === "GET" && basePath.startsWith("/api/nafs/")) {
-      const code = decodeURIComponent(basePath.replace("/api/nafs/", ""));
-      const naf = await getNafDetail(code);
-      if (!naf) return notFound(res);
-      return json(res, naf);
-    }
-
     // --- App data: establishments / work-units / assessments / actions / versions ---
     // All scoped to the real signed-in Clerk user (see getClerkOrgId above).
     if (basePath === "/api/establishments" || basePath.startsWith("/api/establishments/")) {
@@ -780,13 +722,17 @@ createServer(async (req, res) => {
     }
 
     // ── COLLABORATEURS ──────────────────────────────────────────────────────
+    // Toutes ces routes exigent une vraie session Clerk : l'identité de
+    // l'appelant (orgId) vient du jeton vérifié, jamais d'un champ envoyé
+    // par le client (sinon n'importe qui peut lister/créer/révoquer les
+    // invitations d'un autre utilisateur, ou faire envoyer un email arbitraire).
     if (req.method === "GET" && basePath === "/api/invites") {
-      const clerkUserId = url.searchParams.get("clerkUserId");
-      if (!clerkUserId) return json(res, { error: "clerkUserId required" }, 400);
+      const orgId = await getClerkOrgId(req);
+      if (!orgId) return json(res, { error: "Unauthorized" }, 401);
       try {
         const rows = await query(
           "SELECT id, invitee_email, role, status, created_at FROM invitations WHERE owner_clerk_id = $1 ORDER BY created_at DESC",
-          [clerkUserId]
+          [orgId]
         ).catch(() => ({ rows: [] as any[] }));
         return json(res, { invites: rows.rows });
       } catch {
@@ -795,8 +741,10 @@ createServer(async (req, res) => {
     }
 
     if (req.method === "POST" && basePath === "/api/invites") {
+      const orgId = await getClerkOrgId(req);
+      if (!orgId) return json(res, { error: "Unauthorized" }, 401);
       const body = await readBody(req).catch(() => null);
-      if (!body?.ownerClerkId || !body?.email) return json(res, { error: "Bad Request" }, 400);
+      if (!body?.email) return json(res, { error: "Bad Request" }, 400);
 
       // Persist in DB
       try {
@@ -804,7 +752,7 @@ createServer(async (req, res) => {
           `INSERT INTO invitations (id, owner_clerk_id, invitee_email, role, status, created_at)
            VALUES (gen_random_uuid(), $1, $2, $3, 'pending', NOW())
            ON CONFLICT (owner_clerk_id, invitee_email) DO UPDATE SET status = 'pending', role = $3`,
-          [body.ownerClerkId, body.email.toLowerCase(), body.role || "viewer"]
+          [orgId, body.email.toLowerCase(), body.role || "viewer"]
         );
       } catch (dbErr) {
         console.warn("[invites] DB unavailable, email-only fallback:", dbErr);
@@ -848,20 +796,32 @@ createServer(async (req, res) => {
     }
 
     if (req.method === "POST" && basePath === "/api/invites/revoke") {
+      const orgId = await getClerkOrgId(req);
+      if (!orgId) return json(res, { error: "Unauthorized" }, 401);
       const body = await readBody(req).catch(() => null);
-      if (!body?.ownerClerkId || !body?.email) return json(res, { error: "Bad Request" }, 400);
+      if (!body?.email) return json(res, { error: "Bad Request" }, 400);
       await query(
         "DELETE FROM invitations WHERE owner_clerk_id = $1 AND invitee_email = $2",
-        [body.ownerClerkId, body.email.toLowerCase()]
+        [orgId, body.email.toLowerCase()]
       ).catch(() => null);
       return json(res, { ok: true });
     }
 
     // ── RAPPEL RÉVISION ANNUELLE ─────────────────────────────────────────────
+    // Le destinataire est toujours l'email du compte Clerk authentifié —
+    // jamais une adresse fournie par le client, pour ne pas transformer
+    // cette route en relais d'envoi d'emails arbitraires.
     if (req.method === "POST" && basePath === "/api/reminders/send") {
+      if (!clerkEnabled) return json(res, { error: "Clerk not configured" }, 500);
+      const orgId = await getClerkOrgId(req);
+      if (!orgId) return json(res, { error: "Unauthorized" }, 401);
       const body = await readBody(req).catch(() => null);
-      if (!body?.to || !body?.establishmentName) return json(res, { error: "Bad Request" }, 400);
+      if (!body?.establishmentName) return json(res, { error: "Bad Request" }, 400);
       if (!RESEND_API_KEY) return json(res, { error: "Email service non configuré" }, 503);
+
+      const requester = await clerkClient.users.getUser(orgId).catch(() => null);
+      const to = requester?.emailAddresses?.[0]?.emailAddress;
+      if (!to) return json(res, { error: "Email introuvable pour ce compte" }, 400);
 
       const html = `
         <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto">
@@ -882,7 +842,7 @@ createServer(async (req, res) => {
                style="display:inline-block;margin-top:16px;background:#5B61F6;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:bold">
               Créer une nouvelle version →
             </a>
-            <p style="margin-top:24px;font-size:12px;color:#94a3b8">Kaijos by Milante Consulting</p>
+            <p style="margin-top:24px;font-size:12px;color:#94a3b8">Kaijos</p>
           </div>
         </div>`;
 
@@ -892,7 +852,7 @@ createServer(async (req, res) => {
           headers: { "Authorization": `Bearer ${RESEND_API_KEY}`, "Content-Type": "application/json" },
           body: JSON.stringify({
             from: FROM_EMAIL,
-            to: [body.to],
+            to: [to],
             subject: `[Kaijos] Révision DUERP — ${body.establishmentName}`,
             html,
           }),

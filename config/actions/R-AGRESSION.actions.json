@@ -8,8 +8,24 @@
     "impact": "Réduction de l'exposition physique directe aux agressions. Dissuasion des comportements violents. Protection des salariés en contact avec le public sans réduire la qualité du service.",
     "difficulty": "Moyenne",
     "cost": "Élevé",
-    "naf_specific": ["64", "84", "86", "87", "47", "56"],
-    "references": ["INRS ED 6010", "ONVS guide prévention violence", "Code du travail R.4121-1"]
+    "naf_specific": [
+      "64",
+      "84",
+      "86",
+      "87",
+      "47",
+      "56"
+    ],
+    "references": [
+      "INRS ED 6010",
+      "ONVS guide prévention violence",
+      "Code du travail R.4121-1"
+    ],
+    "referenceUrls": [
+      "",
+      "",
+      ""
+    ]
   },
   {
     "id": "A-R-AGRESSION-002",
@@ -20,8 +36,23 @@
     "impact": "Prise en charge immédiate du salarié victime. Réduction du traumatisme secondaire. Données d'analyse permettant d'identifier les situations à risque récurrentes. Signal fort d'engagement de l'employeur.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "naf_specific": ["64", "84", "86", "87", "56"],
-    "references": ["INRS ED 6010", "ONVS", "Code du travail R.4121-1"]
+    "naf_specific": [
+      "64",
+      "84",
+      "86",
+      "87",
+      "56"
+    ],
+    "references": [
+      "INRS ED 6010",
+      "ONVS",
+      "Code du travail R.4121-1"
+    ],
+    "referenceUrls": [
+      "",
+      "",
+      ""
+    ]
   },
   {
     "id": "A-R-AGRESSION-003",
@@ -32,8 +63,22 @@
     "impact": "Salariés capables de désamorcer les situations avant l'escalade vers la violence. Réduction des agressions abouties. Réduction du stress lié à l'anticipation de l'agression.",
     "difficulty": "Faible",
     "cost": "Moyen",
-    "naf_specific": ["64", "84", "86", "87", "56", "88"],
-    "references": ["INRS ED 6010", "ANACT guide violence externe"]
+    "naf_specific": [
+      "64",
+      "84",
+      "86",
+      "87",
+      "56",
+      "88"
+    ],
+    "references": [
+      "INRS ED 6010",
+      "ANACT guide violence externe"
+    ],
+    "referenceUrls": [
+      "",
+      ""
+    ]
   },
   {
     "id": "A-R-AGRESSION-004",
@@ -44,7 +89,22 @@
     "impact": "Détection rapide en cas d'agression ou de malaise. Réduction du temps d'intervention des secours. Protection des salariés les plus vulnérables (gardiens, travailleurs sociaux, visiteurs à domicile).",
     "difficulty": "Moyenne",
     "cost": "Moyen",
-    "naf_specific": ["86", "87", "88", "64", "84"],
-    "references": ["INRS ED 6127", "Norme NF X 50-780 PTI", "Code du travail R.4512-13"]
+    "naf_specific": [
+      "86",
+      "87",
+      "88",
+      "64",
+      "84"
+    ],
+    "references": [
+      "INRS ED 6127",
+      "Norme NF X 50-780 PTI",
+      "Code du travail R.4512-13"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6127",
+      "",
+      ""
+    ]
   }
 ]

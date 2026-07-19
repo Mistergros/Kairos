@@ -8,7 +8,16 @@
     "impact": "Détection des défauts avant qu'ils ne causent un accident (électrocution, incendie d'origine électrique). Conformité réglementaire. Réduction des responsabilités pénales de l'employeur.",
     "difficulty": "Faible",
     "cost": "Moyen",
-    "references": ["Décret 88-1056", "Norme NF C 15-100", "Code du travail R.4226-14"]
+    "references": [
+      "Décret 88-1056",
+      "Norme NF C 15-100",
+      "Code du travail R.4226-14"
+    ],
+    "referenceUrls": [
+      "",
+      "",
+      ""
+    ]
   },
   {
     "id": "A-R-ELECTRIQUE-002",
@@ -19,7 +28,16 @@
     "impact": "Élimination du risque d'électrocution lors des interventions de maintenance. Procédure universelle reconnue. Réduction des accidents de maintenance électrique à zéro dans les entreprises qui l'appliquent rigoureusement.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "references": ["INRS ED 6109", "Norme NF EN 1037", "UTE C 18-510"]
+    "references": [
+      "INRS ED 6109",
+      "Norme NF EN 1037",
+      "UTE C 18-510"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6109",
+      "",
+      ""
+    ]
   },
   {
     "id": "A-R-ELECTRIQUE-003",
@@ -30,7 +48,16 @@
     "impact": "Seul le personnel compétent et habilité intervient sur les installations électriques. Réduction des comportements à risque. Conformité légale (l'employeur engage sa responsabilité pénale en cas d'intervention non habilitée).",
     "difficulty": "Moyenne",
     "cost": "Moyen",
-    "references": ["NF C 18-510", "UTE C 18-550", "Code du travail R.4544-9"]
+    "references": [
+      "NF C 18-510",
+      "UTE C 18-550",
+      "Code du travail R.4544-9"
+    ],
+    "referenceUrls": [
+      "",
+      "",
+      ""
+    ]
   },
   {
     "id": "A-R-ELECTRIQUE-004",
@@ -41,6 +68,15 @@
     "impact": "Protection individuelle contre les contacts électriques directs et indirects. Réduction du risque d'électrocution et de brûlures par arc électrique.",
     "difficulty": "Faible",
     "cost": "Moyen",
-    "references": ["EN 60903", "EN 60900", "INRS ED 6110"]
+    "references": [
+      "EN 60903",
+      "EN 60900",
+      "INRS ED 6110"
+    ],
+    "referenceUrls": [
+      "",
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6110"
+    ]
   }
 ]

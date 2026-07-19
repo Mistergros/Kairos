@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const readline = require("readline");
 const fg = require("fast-glob");
 const { Pool } = require("pg");
 require("dotenv").config({ path: path.resolve(process.cwd(), ".env.local") });
@@ -43,9 +44,32 @@ async function seedJSONArray(table, rows, map) {
   }
 }
 
+function askConfirmation(question) {
+  const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+  return new Promise((resolve) => rl.question(question, (answer) => { rl.close(); resolve(answer); }));
+}
+
 async function main() {
   const reset = process.argv.includes("--reset");
   if (reset) {
+    let host = "?";
+    let dbName = "?";
+    try {
+      const url = new URL(connectionString);
+      host = url.hostname;
+      dbName = url.pathname.replace(/^\//, "");
+    } catch {
+      // connectionString non-standard, on garde les valeurs par defaut "?"
+    }
+    console.log("\n⚠️  ATTENTION — vous etes sur le point de SUPPRIMER TOUTES LES DONNEES de cette base :");
+    console.log(`   Hote : ${host}`);
+    console.log(`   Base : ${dbName}`);
+    console.log("\nSi cette base contient des donnees de vrais clients (production), NE CONTINUEZ PAS.\n");
+    const answer = await askConfirmation(`Tapez le nom de la base ("${dbName}") pour confirmer la suppression : `);
+    if (answer.trim() !== dbName) {
+      console.error("\nConfirmation incorrecte — operation annulee, aucune donnee supprimee.");
+      process.exit(1);
+    }
     await query(`DROP SCHEMA public CASCADE; CREATE SCHEMA public;`);
   }
 

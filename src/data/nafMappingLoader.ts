@@ -1,5 +1,6 @@
 import mapping from "../../kairos_duerp_naf_mapping.json";
 import { Hazard } from "../types";
+import { nafMappingSourceByItem } from "./nafMappingSources";
 
 type MappingCategory = {
   category: string;
@@ -105,6 +106,7 @@ export const buildHazardsFromMapping = (nafCode?: string): (Hazard & { gravity?:
     const weights = defaultWeights[hint.category] ?? { gravity: 6, frequency: 5, control: 0.8 };
     hint.items.forEach((item) => {
       const id = `naf-${hint.category}-${item.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+      const sourced = nafMappingSourceByItem[item];
       hazards.push({
         id,
         category: hint.label,
@@ -114,6 +116,8 @@ export const buildHazardsFromMapping = (nafCode?: string): (Hazard & { gravity?:
         gravity: weights.gravity,
         frequency: weights.frequency,
         control: weights.control,
+        source: sourced?.source,
+        sourceUrl: sourced?.sourceUrl,
       });
     });
   });

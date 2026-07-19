@@ -8,8 +8,23 @@
     "impact": "Réduction de la transmission des agents biologiques par contact indirect. Prévention des infections nosocomiales et professionnelles. Conformité aux recommandations des autorités sanitaires.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "naf_specific": ["86", "87", "88", "38", "56"],
-    "references": ["INRS ED 6034", "Code de la santé publique R.1335-1", "Norme NF EN ISO 22442"]
+    "naf_specific": [
+      "86",
+      "87",
+      "88",
+      "38",
+      "56"
+    ],
+    "references": [
+      "INRS ED 6034",
+      "Code de la santé publique R.1335-1",
+      "Norme NF EN ISO 22442"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6034",
+      "",
+      ""
+    ]
   },
   {
     "id": "A-R-BIO-002",
@@ -20,7 +35,16 @@
     "impact": "Identification précise du niveau de risque biologique. Ciblage des mesures de prévention sur les agents les plus dangereux. Conformité réglementaire (Décret 94-352).",
     "difficulty": "Moyenne",
     "cost": "Faible",
-    "references": ["Directive 2000/54/CE", "Décret 94-352", "INRS ED 6034"]
+    "references": [
+      "Directive 2000/54/CE",
+      "Décret 94-352",
+      "INRS ED 6034"
+    ],
+    "referenceUrls": [
+      "",
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6034"
+    ]
   },
   {
     "id": "A-R-BIO-003",
@@ -31,8 +55,21 @@
     "impact": "Protection individuelle contre les infections évitables par vaccination. Réduction du risque de transmission lors d'accidents d'exposition au sang (AES). Conformité aux obligations réglementaires (hépatite B obligatoire pour le secteur de la santé).",
     "difficulty": "Faible",
     "cost": "Faible",
-    "naf_specific": ["86", "87", "88"],
-    "references": ["Code de la santé publique L.3111-4", "INRS ED 6034", "Calendrier vaccinal en vigueur"]
+    "naf_specific": [
+      "86",
+      "87",
+      "88"
+    ],
+    "references": [
+      "Code de la santé publique L.3111-4",
+      "INRS ED 6034",
+      "Calendrier vaccinal en vigueur"
+    ],
+    "referenceUrls": [
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6034",
+      ""
+    ]
   },
   {
     "id": "A-R-BIO-004",
@@ -43,7 +80,23 @@
     "impact": "Protection individuelle contre les expositions directes. Réduction des accidents d'exposition au sang (AES) et aux fluides biologiques. Protection contre les aérosols infectieux.",
     "difficulty": "Faible",
     "cost": "Moyen",
-    "naf_specific": ["86", "87", "88", "38"],
-    "references": ["INRS ED 6034", "EN 374", "EN 149 (FFP2)", "Précautions standard HAS"]
+    "naf_specific": [
+      "86",
+      "87",
+      "88",
+      "38"
+    ],
+    "references": [
+      "INRS ED 6034",
+      "EN 374",
+      "EN 149 (FFP2)",
+      "Précautions standard HAS"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6034",
+      "",
+      "",
+      ""
+    ]
   }
 ]

@@ -11,7 +11,7 @@ export type PlanLimits = {
   label: string;
 };
 
-const PLAN_CONFIG: Record<PlanId, PlanLimits> = {
+export const PLAN_CONFIG: Record<PlanId, PlanLimits> = {
   starter: {
     planId: "starter",
     maxWorkUnits: 5,

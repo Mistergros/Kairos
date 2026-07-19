@@ -15,5 +15,8 @@
   "sources": [
     "INRS ED 4202 — Les sources de rayonnements non ionisants (jusqu'à 60 GHz)"
   ],
-  "sources_verified": "2026-07-19"
+  "sources_verified": "2026-07-19",
+  "sourceUrls": [
+    "https://www.inrs.fr/media.html?refINRS=ED+4202"
+  ]
 }

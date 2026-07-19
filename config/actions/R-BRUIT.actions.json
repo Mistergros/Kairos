@@ -8,8 +8,24 @@
     "impact": "Connaissance précise de l'exposition. Priorisation des investissements de réduction. Base légale solide pour le programme de prévention.",
     "difficulty": "Faible",
     "cost": "Moyen",
-    "naf_specific": ["10", "13", "24", "25", "41", "45"],
-    "references": ["INRS ED 6019", "Décret 2006-892", "Code du travail R.4431-1"]
+    "naf_specific": [
+      "10",
+      "13",
+      "24",
+      "25",
+      "41",
+      "45"
+    ],
+    "references": [
+      "INRS ED 6019",
+      "Décret 2006-892",
+      "Code du travail R.4431-1"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6019",
+      "",
+      ""
+    ]
   },
   {
     "id": "A-R-BRUIT-002",
@@ -20,8 +36,20 @@
     "impact": "Réduction durable du niveau sonore à la source. Protection de l'ensemble du collectif de travail sans dépendre du port d'EPI. Prévention des surdités professionnelles (MP 42).",
     "difficulty": "Moyenne",
     "cost": "Élevé",
-    "naf_specific": ["10", "13", "24", "41"],
-    "references": ["INRS ED 962", "INRS TJ 13"]
+    "naf_specific": [
+      "10",
+      "13",
+      "24",
+      "41"
+    ],
+    "references": [
+      "INRS ED 962",
+      "INRS TJ 13"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+962",
+      ""
+    ]
   },
   {
     "id": "A-R-BRUIT-003",
@@ -32,7 +60,16 @@
     "impact": "Protection immédiate contre les traumatismes sonores. Obligation réglementaire au-dessus de 85 dB(A). Réduction des expositions en attendant les mesures techniques.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "references": ["INRS ED 6020", "Norme EN 352", "Code du travail R.4434-7"]
+    "references": [
+      "INRS ED 6020",
+      "Norme EN 352",
+      "Code du travail R.4434-7"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6020",
+      "",
+      ""
+    ]
   },
   {
     "id": "A-R-BRUIT-004",
@@ -43,6 +80,13 @@
     "impact": "Détection précoce des atteintes auditives permettant de reclasser avant aggravation. Traçabilité de l'exposition. Réduction des risques de contentieux.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "references": ["Code du travail R.4435-1", "Tableau MP 42"]
+    "references": [
+      "Code du travail R.4435-1",
+      "Tableau MP 42"
+    ],
+    "referenceUrls": [
+      "",
+      ""
+    ]
   }
 ]

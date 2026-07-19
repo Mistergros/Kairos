@@ -8,8 +8,24 @@
     "impact": "Élimination du risque cancérogène à la source. Réduction du risque de cancers professionnels (MP 30 bis, 36, 37). Obligation légale : la substitution doit être envisagée avant toute autre mesure.",
     "difficulty": "Élevée",
     "cost": "Moyen",
-    "naf_specific": ["20", "22", "23", "24", "25", "29"],
-    "references": ["INRS ED 6004", "Outil SEIRICH INRS", "Code du travail R.4412-66"]
+    "naf_specific": [
+      "20",
+      "22",
+      "23",
+      "24",
+      "25",
+      "29"
+    ],
+    "references": [
+      "INRS ED 6004",
+      "Outil SEIRICH INRS",
+      "Code du travail R.4412-66"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6004",
+      "",
+      ""
+    ]
   },
   {
     "id": "A-CMR-002",
@@ -20,8 +36,23 @@
     "impact": "Maintien des concentrations sous les valeurs limites réglementaires. Protection de l'ensemble du collectif de travail. Réduction de l'exposition cumulée sur carrière.",
     "difficulty": "Élevée",
     "cost": "Élevé",
-    "naf_specific": ["20", "22", "24", "29", "30"],
-    "references": ["INRS ED 695", "Code du travail R.4412-76", "Valeurs limites d'exposition professionnelle (VLEP)"]
+    "naf_specific": [
+      "20",
+      "22",
+      "24",
+      "29",
+      "30"
+    ],
+    "references": [
+      "INRS ED 695",
+      "Code du travail R.4412-76",
+      "Valeurs limites d'exposition professionnelle (VLEP)"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+695",
+      "",
+      ""
+    ]
   },
   {
     "id": "A-CMR-003",
@@ -32,6 +63,15 @@
     "impact": "Détection précoce des pathologies cancéreuses professionnelles. Traçabilité de l'exposition pour la déclaration de MP. Conformité réglementaire (obligation de déclaration et de surveillance médicale renforcée).",
     "difficulty": "Moyenne",
     "cost": "Faible",
-    "references": ["Code du travail R.4412-44 à R.4412-57", "Tableau MP 30, 36, 37", "Décret 2012-134"]
+    "references": [
+      "Code du travail R.4412-44 à R.4412-57",
+      "Tableau MP 30, 36, 37",
+      "Décret 2012-134"
+    ],
+    "referenceUrls": [
+      "",
+      "",
+      ""
+    ]
   }
 ]

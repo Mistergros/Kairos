@@ -7,7 +7,7 @@ const STEPS = [
     number: "1",
     icon: "🏢",
     title: "Créez votre établissement",
-    desc: "Renseignez le nom, SIRET, code NAF et effectif. L'IA détecte automatiquement les risques de votre secteur.",
+    desc: "Renseignez le nom, SIRET, code NAF et effectif. Kaijos détecte automatiquement les risques types de votre secteur.",
   },
   {
     number: "2",
@@ -18,7 +18,7 @@ const STEPS = [
   {
     number: "3",
     icon: "⚡",
-    title: "L'IA pré-remplit votre DUERP",
+    title: "Kaijos pré-remplit votre DUERP",
     desc: "Analyse automatique basée sur votre code NAF + activité. Affinez les cotations avec vos paramètres réels.",
   },
   {
@@ -29,22 +29,37 @@ const STEPS = [
   },
 ];
 
+const ONBOARDING_KEY = "kaijos_welcome_dismissed";
+
 export function Onboarding() {
   const { establishments, loadDemoData } = useDuerpStore();
   const navigate = useNavigate();
-  const [dismissed, setDismissed] = useState(false);
+  const [dismissed, setDismissed] = useState(() => !!localStorage.getItem(ONBOARDING_KEY));
+
+  const dismissForNow = () => {
+    localStorage.setItem(ONBOARDING_KEY, "1");
+    setDismissed(true);
+    window.dispatchEvent(new Event("kaijos:welcome-dismissed"));
+  };
 
   if (establishments.length > 0 || dismissed) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/70 backdrop-blur-sm px-4">
-      <div className="w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl">
+      <div className="w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl relative">
+        <button
+          onClick={dismissForNow}
+          aria-label="Fermer"
+          title="Plus tard"
+          className="absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-white text-lg leading-none hover:bg-white/25 transition"
+        >
+          ✕
+        </button>
 
         <div className="bg-gradient-to-r from-[#5B61F6] to-[#00B3FF] px-8 py-7">
-          <p className="text-xs font-semibold uppercase tracking-widest text-white/60 mb-1">Kaijos — by Milante Consulting</p>
-          <h1 className="text-2xl font-bold text-white leading-tight">Votre DUERP conforme en quelques minutes</h1>
+          <h1 className="text-2xl font-bold text-white leading-tight pr-8">Votre DUERP conforme en quelques minutes</h1>
           <p className="mt-2 text-sm text-white/75">
-            Suivez les 4 étapes ci-dessous. Vos données sont sauvegardées localement à chaque modification.
+            Suivez les 4 étapes ci-dessous pour démarrer.
           </p>
         </div>
 
@@ -71,20 +86,27 @@ export function Onboarding() {
 
           <button
             className="mt-6 w-full rounded-2xl bg-gradient-to-r from-[#5B61F6] to-[#00B3FF] py-4 text-sm font-bold text-white shadow-lg hover:opacity-90 active:scale-[0.98] transition"
-            onClick={() => { setDismissed(true); navigate("/units"); }}
+            onClick={() => { dismissForNow(); navigate("/units"); }}
           >
             Créer mon établissement →
           </button>
 
           <button
             className="mt-2 w-full rounded-2xl border border-slate/15 py-3 text-sm font-semibold text-slate-700 hover:bg-slate/5 transition"
-            onClick={() => { loadDemoData(); setDismissed(true); navigate("/"); }}
+            onClick={() => { loadDemoData(); dismissForNow(); navigate("/"); }}
           >
             Voir un exemple rempli (boulangerie fictive)
           </button>
 
-          <p className="mt-3 text-center text-xs text-slate/40">
-            Données stockées dans votre navigateur. Aucun envoi sans votre accord.
+          <button
+            className="mt-2 w-full py-2 text-xs font-medium text-slate/50 hover:text-slate/70 transition"
+            onClick={dismissForNow}
+          >
+            Plus tard — regarder d'abord
+          </button>
+
+          <p className="mt-1 text-center text-xs text-slate/40">
+            Vos données sont enregistrées de façon sécurisée sur votre compte dès leur saisie.
           </p>
         </div>
       </div>

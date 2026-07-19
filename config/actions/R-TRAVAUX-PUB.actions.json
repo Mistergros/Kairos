@@ -8,8 +8,23 @@
     "impact": "Prévention des accidents liés aux heurts de réseaux enterrés (électrocution, explosion gaz, inondation). Le non-respect des DICT est une faute pénale. Réduction des sinistres de chantier.",
     "difficulty": "Moyenne",
     "cost": "Moyen",
-    "naf_specific": ["41", "42", "43"],
-    "references": ["INRS ED 941", "Décret 2012-970 réforme DT-DICT", "OPPBTP guide SPS", "Code du travail R.4532-1"]
+    "naf_specific": [
+      "41",
+      "42",
+      "43"
+    ],
+    "references": [
+      "INRS ED 941",
+      "Décret 2012-970 réforme DT-DICT",
+      "OPPBTP guide SPS",
+      "Code du travail R.4532-1"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+941",
+      "",
+      "",
+      ""
+    ]
   },
   {
     "id": "A-TRAVAUX-PUB-002",
@@ -20,8 +35,21 @@
     "impact": "Prévention des chutes dans les tranchées et des effondrements de parois (risque d'ensevelissement mortel). Sécurisation du chantier pour les tiers. Conformité réglementaire chantiers BTP.",
     "difficulty": "Faible",
     "cost": "Moyen",
-    "naf_specific": ["41", "42", "43"],
-    "references": ["OPPBTP recommandation tranchées", "INRS ED 949", "Code du travail R.4534-116 à R.4534-144"]
+    "naf_specific": [
+      "41",
+      "42",
+      "43"
+    ],
+    "references": [
+      "OPPBTP recommandation tranchées",
+      "INRS ED 949",
+      "Code du travail R.4534-116 à R.4534-144"
+    ],
+    "referenceUrls": [
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+949",
+      ""
+    ]
   },
   {
     "id": "A-TRAVAUX-PUB-003",
@@ -32,8 +60,21 @@
     "impact": "Réduction des accidents de heurt engin/piéton (2ème cause de mortalité en BTP). Prévention des collisions en marche arrière. Culture de sécurité renforcée sur chantier.",
     "difficulty": "Faible",
     "cost": "Moyen",
-    "naf_specific": ["41", "42", "43"],
-    "references": ["OPPBTP fiche co-activité", "INRS ED 949", "EN ISO 20471"]
+    "naf_specific": [
+      "41",
+      "42",
+      "43"
+    ],
+    "references": [
+      "OPPBTP fiche co-activité",
+      "INRS ED 949",
+      "EN ISO 20471"
+    ],
+    "referenceUrls": [
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+949",
+      ""
+    ]
   },
   {
     "id": "A-TRAVAUX-PUB-004",
@@ -44,7 +85,22 @@
     "impact": "Protection individuelle contre les risques multiples du chantier BTP (objets tombant, écrasement, perforation, bruit, projections). Conformité aux obligations EPI chantier. Réduction des AT avec arrêt en BTP.",
     "difficulty": "Faible",
     "cost": "Moyen",
-    "naf_specific": ["41", "42", "43"],
-    "references": ["EN 397", "EN ISO 20471", "EN ISO 20345 S3", "OPPBTP guide EPI chantier"]
+    "naf_specific": [
+      "41",
+      "42",
+      "43"
+    ],
+    "references": [
+      "EN 397",
+      "EN ISO 20471",
+      "EN ISO 20345 S3",
+      "OPPBTP guide EPI chantier"
+    ],
+    "referenceUrls": [
+      "",
+      "",
+      "",
+      ""
+    ]
   }
 ]

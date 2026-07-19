@@ -8,8 +8,24 @@
     "impact": "Réduction de 30 à 50% des arrêts maladie TMS sur les postes traités. Prévention des maladies professionnelles (tableau MP 57, 69, 79). Réduction du coût des AT/MP.",
     "difficulty": "Faible",
     "cost": "Moyen",
-    "naf_specific": ["47", "56", "10", "41", "45", "86"],
-    "references": ["INRS ED 6161", "CARSAT RG 906", "Code du travail R.4541-1"]
+    "naf_specific": [
+      "47",
+      "56",
+      "10",
+      "41",
+      "45",
+      "86"
+    ],
+    "references": [
+      "INRS ED 6161",
+      "CARSAT RG 906",
+      "Code du travail R.4541-1"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6161",
+      "",
+      ""
+    ]
   },
   {
     "id": "A-R-TMS-002",
@@ -20,8 +36,21 @@
     "impact": "Diminution de la sollicitation cumulative des tendons et muscles. Réduction du risque de syndrome du canal carpien, épicondylite, lombalgies. Compatible avec le maintien de la productivité.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "naf_specific": ["10", "47", "56", "13", "14"],
-    "references": ["INRS ED 6011", "ANACT guide TMS"]
+    "naf_specific": [
+      "10",
+      "47",
+      "56",
+      "13",
+      "14"
+    ],
+    "references": [
+      "INRS ED 6011",
+      "ANACT guide TMS"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6011",
+      ""
+    ]
   },
   {
     "id": "A-R-TMS-003",
@@ -32,7 +61,14 @@
     "impact": "Réduction des gestes dangereux dès la formation. L'acteur PRAP interne maintient la vigilance dans la durée. Résultats mesurables sur les indicateurs TMS à 6 mois.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "references": ["INRS PRAP", "CARSAT formation habilitation PRAP"]
+    "references": [
+      "INRS PRAP",
+      "CARSAT formation habilitation PRAP"
+    ],
+    "referenceUrls": [
+      "",
+      ""
+    ]
   },
   {
     "id": "A-R-TMS-004",
@@ -43,7 +79,19 @@
     "impact": "Élimination des contraintes posturales sur les postes modifiés. Réduction immédiate de la fatigue musculaire. ROI estimé : amortissement en 18-24 mois via la réduction des AT.",
     "difficulty": "Moyenne",
     "cost": "Élevé",
-    "naf_specific": ["10", "13", "20", "41"],
-    "references": ["INRS ED 6332", "Eurogip exosquelettes 2022"]
+    "naf_specific": [
+      "10",
+      "13",
+      "20",
+      "41"
+    ],
+    "references": [
+      "INRS ED 6332",
+      "Eurogip exosquelettes 2022"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6332",
+      ""
+    ]
   }
 ]

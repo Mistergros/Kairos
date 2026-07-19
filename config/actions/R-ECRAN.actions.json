@@ -8,8 +8,25 @@
     "impact": "Élimination des postures forcées du cou et des épaules. Réduction des TMS cervicaux et des lombalgies liés au travail sur écran. Conformité Décret 91-451.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "naf_specific": ["62", "63", "64", "69", "70", "73", "84"],
-    "references": ["INRS ED 924", "Décret 91-451", "NF EN ISO 9241"]
+    "naf_specific": [
+      "62",
+      "63",
+      "64",
+      "69",
+      "70",
+      "73",
+      "84"
+    ],
+    "references": [
+      "INRS ED 924",
+      "Décret 91-451",
+      "NF EN ISO 9241"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+924",
+      "",
+      ""
+    ]
   },
   {
     "id": "A-R-ECRAN-002",
@@ -20,7 +37,16 @@
     "impact": "Réduction de la fatigue visuelle (asthénopie) et de la sécheresse oculaire. Diminution des douleurs cervicales et des maux de tête liés au travail prolongé sur écran. Amélioration de la concentration sur la durée.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "references": ["INRS ED 924", "ANACT télétravail et écrans", "Recommandations ophtalmologiques SFO"]
+    "references": [
+      "INRS ED 924",
+      "ANACT télétravail et écrans",
+      "Recommandations ophtalmologiques SFO"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+924",
+      "",
+      ""
+    ]
   },
   {
     "id": "A-R-ECRAN-003",
@@ -31,7 +57,14 @@
     "impact": "Correction de la vue adaptée à la distance de travail sur écran. Réduction de la tension musculaire des yeux et des maux de tête. Droit réglementaire des travailleurs sur écran (Décret 91-451).",
     "difficulty": "Faible",
     "cost": "Moyen",
-    "references": ["Décret 91-451 art. 22", "INRS ED 924"]
+    "references": [
+      "Décret 91-451 art. 22",
+      "INRS ED 924"
+    ],
+    "referenceUrls": [
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+924"
+    ]
   },
   {
     "id": "A-R-ECRAN-004",
@@ -42,7 +75,22 @@
     "impact": "Réduction de la fatigue oculaire et des perturbations du rythme circadien. Amélioration du confort visuel. Prévention des maux de tête d'origine photique.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "naf_specific": ["62", "63", "64", "69", "73"],
-    "references": ["INRS ED 924", "NF EN 12464-1 (éclairage)", "ANSES rapport lumière bleue 2019"]
+    "naf_specific": [
+      "62",
+      "63",
+      "64",
+      "69",
+      "73"
+    ],
+    "references": [
+      "INRS ED 924",
+      "NF EN 12464-1 (éclairage)",
+      "ANSES rapport lumière bleue 2019"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+924",
+      "",
+      ""
+    ]
   }
 ]

@@ -8,8 +8,22 @@
     "impact": "Suppression du risque de lacérations profondes par verre brisé. En cas de casse, le verre feuilleté reste en place et le verre trempé se fragmente en granules non coupants. Réduction des coupures graves.",
     "difficulty": "Moyenne",
     "cost": "Moyen",
-    "naf_specific": ["23", "47", "56", "86"],
-    "references": ["EN ISO 12543", "EN 12150", "INRS ED 6029"]
+    "naf_specific": [
+      "23",
+      "47",
+      "56",
+      "86"
+    ],
+    "references": [
+      "EN ISO 12543",
+      "EN 12150",
+      "INRS ED 6029"
+    ],
+    "referenceUrls": [
+      "",
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6029"
+    ]
   },
   {
     "id": "A-R-GLASS-002",
@@ -20,8 +34,20 @@
     "impact": "Élimination des coupures lors du ramassage du verre brisé. Protection des agents de collecte des déchets. Réduction des accidents secondaires liés à la mauvaise gestion des débris.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "naf_specific": ["56", "47", "86", "10"],
-    "references": ["INRS ED 6029", "Guide hygiène restauration collective"]
+    "naf_specific": [
+      "56",
+      "47",
+      "86",
+      "10"
+    ],
+    "references": [
+      "INRS ED 6029",
+      "Guide hygiène restauration collective"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6029",
+      ""
+    ]
   },
   {
     "id": "A-R-GLASS-003",
@@ -32,8 +58,18 @@
     "impact": "Réduction des coupures lors de la manipulation du verre. Personnel adoptant les équipements et techniques adaptés. Réduction des accidents par manipulation incorrecte de grandes surfaces vitrées.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "naf_specific": ["23", "43"],
-    "references": ["INRS ED 6029", "OPPBTP fiche verre"]
+    "naf_specific": [
+      "23",
+      "43"
+    ],
+    "references": [
+      "INRS ED 6029",
+      "OPPBTP fiche verre"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6029",
+      ""
+    ]
   },
   {
     "id": "A-R-GLASS-004",
@@ -44,7 +80,19 @@
     "impact": "Protection contre les lacérations profondes et les projections d'éclats dans les yeux. Conformité EPI catégorie III. Réduction des accidents avec arrêt dans le secteur verre et vitrage.",
     "difficulty": "Faible",
     "cost": "Moyen",
-    "naf_specific": ["23", "43"],
-    "references": ["EN 388", "EN 166/175", "INRS ED 112"]
+    "naf_specific": [
+      "23",
+      "43"
+    ],
+    "references": [
+      "EN 388",
+      "EN 166/175",
+      "INRS ED 112"
+    ],
+    "referenceUrls": [
+      "",
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+112"
+    ]
   }
 ]

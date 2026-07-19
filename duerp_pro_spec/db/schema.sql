@@ -1,86 +1,15 @@
-CREATE TABLE naf (
-  code VARCHAR(7) PRIMARY KEY,
-  label TEXT NOT NULL,
-  risk_tags TEXT[]
-);
-CREATE TABLE unit_template (
-  id TEXT PRIMARY KEY,
-  naf_code VARCHAR(7) REFERENCES naf(code) ON DELETE CASCADE,
-  name TEXT NOT NULL,
-  description TEXT,
-  default_risk_ids TEXT[],
-  suggested BOOLEAN DEFAULT TRUE
-);
-CREATE TABLE risk (
-  id TEXT PRIMARY KEY,
-  family TEXT NOT NULL,
-  name TEXT NOT NULL,
-  description TEXT,
-  examples TEXT[],
-  default_severity INT,
-  default_frequency INT,
-  default_mastery INT
-);
-CREATE TABLE action (
-  id TEXT PRIMARY KEY,
-  type TEXT NOT NULL,
-  label TEXT NOT NULL,
-  details TEXT
-);
-CREATE TABLE obligation (
-  id TEXT PRIMARY KEY,
-  source TEXT NOT NULL,
-  title TEXT NOT NULL,
-  reference TEXT,
-  summary TEXT
-);
-CREATE TABLE risk_action (
-  risk_id TEXT REFERENCES risk(id) ON DELETE CASCADE,
-  action_id TEXT REFERENCES action(id) ON DELETE CASCADE,
-  PRIMARY KEY (risk_id, action_id)
-);
-CREATE TABLE risk_obligation (
-  risk_id TEXT REFERENCES risk(id) ON DELETE CASCADE,
-  obligation_id TEXT REFERENCES obligation(id) ON DELETE CASCADE,
-  PRIMARY KEY (risk_id, obligation_id)
-);
--- Company-specific
-CREATE TABLE company_unit (
-  id UUID PRIMARY KEY,
-  company_id UUID NOT NULL,
-  tenant_id UUID,
-  name TEXT NOT NULL,
-  description TEXT,
-  headcount INT DEFAULT 0,
-  naf_code VARCHAR(7) REFERENCES naf(code)
-);
-CREATE TABLE unit_risk_assessment (
-  id UUID PRIMARY KEY,
-  unit_id UUID REFERENCES company_unit(id) ON DELETE CASCADE,
-  tenant_id UUID,
-  risk_id TEXT REFERENCES risk(id) ON DELETE CASCADE,
-  context TEXT,
-  existing_measures TEXT[],
-  severity INT CHECK (severity BETWEEN 1 AND 5),
-  frequency INT CHECK (frequency BETWEEN 1 AND 5),
-  mastery INT CHECK (mastery BETWEEN 0 AND 5),
-  score INT GENERATED ALWAYS AS (severity * frequency - mastery) STORED
-);
-CREATE TABLE corrective_action (
-  id UUID PRIMARY KEY,
-  assessment_id UUID REFERENCES unit_risk_assessment(id) ON DELETE CASCADE,
-  tenant_id UUID,
-  action_id TEXT REFERENCES action(id),
-  owner TEXT,
-  due_date DATE,
-  status TEXT CHECK (status IN ('todo','in_progress','done','deferred')) DEFAULT 'todo'
-);
-CREATE INDEX idx_unit_by_company ON company_unit(company_id);
-CREATE INDEX idx_unit_by_tenant ON company_unit(tenant_id);
-CREATE INDEX idx_assessment_by_unit ON unit_risk_assessment(unit_id);
-CREATE INDEX idx_assessment_by_tenant ON unit_risk_assessment(tenant_id);
-CREATE INDEX idx_action_by_assessment ON corrective_action(assessment_id);
-CREATE INDEX idx_action_by_tenant ON corrective_action(tenant_id);
+-- Les tables catalogue (naf, unit_template, risk, action, obligation,
+-- risk_action, risk_obligation) ont ete supprimees le 19/07/2026 : audit a
+-- montre que RiskEngineV4 ne les lit jamais (tout vient de config/*.json en
+-- fichiers), et que 6 des 7 n'etaient interrogees par aucune route API
+-- appelee cote front. Voir ARCHITECTURE.md. Sauvegarde des donnees avant
+-- suppression conservee hors du depot.
+-- company_unit / unit_risk_assessment / corrective_action (l'ancien schema
+-- "company-specific", pre-consolidation Neon) ont ete supprimees le
+-- 19/07/2026 : deja confirmees mortes lors de la migration du 18/07/2026
+-- (remplacees par establishments/work_units/assessments/actions ci-dessous),
+-- et leurs cles etrangeres vers naf/risk/action rendaient ce fichier
+-- invalide sur une base neuve depuis la suppression des tables catalogue.
 
 -- App data (consolidated onto Neon, replaces direct browser->Supabase writes).
 -- Column names mirror src/repos/*Repo.ts's toDb()/dbToX() mappers exactly.
@@ -130,8 +59,13 @@ CREATE TABLE IF NOT EXISTS assessments (
   score NUMERIC,
   priority INT,
   created_at TIMESTAMPTZ,
-  updated_at TIMESTAMPTZ
+  updated_at TIMESTAMPTZ,
+  source TEXT,
+  source_url TEXT
 );
+-- Migration pour les bases deja creees avant l'ajout des liens sources (voir REFERENTIELS.md).
+ALTER TABLE assessments ADD COLUMN IF NOT EXISTS source TEXT;
+ALTER TABLE assessments ADD COLUMN IF NOT EXISTS source_url TEXT;
 CREATE INDEX IF NOT EXISTS idx_assessments_org ON assessments(org_id);
 CREATE INDEX IF NOT EXISTS idx_assessments_work_unit ON assessments(work_unit_id);
 
@@ -164,6 +98,9 @@ CREATE TABLE IF NOT EXISTS duerp_versions (
   label TEXT NOT NULL,
   reason TEXT,
   hash TEXT,
+  snapshot JSONB,
   created_at TIMESTAMPTZ
 );
+-- Migration pour les bases deja creees avant l'ajout de l'archivage complet (snapshot).
+ALTER TABLE duerp_versions ADD COLUMN IF NOT EXISTS snapshot JSONB;
 CREATE INDEX IF NOT EXISTS idx_versions_org ON duerp_versions(org_id);

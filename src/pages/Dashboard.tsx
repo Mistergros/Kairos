@@ -8,6 +8,7 @@ import { PriorityBadge } from '../components/Badge';
 import { useDuerpStore } from '../state/store';
 import { ActionItem, Assessment, WorkUnit } from '../types';
 import GanttDUERP, { GanttDUERPInput, GanttRiskItem } from '../components/GanttDUERP';
+import { apiPost } from '../utils/apiClient';
 
 const soon = (actions: ActionItem[]) =>
   actions
@@ -46,8 +47,6 @@ const riskPalette: Record<string, string> = {
   Bruit: '#F58AB0',
 };
 
-const API_BASE = import.meta.env.VITE_DUERP_API_BASE || "http://localhost:8787";
-
 const ONBOARDING_KEY = 'kaijos_welcome_dismissed';
 
 export const Dashboard = () => {
@@ -65,16 +64,11 @@ export const Dashboard = () => {
   const currentEstablishment = establishments.find((e) => e.id === selectedEstablishmentId) || establishments[0];
 
   const sendReminder = useCallback(async (monthsOld: number) => {
-    const email = user?.primaryEmailAddress?.emailAddress;
-    if (!email || !currentEstablishment) return;
+    if (!user || !currentEstablishment) return;
     setReminderStatus("sending");
     try {
-      const res = await fetch(`${API_BASE}/api/reminders/send`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ to: email, establishmentName: currentEstablishment.name, monthsOld }),
-      });
-      setReminderStatus(res.ok ? "sent" : "error");
+      await apiPost("/api/reminders/send", { establishmentName: currentEstablishment.name, monthsOld });
+      setReminderStatus("sent");
     } catch {
       setReminderStatus("error");
     }

@@ -35,6 +35,7 @@ export interface Hazard {
   // vérification (AAAA-MM-JJ). Voir REFERENTIELS.md pour l'état du sourcing.
   source?: string;
   source_verified?: string;
+  sourceUrl?: string;
   sector?: string;
 }
 
@@ -54,6 +55,9 @@ export interface Assessment {
   priority: Priority;
   createdAt: string;
   updatedAt: string;
+  // Document officiel dont ce risque est issu (ex. "INRS ED 6490 — ..."), s'il est connu.
+  source?: string;
+  sourceUrl?: string;
 }
 
 export interface ActionItem {
@@ -75,6 +79,12 @@ export interface ActionItem {
   createdAt: string;
 }
 
+export interface VersionSnapshot {
+  workUnits: WorkUnit[];
+  assessments: Assessment[];
+  actions: ActionItem[];
+}
+
 export interface VersionEntry {
   id: string;
   establishmentId: string;
@@ -82,4 +92,5 @@ export interface VersionEntry {
   reason?: string;
   hash: string;
   createdAt: string;
+  snapshot?: VersionSnapshot;
 }

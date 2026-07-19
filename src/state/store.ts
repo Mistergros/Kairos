@@ -295,8 +295,13 @@ export const useDuerpStore = create<DUERPState>()(
           actions: state.actions.map((a) => {
             if (a.id !== id) return a;
             const next = { ...a, ...payload };
+            let status = next.status;
+            if (payload.steps && payload.steps.length > 0) {
+              const doneCount = payload.steps.filter((s) => s.done).length;
+              status = doneCount === 0 ? "TO_DO" : doneCount === payload.steps.length ? "DONE" : "IN_PROGRESS";
+            }
             const endTime = next.endDate ? new Date(next.endDate).getTime() : undefined;
-            return { ...next, status: endTime !== undefined && endTime < now && next.status !== "DONE" ? "LATE" : next.status };
+            return { ...next, status: endTime !== undefined && endTime < now && status !== "DONE" ? "LATE" : status };
           }),
         }));
         const { orgId, actions } = get();
@@ -323,12 +328,19 @@ export const useDuerpStore = create<DUERPState>()(
       },
 
       toggleActionStep: (actionId, stepId) => {
+        const now = Date.now();
         set((state) => ({
-          actions: state.actions.map((a) =>
-            a.id === actionId
-              ? { ...a, steps: a.steps?.map((s) => (s.id === stepId ? { ...s, done: !s.done } : s)) }
-              : a
-          ),
+          actions: state.actions.map((a) => {
+            if (a.id !== actionId) return a;
+            const steps = a.steps?.map((s) => (s.id === stepId ? { ...s, done: !s.done } : s)) || [];
+            let status = a.status;
+            if (steps.length > 0) {
+              const doneCount = steps.filter((s) => s.done).length;
+              status = doneCount === 0 ? "TO_DO" : doneCount === steps.length ? "DONE" : "IN_PROGRESS";
+            }
+            const endTime = a.endDate ? new Date(a.endDate).getTime() : undefined;
+            return { ...a, steps, status: endTime !== undefined && endTime < now && status !== "DONE" ? "LATE" : status };
+          }),
         }));
         const { orgId, actions } = get();
         if (orgId) {
@@ -339,13 +351,25 @@ export const useDuerpStore = create<DUERPState>()(
 
       createVersion: (label, reason) => {
         const state = get();
+        const establishmentId = state.selectedEstablishmentId || state.establishments[0].id;
+        const workUnits = state.workUnits.filter((u) => u.establishmentId === establishmentId);
+        const workUnitIds = new Set(workUnits.map((u) => u.id));
+        const assessments = state.assessments.filter((a) => workUnitIds.has(a.workUnitId));
+        const assessmentIds = new Set(assessments.map((a) => a.id));
+        const actions = state.actions.filter(
+          (a) => a.establishmentId === establishmentId || (a.assessmentId && assessmentIds.has(a.assessmentId))
+        );
         const newVersion: VersionEntry = {
           id: uid(),
-          establishmentId: state.selectedEstablishmentId || state.establishments[0].id,
+          establishmentId,
           label,
           reason,
-          hash: btoa(JSON.stringify(state.assessments)).slice(0, 18),
+          hash: btoa(JSON.stringify(assessments)).slice(0, 18),
           createdAt: new Date().toISOString(),
+          // Instantané complet et immuable : permet de reconstituer le DUERP tel qu'il
+          // était à cette date (obligation légale), indépendamment des modifications
+          // ultérieures des unités/risques/actions ou du catalogue.
+          snapshot: { workUnits, assessments, actions },
         };
         set({ versions: [...state.versions, newVersion] });
         const { orgId } = get();
@@ -368,10 +392,10 @@ export const useDuerpStore = create<DUERPState>()(
           set({
             ...result,
             prefillWarning: usedGenericFallback
-              ? "Catalogue de risques par secteur indisponible pour le moment : liste générique proposée ci-dessous, à affiner manuellement."
+              ? "Aucun risque spécifique à votre secteur trouvé : liste générique proposée ci-dessous, à affiner manuellement."
               : null,
           });
-          // Sync new assessments + actions to Supabase
+          // Sync new assessments + actions vers l'API (Neon)
           const { orgId } = get();
           if (orgId) {
             result.assessments?.forEach((a) => sync(() => upsertAssessment(orgId, a)));

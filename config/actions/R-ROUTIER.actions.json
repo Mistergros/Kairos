@@ -8,8 +8,24 @@
     "impact": "Réduction de l'exposition au risque routier (1ère cause d'accidents mortels du travail en France). Véhicules en bon état mécanique. Limitation de la fatigue des conducteurs.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "naf_specific": ["49", "52", "62", "69", "71", "45"],
-    "references": ["INRS ED 6028", "Code de la route L.412-6bis", "Accord de branche transport"]
+    "naf_specific": [
+      "49",
+      "52",
+      "62",
+      "69",
+      "71",
+      "45"
+    ],
+    "references": [
+      "INRS ED 6028",
+      "Code de la route L.412-6bis",
+      "Accord de branche transport"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6028",
+      "",
+      ""
+    ]
   },
   {
     "id": "A-R-ROUTIER-002",
@@ -20,7 +36,14 @@
     "impact": "Réduction des accidents de la route professionnels de 20 à 30% sur 3 ans constatée en entreprise. Économies de carburant de 10-15%. Réduction des coûts d'assurance véhicule.",
     "difficulty": "Faible",
     "cost": "Moyen",
-    "references": ["INRS ED 6028", "Référentiel conduite préventive IBSR"]
+    "references": [
+      "INRS ED 6028",
+      "Référentiel conduite préventive IBSR"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6028",
+      ""
+    ]
   },
   {
     "id": "A-R-ROUTIER-003",
@@ -31,8 +54,18 @@
     "impact": "Élimination de la pression temporelle comme facteur de prise de risque. Réduction de la fatigue de conduite. Conformité réglementaire (règlement CE 561/2006).",
     "difficulty": "Moyenne",
     "cost": "Faible",
-    "naf_specific": ["49", "52"],
-    "references": ["Règlement CE 561/2006", "INRS ED 6084"]
+    "naf_specific": [
+      "49",
+      "52"
+    ],
+    "references": [
+      "Règlement CE 561/2006",
+      "INRS ED 6084"
+    ],
+    "referenceUrls": [
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6084"
+    ]
   },
   {
     "id": "A-R-ROUTIER-004",
@@ -43,6 +76,13 @@
     "impact": "Protection lors des pannes et accidents sur route. Réduction du risque de suraccident (collision par un tiers). Conformité au code de la route.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "references": ["Code de la route R.416-19", "EN 471"]
+    "references": [
+      "Code de la route R.416-19",
+      "EN 471"
+    ],
+    "referenceUrls": [
+      "",
+      ""
+    ]
   }
 ]

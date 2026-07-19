@@ -1,38 +1,6 @@
-import { Hazard } from "../types";
-
-// Base API : l'hôte du serveur, sans suffixe — chaque appel ajoute son propre
-// préfixe /api/... (comme dans src/services/duerpApi.ts, même convention).
-const API_BASE =
-  import.meta.env.VITE_DUERP_API_BASE ||
-  (typeof window !== "undefined" ? window.location.origin : "");
-
 const COMPANY_API =
   import.meta.env.VITE_COMPANY_API ||
   "/api/companies";
-
-const fetchJson = async <T>(path: string): Promise<T> => {
-  const res = await fetch(`${API_BASE}${path}`);
-  if (!res.ok) throw new Error(`API ${path} en erreur (${res.status})`);
-  return (await res.json()) as T;
-};
-
-// Catalogue des risques (depuis Supabase via l'API Next).
-// Ne pas avaler l'erreur ici : l'appelant (prefillService) doit savoir si le
-// catalogue distant a réellement échoué pour pouvoir prévenir l'utilisateur
-// plutôt que de basculer sur un repli générique sans le signaler.
-export const fetchHazardsFromSources = async (sector?: string, naf?: string): Promise<Hazard[]> => {
-  const catalog = await fetchJson<{ id: string; family: string; name: string; description?: string }[]>(
-    "/api/catalog/risks"
-  );
-  return catalog.map((r) => ({
-    id: r.id,
-    category: r.family || "Risque",
-    risk: r.name,
-    damages: r.description || "",
-    source: "Supabase",
-    sector: naf || sector || "",
-  }));
-};
 
 export type CompanySearchHit = {
   id: string;

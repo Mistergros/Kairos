@@ -261,7 +261,7 @@ export function printDuerpDocument(data: PrintData): void {
     doc.setFontSize(7);
     doc.setTextColor(150, 150, 150);
     doc.text(
-      `Kaijos by Milante Consulting — ${establishment?.name || ""} — Édité le ${today} — Page ${i} / ${totalPages}`,
+      `Kaijos — ${establishment?.name || ""} — Édité le ${today} — Page ${i} / ${totalPages}`,
       pageW / 2,
       pageH - 5,
       { align: "center" }
@@ -360,7 +360,7 @@ export function printDuerpSimplified(data: PrintData): void {
     doc.setPage(i);
     doc.setFontSize(7);
     doc.setTextColor(150, 150, 150);
-    doc.text(`Kaijos by Milante Consulting — ${today} — Page ${i}/${totalPages}`, pageW / 2, 290, { align: "center" });
+    doc.text(`Kaijos — ${today} — Page ${i}/${totalPages}`, pageW / 2, 290, { align: "center" });
   }
 
   doc.save(`DUERP_simplifie_${(establishment?.name || "tpe").replace(/\s+/g, "_")}_${new Date().getFullYear()}.pdf`);
@@ -445,7 +445,7 @@ export function printDuerpMultiSites(data: MultiSiteData): void {
     doc.setPage(i);
     doc.setFontSize(7);
     doc.setTextColor(150, 150, 150);
-    doc.text(`Kaijos by Milante Consulting — Rapport multi-sites — ${today} — Page ${i}/${totalPages}`, pageW / 2, (doc.internal.pageSize.getHeight()) - 5, { align: "center" });
+    doc.text(`Kaijos — Rapport multi-sites — ${today} — Page ${i}/${totalPages}`, pageW / 2, (doc.internal.pageSize.getHeight()) - 5, { align: "center" });
   }
 
   doc.save(`DUERP_multi_sites_${new Date().getFullYear()}.pdf`);

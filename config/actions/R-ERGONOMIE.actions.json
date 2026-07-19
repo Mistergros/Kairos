@@ -8,7 +8,16 @@
     "impact": "Identification exhaustive des facteurs de risque ergonomiques. Base solide pour les investissements de prévention. Implication des salariés dans l'amélioration de leurs conditions de travail.",
     "difficulty": "Moyenne",
     "cost": "Moyen",
-    "references": ["INRS ED 6161", "Méthode RULA (McAtamney & Corlett)", "ANACT guide ergonomie"]
+    "references": [
+      "INRS ED 6161",
+      "Méthode RULA (McAtamney & Corlett)",
+      "ANACT guide ergonomie"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6161",
+      "",
+      ""
+    ]
   },
   {
     "id": "A-R-ERGONOMIE-002",
@@ -19,7 +28,16 @@
     "impact": "Suppression des contraintes biomécaniques à la source. Réduction immédiate de la fatigue musculaire et articulaire. Amélioration du confort et de la productivité sur les postes modifiés.",
     "difficulty": "Moyenne",
     "cost": "Élevé",
-    "references": ["INRS ED 6161", "NF EN ISO 9241-5 (postures de travail)", "CARSAT guide ergonomie industrie"]
+    "references": [
+      "INRS ED 6161",
+      "NF EN ISO 9241-5 (postures de travail)",
+      "CARSAT guide ergonomie industrie"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6161",
+      "",
+      ""
+    ]
   },
   {
     "id": "A-R-ERGONOMIE-003",
@@ -30,7 +48,14 @@
     "impact": "Salariés capables d'optimiser eux-mêmes leur poste. Managers attentifs aux conditions de travail. Pérennisation des bonnes pratiques au-delà des interventions ponctuelles.",
     "difficulty": "Faible",
     "cost": "Moyen",
-    "references": ["INRS PRAP", "ANACT formation ergonomie"]
+    "references": [
+      "INRS PRAP",
+      "ANACT formation ergonomie"
+    ],
+    "referenceUrls": [
+      "",
+      ""
+    ]
   },
   {
     "id": "A-R-ERGONOMIE-004",
@@ -41,6 +66,15 @@
     "impact": "Prévention des contraintes ergonomiques dès la conception (10 fois moins coûteux que de corriger après installation). Équipements adaptés aux utilisateurs réels. Réduction des reconceptions coûteuses.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "references": ["INRS ED 6093", "ANACT guide conception participative", "Code du travail R.4311-1"]
+    "references": [
+      "INRS ED 6093",
+      "ANACT guide conception participative",
+      "Code du travail R.4311-1"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6093",
+      "",
+      ""
+    ]
   }
 ]

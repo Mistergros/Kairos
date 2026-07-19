@@ -2,6 +2,7 @@ import { ChangeEvent, Fragment, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card } from "../components/Card";
 import { PriorityBadge } from "../components/Badge";
+import { InfoHint } from "../components/Tooltip";
 import { useDuerpStore } from "../state/store";
 import { Assessment, Priority } from "../types";
 
@@ -433,11 +434,21 @@ export const Inventory = () => {
             />
             <button
               className="rounded-xl bg-ocean px-3 py-2 text-sm font-semibold text-white shadow-sm disabled:opacity-60"
-              onClick={() => prefillFromSector(sectorInput)}
+              onClick={() => {
+                if (
+                  currentAssessments.length > 0 &&
+                  !window.confirm(
+                    `Cette unité a déjà ${currentAssessments.length} risque(s). Relancer le pré-remplissage va en ajouter de nouveaux sans supprimer les existants. Continuer ?`
+                  )
+                ) {
+                  return;
+                }
+                prefillFromSector(sectorInput);
+              }}
               disabled={loadingHazards}
-              title="Ajoute les risques generiques + ceux du secteur/NAF"
+              title="Ajoute les risques génériques + ceux du secteur/NAF"
             >
-              Pre-remplir risques (NAF/secteur)
+              Pré-remplir risques (NAF/secteur)
             </button>
           </div>
           <select
@@ -511,7 +522,21 @@ export const Inventory = () => {
                         onClick={() => openQuestionnaire(a.id)}
                       >
                         <td className="px-4 py-3">
-                          <div className="font-semibold text-slate-900">{a.riskLabel}</div>
+                          <div className="flex items-center gap-1.5">
+                            <span className="font-semibold text-slate-900">{a.riskLabel}</span>
+                            {a.sourceUrl && (
+                              <a
+                                href={a.sourceUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={(e) => e.stopPropagation()}
+                                title={a.source ? `Source : ${a.source}` : "Voir la source officielle"}
+                                className="text-slate/30 hover:text-ocean transition"
+                              >
+                                🔗
+                              </a>
+                            )}
+                          </div>
                           <div className="text-xs text-slate/50">{cat}</div>
                         </td>
                         <td className="px-4 py-3">
@@ -544,6 +569,24 @@ export const Inventory = () => {
                                   Cotation (G × F / M)
                                 </p>
                                 {a.damages && <p className="text-xs text-slate/60 mb-3">{a.damages}</p>}
+                                {a.source && (
+                                  <p className="text-xs text-slate/50 mb-3">
+                                    Source :{" "}
+                                    {a.sourceUrl ? (
+                                      <a
+                                        href={a.sourceUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        onClick={(e) => e.stopPropagation()}
+                                        className="text-ocean hover:underline"
+                                      >
+                                        {a.source}
+                                      </a>
+                                    ) : (
+                                      a.source
+                                    )}
+                                  </p>
+                                )}
                                 <div className="flex flex-wrap items-end gap-3">
                                   {(["gravity", "frequency", "control"] as const).map((field) => (
                                     <label key={field} className="text-xs text-slate/60">
@@ -559,6 +602,7 @@ export const Inventory = () => {
                                   ))}
                                   <div className="text-xs text-slate/60">
                                     Score
+                                    <InfoHint text="Score = Gravité × Fréquence ÷ Maîtrise. Plus il est élevé, plus la priorité (P1-P4) est haute." />
                                     <div className="mt-1 font-semibold text-slate-900">{a.score}</div>
                                   </div>
                                 </div>

@@ -8,8 +8,21 @@
     "impact": "Suppression du risque de chute mortelle. Conformité réglementaire (Code du travail R.4323-58). Réduction drastique des AT graves liés aux chutes de hauteur (1ère cause de mortalité au travail).",
     "difficulty": "Faible",
     "cost": "Moyen",
-    "naf_specific": ["41", "42", "43", "45", "52"],
-    "references": ["INRS ED 131", "Code du travail R.4323-58 à R.4323-90"]
+    "naf_specific": [
+      "41",
+      "42",
+      "43",
+      "45",
+      "52"
+    ],
+    "references": [
+      "INRS ED 131",
+      "Code du travail R.4323-58 à R.4323-90"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+131",
+      ""
+    ]
   },
   {
     "id": "A-R-CHUTE-HAUTEUR-002",
@@ -20,8 +33,19 @@
     "impact": "Préparation rigoureuse des interventions. Réduction des prises de risque liées aux urgences. Responsabilité juridique partagée et documentée.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "naf_specific": ["41", "42", "43"],
-    "references": ["INRS ED 941", "Code du travail R.4512-6"]
+    "naf_specific": [
+      "41",
+      "42",
+      "43"
+    ],
+    "references": [
+      "INRS ED 941",
+      "Code du travail R.4512-6"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+941",
+      ""
+    ]
   },
   {
     "id": "A-R-CHUTE-HAUTEUR-003",
@@ -32,7 +56,16 @@
     "impact": "Réduction des comportements à risque (utilisation incorrecte d'échelle). Conformité réglementaire (habilitation PEMP obligatoire). Personnel compétent et responsabilisé.",
     "difficulty": "Moyenne",
     "cost": "Moyen",
-    "references": ["CACES R408", "CACES R486", "INRS ED 6087"]
+    "references": [
+      "CACES R408",
+      "CACES R486",
+      "INRS ED 6087"
+    ],
+    "referenceUrls": [
+      "",
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6087"
+    ]
   },
   {
     "id": "A-R-CHUTE-HAUTEUR-004",
@@ -43,7 +76,21 @@
     "impact": "Protection individuelle en dernier recours. Limite les conséquences d'une chute (arrêt de la chute). Conformité réglementaire pour les travaux en toiture.",
     "difficulty": "Moyenne",
     "cost": "Moyen",
-    "naf_specific": ["41", "43"],
-    "references": ["INRS ED 6087", "EN 361", "EN 795", "Code du travail R.4323-95"]
+    "naf_specific": [
+      "41",
+      "43"
+    ],
+    "references": [
+      "INRS ED 6087",
+      "EN 361",
+      "EN 795",
+      "Code du travail R.4323-95"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6087",
+      "",
+      "",
+      ""
+    ]
   }
 ]

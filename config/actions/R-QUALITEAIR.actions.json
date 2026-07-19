@@ -8,7 +8,16 @@
     "impact": "Identification précise des polluants de l'air intérieur. Priorisation des mesures correctives. Réduction des symptômes du syndrome des bâtiments malsains (maux de tête, fatigue, irritations).",
     "difficulty": "Faible",
     "cost": "Moyen",
-    "references": ["ANSES valeurs guides QAI", "Décret 2012-14 (ERP)", "INRS ED 6123"]
+    "references": [
+      "ANSES valeurs guides QAI",
+      "Décret 2012-14 (ERP)",
+      "INRS ED 6123"
+    ],
+    "referenceUrls": [
+      "",
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6123"
+    ]
   },
   {
     "id": "A-R-QUALITEAIR-002",
@@ -19,8 +28,24 @@
     "impact": "Maintien d'un renouvellement d'air suffisant. Réduction des concentrations en CO2 (objectif < 1000 ppm). Prévention du développement de moisissures et de légionelles. Amélioration du confort thermique et de la concentration.",
     "difficulty": "Faible",
     "cost": "Moyen",
-    "naf_specific": ["62", "64", "84", "86", "69", "70"],
-    "references": ["NF EN 16798", "INRS ED 6030", "Décret 2004-964 légionelles"]
+    "naf_specific": [
+      "62",
+      "64",
+      "84",
+      "86",
+      "69",
+      "70"
+    ],
+    "references": [
+      "NF EN 16798",
+      "INRS ED 6030",
+      "Arrêté du 1er février 2010 — Surveillance des légionelles dans les installations d'eau chaude sanitaire"
+    ],
+    "referenceUrls": [
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6030",
+      "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000021795143"
+    ]
   },
   {
     "id": "A-R-QUALITEAIR-003",
@@ -31,8 +56,23 @@
     "impact": "Réduction à la source des émissions de COV et de particules fines. Amélioration durable de la qualité de l'air sans nécessiter une augmentation permanente de la ventilation.",
     "difficulty": "Moyenne",
     "cost": "Faible",
-    "naf_specific": ["62", "64", "84", "41", "43"],
-    "references": ["INRS ED 6123", "ANSES guide QAI", "Label Ecolabel pour produits d'entretien"]
+    "naf_specific": [
+      "62",
+      "64",
+      "84",
+      "41",
+      "43"
+    ],
+    "references": [
+      "INRS ED 6123",
+      "ANSES guide QAI",
+      "Label Ecolabel pour produits d'entretien"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6123",
+      "",
+      ""
+    ]
   },
   {
     "id": "A-R-QUALITEAIR-004",
@@ -43,6 +83,15 @@
     "impact": "Réduction immédiate et à faible coût du confinement. Amélioration de la concentration et réduction de la fatigue (le CO2 > 1000 ppm réduit la productivité). Action préventive simple et reproductible.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "references": ["INRS ED 6123", "ADEME aération logements et bureaux", "Valeur guide CO2 ANSES 1000-1500 ppm"]
+    "references": [
+      "INRS ED 6123",
+      "ADEME aération logements et bureaux",
+      "Valeur guide CO2 ANSES 1000-1500 ppm"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6123",
+      "",
+      ""
+    ]
   }
 ]

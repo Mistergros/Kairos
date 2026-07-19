@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, NavLink, Navigate } from "react-router-dom";
 import { useMemo, useState, useEffect, type ReactNode } from "react";
 import { useUser } from "@clerk/clerk-react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, HelpCircle } from "lucide-react";
 import { LayoutDashboard, Building2, ShieldCheck, ListChecks, Download, Clock3, CreditCard, UserCircle } from "lucide-react";
 import { Dashboard } from "./pages/Dashboard";
 import { Units } from "./pages/Units";
@@ -14,17 +14,22 @@ import LandingPage from "./pages/Landing";
 import AccountPage from "./pages/Account";
 import SignInPage from "./pages/SignIn";
 import SignUpPage from "./pages/SignUp";
+import LegalPage from "./pages/Legal";
+import PrivacyPage from "./pages/Privacy";
+import TermsPage from "./pages/Terms";
+import SupportPage from "./pages/Support";
 import { ContextSelectors } from "./components/Selectors";
 import { Onboarding } from "./components/Onboarding";
+import { ProductTour, useTourControls } from "./components/ProductTour";
 import { useDuerpStore } from "./state/store";
 import { DuerpResults } from "./pages/DuerpResults";
 
-const navItems = [
+const navItems: { path: string; label: string; icon: typeof LayoutDashboard; end?: boolean; tourId?: string }[] = [
   { path: "/", label: "Tableau de bord", icon: LayoutDashboard, end: true },
-  { path: "/units", label: "Unités de travail", icon: Building2 },
-  { path: "/inventory", label: "Inventaire", icon: ShieldCheck },
-  { path: "/action-plan", label: "Plan d'action", icon: ListChecks },
-  { path: "/exports", label: "Exports", icon: Download },
+  { path: "/units", label: "Unités de travail", icon: Building2, tourId: "nav-units" },
+  { path: "/inventory", label: "Inventaire", icon: ShieldCheck, tourId: "nav-inventory" },
+  { path: "/action-plan", label: "Plan d'action", icon: ListChecks, tourId: "nav-action-plan" },
+  { path: "/exports", label: "Exports", icon: Download, tourId: "nav-exports" },
   { path: "/versions", label: "Versions", icon: Clock3 },
   { path: "/pricing", label: "Plans & Tarifs", icon: CreditCard },
   { path: "/mon-compte", label: "Mon compte", icon: UserCircle },
@@ -53,7 +58,8 @@ function RequireSubscription({ children }: { children: ReactNode }) {
   if (bypassAuth) return <>{children}</>;
   if (!isLoaded) return <FullPageLoader />;
   if (!isSignedIn) return <Navigate to="/landing" replace />;
-  // Toujours laisser passer si connecté — le paywall sera géré plus tard
+  const status = (user?.publicMetadata as any)?.subscriptionStatus;
+  if (status !== "active") return <Navigate to="/pricing" replace />;
   return <>{children}</>;
 }
 
@@ -97,11 +103,12 @@ function DashboardRoutes() {
     : "Aucune mise à jour";
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { restart: restartTour } = useTourControls();
 
   const SidebarContent = () => (
     <div className="px-5 py-6 h-full flex flex-col">
       <div className="flex items-center justify-between">
-        <img src="/Kaijos_logo.png" alt="Kaijos" className="h-[160px] w-auto object-contain drop-shadow-lg" />
+        <img data-tour="sidebar-logo" src="/Kaijos_logo.png" alt="Kaijos" className="h-[160px] w-auto object-contain drop-shadow-lg" />
         <button className="md:hidden text-white/70 hover:text-white" onClick={() => setSidebarOpen(false)}>
           <X size={20} />
         </button>
@@ -114,6 +121,7 @@ function DashboardRoutes() {
               key={item.path}
               to={item.path}
               end={item.end}
+              data-tour={item.tourId}
               onClick={() => setSidebarOpen(false)}
               className={({ isActive }) =>
                 `flex items-center gap-3 rounded-xl px-3 py-2 transition hover:bg-white/10 ${
@@ -126,6 +134,14 @@ function DashboardRoutes() {
           );
         })}
       </div>
+      <button
+        data-tour="tour-relaunch"
+        onClick={restartTour}
+        title="Revoir la visite guidée"
+        className="mt-auto flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium text-white/60 hover:bg-white/10 hover:text-white/90 transition"
+      >
+        <HelpCircle size={16} /> Revoir la visite guidée
+      </button>
     </div>
   );
 
@@ -156,25 +172,27 @@ function DashboardRoutes() {
           </button>
           <div className="flex-1 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
           <div>
-            <p className="text-xs uppercase tracking-wide text-slate/60">Kaijos - by Milante Consulting</p>
             <p className="text-xs text-slate/60">
               Dernière MAJ : {lastUpdateLabel}
               {syncStatus === "syncing" && <span className="ml-2 text-ocean animate-pulse">● Sync…</span>}
               {syncStatus === "error" && <span className="ml-2 text-amber-500" title="Données locales — reconnexion en attente">● Hors ligne</span>}
             </p>
           </div>
-          <ContextSelectors
-            establishments={establishments}
-            workUnits={workUnits}
-            selectedEstablishmentId={selectedEstablishmentId}
-            selectedWorkUnitId={selectedWorkUnitId}
-            onSelectEstablishment={setSelectedEstablishment}
-            onSelectWorkUnit={setSelectedWorkUnit}
-          />
+          <div data-tour="context-selector">
+            <ContextSelectors
+              establishments={establishments}
+              workUnits={workUnits}
+              selectedEstablishmentId={selectedEstablishmentId}
+              selectedWorkUnitId={selectedWorkUnitId}
+              onSelectEstablishment={setSelectedEstablishment}
+              onSelectWorkUnit={setSelectedWorkUnit}
+            />
+          </div>
           </div>
         </header>
 
         <Onboarding />
+        <ProductTour establishmentsCount={establishments.length} />
         <div className="px-4 py-6 md:px-8">
           <Routes>
             <Route path="/" element={<Dashboard />} />
@@ -183,7 +201,6 @@ function DashboardRoutes() {
             <Route path="/action-plan" element={<ActionPlan />} />
             <Route path="/exports" element={<Exports />} />
             <Route path="/versions" element={<Versions />} />
-            <Route path="/pricing" element={<Pricing />} />
             <Route path="/duerp-results" element={<DuerpResults />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
@@ -200,11 +217,23 @@ export default function App() {
         <Route path="/landing" element={<LandingPage />} />
         <Route path="/sign-in/*" element={<SignInPage />} />
         <Route path="/sign-up/*" element={<SignUpPage />} />
+        <Route path="/legal" element={<LegalPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/cgv" element={<TermsPage />} />
+        <Route path="/support" element={<SupportPage />} />
         <Route
           path="/mon-compte"
           element={
             <RequireAuth>
               <AccountPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/pricing"
+          element={
+            <RequireAuth>
+              <Pricing />
             </RequireAuth>
           }
         />

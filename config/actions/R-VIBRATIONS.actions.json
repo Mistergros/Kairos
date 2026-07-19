@@ -8,8 +8,25 @@
     "impact": "Connaissance précise des niveaux d'exposition. Identification des postes dépassant les valeurs d'action réglementaires. Base solide pour le plan de réduction et le suivi médical.",
     "difficulty": "Moyenne",
     "cost": "Moyen",
-    "naf_specific": ["41", "42", "43", "28", "01"],
-    "references": ["EN ISO 5349", "ISO 2631", "Décret 2005-746", "INRS ED 6018"]
+    "naf_specific": [
+      "41",
+      "42",
+      "43",
+      "28",
+      "01"
+    ],
+    "references": [
+      "EN ISO 5349",
+      "ISO 2631",
+      "Décret 2005-746",
+      "INRS ED 6018"
+    ],
+    "referenceUrls": [
+      "",
+      "",
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6018"
+    ]
   },
   {
     "id": "A-R-VIBRATIONS-002",
@@ -20,8 +37,23 @@
     "impact": "Réduction des niveaux de vibrations à la source. Prévention des TMS liés aux vibrations (syndrome de Raynaud professionnel, lésions ostéo-articulaires). Économies de maintenance par détection précoce des défaillances mécaniques.",
     "difficulty": "Élevée",
     "cost": "Élevé",
-    "naf_specific": ["41", "42", "43", "01", "28"],
-    "references": ["INRS ED 6018", "Guide OPPBTP vibrations chantier", "Décret 2005-746"]
+    "naf_specific": [
+      "41",
+      "42",
+      "43",
+      "01",
+      "28"
+    ],
+    "references": [
+      "INRS ED 6018",
+      "Guide OPPBTP vibrations chantier",
+      "Décret 2005-746"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6018",
+      "",
+      ""
+    ]
   },
   {
     "id": "A-R-VIBRATIONS-003",
@@ -32,7 +64,16 @@
     "impact": "Réduction de l'exposition cumulative sous la valeur d'action réglementaire. Prévention du syndrome des vibrations mains-bras (maladie professionnelle tableau 69C). Maintien de la productivité par répartition du travail sur plusieurs opérateurs.",
     "difficulty": "Moyenne",
     "cost": "Faible",
-    "references": ["INRS ED 6018", "Calculateur exposition vibrations INRS", "Décret 2005-746"]
+    "references": [
+      "INRS ED 6018",
+      "Calculateur exposition vibrations INRS",
+      "Décret 2005-746"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6018",
+      "",
+      ""
+    ]
   },
   {
     "id": "A-R-VIBRATIONS-004",
@@ -43,7 +84,21 @@
     "impact": "Protection individuelle contre les vibrations résiduelles. Détection précoce des atteintes vasculaires et nerveuses. Prise en charge et reclassement avant apparition des symptômes irréversibles du syndrome vibratoire.",
     "difficulty": "Faible",
     "cost": "Moyen",
-    "naf_specific": ["41", "42", "43", "28"],
-    "references": ["EN ISO 10819", "Tableau MP 69C", "Code du travail R.4447-1 SMR vibrations"]
+    "naf_specific": [
+      "41",
+      "42",
+      "43",
+      "28"
+    ],
+    "references": [
+      "EN ISO 10819",
+      "Tableau MP 69C",
+      "Code du travail R.4447-1 SMR vibrations"
+    ],
+    "referenceUrls": [
+      "",
+      "",
+      ""
+    ]
   }
 ]

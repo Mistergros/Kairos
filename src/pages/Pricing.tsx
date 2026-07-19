@@ -44,9 +44,17 @@ export function Pricing() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="text-center">
-        <p className="text-xs uppercase tracking-widest text-slate/60 mb-1">Kaijos — by Milante Consulting</p>
+    <div className="min-h-screen bg-[radial-gradient(circle_at_20%_20%,rgba(91,97,246,0.08),transparent_35%),linear-gradient(135deg,rgba(91,97,246,0.08),rgba(0,179,255,0.12))]">
+      <div className="mx-auto max-w-5xl space-y-6 px-4 py-10 md:px-8">
+        <div className="flex items-center justify-between">
+          <a href="/" title="Retour au tableau de bord">
+            <img src="/Kaijos_logo.png" alt="Kaijos" className="h-16 w-auto object-contain transition hover:opacity-80" />
+          </a>
+          <a href="/mon-compte" className="text-sm font-semibold text-kairos hover:underline">
+            Mon compte
+          </a>
+        </div>
+        <div className="text-center">
         <h1 className="text-3xl font-extrabold text-ink">Plans & Tarifs</h1>
         <p className="mt-2 text-slate/60 text-sm">Engagez-vous annuellement et économisez 2 mois.</p>
 
@@ -137,6 +145,7 @@ export function Pricing() {
       <p className="text-center text-xs text-slate/50 pt-2">
         Résiliation à tout moment depuis votre espace compte. Paiement sécurisé via Stripe.
       </p>
+      </div>
     </div>
   );
 }

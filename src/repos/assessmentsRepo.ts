@@ -18,6 +18,8 @@ export function dbToAssessment(row: any): Assessment {
     priority: row.priority,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
+    source: row.source,
+    sourceUrl: row.source_url,
   };
 }
 

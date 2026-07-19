@@ -8,8 +8,23 @@
     "impact": "Réduction du risque de coup de chaleur (potentiellement mortel > 40°C intérieur). Prise en charge rapide des premiers signes d'hyperthermie. Engagement de l'employeur documenté.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "naf_specific": ["41", "42", "43", "01", "02"],
-    "references": ["INRS canicule", "Plan national canicule DGOS", "Code du travail R.4121-1"]
+    "naf_specific": [
+      "41",
+      "42",
+      "43",
+      "01",
+      "02"
+    ],
+    "references": [
+      "INRS canicule",
+      "Plan national canicule DGOS",
+      "Code du travail R.4121-1"
+    ],
+    "referenceUrls": [
+      "",
+      "",
+      ""
+    ]
   },
   {
     "id": "A-R-CANICULE-002",
@@ -20,8 +35,21 @@
     "impact": "Réduction de la charge thermique cumulée. Prévention des hyperthermies d'effort. Maintien de la productivité dans des conditions acceptables pour les salariés.",
     "difficulty": "Moyenne",
     "cost": "Faible",
-    "naf_specific": ["41", "42", "43", "01", "02"],
-    "references": ["INRS canicule travail extérieur", "Recommandations DGT 2023"]
+    "naf_specific": [
+      "41",
+      "42",
+      "43",
+      "01",
+      "02"
+    ],
+    "references": [
+      "INRS canicule travail extérieur",
+      "Recommandations DGT 2023"
+    ],
+    "referenceUrls": [
+      "",
+      ""
+    ]
   },
   {
     "id": "A-R-CANICULE-003",
@@ -32,7 +60,14 @@
     "impact": "Maintien de l'hydratation et de la thermorégulation du corps. Réduction de la température ambiante des postes. Prévention des coups de chaleur par hyperhydratation.",
     "difficulty": "Faible",
     "cost": "Moyen",
-    "references": ["INRS ED 6131", "Code du travail R.4225-2 à R.4225-6"]
+    "references": [
+      "INRS ED 6131",
+      "Code du travail R.4225-2 à R.4225-6"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6131",
+      ""
+    ]
   },
   {
     "id": "A-R-CANICULE-004",
@@ -43,6 +78,15 @@
     "impact": "Reconnaissance précoce des signes permettant d'agir avant la perte de connaissance. Prise en charge rapide réduisant la mortalité par coup de chaleur (taux de mortalité réduit de 40% si refroidissement rapide).",
     "difficulty": "Faible",
     "cost": "Faible",
-    "references": ["INRS fiche canicule", "Samu société guide coup de chaleur", "Plan national canicule"]
+    "references": [
+      "INRS fiche canicule",
+      "Samu société guide coup de chaleur",
+      "Plan national canicule"
+    ],
+    "referenceUrls": [
+      "",
+      "",
+      ""
+    ]
   }
 ]

@@ -8,8 +8,22 @@
     "impact": "Suppression des risques de lombalgies aiguës et chroniques. Élimination des TMS du rachis. Réduction des AT liés à la manutention (15% des AT en France).",
     "difficulty": "Moyenne",
     "cost": "Élevé",
-    "naf_specific": ["52", "47", "10", "41", "45", "38"],
-    "references": ["INRS ED 776", "Code du travail R.4541-2"]
+    "naf_specific": [
+      "52",
+      "47",
+      "10",
+      "41",
+      "45",
+      "38"
+    ],
+    "references": [
+      "INRS ED 6161 — Méthode d'analyse de la charge physique de travail",
+      "Code du travail R.4541-2"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6161",
+      ""
+    ]
   },
   {
     "id": "A-R-MANUTENTION-002",
@@ -20,7 +34,14 @@
     "impact": "Réduction des mauvaises postures. Conformité réglementaire. Amélioration de la sécurité sans investissement lourd.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "references": ["INRS outil NIOSH", "Code du travail R.4541-8"]
+    "references": [
+      "INRS outil NIOSH",
+      "Code du travail R.4541-8"
+    ],
+    "referenceUrls": [
+      "",
+      ""
+    ]
   },
   {
     "id": "A-R-MANUTENTION-003",
@@ -31,7 +52,14 @@
     "impact": "Diminution immédiate des mauvaises postures dès la formation. Réduction des lombalgies professionnelles déclarées à terme.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "references": ["INRS PRAP IBC", "CARSAT formation"]
+    "references": [
+      "INRS PRAP IBC",
+      "CARSAT formation"
+    ],
+    "referenceUrls": [
+      "",
+      ""
+    ]
   },
   {
     "id": "A-R-MANUTENTION-004",
@@ -42,7 +70,18 @@
     "impact": "Réduction des risques de chute et collision. Amélioration de l'ergonomie du poste. Conformité réglementation entrepôts.",
     "difficulty": "Moyenne",
     "cost": "Moyen",
-    "naf_specific": ["52", "47", "10"],
-    "references": ["INRS ED 959", "Code du travail R.4224-2"]
+    "naf_specific": [
+      "52",
+      "47",
+      "10"
+    ],
+    "references": [
+      "INRS ED 959",
+      "Code du travail R.4224-2"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+959",
+      ""
+    ]
   }
 ]

@@ -12,6 +12,7 @@ export const riskLibrary: Hazard[] = [
     damages: 'Brûlure, irritation, allergie',
     example_prevention: 'Substitution produit; captage à la source; EPI (gants, lunettes); information',
     source: "INRS ED 6150 — Travailler avec des produits chimiques. Pensez prévention des risques !",
+    sourceUrl: "https://www.inrs.fr/media.html?refINRS=ED+6150",
     source_verified: '2026-07-19',
   },
   {
@@ -21,6 +22,7 @@ export const riskLibrary: Hazard[] = [
     damages: 'Intoxication, céphalées',
     example_prevention: 'Ventilation/aspiration; confinement; EPI',
     source: "INRS ED 6150 — Travailler avec des produits chimiques. Pensez prévention des risques !",
+    sourceUrl: "https://www.inrs.fr/media.html?refINRS=ED+6150",
     source_verified: '2026-07-19',
   },
   {
@@ -30,6 +32,7 @@ export const riskLibrary: Hazard[] = [
     damages: 'Incendie, intoxication',
     example_prevention: 'Séparer, aérer, rétention, compatibilités',
     source: "INRS ED 6150 — Travailler avec des produits chimiques. Pensez prévention des risques !",
+    sourceUrl: "https://www.inrs.fr/media.html?refINRS=ED+6150",
     source_verified: '2026-07-19',
   },
   {
@@ -39,6 +42,7 @@ export const riskLibrary: Hazard[] = [
     damages: 'Coupure, écrasement',
     example_prevention: 'Carter, arrêt d’urgence, formation',
     source: "INRS ED 6122 — Sécurité des équipements de travail",
+    sourceUrl: "https://www.inrs.fr/media.html?refINRS=ED+6122",
     source_verified: '2026-07-19',
   },
   {
@@ -48,6 +52,7 @@ export const riskLibrary: Hazard[] = [
     damages: 'Coupures, projections',
     example_prevention: 'EPI, consignes, formation, conformité CE',
     source: "INRS ED 6501 — Risques de coupures : solutions de prévention",
+    sourceUrl: "https://www.inrs.fr/media.html?refINRS=ED+6501",
     source_verified: '2026-07-19',
   },
   {
@@ -57,6 +62,7 @@ export const riskLibrary: Hazard[] = [
     damages: 'Électrocution, brûlures',
     example_prevention: 'Habilitation, contrôles périodiques, consignation',
     source: "INRS ED 6187 — La prévention du risque électrique",
+    sourceUrl: "https://www.inrs.fr/media.html?refINRS=ED+6187",
     source_verified: '2026-07-19',
   },
   {
@@ -66,6 +72,7 @@ export const riskLibrary: Hazard[] = [
     damages: 'Incendie',
     example_prevention: 'Remplacement, vérification visuelle, GMAO',
     source: "INRS ED 6187 — La prévention du risque électrique",
+    sourceUrl: "https://www.inrs.fr/media.html?refINRS=ED+6187",
     source_verified: '2026-07-19',
   },
   {
@@ -75,6 +82,7 @@ export const riskLibrary: Hazard[] = [
     damages: 'Brûlures, intoxication',
     example_prevention: 'Suppression sources ignition, mise à la terre, extincteurs',
     source: "INRS ED 4702 — Incendie et explosion sur le lieu de travail",
+    sourceUrl: "https://www.inrs.fr/media.html?refINRS=ED+4702",
     source_verified: '2026-07-19',
   },
   {
@@ -84,6 +92,7 @@ export const riskLibrary: Hazard[] = [
     damages: 'Explosion',
     example_prevention: 'Séparation, procédures, FDS disponibles',
     source: "INRS ED 4702 — Incendie et explosion sur le lieu de travail",
+    sourceUrl: "https://www.inrs.fr/media.html?refINRS=ED+4702",
     source_verified: '2026-07-19',
   },
   {
@@ -93,6 +102,7 @@ export const riskLibrary: Hazard[] = [
     damages: 'TMS, lombalgies',
     example_prevention: 'Aides mécaniques, PRAP, réorganisation',
     source: "INRS ED 6518 — Démarche de prévention des troubles musculosquelettiques (TMS)",
+    sourceUrl: "https://www.inrs.fr/media.html?refINRS=ED+6518",
     source_verified: '2026-07-19',
   },
   {
@@ -102,6 +112,7 @@ export const riskLibrary: Hazard[] = [
     damages: 'Fatigue, chute',
     example_prevention: 'Aménagement poste, formation gestes/postures',
     source: "INRS ED 6518 — Démarche de prévention des troubles musculosquelettiques (TMS)",
+    sourceUrl: "https://www.inrs.fr/media.html?refINRS=ED+6518",
     source_verified: '2026-07-19',
   },
   {
@@ -111,6 +122,7 @@ export const riskLibrary: Hazard[] = [
     damages: 'Collision, écrasement',
     example_prevention: 'Vitesse limitée, marquage, seules personnes habilitées',
     source: "INRS ED 6122 — Sécurité des équipements de travail",
+    sourceUrl: "https://www.inrs.fr/media.html?refINRS=ED+6122",
     source_verified: '2026-07-19',
   },
   {
@@ -120,6 +132,7 @@ export const riskLibrary: Hazard[] = [
     damages: 'Chute de charge',
     example_prevention: 'Contrôle sol, arrimage, vérifications réglementaires',
     source: "INRS ED 6468 — Risques de choc ou d'écrasement, solutions de prévention",
+    sourceUrl: "https://www.inrs.fr/media.html?refINRS=ED+6468",
     source_verified: '2026-07-19',
   },
   {
@@ -128,7 +141,8 @@ export const riskLibrary: Hazard[] = [
     risk: 'Sol glissant/encombré',
     damages: 'Entorses, fractures',
     example_prevention: 'Entretien, dégagement, éclairage, chaussures',
-    source: "INRS ED 6053 — Chutes de plain-pied et de hauteur (+ CARSAT Prévention chutes)",
+    source: "INRS ED 6433 — Les chutes de plain-pied (+ CARSAT Prévention chutes)",
+    sourceUrl: "https://www.inrs.fr/media.html?refINRS=ED+6433",
     source_verified: '2026-07-19',
   },
   {
@@ -138,6 +152,7 @@ export const riskLibrary: Hazard[] = [
     damages: 'Chute de hauteur',
     example_prevention: 'Garde-corps, EPI antichute, escabeaux sécurisés',
     source: "INRS ED 6110 — Prévention des risques de chutes de hauteur",
+    sourceUrl: "https://www.inrs.fr/media.html?refINRS=ED+6110",
     source_verified: '2026-07-19',
   },
   {
@@ -147,6 +162,7 @@ export const riskLibrary: Hazard[] = [
     damages: 'Blessures par chute d’objet',
     example_prevention: 'Limite hauteurs, protections, palettes adaptées',
     source: "INRS ED 6468 — Risques de choc ou d'écrasement, solutions de prévention",
+    sourceUrl: "https://www.inrs.fr/media.html?refINRS=ED+6468",
     source_verified: '2026-07-19',
   },
   {
@@ -156,6 +172,7 @@ export const riskLibrary: Hazard[] = [
     damages: 'Risque sanitaire/contamination',
     example_prevention: 'Mise en conformité, entretien, eau potable',
     source: "Code du travail, art. R.4228-1 — Vestiaires et installations sanitaires",
+    sourceUrl: "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000018532006",
     source_verified: '2026-07-19',
   },
   {
@@ -165,6 +182,7 @@ export const riskLibrary: Hazard[] = [
     damages: 'Fatigue visuelle, erreurs',
     example_prevention: 'Stores, positionnement, réglages',
     source: "INRS ED 6538 — Le travail sur écran, guide pratique pour la prévention des risques",
+    sourceUrl: "https://www.inrs.fr/media.html?refINRS=ED+6538",
     source_verified: '2026-07-19',
   },
   {
@@ -174,6 +192,7 @@ export const riskLibrary: Hazard[] = [
     damages: 'TMS, stress',
     example_prevention: 'Sièges réglables, supports, repose-pieds',
     source: "INRS ED 6538 — Le travail sur écran, guide pratique pour la prévention des risques",
+    sourceUrl: "https://www.inrs.fr/media.html?refINRS=ED+6538",
     source_verified: '2026-07-19',
   },
   {
@@ -183,6 +202,7 @@ export const riskLibrary: Hazard[] = [
     damages: 'Inconfort, baisse concentration',
     example_prevention: 'Traitement acoustique, bouchons, isolement',
     source: "INRS ED 6035 — Évaluer et mesurer l'exposition professionnelle au bruit",
+    sourceUrl: "https://www.inrs.fr/media.html?refINRS=ED+6035",
     source_verified: '2026-07-19',
   },
   {
@@ -192,6 +212,7 @@ export const riskLibrary: Hazard[] = [
     damages: 'Lésions ostéoarticulaires',
     example_prevention: 'Outils antivibratiles, sièges adaptés, pauses',
     source: "INRS ED 6342 — Vibrations mains-bras",
+    sourceUrl: "https://www.inrs.fr/media.html?refINRS=ED+6342",
     source_verified: '2026-07-19',
   },
   {
@@ -201,6 +222,7 @@ export const riskLibrary: Hazard[] = [
     damages: 'Maladie infectieuse',
     example_prevention: 'Vaccination, EPI, procédures de décontamination',
     source: "INRS ED 6034 — Les risques biologiques en milieu professionnel",
+    sourceUrl: "https://www.inrs.fr/media.html?refINRS=ED+6034",
     source_verified: '2026-07-19',
   },
   {
@@ -210,6 +232,7 @@ export const riskLibrary: Hazard[] = [
     damages: 'Stress, épuisement',
     example_prevention: 'Organisation, priorisation, cellule d’écoute',
     source: "INRS ED 6349 — Risques psychosociaux, comment agir en prévention ?",
+    sourceUrl: "https://www.inrs.fr/media.html?refINRS=ED+6349",
     source_verified: '2026-07-19',
   },
   {
@@ -219,6 +242,7 @@ export const riskLibrary: Hazard[] = [
     damages: 'Choc psy, harcèlement',
     example_prevention: 'Signalement, médiation, procédures, formation',
     source: "INRS — Agressions et violences externes, démarche de prévention",
+    sourceUrl: "https://www.inrs.fr/risques/agressions-violences-externes/prevention.html",
     source_verified: '2026-07-19',
   },
   {
@@ -228,6 +252,7 @@ export const riskLibrary: Hazard[] = [
     damages: 'TMS, chutes',
     example_prevention: 'Aménagement, alternance tâches, PRAP',
     source: "INRS ED 79 — Conception et aménagement des postes de travail",
+    sourceUrl: "https://www.inrs.fr/media.html?refINRS=ED+79",
     source_verified: '2026-07-19',
   },
   {
@@ -237,6 +262,7 @@ export const riskLibrary: Hazard[] = [
     damages: 'Accident routier',
     example_prevention: 'Planning, télétravail, entretien véhicule',
     source: "INRS ED 6545 — Le risque routier, les déplacements pour le travail",
+    sourceUrl: "https://www.inrs.fr/media.html?refINRS=ED+6545",
     source_verified: '2026-07-19',
   },
   {
@@ -246,6 +272,7 @@ export const riskLibrary: Hazard[] = [
     damages: 'Accident',
     example_prevention: 'Marge planning, politique sécurité',
     source: "INRS ED 6545 — Le risque routier, les déplacements pour le travail",
+    sourceUrl: "https://www.inrs.fr/media.html?refINRS=ED+6545",
     source_verified: '2026-07-19',
   },
 ];

@@ -108,7 +108,7 @@ export const Exports = () => {
             Génère le Document Unique mis en page — unités, inventaire des risques coté G×F/M, plan d'action avec responsables, bloc de signatures.
           </p>
           <p className="mb-3 text-xs text-slate/50">
-            Une boîte d'impression s'ouvre. Choisissez <strong>"Enregistrer en PDF"</strong> comme imprimante.
+            Le fichier PDF est généré directement et téléchargé — aucune boîte d'impression à configurer.
           </p>
           <button
             onClick={handlePrintPdf}

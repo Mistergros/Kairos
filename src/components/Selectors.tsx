@@ -1,4 +1,5 @@
 ﻿import { Establishment, WorkUnit } from "../types";
+import { InfoHint } from "./Tooltip";
 
 type Props = {
   establishments: Establishment[];
@@ -22,6 +23,7 @@ export const ContextSelectors = ({
     <div className="flex flex-wrap gap-3">
       <label className="text-sm font-semibold text-slate flex items-center gap-2">
         Établissement
+        <InfoHint text="Toutes les pages (inventaire, plan d'action, exports...) n'affichent que les données de l'établissement choisi ici." />
         <select
           className="rounded-xl border border-slate/20 bg-white px-3 py-2 text-sm shadow-sm"
           value={selectedEstablishmentId}
@@ -37,6 +39,7 @@ export const ContextSelectors = ({
       </label>
       <label className="text-sm font-semibold text-slate flex items-center gap-2">
         Unité
+        <InfoHint text="Change d'unité de travail pour voir son propre inventaire de risques." />
         <select
           className="rounded-xl border border-slate/20 bg-white px-3 py-2 text-sm shadow-sm"
           value={selectedWorkUnitId}

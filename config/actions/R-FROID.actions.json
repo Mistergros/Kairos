@@ -8,8 +8,23 @@
     "impact": "Maintien de la thermorégulation corporelle. Prévention des engelures, de l'hypothermie et des maladies vasculaires du froid. Maintien de la dextérité manuelle réduisant le risque d'accidents.",
     "difficulty": "Faible",
     "cost": "Moyen",
-    "naf_specific": ["10", "52", "01"],
-    "references": ["EN 342", "EN 14058", "EN 511", "INRS ED 6113"]
+    "naf_specific": [
+      "10",
+      "52",
+      "01"
+    ],
+    "references": [
+      "EN 342",
+      "EN 14058",
+      "EN 511",
+      "INRS ED 6113"
+    ],
+    "referenceUrls": [
+      "",
+      "",
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6113"
+    ]
   },
   {
     "id": "A-R-FROID-002",
@@ -20,8 +35,18 @@
     "impact": "Réduction de la durée d'exposition cumulée. Récupération thermique régulière. Prévention des effets du froid chronique sur les articulations et les vaisseaux sanguins.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "naf_specific": ["10", "52"],
-    "references": ["INRS ED 6113", "Recommandations CARSAT travail au froid"]
+    "naf_specific": [
+      "10",
+      "52"
+    ],
+    "references": [
+      "INRS ED 6113",
+      "Recommandations CARSAT travail au froid"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6113",
+      ""
+    ]
   },
   {
     "id": "A-R-FROID-003",
@@ -32,8 +57,20 @@
     "impact": "Prévention du risque d'enfermement accidentel dans les chambres froides (risque mortel). Maintien de l'efficacité thermique des équipements. Réduction des déperditions d'énergie.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "naf_specific": ["10", "52"],
-    "references": ["INRS ED 6113", "Code du travail R.4215-14", "Norme NF EN 13537"]
+    "naf_specific": [
+      "10",
+      "52"
+    ],
+    "references": [
+      "INRS ED 6113",
+      "Code du travail R.4215-14",
+      "Norme NF EN 13537"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6113",
+      "",
+      ""
+    ]
   },
   {
     "id": "A-R-FROID-004",
@@ -44,6 +81,13 @@
     "impact": "Détection précoce des affections aggravées par le froid. Protection des salariés les plus vulnérables. Prévention des crises de Raynaud et des accidents cardio-vasculaires en milieu froid.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "references": ["INRS ED 6113", "Code du travail R.4624-18 SMR"]
+    "references": [
+      "INRS ED 6113",
+      "Code du travail R.4624-18 SMR"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6113",
+      ""
+    ]
   }
 ]

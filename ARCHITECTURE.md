@@ -63,12 +63,12 @@ flowchart TB
 - **Si ça casse :** regarde les "Logs" dans le dashboard Render — c'est exactement ce que j'ai fait aujourd'hui pour diagnostiquer les pannes.
 
 ### 🗄️ La base de données — Neon
-- **Ce que c'est :** l'endroit où sont stockées **toutes** les données : le catalogue de risques (référence) et tes établissements/unités/inventaire/plan d'action.
+- **Ce que c'est :** l'endroit où sont stockées **tes** données : établissements, unités, inventaire de risques, plan d'action, versions. **Le catalogue de risques (référence) n'y vit pas** — voir §4bis, c'est volontaire.
 - **Ancien hébergeur :** Supabase — projet perdu le 18/07/2026 après une longue inactivité (voir le rapport de ce jour-là pour le détail de l'incident). Entièrement retiré du code depuis.
 - **Hébergeur actuel :** **Neon**, région Europe (Francfort). Choisi parce qu'il ne supprime jamais les données en cas d'inactivité (juste une pause), contrairement à Supabase.
 - **Où la gérer :** [console.neon.tech](https://console.neon.tech)
 - **Coût :** gratuit pour commencer (0.5 Go), plans payants ensuite selon le volume.
-- **Statut au 18/07/2026 :** migration terminée et testée en local. **Reste à faire :** mettre à jour les variables d'environnement en production (Render) — voir §7.
+- **Statut au 19/07/2026 :** migration terminée, testée, et en production (Render pointe vers la même base Neon que le développement local).
 
 ### 🔑 Clerk — qui a le droit de se connecter
 - **Ce que c'est :** gère les comptes utilisateurs (inscription, connexion, mot de passe).
@@ -103,6 +103,16 @@ C'est corrigé : toutes les données passent maintenant par ton serveur, qui vé
 
 ---
 
+## 4bis. Pourquoi le catalogue de risques n'est pas dans la base de données
+
+Choix assumé, pas un oubli : le **contenu de référence** (les risques types, leurs mesures de prévention, leurs sources officielles) vit dans des fichiers du code (`config/risks/`, `config/actions/`, etc.), pas dans Neon. **Tes données à toi** (établissements, inventaire, plan d'action) restent en base, comme expliqué au §4.
+
+Un audit du 19/07/2026 a montré que la version "en base de données" de ce catalogue, tentée dans une phase antérieure du projet, n'apportait aucune valeur réelle : sur les 7 tables prévues pour ça, une seule était encore lue par l'application (et seulement en tout dernier recours), les 6 autres n'étaient interrogées par aucun écran. Elles ont été supprimées.
+
+Avantage concret du choix "fichiers" : ce catalogue continue de fonctionner **même si Neon est en panne** — il a d'ailleurs tenu bon pendant les deux incidents d'infrastructure de cette semaine (Supabase, puis Render), puisqu'il ne dépend d'aucune connexion réseau pour être lu. Inconvénient : le modifier demande de changer le code (donc un déploiement), pas juste d'éditer une ligne dans un tableau — un compromis jugé acceptable puisque ce contenu ne change pas souvent.
+
+---
+
 ## 5. Où vivent les mots de passe et clés (variables d'environnement)
 
 - **En local (ton PC) :** fichier `.env.local` à la racine du projet — jamais envoyé sur GitHub (protégé par `.gitignore`).
@@ -123,12 +133,13 @@ Puis ouvrir `http://localhost:5173`.
 
 ---
 
-## 7. Chantiers en cours (au 18/07/2026)
+## 7. Chantiers en cours (au 19/07/2026)
 
-1. **Migration Supabase → Neon** — terminée en local (§4). Reste à mettre à jour les variables d'environnement sur Render (production) avec la chaîne de connexion Neon, et à faire un vrai test de connexion en conditions réelles (une tentative automatisée a été bloquée par la protection anti-robot de Clerk, volontairement non contournée — un clic manuel de ta part suffit à vérifier).
-2. **Bug du moteur de notation des risques** — le calcul automatique des scores plante à cause d'un décalage entre un fichier de configuration et le code qui le lit. Corrigé en premier avant d'ajouter de nouvelles fonctionnalités IA.
-3. **Amélioration du contenu des risques** — après le point 2 : connecter une IA générative pour rédiger/affiner les risques et mesures, puis explorer les bases réglementaires officielles (INRS, OPPBTP, CARSAT).
-4. **Pages légales manquantes** — mentions légales, confidentialité, support (liens déjà présents sur la page d'accueil mais pointent vers rien).
+**Fait récemment :** migration Supabase → Neon (production comprise), réparation du moteur de notation des risques, sourcing du catalogue de risques (55 risques + mapping NAF détaillé, avec liens cliquables vers les documents officiels dans l'écran Inventaire), audit et nettoyage des tables de base de données mortes, consolidation des catalogues d'actions dispersés, vérification des références des 43 documents INRS numérotés cités dans le catalogue d'actions.
+
+1. **Sourcing encore partiel** — sur les 27 fichiers du catalogue d'actions (`config/actions/`), seules les 43 références au format "INRS ED ####" ont été vérifiées et liées ; les ~200 autres (articles du Code du travail, normes EN/NF/ISO, guides ANACT/CARSAT/OPPBTP) restent des citations texte non vérifiées individuellement.
+2. **Amélioration du contenu des risques** — connecter une IA générative pour rédiger/affiner les risques et mesures, puis explorer les bases réglementaires officielles au-delà de ce qui est déjà sourcé.
+3. **Pages légales manquantes** — mentions légales, confidentialité, support (liens déjà présents sur la page d'accueil mais pointent vers rien).
 
 ---
 

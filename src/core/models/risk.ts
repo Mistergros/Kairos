@@ -10,6 +10,9 @@ export interface Risk {
   // (AAAA-MM-JJ) pour la revue périodique. Voir REFERENTIELS.md.
   sources?: string[];
   sources_verified?: string;
+  // URL officielle (même ordre que `sources`) vers le contenu de prévention/sensibilisation,
+  // quand elle a été vérifiée. Chaîne vide si aucun lien précis et fiable n'a été trouvé.
+  sourceUrls?: string[];
 }
 
 export interface RiskContext {

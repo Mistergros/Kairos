@@ -2,7 +2,6 @@ import { riskLibrary } from "../data/riskLibrary";
 import { nafPresets } from "../data/nafPresets";
 import { buildHazardsFromMapping } from "../data/nafMappingLoader";
 import { hazardByNafPrefix } from "../data/sectorHazards";
-import { fetchHazardsFromSources } from "../utils/api";
 import { RiskEngineV3 } from "../core/engine/risk-engine.v3";
 import duerpApi from "./duerpApi";
 import { computePriority } from "../utils/score";
@@ -103,6 +102,8 @@ export async function buildPrefillData(
       gravity: e.severity,
       frequency: e.probability,
       control: e.control,
+      source: e.risk.sources?.[0],
+      sourceUrl: e.risk.sourceUrls?.[0],
     }))
     .sort((a, b) => a.risk.localeCompare(b.risk)) as PresetHazard[];
 
@@ -112,16 +113,8 @@ export async function buildPrefillData(
   const mappingHazards = buildHazardsFromMapping(naf);
   const presetFromJson = nafPresets[nafPrefix]?.hazards || [];
   const fallbackPreset = hazardByNafPrefix[nafPrefix] || [];
-  let fetched: Hazard[] = [];
-  let remoteCatalogFailed = false;
-  try {
-    fetched = await fetchHazardsFromSources(sector, naf);
-  } catch (err) {
-    console.warn("Catalogue de risques distant indisponible, repli sur les sources locales", err);
-    remoteCatalogFailed = true;
-  }
 
-  // Pipeline de merge : templates > moteur > mapping > presets > fallback > bibliothèque
+  // Pipeline de merge : templates > moteur > mapping > presets > bibliothèque
   const merged: Hazard[] = [];
   const pushAll = (list: Hazard[]) => list.forEach((h) => merged.push(h));
 
@@ -138,16 +131,15 @@ export async function buildPrefillData(
     pushAll(list.slice(0, room));
   };
   if (merged.length < 8 && mappingHazards.length) topUp(mappingHazards);
-  if (merged.length < 8 && (presetFromJson.length || fallbackPreset.length || fetched.length)) {
+  if (merged.length < 8 && (presetFromJson.length || fallbackPreset.length)) {
     topUp(presetFromJson);
     topUp(fallbackPreset);
-    topUp(fetched);
   }
-  if (merged.length < 8) pushAll(riskLibrary);
-  // Le catalogue distant (Supabase) n'a pas pu être interrogé : les risques
-  // affichés viennent uniquement des sources locales, potentiellement moins
-  // précises que l'analyse par secteur habituelle — à signaler à l'utilisateur.
-  const usedGenericFallback = remoteCatalogFailed;
+  // Rien de spécifique au secteur n'a été trouvé (templates/moteur/mapping/
+  // presets) : on complète avec la bibliothèque générique — à signaler à
+  // l'utilisateur, ces risques ne sont pas affinés par secteur.
+  const usedGenericFallback = merged.length < 8;
+  if (usedGenericFallback) pushAll(riskLibrary);
 
   const safeId = (h: Hazard) => h.id || `haz-${h.risk.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
 
@@ -197,6 +189,8 @@ export async function buildPrefillData(
         priority: computePriority(score),
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
+        source: h.source,
+        sourceUrl: h.sourceUrl,
       });
     });
   });

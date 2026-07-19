@@ -8,8 +8,23 @@
     "impact": "Suppression du facteur contributif principal des glissades (sol lisse mouillé ou gras). Les chutes de plain-pied représentent 40% des accidents avec arrêt. Réduction immédiate des glissades sur les surfaces traitées.",
     "difficulty": "Moyenne",
     "cost": "Moyen",
-    "naf_specific": ["56", "10", "86", "87", "52"],
-    "references": ["INRS ED 6102", "Norme DIN 51130 (coefficient R)", "Code du travail R.4224-7"]
+    "naf_specific": [
+      "56",
+      "10",
+      "86",
+      "87",
+      "52"
+    ],
+    "references": [
+      "INRS ED 6102",
+      "Norme DIN 51130 (coefficient R)",
+      "Code du travail R.4224-7"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6102",
+      "",
+      ""
+    ]
   },
   {
     "id": "A-R-GLISSADES-002",
@@ -20,8 +35,20 @@
     "impact": "Réduction du temps d'exposition aux surfaces mouillées. Élimination des glissades sur déversements non signalés. Responsabilisation collective pour la sécurité des circulations.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "naf_specific": ["56", "47", "86", "10"],
-    "references": ["INRS ED 6102", "Guide restauration collective hygiène et sécurité"]
+    "naf_specific": [
+      "56",
+      "47",
+      "86",
+      "10"
+    ],
+    "references": [
+      "INRS ED 6102",
+      "Guide restauration collective hygiène et sécurité"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6102",
+      ""
+    ]
   },
   {
     "id": "A-R-GLISSADES-003",
@@ -32,8 +59,19 @@
     "impact": "Réduction de 30-50% des glissades lors du port systématique de chaussures antidérapantes adaptées. Protection contre les chutes lors des déplacements en zones mouillées ou grasses.",
     "difficulty": "Faible",
     "cost": "Moyen",
-    "naf_specific": ["56", "10", "47"],
-    "references": ["EN ISO 20345 (classe SRC)", "INRS ED 6102"]
+    "naf_specific": [
+      "56",
+      "10",
+      "47"
+    ],
+    "references": [
+      "EN ISO 20345 (classe SRC)",
+      "INRS ED 6102"
+    ],
+    "referenceUrls": [
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6102"
+    ]
   },
   {
     "id": "A-R-GLISSADES-004",
@@ -44,6 +82,15 @@
     "impact": "Meilleure visibilité des obstacles et du sol. Prévention des trébuchements en plus des glissades. Réduction des chutes de plain-pied liées aux défauts d'éclairage et d'encombrement.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "references": ["NF EN 12464-1", "INRS ED 6102", "Code du travail R.4224-7 à R.4224-12"]
+    "references": [
+      "NF EN 12464-1",
+      "INRS ED 6102",
+      "Code du travail R.4224-7 à R.4224-12"
+    ],
+    "referenceUrls": [
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6102",
+      ""
+    ]
   }
 ]

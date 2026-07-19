@@ -8,8 +8,22 @@
     "impact": "Réduction des brûlures thermiques superficielles et profondes. Conformité réglementaire. Prévention des brûlures accidentelles des voies respiratoires par projection de vapeur.",
     "difficulty": "Faible",
     "cost": "Moyen",
-    "naf_specific": ["10", "24", "20", "56"],
-    "references": ["INRS ED 6029", "EN ISO 13732-1", "Code du travail R.4223-1"]
+    "naf_specific": [
+      "10",
+      "24",
+      "20",
+      "56"
+    ],
+    "references": [
+      "INRS ED 6029",
+      "EN ISO 13732-1",
+      "Code du travail R.4223-1"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6029",
+      "",
+      ""
+    ]
   },
   {
     "id": "A-R-BRULE-002",
@@ -20,8 +34,19 @@
     "impact": "Réduction des projections de liquides bouillants lors des manipulations. Prévention des brûlures graves par renversement. Procédures documentées engageant la responsabilité des opérateurs.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "naf_specific": ["10", "56", "20"],
-    "references": ["INRS ED 6029", "Fiche risques cuisine professionnelle"]
+    "naf_specific": [
+      "10",
+      "56",
+      "20"
+    ],
+    "references": [
+      "INRS ED 6029",
+      "Fiche risques cuisine professionnelle"
+    ],
+    "referenceUrls": [
+      "https://www.inrs.fr/media.html?refINRS=ED+6029",
+      ""
+    ]
   },
   {
     "id": "A-R-BRULE-003",
@@ -32,7 +57,16 @@
     "impact": "Réduction des séquelles grâce à la prise en charge immédiate. Refroidissement dans les 30 premières secondes réduit la gravité de la brûlure. Personnel capable d'agir avant l'arrivée des secours.",
     "difficulty": "Faible",
     "cost": "Faible",
-    "references": ["INRS geste premiers secours", "Recommandations HAS brûlures", "Code du travail R.4224-14 à 16"]
+    "references": [
+      "INRS geste premiers secours",
+      "Recommandations HAS brûlures",
+      "Code du travail R.4224-14 à 16"
+    ],
+    "referenceUrls": [
+      "",
+      "",
+      ""
+    ]
   },
   {
     "id": "A-R-BRULE-004",
@@ -43,7 +77,21 @@
     "impact": "Protection individuelle efficace contre les brûlures thermiques et chimiques. Réduction de la surface corporelle exposée. EPI adapté à chaque type de brûlure (thermique, chimique, par projection).",
     "difficulty": "Faible",
     "cost": "Moyen",
-    "naf_specific": ["10", "24", "20", "56"],
-    "references": ["EN 407", "EN ISO 11612", "EN 166/175"]
+    "naf_specific": [
+      "10",
+      "24",
+      "20",
+      "56"
+    ],
+    "references": [
+      "EN 407",
+      "EN ISO 11612",
+      "EN 166/175"
+    ],
+    "referenceUrls": [
+      "",
+      "",
+      ""
+    ]
   }
 ]

@@ -66,7 +66,7 @@ flowchart LR
 
 ## 3. Les mesures correctives
 
-C'est le point le plus éclaté : **trois mécanismes séparés**, avec des sources différentes, qui se chevauchent sans être reliés entre eux.
+**Mise à jour du 19/07/2026 (consolidation) :** ce point était auparavant le plus éclaté du projet — trois mécanismes séparés, avec une logique d'appariement dupliquée à l'identique dans deux fichiers différents. C'est corrigé : la correspondance risque → actions vit maintenant à un seul endroit (`src/services/actionCatalogService.ts`), utilisé à la fois pour générer le titre de l'action et pour la vue Plan d'action. Le catalogue source est désormais `config/actions/*.json` (V4, 27 fichiers, un par risque, 107 actions au total) plutôt que l'ancien `config/actions.catalog.json` (V3, 41 entrées) — le V4 est plus riche et porte un champ `references` (voir §4bis). `config/actions.catalog.json` reste utilisé en interne par le moteur V3 lui-même (`risk-engine.v3.ts`), pas retiré du projet, juste retiré de ce chemin d'appariement précis.
 
 ```mermaid
 flowchart TD
@@ -82,21 +82,20 @@ flowchart TD
 
     subgraph M2["B — Titre + description de l'action"]
         direction TB
-        M2a["config/actions.catalog.json (V3, 41 entrées)<br/>src/services/actionCatalogService.ts<br/>appariement par risk_id / libellé / catégorie"]
+        M2a["config/actions/*.json (V4, 27 fichiers, 107 actions)<br/>src/services/actionCatalogService.ts — source unique<br/>appariement par risk_id / libellé / catégorie"]
     end
 
     A3["On déplie une action<br/>dans le Plan d'action"] --> M3
 
     subgraph M3["C — Tâches suggérées (case à cocher)"]
         direction TB
-        M3a["config/tasks.catalog.json (21 entrées, pas encore commité)<br/>src/pages/ActionPlan.tsx<br/>même logique d'appariement, dupliquée"]
+        M3a["config/tasks.catalog.json (21 entrées)<br/>src/pages/ActionPlan.tsx<br/>réutilise les mêmes alias que B"]
     end
 ```
 
 **Ce qu'il faut retenir :**
 - **A** (le texte libre "mesures à proposer" visible dès l'ajout du risque) vient directement du risque source lui-même — donc de n'importe laquelle des 7 sources du §1, selon celle qui a matché.
-- **B** (l'action générée automatiquement, avec son titre) et **C** (les tâches suggérées une fois l'action dépliée) viennent de **deux catalogues séparés** (`config/actions.catalog.json` et `config/tasks.catalog.json`), avec une logique d'appariement (« quel risque correspond à quelle action ? ») **copiée-collée à l'identique dans deux fichiers différents** (`actionCatalogService.ts` et `ActionPlan.tsx`) — si on corrige un alias dans l'un, il faut penser à le refaire dans l'autre.
-- `config/tasks.catalog.json` n'est pour l'instant pas suivi par Git (fichier local, jamais commité) — à vérifier si c'est voulu.
+- **B** et **C** partagent maintenant la même table d'alias (`labelToRiskId`/`categoryToRiskId`, exportée depuis `actionCatalogService.ts`) — corriger un alias se fait à un seul endroit.
 
 ---
 
@@ -121,11 +120,39 @@ Chaque risque porte maintenant deux champs : `sources` (ou `source` dans `riskLi
 Une commande vérifie l'état du sourcing à tout moment :
 ```
 npm run duerp:sources:audit
+npm run duerp:sources:audit -- --check-links   # + vérifie que les liens répondent vraiment
 ```
-Elle signale : les risques sans aucune source, les sources encore génériques (pas de numéro de document), et celles vérifiées il y a plus d'un an. Concrètement :
-- **Une fois par an** (ou plus tôt si l'INRS/la CARSAT/l'OPPBTP publie une refonte majeure d'un guide déjà cité), lancer l'audit et revérifier les entrées signalées comme anciennes — les brochures INRS sont parfois rééditées avec un nouveau numéro.
-- **À chaque nouveau risque ajouté** au catalogue, lui donner une vraie source dès la création plutôt qu'un texte générique, pour ne pas recréer la dette d'aujourd'hui.
-- Pas encore fait, à envisager plus tard : afficher la source dans l'écran Inventaire lui-même (elle vit aujourd'hui dans les données mais ne remonte pas jusqu'à l'interface) — utile si un client ou un contrôle demande d'où vient un risque.
+Elle signale : les risques sans aucune source, les sources encore génériques (pas de numéro de document), les sources sans lien vérifiable, et celles vérifiées il y a plus d'un an. Avec `--check-links`, elle teste aussi en direct que chaque URL répond (note : legifrance.gouv.fr bloque systématiquement les requêtes automatisées avec un 403, même légitimes — un 403 sur ce domaine précis ne veut pas dire que le lien est mort). Concrètement :
+- **Une fois par an** (ou plus tôt si l'INRS/la CARSAT/l'OPPBTP publie une refonte majeure d'un guide déjà cité), lancer l'audit et revérifier les entrées signalées comme anciennes — les brochures INRS sont parfois rééditées avec un nouveau numéro (et leur URL avec).
+- **À chaque nouveau risque ajouté** au catalogue, lui donner une vraie source **et** son URL officielle dès la création plutôt qu'un texte générique, pour ne pas recréer la dette d'aujourd'hui.
+
+### Liens vers le contenu de prévention (fait le 19/07/2026)
+
+Chaque risque porte maintenant un champ `sourceUrls` (`config/risks/*.json`) ou `sourceUrl` (`riskLibrary.ts`) — l'URL officielle vérifiée du document cité (page catalogue INRS `inrs.fr/media.html?refINRS=ED+XXX`, page Légifrance pour les références légales, ou page thématique officielle quand il n'existe pas de brochure numérotée précise). Ce champ suit le risque jusque dans l'évaluation stockée en base (table `assessments`, colonnes `source`/`source_url`) et s'affiche dans l'écran Inventaire : une icône 🔗 à côté du nom du risque, et un lien cliquable dans le panneau déplié.
+
+**Deux erreurs de citation trouvées et corrigées pendant cette recherche** (la vérification de chaque URL a révélé que le document cité n'était pas le bon) :
+- `R-CMR` citait "INRS ED 6090", qui est en réalité une brochure sur les véhicules industriels au gaz naturel, sans rapport avec les agents CMR. Remplacé par la page thématique officielle INRS sur la prévention du risque CMR.
+- `R-CHUTE`/`R-GLISSADES` (et l'entrée équivalente de `riskLibrary.ts`) citaient "INRS ED 6053" pour les chutes de plain-pied — le bon document est **ED 6433** ("Les chutes de plain-pied"). Corrigé aux deux endroits.
+
+**Mise à jour (toujours le 19/07/2026, plus tard dans la journée)** — Pierre a testé et remarqué que ses risques n'avaient aucun lien : en pratique, la source la plus souvent utilisée par le pipeline n'est ni le moteur V4 ni `riskLibrary.ts`, mais le **mapping NAF détaillé** (`kairos_duerp_naf_mapping.json`, priorité n°3), qui n'avait jamais été sourcé. Ce fichier repose en fait sur une taxonomie fixe de **57 libellés de risques uniques** (pas un contenu différent par code NAF — les 700 codes NAF sélectionnent juste des sous-ensembles de ces mêmes 57 items). Chacun a été recherché et vérifié individuellement ; **52 des 57** ont désormais une source officielle précise (`src/data/nafMappingSources.ts`, branché dans `nafMappingLoader.ts`) — les **5 restants** (Noyade/Enfouissement, Procédures insuffisantes, Sous-effectif, Espaces exigus, Sécurité visiteurs) sont volontairement laissés sans lien, faute d'avoir trouvé un document officiel précis et fiable à leur sujet.
+
+Désormais les risques provenant du moteur V4, de `riskLibrary.ts`, **et** du mapping NAF détaillé ont un lien — seules les sources restantes du pipeline (gabarits d'unité, préréglages statiques) n'ont jamais eu de citation à sourcer, donc rien n'est affiché pour elles (pas une régression, un reflet honnête de ce qui est réellement sourcé aujourd'hui). Le "catalogue Neon" mentionné dans une version antérieure de ce document a été retiré du pipeline le 19/07/2026, suite à un audit qui a montré qu'il n'était quasiment jamais utilisé — voir `ARCHITECTURE.md` §4bis pour le détail.
+
+### Sourcing du catalogue d'actions (fait le 19/07/2026, partiel)
+
+Suite à l'audit du moteur V4 et de ses tables (`ARCHITECTURE.md` §4bis), le catalogue d'actions a été consolidé sur `config/actions/*.json` (voir §3) puis passé en revue de la même façon. Il cite **242 références uniques** au total (bien plus que les risques) — articles du Code du travail, normes EN/NF/ISO, guides ANACT/CARSAT/OPPBTP/ADEME/ANSES, et **43 documents INRS numérotés**.
+
+Seules les **43 références INRS "ED ####"** ont été recherchées et vérifiées individuellement (même méthode que pour les risques) ; elles portent maintenant un champ `referenceUrls` (parallèle à `references`, même principe que `sourceUrls`). Les ~200 autres références (Code du travail, normes techniques, guides d'organismes sans numéro) restent des citations texte non vérifiées une par une — un chantier plus lourd, délibérément pas fait dans cette passe.
+
+**Deux citations périmées trouvées et corrigées** :
+- "INRS ED 697" (citée pour l'inventaire des FDS/produits chimiques) — ce document de 1987 a été remplacé par une base de données en ligne, sans équivalent brochure. Remplacé par **INRS ED 6483**, "La fiche de données de sécurité", qui correspond au sujet réellement cité.
+- "INRS ED 776" (méthode d'analyse des manutentions manuelles) — brochure remplacée par **INRS ED 6161**, "Méthode d'analyse de la charge physique de travail".
+
+Un seul numéro n'a pas pu être confirmé : **INRS ED 6010**, introuvable sur le site INRS malgré plusieurs recherches — laissé sans lien plutôt que de deviner.
+
+**Suite (toujours le 19/07/2026) — passage sur les références légales.** Les **48 articles de code** (Code du travail, de l'environnement, de la santé publique, de la route) cités dans le catalogue d'actions ont été vérifiés un par un sur Légifrance : tous réels, tous topiquement cohérents avec l'action qui les cite. Les **24 décrets/arrêtés/directives/règlements** ont également été passés en revue : tous réels sauf une vraie erreur trouvée — l'action "Maintenance des systèmes de ventilation et de climatisation" (`R-QUALITEAIR`) citait "Décret 2004-964" pour les légionelles, alors que ce décret concerne en réalité la sécurité des ascenseurs. Corrigé vers l'**arrêté du 1ᵉʳ février 2010** (surveillance des légionelles dans les installations d'eau chaude sanitaire), le texte réellement applicable. Un doute mineur subsiste sur "Décret 2012-970 (réforme DT-DICT)" — la recherche pointe plutôt vers le décret n° 2011-1241 pour ce même texte, non tranché faute de certitude suffisante.
+
+**Ce qui reste non vérifié** : les URLs Légifrance des 48+24 références légales ci-dessus n'ont pas été ajoutées individuellement au champ `referenceUrls` (contrainte de temps) — seule la correction légionelles a été liée. Les **49 normes techniques** (EN/NF/ISO/UTE, payantes, sans page officielle publique à lier) et les **77 guides d'organismes génériques** (ANACT/CARSAT/OPPBTP/ADEME/ANSES sans numéro précis) n'ont pas été vérifiés individuellement — rapport effort/valeur jugé trop défavorable pour ce passage (pas de lien public possible pour les normes ; pas de document précis identifiable pour la plupart des guides génériques).
 
 ## Ce qui n'est pas utilisé du tout aujourd'hui
 

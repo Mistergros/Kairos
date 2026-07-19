@@ -3,18 +3,10 @@ import * as XLSX from "xlsx";
 import { usePlan } from "../hooks/usePlan";
 import { Card } from "../components/Card";
 import { PriorityBadge } from "../components/Badge";
-import actionsCatalog from "../../config/actions.catalog.json";
 import tasksCatalog from "../../config/tasks.catalog.json";
 import { useDuerpStore } from "../state/store";
+import { getCatalogActionsForAssessment, labelToRiskId, categoryToRiskId, normalize } from "../services/actionCatalogService";
 import type { ActionStatus, Priority, Assessment, WorkUnit, ActionItem } from "../types";
-
-type CatalogAction = {
-  id: string;
-  risk_id?: string;
-  risk_label?: string;
-  title: string;
-  description?: string;
-};
 
 const STATUSES: ActionStatus[] = ["TO_DO", "IN_PROGRESS", "LATE", "DONE"];
 const formatDate = (value?: string) =>
@@ -38,7 +30,7 @@ export const ActionPlan = () => {
   const plan = usePlan();
   const [filter, setFilter] = useState<ActionStatus | "">("");
   const [unitTab, setUnitTab] = useState<string>("all");
-  const [viewMode, setViewMode] = useState<"unit" | "owner">("unit");
+  const [viewMode, setViewMode] = useState<"unit" | "owner">("owner");
   const [expanded, setExpanded] = useState<string | null>(null);
   const [newStepText, setNewStepText] = useState<Record<string, string>>({});
   const [localDates, setLocalDates] = useState<Record<string, { start?: string; end?: string }>>({});
@@ -99,14 +91,6 @@ export const ActionPlan = () => {
 
   const linkedAssessments = useMemo(() => assessments, [assessments]);
 
-  const normalize = (s: string) =>
-    (s || "")
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/[^a-z0-9]+/g, " ")
-      .trim();
-
   const assessmentsByCategory = useMemo(() => {
     const map = new Map<string, Assessment[]>();
     linkedAssessments.forEach((a) => {
@@ -119,70 +103,6 @@ export const ActionPlan = () => {
       items: list.sort((a, b) => a.riskLabel.localeCompare(b.riskLabel)),
     }));
   }, [linkedAssessments]);
-
-  const actionsByRisk = useMemo(() => {
-    const map = new Map<string, CatalogAction[]>();
-    (actionsCatalog as CatalogAction[]).forEach((a) => {
-      if (!a.risk_id) return;
-      const key = normalize(a.risk_id);
-      if (!map.has(key)) map.set(key, []);
-      map.get(key)!.push(a);
-    });
-    return map;
-  }, []);
-
-  const labelToRiskId: Record<string, string> = {
-    "atmospheres explosives": "r-atex",
-    "incendie et evacuation": "r-incendie",
-    "chutes de plain pied et de hauteur": "r-chute-hauteur",
-    "machines et equipements de travail": "r-machine",
-    "risque electrique": "r-electrique",
-    "risque routier professionnel": "r-routier",
-    "bruit": "r-bruit",
-    "vibrations": "r-vibrations",
-    "tms": "r-tms",
-    "risques psychosociaux": "r-rps",
-    "risques psychosociaux rps": "r-rps",
-    // Sous-risques RPS
-    "charge mentale": "r-rps",
-    "conflits tensions": "r-rps",
-    "conflits et tensions": "r-rps",
-    "violence externe": "r-rps",
-    "organisation du travail": "r-rps",
-    "equilibre vie pro perso": "r-rps",
-    "harcelement": "r-rps",
-    "stress": "r-rps",
-    "burn out": "r-rps",
-    "travail sur ecran": "r-ecran",
-    "horaires atypiques travail de nuit": "r-night",
-    "travail de nuit equipes alternantes": "r-night",
-    "manutention manuelle": "r-manutention",
-    "manutentions manuelles et tms": "r-manutention",
-    "manutention manuelle et tms": "r-manutention",
-    "agents chimiques dangereux": "r-chimique",
-    "biologique": "r-bio",
-    "glissades": "r-glissades",
-    "travail de nuit": "r-night",
-    "qualite de l air interieur": "r-qualiteair",
-    "qualite de l air": "r-qualiteair",
-  };
-
-  const categoryToRiskId: Record<string, string> = {
-    "manutention manuelle": "r-manutention",
-    "ergonomie": "r-tms",
-    "organisation": "r-rps",
-    "organisationnel": "r-rps",
-    "travail sur ecran": "r-ecran",
-    "bruit": "r-bruit",
-    "vibrations": "r-vibrations",
-    "risques psychosociaux": "r-rps",
-    "travail de nuit": "r-night",
-    "physique": "r-tms",
-    "accidentel": "r-chute-hauteur",
-    "chimique": "r-chimique",
-    "biologique": "r-bio",
-    "environnemental": "r-qualiteair",
-  };
 
   const tasksByRiskId = useMemo(() => {
     const map = new Map<string, string[]>();
@@ -213,31 +133,7 @@ export const ActionPlan = () => {
   };
 
   const getCatalogForAssessment = (assessment?: Assessment) => {
-    if (!assessment) return undefined;
-    const riskId = assessment.hazardId ? normalize(assessment.hazardId) : "";
-    const riskLabel = normalize(assessment.riskLabel || "");
-    const riskCategory = normalize(assessment.hazardCategory || "");
-
-    // 1) match by hazardId/risk_id exact
-    const byId = riskId ? actionsByRisk.get(riskId) : undefined;
-    if (byId?.length) return byId;
-
-    // 2) match using label alias
-    const aliasId = labelToRiskId[riskLabel];
-    const byAlias = aliasId ? actionsByRisk.get(normalize(aliasId)) : undefined;
-    if (byAlias?.length) return byAlias;
-
-    // 3) match using category alias
-    const catId = categoryToRiskId[riskCategory];
-    const byCat = catId ? actionsByRisk.get(normalize(catId)) : undefined;
-    if (byCat?.length) return byCat;
-
-    // 4) last resort: find risk_id containing label
-    const all = actionsCatalog as CatalogAction[];
-    const matches = all.filter((a) => {
-      const rid = normalize(a.risk_id || "");
-      return rid === riskLabel || rid.includes(riskLabel) || riskLabel.includes(rid);
-    });
+    const matches = getCatalogActionsForAssessment(assessment);
     return matches.length ? matches : undefined;
   };
 
@@ -442,20 +338,25 @@ export const ActionPlan = () => {
         }
       >
         {/* Switch de vue */}
-        <div className="mb-4 flex items-center gap-1 rounded-xl border border-slate/15 bg-slate/5 p-1 w-fit">
+        <div className="mb-1 flex items-center gap-1 rounded-xl border border-slate/15 bg-slate/5 p-1 w-fit">
           <button
-            className={`rounded-lg px-4 py-1.5 text-sm font-medium transition ${viewMode === "unit" ? "bg-white text-ink shadow-sm" : "text-slate/60 hover:text-slate"}`}
-            onClick={() => setViewMode("unit")}
-          >
-            Par unité de travail
-          </button>
-          <button
-            className={`rounded-lg px-4 py-1.5 text-sm font-medium transition ${viewMode === "owner" ? "bg-white text-ink shadow-sm" : "text-slate/60 hover:text-slate"}`}
+            className={`flex items-center gap-1.5 rounded-lg px-4 py-1.5 text-sm font-medium transition ${viewMode === "owner" ? "bg-white text-ink shadow-sm" : "text-slate/60 hover:text-slate"}`}
             onClick={() => setViewMode("owner")}
           >
-            Par responsable
+            <span aria-hidden="true">👤</span> Répartition
+          </button>
+          <button
+            className={`flex items-center gap-1.5 rounded-lg px-4 py-1.5 text-sm font-medium transition ${viewMode === "unit" ? "bg-white text-ink shadow-sm" : "text-slate/60 hover:text-slate"}`}
+            onClick={() => setViewMode("unit")}
+          >
+            <span aria-hidden="true">📅</span> Planification
           </button>
         </div>
+        <p className="mb-4 text-xs text-slate/50">
+          {viewMode === "owner"
+            ? "Étape 1 — Attribuez chaque action à un responsable."
+            : "Étape 2 — Planifiez les actions dans le temps, unité par unité."}
+        </p>
 
         {/* Filtre unités (uniquement en mode "par unité") */}
         {viewMode === "unit" && (

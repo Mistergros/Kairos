@@ -8,8 +8,26 @@
     "impact": "Identification précise des zones à risque d'explosion. Base légale du programme de prévention ATEX. Conformité réglementaire (Décret 2002-1553 et 2002-1554). Engagement de la responsabilité de l'employeur documenté.",
     "difficulty": "Élevée",
     "cost": "Moyen",
-    "naf_specific": ["20", "10", "24", "19", "35", "46"],
-    "references": ["Directive ATEX 1999/92/CE", "EN 60079-10", "Décret 2002-1553", "INRS ED 6077"]
+    "naf_specific": [
+      "20",
+      "10",
+      "24",
+      "19",
+      "35",
+      "46"
+    ],
+    "references": [
+      "Directive ATEX 1999/92/CE",
+      "EN 60079-10",
+      "Décret 2002-1553",
+      "INRS ED 6077"
+    ],
+    "referenceUrls": [
+      "",
+      "",
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6077"
+    ]
   },
   {
     "id": "A-R-ATEX-002",
@@ -20,8 +38,22 @@
     "impact": "Suppression des sources d'ignition dans les atmosphères explosibles. Conformité à la Directive ATEX 94/9/CE (équipements). Réduction du risque d'explosion à un niveau aussi bas que raisonnablement praticable.",
     "difficulty": "Moyenne",
     "cost": "Élevé",
-    "naf_specific": ["20", "10", "19", "24"],
-    "references": ["Directive 94/9/CE ATEX", "EN 60079-17", "INRS ED 6079"]
+    "naf_specific": [
+      "20",
+      "10",
+      "19",
+      "24"
+    ],
+    "references": [
+      "Directive 94/9/CE ATEX",
+      "EN 60079-17",
+      "INRS ED 6079"
+    ],
+    "referenceUrls": [
+      "",
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6079"
+    ]
   },
   {
     "id": "A-R-ATEX-003",
@@ -32,7 +64,16 @@
     "impact": "Personnel conscient des risques spécifiques ATEX et des comportements à adopter. Réduction des déclenchements d'alarme dus à des comportements inadaptés. Conformité Décret 2002-1553.",
     "difficulty": "Faible",
     "cost": "Moyen",
-    "references": ["Décret 2002-1553 Art. 8", "INRS ED 6077", "INERIS guide ATEX"]
+    "references": [
+      "Décret 2002-1553 Art. 8",
+      "INRS ED 6077",
+      "INERIS guide ATEX"
+    ],
+    "referenceUrls": [
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6077",
+      ""
+    ]
   },
   {
     "id": "A-R-ATEX-004",
@@ -43,7 +84,21 @@
     "impact": "Dilution des atmosphères explosibles avant qu'elles n'atteignent le seuil d'explosion. Détection précoce permettant l'évacuation avant l'atteinte du seuil critique. Réduction du risque d'explosion à la source.",
     "difficulty": "Faible",
     "cost": "Élevé",
-    "naf_specific": ["20", "10", "19", "46"],
-    "references": ["EN 50271", "INRS ED 6079", "INERIS OMEGA 10"]
+    "naf_specific": [
+      "20",
+      "10",
+      "19",
+      "46"
+    ],
+    "references": [
+      "EN 50271",
+      "INRS ED 6079",
+      "INERIS OMEGA 10"
+    ],
+    "referenceUrls": [
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6079",
+      ""
+    ]
   }
 ]

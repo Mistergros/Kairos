@@ -317,7 +317,7 @@ const USE_CASES: UseCase[] = [
       "Suivi EPI & autorisations (SPS, consignation, permis feu)",
     ],
     case: {
-      org: "Entreprise Générale « BâtiOuest » (anonyme)",
+      org: "Entreprise Générale « BâtiOuest » (exemple illustratif)",
       size: "PME — 95 salariés, 8 chantiers actifs",
       context:
         "Plan d’actions éclaté (Excel/email), mises à jour DUERP irrégulières, difficultés à tracer les EPI.",
@@ -365,7 +365,7 @@ const USE_CASES: UseCase[] = [
       "Exports prêts inspection + CSE",
     ],
     case: {
-      org: "Atelier « MétalTech » (anonyme)",
+      org: "Atelier « MétalTech » (exemple illustratif)",
       size: "ETI — 420 salariés, 3 sites",
       context: "Historique AT, dispersion des FDS, DUERP peu lu en comité.",
       beforeAfter: [
@@ -412,7 +412,7 @@ const USE_CASES: UseCase[] = [
       "Exports PDF propres pour clients / audits",
     ],
     case: {
-      org: "Société « Servia+ » (anonyme)",
+      org: "Société « Servia+ » (exemple illustratif)",
       size: "PME — 130 salariés, 4 directions",
       context: "RPS non structurés, mobilité pro mal couverte.",
       beforeAfter: [
@@ -506,9 +506,9 @@ export function UseCasesCompact({ data }: { data?: UseCase[] }) {
 
         {/* Titre */}
         <div className="text-center mb-12">
-          <span className="inline-block rounded-full bg-kairos/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-kairos mb-4">Cas pratiques</span>
-          <h2 className="text-4xl font-extrabold text-ink">Ils utilisent Kaijos dans leur secteur</h2>
-          <p className="mt-4 text-lg text-slate-500 max-w-2xl mx-auto">Exemples anonymisés — contexte, résultats et extraits du DUERP produit.</p>
+          <span className="inline-block rounded-full bg-kairos/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-kairos mb-4">Scénarios types</span>
+          <h2 className="text-4xl font-extrabold text-ink">Ce que Kaijos change, secteur par secteur</h2>
+          <p className="mt-4 text-lg text-slate-500 max-w-2xl mx-auto">Exemples illustratifs — contexte type, résultats attendus et extraits du DUERP généré.</p>
         </div>
 
         {/* Onglets */}
@@ -801,10 +801,11 @@ function Footer() {
       <div className="mx-auto max-w-7xl flex justify-between px-6 text-sm text-slate-600 dark:text-slate-300">
         <div className="flex gap-6">
           <a href="/legal" className="hover:underline">Mentions légales</a>
+          <a href="/cgv" className="hover:underline">CGV</a>
           <a href="/privacy" className="hover:underline">Confidentialité</a>
           <a href="/support" className="hover:underline">Support</a>
         </div>
-        <span>© {new Date().getFullYear()} Kaijos — Milante Consulting</span>
+        <span>© {new Date().getFullYear()} Kaijos</span>
       </div>
     </footer>
   );
