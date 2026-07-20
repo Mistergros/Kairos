@@ -103,10 +103,6 @@ function Hero({ onSubscribe, isLoading }: { onSubscribe: SubscribeHandler; isLoa
 
         {/* Texte gauche */}
         <div>
-          <span className="inline-block rounded-full border border-kairos text-kairos text-xs font-semibold px-4 py-1.5 mb-6 tracking-wide">
-            BY MILANTE CONSULTING
-          </span>
-
           <h1 className="text-4xl md:text-5xl font-extrabold text-white leading-tight">
             Le DUERP de votre entreprise,{" "}
             <span className="text-kairos">conforme et à jour.</span>
