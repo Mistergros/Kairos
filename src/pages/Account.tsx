@@ -136,8 +136,8 @@ export default function AccountPage() {
         <div className="mt-10">
           <h2 className="text-xl font-semibold text-slate-900">Collaborateurs</h2>
           <p className="mt-1 text-sm text-slate-500">
-            Invitez des collègues à accéder au DUERP de <strong>{currentEstablishment?.name || "votre établissement"}</strong>.
-            Ils recevront un email avec un lien pour créer leur compte.
+            Invitez un collègue à créer son propre compte Kaijos. Il recevra un email avec un lien d'inscription.
+            L'accès partagé à un même établissement n'est pas encore disponible — chaque compte reste indépendant pour l'instant.
           </p>
 
           <div className="mt-4 flex flex-wrap items-end gap-3">
