@@ -242,3 +242,19 @@ npx tsc -b                      # typecheck complet — à lancer avant tout pus
 3. `npm run config:build:front`
 4. `npm run dev:full` puis ouvrir `http://localhost:5173` (`/` dashboard, `/landing` marketing).
 5. `npm run config:validate` et `npm run test:api:smoke` avant de committer.
+
+---
+
+## 16. Environnements (production / staging)
+
+**En cours de mise en place (19/07/2026)** — objectif : ne plus jamais tester en poussant directement sur `master` (qui déclenche le vrai déploiement de prod sur Vercel + Render).
+
+- **Branche `master`** → seule branche qui déclenche un déploiement de production (Vercel + Render).
+- **Branche `staging`** → environnement de test, isolé :
+  - Vercel : déploiement de preview automatique à chaque push (à confirmer que ça se déclenche bien).
+  - Render : second Web Service à créer, suivant `staging`, avec ses propres variables d'environnement (clés Stripe **test**, pas live).
+  - Neon : branche de base de données `staging`, créée par copie de la branche de production — isolée des vraies données clients.
+- **Workflow** : travailler sur `staging` → tester sur les URLs de preview/staging → une fois validé, fusionner `staging` dans `master` → seul ce merge déclenche la mise en prod.
+- **Rollback** : Vercel (Deployments → ancien déploiement → "Promote to Production"), Render (Deploys → ancien déploiement → "Rollback"), ou `git revert` + push sur `master`. Pour un problème de données : Point-in-Time Restore côté Neon.
+
+Détail exact (noms de services, URLs) à compléter une fois la configuration Render/Vercel confirmée fonctionnelle.
