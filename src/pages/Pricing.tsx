@@ -20,11 +20,17 @@ export function Pricing() {
   const currentPlan = usePlan();
   const [annual, setAnnual] = useState(false);
   const [loading, setLoading] = useState<string | null>(null);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [showTermsHint, setShowTermsHint] = useState(false);
 
   const monthlyPrice = (plan: Plan) =>
     annual ? Math.round(plan.priceYearly / 12) : plan.priceMonthly;
 
   const handleSubscribe = async (planId: string) => {
+    if (!acceptedTerms) {
+      setShowTermsHint(true);
+      return;
+    }
     if (!isSignedIn) {
       navigate(`/sign-up?plan=${planId}`);
       return;
@@ -142,9 +148,33 @@ export function Pricing() {
         })}
       </div>
 
-      <p className="text-center text-xs text-slate/50 pt-2">
-        Résiliation à tout moment depuis votre espace compte. Paiement sécurisé via Stripe.
-      </p>
+      <div className="flex flex-col items-center gap-2 pt-2">
+        <label className="flex items-center gap-2 text-sm text-slate">
+          <input
+            type="checkbox"
+            checked={acceptedTerms}
+            onChange={(e) => {
+              setAcceptedTerms(e.target.checked);
+              if (e.target.checked) setShowTermsHint(false);
+            }}
+            className="h-4 w-4 rounded border-slate/30 text-kairos focus:ring-kairos"
+          />
+          J'accepte les{" "}
+          <a href="/cgv" target="_blank" rel="noreferrer" className="text-kairos hover:underline">
+            CGV
+          </a>{" "}
+          et la{" "}
+          <a href="/privacy" target="_blank" rel="noreferrer" className="text-kairos hover:underline">
+            politique de confidentialité
+          </a>
+        </label>
+        {showTermsHint && (
+          <p className="text-xs font-semibold text-rose-600">Coche cette case pour continuer.</p>
+        )}
+        <p className="text-center text-xs text-slate/50">
+          Résiliation à tout moment depuis votre espace compte. Paiement sécurisé via Stripe.
+        </p>
+      </div>
       </div>
     </div>
   );
