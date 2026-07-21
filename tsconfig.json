@@ -12,14 +12,7 @@
     "esModuleInterop": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "types": ["vite/client", "node"],
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./*"],
-      "@/core/*": ["src/core/*"],
-      "@/": ["./"],
-      "@/core/": ["src/core/"]
-    }
+    "types": ["vite/client", "node"]
   },
   "include": ["src", "config"],
   "references": [{ "path": "./tsconfig.node.json" }]
