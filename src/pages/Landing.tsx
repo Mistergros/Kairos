@@ -50,12 +50,8 @@ type SubscribeHandler = (planId?: PlanId) => void;
    NAVBAR MARKETING
 ------------------------------------------------------------ */
 function Navbar({
-  onSubscribe,
-  isLoading,
   isSignedIn,
 }: {
-  onSubscribe: SubscribeHandler;
-  isLoading: boolean;
   isSignedIn: boolean;
 }) {
   return (
@@ -79,14 +75,12 @@ function Navbar({
           ) : (
             <a href="/sign-in" className="text-sm font-medium text-slate-600 hover:text-ink transition">Se connecter</a>
           )}
-          <button
-            type="button"
-            onClick={() => onSubscribe("starter")}
-            disabled={isLoading}
-            className="rounded-lg bg-kairos px-5 py-2 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50 transition"
+          <a
+            href="#pricing"
+            className="rounded-lg bg-kairos px-5 py-2 text-sm font-semibold text-white hover:opacity-90 transition"
           >
-            {isLoading ? "…" : "Démarrer"}
-          </button>
+            Démarrer
+          </a>
         </div>
       </div>
     </header>
@@ -96,7 +90,7 @@ function Navbar({
 /* ------------------------------------------------------------
    HERO SECTION
 ------------------------------------------------------------ */
-function Hero({ onSubscribe, isLoading }: { onSubscribe: SubscribeHandler; isLoading: boolean }) {
+function Hero() {
   return (
     <section className="w-full bg-ink">
       <div className="mx-auto max-w-6xl px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
@@ -127,14 +121,12 @@ function Hero({ onSubscribe, isLoading }: { onSubscribe: SubscribeHandler; isLoa
           </div>
 
           <div className="mt-10 flex flex-wrap gap-4">
-            <button
-              type="button"
-              onClick={() => onSubscribe("starter")}
-              disabled={isLoading}
-              className="rounded-xl bg-kairos px-8 py-3.5 text-base font-bold text-white hover:opacity-90 disabled:opacity-50 transition"
+            <a
+              href="#pricing"
+              className="rounded-xl bg-kairos px-8 py-3.5 text-base font-bold text-white hover:opacity-90 transition"
             >
-              {isLoading ? "Redirection…" : "Démarrer maintenant"}
-            </button>
+              Démarrer maintenant
+            </a>
             <a href="#pricing" className="rounded-xl border border-gray-500 px-8 py-3.5 text-base font-semibold text-white hover:border-white transition">
               Voir les offres
             </a>
@@ -834,7 +826,7 @@ export default function LandingPage() {
     if (checkoutState === "loading") return;
     // Si pas connecté → inscription d'abord, avec le plan en paramètre
     if (!isSignedIn) {
-      navigate(`/sign-up?plan=${planId || "essential"}`);
+      navigate(`/sign-up?plan=${planId || "starter"}`);
       return;
     }
 
@@ -874,7 +866,7 @@ export default function LandingPage() {
   const isLoading = checkoutState === "loading";
   return (
     <main className="bg-white dark:bg-slate-950">
-      <Navbar onSubscribe={startCheckout} isLoading={isLoading} isSignedIn={Boolean(isSignedIn)} />
+      <Navbar isSignedIn={Boolean(isSignedIn)} />
       {notice && (
         <div className="mx-auto max-w-7xl px-6 pt-6">
           <div className="rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-sm text-blue-900">
@@ -889,7 +881,7 @@ export default function LandingPage() {
           </div>
         </div>
       )}
-      <Hero onSubscribe={startCheckout} isLoading={isLoading} />
+      <Hero />
       <SocialProof />
       <ValueProps />
       <UseCasesCompact data={USE_CASES} /> {/* ← Cas pratiques compact */}
