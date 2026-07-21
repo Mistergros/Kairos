@@ -1,6 +1,11 @@
 import { SignUp } from "@clerk/clerk-react";
+import { useSearchParams } from "react-router-dom";
 
 export default function SignUpPage() {
+  const [searchParams] = useSearchParams();
+  const plan = searchParams.get("plan");
+  const afterSignUpUrl = plan ? `/landing?startCheckout=${encodeURIComponent(plan)}` : "/";
+
   return (
     <div className="min-h-screen bg-slate-950 text-white px-6 py-12">
       <div className="mx-auto grid w-full max-w-5xl items-center gap-10 md:grid-cols-2">
@@ -21,7 +26,7 @@ export default function SignUpPage() {
         </div>
 
         <div className="rounded-3xl bg-white p-6 shadow-2xl">
-          <SignUp routing="path" path="/sign-up" signInUrl="/sign-in" afterSignUpUrl="/" />
+          <SignUp routing="path" path="/sign-up" signInUrl="/sign-in" afterSignUpUrl={afterSignUpUrl} />
         </div>
       </div>
     </div>

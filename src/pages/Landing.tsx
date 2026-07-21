@@ -809,19 +809,6 @@ export default function LandingPage() {
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const checkout = params.get("checkout");
-    const subscription = params.get("subscription");
-    if (checkout === "success") {
-      setNotice("Paiement confirme. Vous pouvez vous connecter.");
-    } else if (checkout === "cancel") {
-      setNotice("Paiement annule. Vous pouvez reessayer.");
-    } else if (subscription === "required") {
-      setNotice("Abonnement inactif. Merci de vous abonner pour acceder a l'application.");
-    }
-  }, []);
-
   const startCheckout = async (planId?: PlanId) => {
     if (checkoutState === "loading") return;
     // Si pas connecté → inscription d'abord, avec le plan en paramètre
@@ -862,6 +849,41 @@ export default function LandingPage() {
       setCheckoutError("Impossible de démarrer le paiement. Réessayez dans quelques secondes.");
     }
   };
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const checkout = params.get("checkout");
+    const subscription = params.get("subscription");
+    const autoPlan = params.get("startCheckout");
+
+    if (checkout === "success") {
+      // Le webhook Stripe a déjà mis à jour l'abonnement côté serveur, mais la
+      // session Clerk de ce navigateur est encore périmée — sans reload(), on
+      // resterait bloqué ici en boucle malgré un paiement réussi.
+      setNotice("Paiement confirmé — activation de votre abonnement…");
+      (async () => {
+        for (let i = 0; i < 6; i++) {
+          const updated = await user?.reload();
+          if ((updated?.publicMetadata as any)?.subscriptionStatus === "active") {
+            navigate("/", { replace: true });
+            return;
+          }
+          await new Promise((r) => setTimeout(r, 1500));
+        }
+        setNotice("Paiement confirmé — l'activation prend un peu plus de temps que prévu. Rechargez cette page dans une minute.");
+      })();
+    } else if (checkout === "cancel") {
+      setNotice("Paiement annulé. Vous pouvez réessayer.");
+    } else if (subscription === "required") {
+      setNotice("Abonnement inactif. Merci de vous abonner pour accéder à l'application.");
+    } else if (autoPlan && isSignedIn) {
+      // Reprend le plan choisi avant l'inscription (voir SignUpPage), pour ne
+      // pas faire re-choisir le plan une deuxième fois juste après avoir créé
+      // le compte.
+      startCheckout(autoPlan as PlanId);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSignedIn]);
 
   const isLoading = checkoutState === "loading";
   return (

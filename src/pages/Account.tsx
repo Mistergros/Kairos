@@ -24,6 +24,14 @@ export default function AccountPage() {
   const [inviteLoading, setInviteLoading] = useState(false);
   const [inviteMsg, setInviteMsg] = useState<{ ok: boolean; text: string } | null>(null);
 
+  // Rafraîchit la session au premier affichage : si l'utilisateur revient du
+  // portail Stripe (changement de plan, résiliation), la session Clerk locale
+  // peut encore refléter l'ancien statut le temps que ça se synchronise.
+  useEffect(() => {
+    user?.reload();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
     if (!user?.id) return;
     apiGet<{ invites: Invite[] }>("/api/invites")
