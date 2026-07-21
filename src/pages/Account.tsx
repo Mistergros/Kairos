@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Navigate } from "react-router-dom";
 import { useUser } from "@clerk/clerk-react";
 import { useDuerpStore } from "../state/store";
 import { PLAN_CONFIG, type PlanId } from "../hooks/usePlan";
@@ -59,6 +60,7 @@ export default function AccountPage() {
   };
 
   const status = String((user?.publicMetadata as any)?.subscriptionStatus || "inactive");
+  if (status !== "active") return <Navigate to="/pricing" replace />;
   const rawPlanId = (user?.publicMetadata as any)?.planId as string | undefined;
   const planLabel = rawPlanId && rawPlanId in PLAN_CONFIG ? PLAN_CONFIG[rawPlanId as PlanId].label : null;
   const customerId = String((user?.publicMetadata as any)?.stripeCustomerId || "");
