@@ -59,7 +59,7 @@ function RequireSubscription({ children }: { children: ReactNode }) {
   if (!isLoaded) return <FullPageLoader />;
   if (!isSignedIn) return <Navigate to="/landing" replace />;
   const status = (user?.publicMetadata as any)?.subscriptionStatus;
-  if (status !== "active") return <Navigate to="/pricing" replace />;
+  if (status !== "active") return <Navigate to="/landing" replace />;
   return <>{children}</>;
 }
 
