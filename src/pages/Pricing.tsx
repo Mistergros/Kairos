@@ -53,7 +53,7 @@ export function Pricing() {
     <div className="min-h-screen bg-[radial-gradient(circle_at_20%_20%,rgba(91,97,246,0.08),transparent_35%),linear-gradient(135deg,rgba(91,97,246,0.08),rgba(0,179,255,0.12))]">
       <div className="mx-auto max-w-5xl space-y-6 px-4 py-10 md:px-8">
         <div className="flex items-center justify-between">
-          <a href="/" title="Retour au tableau de bord">
+          <a href="/landing" title="Retour à l'accueil">
             <img src="/Kaijos_logo.png" alt="Kaijos" className="h-16 w-auto object-contain transition hover:opacity-80" />
           </a>
           <a href="/mon-compte" className="text-sm font-semibold text-kairos hover:underline">
