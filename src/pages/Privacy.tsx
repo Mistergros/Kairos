@@ -6,7 +6,7 @@ export default function PrivacyPage() {
       <Section title="Responsable de traitement">
         <p>
           Milante Consulting, éditeur de Kaijos (voir <a className="text-blue-600 hover:underline" href="/legal">mentions légales</a>), est responsable du traitement des données personnelles décrites ci-dessous, au sens du Règlement général sur la protection des données (RGPD).
-          Contact : contact@kaijos.fr
+          Contact : contact@kaijos.com
         </p>
       </Section>
 
@@ -47,7 +47,7 @@ export default function PrivacyPage() {
 
       <Section title="Vos droits">
         <p>
-          Conformément au RGPD, vous disposez d'un droit d'accès, de rectification, d'effacement, de limitation, d'opposition et de portabilité sur vos données personnelles. Pour les exercer, contactez contact@kaijos.fr. Vous pouvez également introduire une réclamation auprès de la CNIL (<a className="text-blue-600 hover:underline" href="https://www.cnil.fr" target="_blank" rel="noreferrer">cnil.fr</a>).
+          Conformément au RGPD, vous disposez d'un droit d'accès, de rectification, d'effacement, de limitation, d'opposition et de portabilité sur vos données personnelles. Pour les exercer, contactez contact@kaijos.com. Vous pouvez également introduire une réclamation auprès de la CNIL (<a className="text-blue-600 hover:underline" href="https://www.cnil.fr" target="_blank" rel="noreferrer">cnil.fr</a>).
         </p>
       </Section>
 

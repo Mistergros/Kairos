@@ -58,7 +58,7 @@ export default function TermsPage() {
       </Section>
 
       <Section title="9. Contact">
-        <p>Pour toute question relative aux présentes CGV : contact@kaijos.fr</p>
+        <p>Pour toute question relative aux présentes CGV : contact@kaijos.com</p>
       </Section>
     </LegalShell>
   );

@@ -10,7 +10,7 @@ export default function LegalPage() {
           RCS Paris — Capital social de 1 000 €<br />
           Numéro de TVA intracommunautaire : Non applicable — franchise en base de TVA (art. 293 B du Code général des impôts)<br />
           Directeur de la publication : Pierre Marey-Semper<br />
-          Contact : contact@kaijos.fr
+          Contact : contact@kaijos.com
         </p>
       </Section>
 
@@ -39,7 +39,7 @@ export default function LegalPage() {
       </Section>
 
       <Section title="Contact">
-        <p>Pour toute question relative au Site ou à son contenu : contact@kaijos.fr</p>
+        <p>Pour toute question relative au Site ou à son contenu : contact@kaijos.com</p>
       </Section>
     </LegalShell>
   );

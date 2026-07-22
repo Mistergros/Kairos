@@ -5,7 +5,7 @@ export default function SupportPage() {
     <LegalShell title="Support">
       <Section title="Une question, un problème ?">
         <p>
-          Écrivez-nous à <a className="text-blue-600 hover:underline" href="mailto:contact@kaijos.fr">contact@kaijos.fr</a> — nous répondons sous 48h ouvrées (support prioritaire pour les offres PME et Consultants).
+          Écrivez-nous à <a className="text-blue-600 hover:underline" href="mailto:contact@kaijos.com">contact@kaijos.com</a> — nous répondons sous 48h ouvrées (support prioritaire pour les offres PME et Consultants).
         </p>
       </Section>
       <Section title="Documents utiles">

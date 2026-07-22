@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /landing
+Allow: /legal
+Allow: /privacy
+Allow: /cgv
+Allow: /support
+Disallow: /mon-compte
+Disallow: /pricing
+Disallow: /units
+Disallow: /inventory
+Disallow: /action-plan
+Disallow: /exports
+Disallow: /versions
+Disallow: /duerp-results
+Disallow: /sign-in
+Disallow: /sign-up
+
+Sitemap: https://kaijos.com/sitemap.xml
