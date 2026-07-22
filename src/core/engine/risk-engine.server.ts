@@ -71,10 +71,22 @@ export class RiskEngineV4 {
     const ndir = path.join(this.baseConfigPath,'naf');
     return fs.readdirSync(ndir).filter(f=>f.endsWith('.json')).map(f => this.parseJSON(fs.readFileSync(path.join(ndir,f),'utf-8')));
   }
+  private normCode(s?: string){ return String(s||"").toUpperCase().replace(/[^A-Z0-9]/g,""); }
   public getNAFProfile(nafCode?: string){
-    const code = nafCode || "";
+    // Les codes NAF réels arrivent avec un point (format INSEE/Sirene, ex.
+    // "43.29A" — voir api/companies/search.js et le placeholder d'Inventory.tsx),
+    // mais certains profils config/naf/*.json sont enregistrés sans point
+    // (ex. "4329A"). On compare toujours des codes normalisés (majuscules,
+    // ponctuation retirée) pour que le matching ne dépende pas du formatage.
+    const code = this.normCode(nafCode);
     const all = this.listNaf();
-    return all.find(n => String(code).startsWith(String(n.code))) || null;
+    const matches = all.filter(n => code.startsWith(this.normCode(n.code)));
+    if (!matches.length) return null;
+    // Plusieurs profils peuvent matcher par préfixe (ex. "41" générique et
+    // "4120A" spécifique pour un code "4120A") — le plus spécifique (code le
+    // plus long) doit toujours l'emporter, indépendamment de l'ordre de
+    // lecture des fichiers sur le disque.
+    return matches.reduce((best, cur) => (this.normCode(cur.code).length > this.normCode(best.code).length ? cur : best));
   }
   private applyRules(ctx: UnityContext, riskIds: Set<string>, actionIds: Set<string>, obligIds: Set<string>){
     if (!this.rules) return;

@@ -1,6 +1,9 @@
 {
-  "code": "4120A",
+  "code": "41",
   "label": "Construction de bâtiments",
+  "risks_mandatory": [
+    "R-INCENDIE"
+  ],
   "risks_priority": [
     "R-CHUTE-HAUTEUR",
     "R-ELECTRIQUE",
