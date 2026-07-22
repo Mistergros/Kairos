@@ -9,8 +9,7 @@
     "R-TMS"
   ],
   "risks_mandatory": [
-    "R-AGRESSION",
-    "R-TRAVAIL-NUIT"
+    "R-AGRESSION"
   ],
   "actions_recommended": [
     "A-R-GLISSADES-001",

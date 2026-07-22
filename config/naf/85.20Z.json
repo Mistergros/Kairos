@@ -8,7 +8,7 @@
   "risks_priority": [
     "R-ECRAN",
     "R-RPS",
-    "R-QUALITE-AIR",
+    "R-QUALITEAIR",
     "R-AGRESSION"
   ],
   "risks_mandatory": [],

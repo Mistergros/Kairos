@@ -3,8 +3,7 @@
   "label": "Plâtrerie",
   "risks_priority": [
     "R-CHUTE-HAUTEUR",
-    "R-MANUTENTION",
-    "R-POUSSIERES"
+    "R-MANUTENTION"
   ],
   "risks_mandatory": [],
   "actions_recommended": [
