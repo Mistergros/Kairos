@@ -1,5 +1,5 @@
 {
-  "naf": "9200Z",
+  "code": "9200Z",
   "label": "Organisation de jeux de hasard",
   "risks_priority": [
     "R-AGRESSION",
