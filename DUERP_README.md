@@ -258,3 +258,19 @@ npx tsc -b                      # typecheck complet — à lancer avant tout pus
 - **Limite connue** : `STRIPE_WEBHOOK_SECRET` du service staging est encore celui de prod — un checkout Stripe complet (jusqu'au passage de l'abonnement à "actif") n'est donc pas testable de bout en bout sur staging tant qu'un second endpoint webhook Stripe (pointant vers l'URL de `kaijos-api-staging`) n'a pas été créé avec son propre secret.
 - **Workflow** : travailler sur `staging` → tester sur les URLs de preview/staging → une fois validé, fusionner `staging` dans `master` → seul ce merge déclenche la mise en prod.
 - **Rollback** : Vercel (Deployments → ancien déploiement → "Promote to Production"), Render (Deploys → ancien déploiement → "Rollback"), ou `git revert` + push sur `master`. Pour un problème de données : Point-in-Time Restore côté Neon.
+
+---
+
+## 17. RGPD — droit à l'effacement
+
+Aucun mécanisme en libre-service côté client (légal pour une structure de cette taille — le RGPD n'exige pas l'automatisation, juste que la demande soit honorée sous un délai raisonnable). Procédure manuelle, via script :
+
+```bash
+# Aperçu (ne supprime rien) : montre ce qui serait effacé
+npm run duerp:erase-user -- "email-ou-id-clerk-de-la-personne"
+
+# Suppression réelle
+npm run duerp:erase-user -- "email-ou-id-clerk-de-la-personne" --confirm
+```
+
+Le script (`scripts/duerp/erase-user.ts`) supprime, pour l'utilisateur donné : toutes ses lignes dans `establishments`, `work_units`, `assessments`, `actions`, `duerp_versions` (Neon — la suppression des `establishments` entraîne la suppression en cascade du reste), puis le compte Clerk lui-même. Nécessite `DATABASE_URL` et `CLERK_SECRET_KEY` dans l'environnement — **vérifier lequel avant de lancer avec `--confirm`** (production vs staging pointent vers des bases différentes).

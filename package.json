@@ -13,6 +13,7 @@
     "duerp:db:reset": "node scripts/duerp/bootstrap.cjs --reset",
     "duerp:api:check": "node -e \"console.log('OpenAPI: duerp_pro_spec/specs/openapi.yaml')\"",
     "duerp:sources:audit": "node scripts/duerp/audit-sources.mjs",
+    "duerp:erase-user": "tsx scripts/duerp/erase-user.ts",
     "dev:api": "tsx api/server.ts",
     "config:build:front": "tsx scripts/config/build-front.ts",
     "config:validate": "tsx scripts/config/validate-config.ts",
