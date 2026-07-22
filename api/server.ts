@@ -1,6 +1,7 @@
 import { createServer } from "http";
 import { URL } from "url";
 import path from "path";
+import fs from "fs";
 import crypto from "crypto";
 import Stripe from "stripe";
 import { clerkClient, verifyToken } from "@clerk/clerk-sdk-node";
@@ -32,7 +33,7 @@ const stripe = STRIPE_SECRET_KEY ? new Stripe(STRIPE_SECRET_KEY, { apiVersion: "
 const CLERK_SECRET_KEY = process.env.CLERK_SECRET_KEY;
 const clerkEnabled = Boolean(CLERK_SECRET_KEY);
 const RESEND_API_KEY = process.env.RESEND_API_KEY || "";
-const FROM_EMAIL = process.env.FROM_EMAIL || "noreply@kaijos.fr";
+const FROM_EMAIL = process.env.FROM_EMAIL || "noreply@kaijos.com";
 
 const json = (res: any, data: any, status = 200) => {
   const originHeader = (res as any)._origin;
@@ -695,6 +696,54 @@ createServer(async (req, res) => {
         status: "pending",
       }));
       return json(res, { obligations, tenantId: tenantId || undefined });
+    }
+
+    // ── BACK-OFFICE (lecture seule) : tables de config brutes pour le
+    // back-office interne (parcourir les référentiels, pas d'écriture).
+    // Gardé par la vraie session Clerk (pas le jeton API_TOKEN_* partagé,
+    // celui-là est déjà présent dans le bundle front envoyé à tout client) —
+    // il faut être connecté ET que l'email corresponde à VITE_ADMIN_EMAIL. ──
+    if (req.method === "GET" && basePath === "/api/admin/config") {
+      const adminEmail = process.env.VITE_ADMIN_EMAIL;
+      if (!adminEmail || !clerkEnabled) return json(res, { error: "Not configured" }, 404);
+      const userId = await getClerkOrgId(req);
+      if (!userId) return json(res, { error: "Unauthorized" }, 401);
+      const clerkUser = await clerkClient.users.getUser(userId).catch(() => null);
+      const email = clerkUser?.emailAddresses?.find((e) => e.id === clerkUser.primaryEmailAddressId)?.emailAddress;
+      if (!email || email !== adminEmail) return json(res, { error: "Forbidden" }, 403);
+      try {
+        const configDir = path.join(process.cwd(), "config");
+        const stripBom = (raw: string) => raw.replace(/^﻿/, "").replace(/^ï»¿/, "");
+        const readJsonDir = (rel: string) =>
+          fs
+            .readdirSync(path.join(configDir, rel))
+            .filter((f) => f.endsWith(".json"))
+            .map((f) => JSON.parse(stripBom(fs.readFileSync(path.join(configDir, rel, f), "utf-8"))));
+        const readJsonFile = (rel: string) => JSON.parse(stripBom(fs.readFileSync(path.join(configDir, rel), "utf-8")));
+
+        const risks = readJsonDir("risks");
+        const naf = readJsonDir("naf");
+        const actions = readJsonDir("actions").flat();
+        const obligations = {
+          general: readJsonFile("obligations/general.json"),
+          sector: readJsonFile("obligations/sector.json"),
+        };
+        const scoring = readJsonFile("scoring.json");
+        const unitsModifiers = readJsonFile("units/modifiers.json");
+
+        return json(res, {
+          risks,
+          naf,
+          actions,
+          obligations,
+          scoring,
+          unitsModifiers,
+          generatedAt: new Date().toISOString(),
+        });
+      } catch (err) {
+        console.error("[admin/config] failed", err);
+        return json(res, { error: "Internal error" }, 500);
+      }
     }
 
     // ── RECHERCHE ENTREPRISES (INSEE) ───────────────────────────────────────

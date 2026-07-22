@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, NavLink, Navigate } from "react-router-do
 import { useMemo, useState, useEffect, type ReactNode } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { Menu, X, HelpCircle } from "lucide-react";
-import { LayoutDashboard, Building2, ShieldCheck, ListChecks, Download, Clock3, CreditCard, UserCircle } from "lucide-react";
+import { LayoutDashboard, Building2, ShieldCheck, ListChecks, Download, Clock3, CreditCard, UserCircle, Database } from "lucide-react";
 import { Dashboard } from "./pages/Dashboard";
 import { Units } from "./pages/Units";
 import { Inventory } from "./pages/Inventory";
@@ -23,6 +23,7 @@ import { Onboarding } from "./components/Onboarding";
 import { ProductTour, useTourControls } from "./components/ProductTour";
 import { useDuerpStore } from "./state/store";
 import { DuerpResults } from "./pages/DuerpResults";
+import { BackOffice } from "./pages/BackOffice";
 
 const navItems: { path: string; label: string; icon: typeof LayoutDashboard; end?: boolean; tourId?: string }[] = [
   { path: "/", label: "Tableau de bord", icon: LayoutDashboard, end: true },
@@ -36,6 +37,14 @@ const navItems: { path: string; label: string; icon: typeof LayoutDashboard; end
 ];
 
 const bypassAuth = import.meta.env.VITE_BYPASS_AUTH === "true";
+const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL as string | undefined;
+
+function useIsAdmin() {
+  const { user } = useUser();
+  if (bypassAuth) return true; // même bascule que le reste du dashboard en dev/preview
+  if (!ADMIN_EMAIL) return false;
+  return user?.primaryEmailAddress?.emailAddress === ADMIN_EMAIL;
+}
 
 function FullPageLoader({ label = "Chargement..." }: { label?: string }) {
   return (
@@ -60,6 +69,12 @@ function RequireSubscription({ children }: { children: ReactNode }) {
   if (!isSignedIn) return <Navigate to="/landing" replace />;
   const status = (user?.publicMetadata as any)?.subscriptionStatus;
   if (status !== "active") return <Navigate to="/landing" replace />;
+  return <>{children}</>;
+}
+
+function RequireAdmin({ children }: { children: ReactNode }) {
+  const isAdmin = useIsAdmin();
+  if (!isAdmin) return <Navigate to="/" replace />;
   return <>{children}</>;
 }
 
@@ -104,6 +119,10 @@ function DashboardRoutes() {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { restart: restartTour } = useTourControls();
+  const isAdmin = useIsAdmin();
+  const visibleNavItems = isAdmin
+    ? [...navItems, { path: "/back-office", label: "Back-office", icon: Database }]
+    : navItems;
 
   const SidebarContent = () => (
     <div className="px-5 py-6 h-full flex flex-col">
@@ -114,7 +133,7 @@ function DashboardRoutes() {
         </button>
       </div>
       <div className="mt-6 space-y-2 text-sm">
-        {navItems.map((item) => {
+        {visibleNavItems.map((item) => {
           const Icon = item.icon;
           return (
             <NavLink
@@ -202,6 +221,14 @@ function DashboardRoutes() {
             <Route path="/exports" element={<Exports />} />
             <Route path="/versions" element={<Versions />} />
             <Route path="/duerp-results" element={<DuerpResults />} />
+            <Route
+              path="/back-office"
+              element={
+                <RequireAdmin>
+                  <BackOffice />
+                </RequireAdmin>
+              }
+            />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
