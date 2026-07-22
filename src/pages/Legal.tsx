@@ -1,6 +1,24 @@
+import { useEffect } from "react";
+
+function usePageMeta(title: string, description: string) {
+  useEffect(() => {
+    const prevTitle = document.title;
+    const metaEl = document.querySelector('meta[name="description"]');
+    const prevDescription = metaEl?.getAttribute("content") ?? null;
+
+    document.title = title;
+    if (metaEl) metaEl.setAttribute("content", description);
+
+    return () => {
+      document.title = prevTitle;
+      if (metaEl && prevDescription !== null) metaEl.setAttribute("content", prevDescription);
+    };
+  }, [title, description]);
+}
+
 export default function LegalPage() {
   return (
-    <LegalShell title="Mentions légales">
+    <LegalShell title="Mentions légales" description="Mentions légales du site Kaijos : éditeur, hébergement et propriété intellectuelle.">
       <Section title="Éditeur du site">
         <p>
           Le site Kaijos (ci-après « le Site ») est édité par :<br />
@@ -45,7 +63,16 @@ export default function LegalPage() {
   );
 }
 
-export function LegalShell({ title, children }: { title: string; children: React.ReactNode }) {
+export function LegalShell({
+  title,
+  description,
+  children,
+}: {
+  title: string;
+  description: string;
+  children: React.ReactNode;
+}) {
+  usePageMeta(`${title} — Kaijos`, description);
   return (
     <main className="min-h-screen bg-white">
       <div className="mx-auto max-w-3xl px-6 py-14">

@@ -2,7 +2,10 @@ import { LegalShell, Section } from "./Legal";
 
 export default function TermsPage() {
   return (
-    <LegalShell title="Conditions générales de vente">
+    <LegalShell
+      title="Conditions générales de vente"
+      description="Conditions générales de vente de Kaijos : abonnements, tarifs, résiliation et facturation."
+    >
       <p className="text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-8">
         ⚠️ Ce document est un point de départ structurel, pas un avis juridique — une relecture par un professionnel du droit est recommandée avant la mise en production de paiements réels.
       </p>

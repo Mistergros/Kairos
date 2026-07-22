@@ -2,7 +2,10 @@ import { LegalShell, Section } from "./Legal";
 
 export default function PrivacyPage() {
   return (
-    <LegalShell title="Politique de confidentialité">
+    <LegalShell
+      title="Politique de confidentialité"
+      description="Politique de confidentialité de Kaijos : données personnelles collectées, finalités et droits RGPD."
+    >
       <Section title="Responsable de traitement">
         <p>
           Milante Consulting, éditeur de Kaijos (voir <a className="text-blue-600 hover:underline" href="/legal">mentions légales</a>), est responsable du traitement des données personnelles décrites ci-dessous, au sens du Règlement général sur la protection des données (RGPD).
