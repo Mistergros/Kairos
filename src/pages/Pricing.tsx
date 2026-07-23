@@ -22,6 +22,7 @@ export function Pricing() {
   const [loading, setLoading] = useState<string | null>(null);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [showTermsHint, setShowTermsHint] = useState(false);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
 
   const monthlyPrice = (plan: Plan) =>
     annual ? Math.round(plan.priceYearly / 12) : plan.priceMonthly;
@@ -36,15 +37,23 @@ export function Pricing() {
       return;
     }
     setLoading(planId);
+    setCheckoutError(null);
     try {
       const res = await fetch(`${API_BASE}/api/checkout-sessions`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ clerkUserId: user?.id, planId, billing: annual ? "annual" : "monthly" }),
       });
+      if (!res.ok) {
+        const text = await res.text().catch(() => "");
+        throw new Error(text || `Le paiement n'a pas pu démarrer (${res.status}).`);
+      }
       const data = await res.json();
-      if (data.url) window.location.href = data.url;
-    } finally {
+      if (!data?.url) throw new Error("Le paiement n'a pas pu démarrer (réponse inattendue du serveur).");
+      window.location.href = data.url;
+    } catch (err) {
+      console.error(err);
+      setCheckoutError(err instanceof Error ? err.message : "Impossible de démarrer le paiement. Réessayez dans quelques secondes.");
       setLoading(null);
     }
   };
@@ -149,6 +158,11 @@ export function Pricing() {
       </div>
 
       <div className="flex flex-col items-center gap-2 pt-2">
+        {checkoutError && (
+          <div className="w-full max-w-md rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-center text-sm text-rose-700">
+            {checkoutError}
+          </div>
+        )}
         <label className="flex items-center gap-2 text-sm text-slate">
           <input
             type="checkbox"
