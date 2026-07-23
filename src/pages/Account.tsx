@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
-import { useUser } from "@clerk/clerk-react";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useUser, useClerk } from "@clerk/clerk-react";
 import { useDuerpStore } from "../state/store";
 import { PLAN_CONFIG, type PlanId } from "../hooks/usePlan";
 import { apiGet, apiPost } from "../utils/apiClient";
@@ -11,6 +11,8 @@ type Invite = { id: string; invitee_email: string; role: string; status: string;
 
 export default function AccountPage() {
   const { user } = useUser();
+  const { signOut } = useClerk();
+  const navigate = useNavigate();
   const { establishments, selectedEstablishmentId } = useDuerpStore();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -107,9 +109,18 @@ export default function AccountPage() {
             <h1 className="text-3xl font-semibold">Mon compte</h1>
             <p className="mt-2 text-slate-600">Gerez votre abonnement et vos informations de facturation.</p>
           </div>
-          <a href="/" className="text-sm font-semibold text-blue-600 hover:underline">
-            Retour a l'application
-          </a>
+          <div className="flex items-center gap-4">
+            <a href="/" className="text-sm font-semibold text-blue-600 hover:underline">
+              Retour a l'application
+            </a>
+            <button
+              type="button"
+              onClick={() => signOut(() => navigate("/landing"))}
+              className="text-sm font-semibold text-slate-500 hover:text-slate-700 hover:underline"
+            >
+              Se déconnecter
+            </button>
+          </div>
         </div>
 
         <div className="mt-8 grid gap-6 md:grid-cols-2">
