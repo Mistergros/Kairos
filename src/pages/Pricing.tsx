@@ -187,7 +187,7 @@ export function Pricing() {
           <p className="text-xs font-semibold text-rose-600">Coche cette case pour continuer.</p>
         )}
         <p className="text-center text-xs text-slate/50">
-          Résiliation à tout moment depuis votre espace compte. Paiement sécurisé via Stripe.
+          Résiliable à tout moment depuis votre espace compte — prend effet à la fin de la période déjà payée (mensuelle ou annuelle selon votre choix), sans reconduction ensuite. Paiement sécurisé via Stripe.
         </p>
       </div>
       </div>

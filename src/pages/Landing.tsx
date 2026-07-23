@@ -701,7 +701,7 @@ function PricingSection({
         <div className="text-center mb-12">
           <span className="inline-block rounded-full bg-[#5b61f6]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[#5b61f6] mb-4">Tarifs</span>
           <h2 className="text-4xl font-extrabold text-[#0f172a]">Simple. Transparent.</h2>
-          <p className="mt-3 text-lg text-slate-500">Résiliation à tout moment — 2 mois offerts sur l'abonnement annuel.</p>
+          <p className="mt-3 text-lg text-slate-500">Résiliable à tout moment, sans reconduction — 2 mois offerts sur l'abonnement annuel.</p>
 
           {/* Toggle mensuel / annuel */}
           <div className="mt-6 inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white p-1.5 shadow-sm">
