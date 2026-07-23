@@ -33,6 +33,7 @@ export function Pricing() {
       return;
     }
     if (!isSignedIn) {
+      try { localStorage.setItem("kaijos_pending_plan", planId); } catch {}
       navigate(`/sign-up?plan=${planId}`);
       return;
     }

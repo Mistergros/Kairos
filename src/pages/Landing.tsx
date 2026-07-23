@@ -803,7 +803,7 @@ function Footer() {
    EXPORT PAGE
 ------------------------------------------------------------ */
 export default function LandingPage() {
-  const { isSignedIn, user } = useUser();
+  const { isLoaded, isSignedIn, user } = useUser();
   const navigate = useNavigate();
   const [checkoutState, setCheckoutState] = useState<"idle" | "loading" | "error">("idle");
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
@@ -811,8 +811,13 @@ export default function LandingPage() {
 
   const startCheckout = async (planId?: PlanId) => {
     if (checkoutState === "loading") return;
-    // Si pas connecté → inscription d'abord, avec le plan en paramètre
+    // Si pas connecté → inscription d'abord, avec le plan en paramètre. On le
+    // garde aussi en localStorage : le "afterSignUpUrl" de Clerk ne survit pas
+    // toujours au parcours d'inscription (ex. redirection interne de Clerk vers
+    // "/" plutôt que vers l'URL demandée) — sans ce filet, l'utilisateur revient
+    // sur /landing après inscription sans que le paiement ne reprenne jamais.
     if (!isSignedIn) {
+      try { localStorage.setItem("kaijos_pending_plan", planId || "starter"); } catch {}
       navigate(`/sign-up?plan=${planId || "starter"}`);
       return;
     }
@@ -851,6 +856,8 @@ export default function LandingPage() {
   };
 
   useEffect(() => {
+    if (!isLoaded) return; // attend que Clerk confirme l'état de session avant de décider quoi que ce soit
+
     const params = new URLSearchParams(window.location.search);
     const checkout = params.get("checkout");
     const subscription = params.get("subscription");
@@ -876,14 +883,23 @@ export default function LandingPage() {
       setNotice("Paiement annulé. Vous pouvez réessayer.");
     } else if (subscription === "required") {
       setNotice("Abonnement inactif. Merci de vous abonner pour accéder à l'application.");
-    } else if (autoPlan && isSignedIn) {
+    } else if (isSignedIn) {
       // Reprend le plan choisi avant l'inscription (voir SignUpPage), pour ne
       // pas faire re-choisir le plan une deuxième fois juste après avoir créé
-      // le compte.
-      startCheckout(autoPlan as PlanId);
+      // le compte. On accepte aussi bien le paramètre d'URL que le filet de
+      // secours en localStorage (voir startCheckout) — le paramètre peut être
+      // perdu si Clerk redirige ailleurs que vers l'URL demandée après l'inscription.
+      let pendingPlan: string | null = autoPlan;
+      if (!pendingPlan) {
+        try { pendingPlan = localStorage.getItem("kaijos_pending_plan"); } catch {}
+      }
+      if (pendingPlan) {
+        try { localStorage.removeItem("kaijos_pending_plan"); } catch {}
+        startCheckout(pendingPlan as PlanId);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSignedIn]);
+  }, [isSignedIn, isLoaded]);
 
   const isLoading = checkoutState === "loading";
   return (
