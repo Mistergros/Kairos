@@ -76,7 +76,9 @@ const readRawBody = async (req: any) =>
 const mergePublicMetadata = async (userId: string, patch: Record<string, any>) => {
   const user = await clerkClient.users.getUser(userId);
   const current = (user.publicMetadata || {}) as Record<string, any>;
-  await clerkClient.users.updateUser(userId, { publicMetadata: { ...current, ...patch } });
+  // updateUser({ publicMetadata }) is deprecated by Clerk's API (422
+  // form_param_deprecated) — this is the dedicated replacement endpoint.
+  await clerkClient.users.updateUserMetadata(userId, { publicMetadata: { ...current, ...patch } });
 };
 
 const getClerkUserByEmail = async (email: string) => {
