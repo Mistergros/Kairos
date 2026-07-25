@@ -225,8 +225,23 @@ export const nafMappingSourceByItem: Record<string, { source: string; sourceUrl:
   "Espaces exigus": {
     "source": "INRS ED 950 — Conception des lieux et des situations de travail",
     "sourceUrl": "https://www.inrs.fr/media.html?refINRS=ED+950"
+  },
+  // Sous-effectif, Sécurité visiteurs, Noyade/Enfouissement : aucune brochure
+  // INRS dédiée trouvée malgré recherche le 25/07/2026 (pistes écartées après
+  // vérification — voir mémoire duerp-referentiels-sourcing). Rattachés à
+  // l'obligation légale générale de l'employeur plutôt que laissés sans rien :
+  // c'est elle qui fonde le DUERP lui-même (art. R.4121-1), donc un
+  // fondement réel, seulement plus général qu'une brochure thématique.
+  "Sous-effectif": {
+    "source": "Code du travail, art. L.4121-1 — obligation générale de l'employeur d'assurer la sécurité et de protéger la santé physique et mentale des travailleurs",
+    "sourceUrl": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000035640828/"
+  },
+  "Sécurité visiteurs": {
+    "source": "Code du travail, art. L.4121-1 — obligation générale de l'employeur d'assurer la sécurité et de protéger la santé physique et mentale des travailleurs",
+    "sourceUrl": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000035640828/"
+  },
+  "Noyade/Enfouissement": {
+    "source": "Code du travail, art. L.4121-1 — obligation générale de l'employeur d'assurer la sécurité et de protéger la santé physique et mentale des travailleurs",
+    "sourceUrl": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000035640828/"
   }
-  // Sous-effectif, Sécurité visiteurs, Noyade/Enfouissement : recherchés le
-  // 25/07/2026, toujours sans source fiable trouvée (voir REFERENTIELS.md /
-  // mémoire duerp-referentiels-sourcing pour le détail des pistes écartées).
 };
