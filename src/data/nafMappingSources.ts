@@ -212,5 +212,21 @@ export const nafMappingSourceByItem: Record<string, { source: string; sourceUrl:
   "Travaux sur corde": {
     "source": "INRS — Travail encordé ou accès et positionnement au moyen de cordes",
     "sourceUrl": "https://www.inrs.fr/risques/chutes-hauteur/travail-encorde-acces-positionnement-cordes.html"
+  },
+
+  // Ajoutés le 25/07/2026, recherche + vérification directe des URLs.
+  "Procédures insuffisantes": {
+    "source": "Code du travail, art. L.4121-2 — 9 principes généraux de prévention (dont « donner des instructions appropriées aux travailleurs »)",
+    "sourceUrl": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033019913"
+  },
+  // Confiance partielle : le sujet (conception/aménagement des locaux) correspond,
+  // mais je n'ai pas pu vérifier que l'exiguïté y est traitée précisément (page
+  // technique illisible par mes outils) — à confirmer si besoin.
+  "Espaces exigus": {
+    "source": "INRS ED 950 — Conception des lieux et des situations de travail",
+    "sourceUrl": "https://www.inrs.fr/media.html?refINRS=ED+950"
   }
+  // Sous-effectif, Sécurité visiteurs, Noyade/Enfouissement : recherchés le
+  // 25/07/2026, toujours sans source fiable trouvée (voir REFERENTIELS.md /
+  // mémoire duerp-referentiels-sourcing pour le détail des pistes écartées).
 };
