@@ -384,7 +384,12 @@ export const useDuerpStore = create<DUERPState>()(
         const targetWorkUnitId = state.selectedWorkUnitId;
         const allUnits = state.workUnits.filter((u) => u.establishmentId === state.selectedEstablishmentId);
         const targetUnits = targetWorkUnitId ? allUnits.filter((u) => u.id === targetWorkUnitId) : allUnits;
-        if (!targetUnits.length) return;
+        if (!targetUnits.length) {
+          set({
+            prefillWarning: "Créez d'abord une unité de travail (menu « Unités de travail ») avant de pré-remplir les risques — chaque risque doit être rattaché à une unité.",
+          });
+          return;
+        }
 
         set({ loadingHazards: true });
         try {
