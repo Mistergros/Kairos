@@ -694,6 +694,16 @@ function PricingSection({
   isLoading: boolean;
 }) {
   const [annual, setAnnual] = React.useState(false);
+  const [acceptedTerms, setAcceptedTerms] = React.useState(false);
+  const [showTermsHint, setShowTermsHint] = React.useState(false);
+
+  const handleSubscribe = (planId: PlanId) => {
+    if (!acceptedTerms) {
+      setShowTermsHint(true);
+      return;
+    }
+    onSubscribe(planId);
+  };
 
   return (
     <section id="pricing" className="w-full bg-[#FAF8F5] px-6 py-24">
@@ -757,7 +767,7 @@ function PricingSection({
                 </ul>
                 <button
                   type="button"
-                  onClick={() => onSubscribe(p.id)}
+                  onClick={() => handleSubscribe(p.id)}
                   disabled={isLoading}
                   className={`mt-8 w-full rounded-2xl py-3.5 font-bold text-base transition disabled:opacity-60 ${
                     p.recommended
@@ -772,7 +782,32 @@ function PricingSection({
           })}
         </div>
 
-        <p className="text-center text-xs text-slate-400 mt-8">
+        <div className="mt-8 flex flex-col items-center gap-2">
+          <label className="flex items-center gap-2 text-sm text-slate-600">
+            <input
+              type="checkbox"
+              checked={acceptedTerms}
+              onChange={(e) => {
+                setAcceptedTerms(e.target.checked);
+                if (e.target.checked) setShowTermsHint(false);
+              }}
+              className="h-4 w-4 rounded border-slate-300 text-[#5b61f6] focus:ring-[#5b61f6]"
+            />
+            J'accepte les{" "}
+            <a href="/cgv" target="_blank" rel="noreferrer" className="text-[#5b61f6] hover:underline">
+              CGV
+            </a>{" "}
+            et la{" "}
+            <a href="/privacy" target="_blank" rel="noreferrer" className="text-[#5b61f6] hover:underline">
+              politique de confidentialité
+            </a>
+          </label>
+          {showTermsHint && (
+            <p className="text-xs font-semibold text-rose-600">Coche cette case pour continuer.</p>
+          )}
+        </div>
+
+        <p className="text-center text-xs text-slate-400 mt-4">
           Paiement sécurisé par Stripe · Résiliation en 1 clic · TVA non applicable (Art. 293B du CGI)
         </p>
       </div>
