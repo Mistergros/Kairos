@@ -1,0 +1,15 @@
+[
+  {
+    "id": "A-R-CHUTE-OBJET-001",
+    "risk_id": "R-CHUTE-OBJET",
+    "title": "Sécurisation du stockage en hauteur et contrôle périodique des racks",
+    "type": "Technique",
+    "description": "Arrimer ou sécuriser (filets, barrières) les charges stockées en hauteur. Respecter les limites de charge des racks et rayonnages, vérifier leur état périodiquement (déformation, corrosion), et interdire le stationnement prolongé sous une charge suspendue ou en hauteur.",
+    "impact": "Réduction des accidents par chute d'objets, cause fréquente de blessures graves en entrepôt et sur chantier.",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "naf_specific": [],
+    "references": ["INRS ED 6468 — Risques de choc ou d'écrasement, solutions de prévention"],
+    "referenceUrls": ["https://www.inrs.fr/media.html?refINRS=ED+6468"]
+  }
+]

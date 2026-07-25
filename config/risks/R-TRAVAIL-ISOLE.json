@@ -1,0 +1,12 @@
+{
+  "id": "R-TRAVAIL-ISOLE",
+  "name": "Travail isolé",
+  "category": "Organisationnel",
+  "description": "Salarié seul, hors de vue ou de portée de voix d'autres personnes, sans moyen d'alerte rapide en cas d'accident ou de malaise.",
+  "units": ["Chantier", "Bureau"],
+  "questions": ["Dispositif d'alerte (DATI/PTI) mis à disposition ?", "Procédure de vérification périodique organisée ?"],
+  "factors": [],
+  "sources": ["INRS ED 6288 — Travail isolé, pour une démarche globale de prévention"],
+  "sources_verified": "2026-07-25",
+  "sourceUrls": ["https://www.inrs.fr/media.html?refINRS=ED+6288"]
+}

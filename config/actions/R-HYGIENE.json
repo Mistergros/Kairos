@@ -1,0 +1,15 @@
+[
+  {
+    "id": "A-R-HYGIENE-001",
+    "risk_id": "R-HYGIENE",
+    "title": "Mise à disposition et entretien de vestiaires et sanitaires conformes",
+    "type": "Technique",
+    "description": "Mettre à disposition des salariés des vestiaires, lavabos, cabinets d'aisance et, le cas échéant, des douches, en nombre suffisant et maintenus en état de propreté. Prévoir des points d'eau accessibles au poste pour les activités salissantes.",
+    "impact": "Conformité réglementaire et prévention des risques infectieux liés au manque d'hygiène (contact avec produits, saleté).",
+    "difficulty": "Faible",
+    "cost": "Moyen",
+    "naf_specific": [],
+    "references": ["Code du travail, art. R.4228-1 — Vestiaires et installations sanitaires"],
+    "referenceUrls": ["https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000018532006"]
+  }
+]

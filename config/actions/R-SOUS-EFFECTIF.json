@@ -1,0 +1,15 @@
+[
+  {
+    "id": "A-R-SOUS-EFFECTIF-001",
+    "risk_id": "R-SOUS-EFFECTIF",
+    "title": "Évaluation régulière de la charge de travail au regard des effectifs réels",
+    "type": "Organisationnelle",
+    "description": "Mettre en place un suivi périodique de la charge de travail (indicateurs d'activité, heures supplémentaires, absentéisme) pour objectiver les situations de sous-effectif durable. Associer les représentants du personnel à cette analyse et anticiper les renforts (recrutement, intérim) avant que la situation ne se dégrade.",
+    "impact": "Prévention des risques psychosociaux et des accidents liés à la précipitation ou à la fatigue générés par une charge de travail chronique excessive.",
+    "difficulty": "Moyenne",
+    "cost": "Faible",
+    "naf_specific": [],
+    "references": ["ANACT — Agir sur la charge de travail"],
+    "referenceUrls": ["https://www.anact.fr/sites/default/files/2025-07/guide-anact-charge-travail.pdf"]
+  }
+]

@@ -1,0 +1,15 @@
+[
+  {
+    "id": "A-R-NOYADE-ENFOUISSEMENT-001",
+    "risk_id": "R-NOYADE-ENFOUISSEMENT",
+    "title": "Blindage des tranchées et équipement de flottaison près des points d'eau",
+    "type": "Technique",
+    "description": "Pour les travaux en tranchée : mettre en place un blindage ou un talutage adapté à la nature du terrain avant toute intervention dans la fouille, ne jamais y travailler seul. Pour les travaux à proximité de points d'eau : équiper le personnel de gilets de sauvetage et prévoir un dispositif de secours immédiat (bouée, moyen d'alerte).",
+    "impact": "Prévention de deux risques d'accident mortel bien documentés : l'ensevelissement (effondrement de tranchée) et la noyade lors de travaux près de l'eau.",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "naf_specific": [],
+    "references": ["Code du travail, art. L.4121-1 — obligation générale de l'employeur"],
+    "referenceUrls": ["https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000035640828/"]
+  }
+]

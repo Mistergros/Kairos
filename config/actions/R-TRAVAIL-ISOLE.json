@@ -1,0 +1,15 @@
+[
+  {
+    "id": "A-R-TRAVAIL-ISOLE-001",
+    "risk_id": "R-TRAVAIL-ISOLE",
+    "title": "Dispositif d'alerte pour travailleur isolé (DATI/PTI) et procédure de vérification",
+    "type": "Technique",
+    "description": "Équiper les salariés en situation d'isolement d'un dispositif d'alarme pour travailleur isolé (DATI) déclenchable manuellement ou automatiquement (détection d'immobilité, de chute). Organiser une procédure de vérification régulière (appel, pointage) et définir clairement qui intervient et sous quel délai en cas d'alerte.",
+    "impact": "Réduction du délai d'intervention en cas d'accident ou de malaise, déterminant pour le pronostic vital dans de nombreuses situations.",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "naf_specific": [],
+    "references": ["INRS ED 6288 — Travail isolé, pour une démarche globale de prévention"],
+    "referenceUrls": ["https://www.inrs.fr/media.html?refINRS=ED+6288"]
+  }
+]

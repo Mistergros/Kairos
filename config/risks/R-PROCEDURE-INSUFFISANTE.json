@@ -1,0 +1,12 @@
+{
+  "id": "R-PROCEDURE-INSUFFISANTE",
+  "name": "Procédures et consignes de travail insuffisantes",
+  "category": "Organisationnel",
+  "description": "Absence de modes opératoires écrits, consignes de sécurité non formalisées ou non communiquées aux salariés.",
+  "units": ["Bureau", "Chantier", "Atelier"],
+  "questions": ["Modes opératoires écrits disponibles au poste ?", "Consignes de sécurité affichées et connues ?"],
+  "factors": [],
+  "sources": ["Code du travail, art. L.4121-2 — 9 principes généraux de prévention (dont « donner des instructions appropriées aux travailleurs »)"],
+  "sources_verified": "2026-07-25",
+  "sourceUrls": ["https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033019913"]
+}

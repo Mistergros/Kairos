@@ -1,0 +1,12 @@
+{
+  "id": "R-ESPACE-EXIGU",
+  "name": "Espaces de travail exigus",
+  "category": "Ergonomique",
+  "description": "Poste de travail ou local trop étroit, contraignant les postures et gênant la circulation et l'évacuation.",
+  "units": ["Bureau", "Atelier", "Cuisine"],
+  "questions": ["Surface au poste conforme aux besoins de l'activité ?", "Dégagements de circulation suffisants ?"],
+  "factors": [],
+  "sources": ["INRS ED 950 — Conception des lieux et des situations de travail"],
+  "sources_verified": "2026-07-25",
+  "sourceUrls": ["https://www.inrs.fr/media.html?refINRS=ED+950"]
+}

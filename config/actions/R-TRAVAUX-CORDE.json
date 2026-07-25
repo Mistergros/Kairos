@@ -1,0 +1,15 @@
+[
+  {
+    "id": "A-R-TRAVAUX-CORDE-001",
+    "risk_id": "R-TRAVAUX-CORDE",
+    "title": "Certification des opérateurs et système d'assurage à double corde",
+    "type": "Formation",
+    "description": "S'assurer que tout salarié réalisant des travaux sur corde est formé et certifié aux techniques d'accès et de positionnement par corde. Utiliser systématiquement un système à double corde (corde de travail et corde de sécurité indépendante) et un plan de secours en cas de suspension prolongée.",
+    "impact": "Prévention des chutes de hauteur, principal risque des travaux sur corde, et du syndrome du harnais en cas de suspension inerte.",
+    "difficulty": "Élevée",
+    "cost": "Élevé",
+    "naf_specific": [],
+    "references": ["INRS — Travail encordé ou accès et positionnement au moyen de cordes"],
+    "referenceUrls": ["https://www.inrs.fr/risques/chutes-hauteur/travail-encorde-acces-positionnement-cordes.html"]
+  }
+]

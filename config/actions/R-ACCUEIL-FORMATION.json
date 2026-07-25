@@ -1,0 +1,15 @@
+[
+  {
+    "id": "A-R-ACCUEIL-FORMATION-001",
+    "risk_id": "R-ACCUEIL-FORMATION",
+    "title": "Livret d'accueil sécurité et formation au poste avant prise de fonction",
+    "type": "Organisationnelle",
+    "description": "Remettre à tout nouvel arrivant (embauche, intérimaire, stagiaire) un livret d'accueil présentant les risques du site et les consignes générales. Dispenser une formation pratique et adaptée au poste avant toute prise de fonction autonome, incluant les gestes, modes opératoires et facteurs de risque spécifiques.",
+    "impact": "Réduction des accidents liés à la méconnaissance des risques — les nouveaux arrivants et intérimaires sont statistiquement plus exposés aux accidents du travail durant leurs premiers mois.",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "naf_specific": [],
+    "references": ["INRS — Réussir l'accueil des nouveaux embauchés et prévenir les risques", "Code du travail, art. L.4141-2"],
+    "referenceUrls": ["https://www.inrs.fr/demarche/nouveaux-embauches/ce-qu-il-faut-retenir.html", ""]
+  }
+]

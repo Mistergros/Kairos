@@ -1,0 +1,12 @@
+{
+  "id": "R-ESPACE-CONFINE",
+  "name": "Travail en espace confiné",
+  "category": "Accident majeur",
+  "description": "Intervention en cuve, réservoir, égout, silo ou tout volume mal ventilé — risque d'asphyxie, d'intoxication ou d'explosion.",
+  "units": ["Chantier", "Atelier"],
+  "questions": ["Mesure de l'atmosphère avant entrée ?", "Surveillance depuis l'extérieur organisée ?"],
+  "factors": [],
+  "sources": ["INRS ED 6184 — Les espaces confinés"],
+  "sources_verified": "2026-07-25",
+  "sourceUrls": ["https://www.inrs.fr/media.html?refINRS=ED+6184"]
+}

@@ -1,0 +1,12 @@
+{
+  "id": "R-ECLAIRAGE",
+  "name": "Éclairage insuffisant ou éblouissement",
+  "category": "Physique",
+  "description": "Niveau d'éclairement inadapté au poste de travail, contrastes marqués ou éblouissements gênants (fatigue visuelle, erreurs, chutes).",
+  "units": ["Bureau", "Atelier", "Entrepôt"],
+  "questions": ["Niveau d'éclairement mesuré et adapté à la tâche ?", "Sources d'éblouissement identifiées et corrigées ?"],
+  "factors": [],
+  "sources": ["INRS ED 85 — Éclairage artificiel au poste de travail"],
+  "sources_verified": "2026-07-25",
+  "sourceUrls": ["https://www.inrs.fr/media.html?refINRS=ED+85"]
+}

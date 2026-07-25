@@ -96,6 +96,36 @@ export const labelToRiskId: Record<string, string> = {
   "repetitivite": "r-tms",
   "velo edpm": "r-routier",
   "electricite": "r-electrique",
+
+  // Ajoutés le 25/07/2026 : les 25 derniers libellés du mapping NAF encore
+  // sans action concrète. 8 recoupent un risque déjà catalogué (même
+  // thématique, même source) ; 17 pointent vers 15 nouveaux risques créés le
+  // même jour (config/risks/ + config/actions/), chacun sourcé individuellement.
+  "animaux insectes": "r-bio",
+  "contact public fragile": "r-bio",
+  "contact usagers patients": "r-agression",
+  "exposition cutanee respiratoire": "r-chimique",
+  "longs trajets fatigue": "r-routier",
+  "stockage manipulation": "r-chimique",
+  "emissions": "r-chimique",
+  "energie gaz electricite": "r-electrique",
+  "absence de formation": "r-accueil-formation",
+  "interimaires nouveaux": "r-accueil-formation",
+  "circulation interne engins": "r-circulation-interne",
+  "deplacements internes": "r-circulation-interne",
+  "coordination plan de prevention": "r-coordination-prevention",
+  "effondrement chute d objets": "r-chute-objet",
+  "espaces confines travaux particuliers": "r-espace-confine",
+  "espaces exigus": "r-espace-exigu",
+  "hygiene": "r-hygiene",
+  "noyade enfouissement": "r-noyade-enfouissement",
+  "procedures insuffisantes": "r-procedure-insuffisante",
+  "silice poussieres": "r-silice",
+  "sous effectif": "r-sous-effectif",
+  "securite visiteurs": "r-securite-visiteur",
+  "travail isole": "r-travail-isole",
+  "travaux sur corde": "r-travaux-corde",
+  "eclairage insuffisant eblouissement": "r-eclairage",
 };
 
 export const categoryToRiskId: Record<string, string> = {

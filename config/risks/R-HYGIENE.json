@@ -1,0 +1,12 @@
+{
+  "id": "R-HYGIENE",
+  "name": "Installations sanitaires et hygiène",
+  "category": "Environnemental",
+  "description": "Absence ou insuffisance de vestiaires, sanitaires, moyens de lavage mis à disposition des salariés.",
+  "units": ["Chantier", "Atelier", "Cuisine"],
+  "questions": ["Vestiaires et sanitaires disponibles et entretenus ?", "Points d'eau accessibles au poste ?"],
+  "factors": [],
+  "sources": ["Code du travail, art. R.4228-1 — Vestiaires et installations sanitaires"],
+  "sources_verified": "2026-07-25",
+  "sourceUrls": ["https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000018532006"]
+}

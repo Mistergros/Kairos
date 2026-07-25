@@ -1,0 +1,12 @@
+{
+  "id": "R-ACCUEIL-FORMATION",
+  "name": "Accueil et formation des nouveaux arrivants",
+  "category": "Organisationnel",
+  "description": "Nouveaux embauchés, intérimaires ou salariés changeant de poste, insuffisamment formés ou informés des risques propres au poste.",
+  "units": ["Bureau", "Chantier", "Atelier"],
+  "questions": ["Livret d'accueil sécurité remis ?", "Formation au poste réalisée avant prise de poste ?"],
+  "factors": [],
+  "sources": ["INRS — Réussir l'accueil des nouveaux embauchés et prévenir les risques"],
+  "sources_verified": "2026-07-25",
+  "sourceUrls": ["https://www.inrs.fr/demarche/nouveaux-embauches/ce-qu-il-faut-retenir.html"]
+}

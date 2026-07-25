@@ -1,0 +1,15 @@
+[
+  {
+    "id": "A-R-COORDINATION-PREVENTION-001",
+    "risk_id": "R-COORDINATION-PREVENTION",
+    "title": "Rédaction systématique d'un plan de prévention avant intervention d'une entreprise extérieure",
+    "type": "Organisationnelle",
+    "description": "Organiser une visite préalable des lieux avec chaque entreprise extérieure intervenant sur le site. Rédiger un plan de prévention identifiant les risques d'interférence entre activités, formalisant les mesures de prévention et les consignes de sécurité communes, avant le début des travaux.",
+    "impact": "Réduction des accidents liés à la coactivité de plusieurs entreprises sur un même site — cause fréquente d'accidents non anticipés.",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "naf_specific": [],
+    "references": ["Code du travail, art. R.4512-6 à R.4512-12 — Plan de prévention", "INRS ED 941 — Intervention d'entreprises extérieures"],
+    "referenceUrls": ["https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072050/LEGISCTA000018491568/", "https://www.inrs.fr/media.html?refINRS=ED+941"]
+  }
+]

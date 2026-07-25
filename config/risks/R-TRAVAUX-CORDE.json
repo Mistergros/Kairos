@@ -1,0 +1,12 @@
+{
+  "id": "R-TRAVAUX-CORDE",
+  "name": "Travaux sur corde",
+  "category": "Accident majeur",
+  "description": "Accès et positionnement au moyen de cordes pour des travaux en hauteur (façades, structures, ouvrages difficiles d'accès).",
+  "units": ["Chantier"],
+  "questions": ["Salariés certifiés aux techniques de travail sur corde ?", "Système d'assurage à double corde utilisé ?"],
+  "factors": [],
+  "sources": ["INRS — Travail encordé ou accès et positionnement au moyen de cordes"],
+  "sources_verified": "2026-07-25",
+  "sourceUrls": ["https://www.inrs.fr/risques/chutes-hauteur/travail-encorde-acces-positionnement-cordes.html"]
+}

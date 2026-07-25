@@ -1,0 +1,12 @@
+{
+  "id": "R-COORDINATION-PREVENTION",
+  "name": "Coordination de la prévention avec les entreprises extérieures",
+  "category": "Organisationnel",
+  "description": "Absence ou insuffisance de plan de prévention lors de l'intervention d'entreprises extérieures dans l'établissement.",
+  "units": ["Chantier", "Atelier"],
+  "questions": ["Plan de prévention rédigé avant intervention ?", "Visite préalable des lieux effectuée ?"],
+  "factors": [],
+  "sources": ["Code du travail, art. R.4512-6 à R.4512-12 — Plan de prévention"],
+  "sources_verified": "2026-07-25",
+  "sourceUrls": ["https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072050/LEGISCTA000018491568/"]
+}

@@ -1,0 +1,15 @@
+[
+  {
+    "id": "A-R-ECLAIRAGE-001",
+    "risk_id": "R-ECLAIRAGE",
+    "title": "Mesure et adaptation du niveau d'éclairement au poste de travail",
+    "type": "Technique",
+    "description": "Mesurer le niveau d'éclairement à chaque poste et le comparer aux valeurs recommandées selon la nature de la tâche. Ajouter un éclairage d'appoint si nécessaire, positionner les luminaires pour éviter reflets et éblouissements directs, et entretenir régulièrement les installations (nettoyage, remplacement).",
+    "impact": "Réduction de la fatigue visuelle, des erreurs et des chutes liées à un éclairage inadapté.",
+    "difficulty": "Faible",
+    "cost": "Moyen",
+    "naf_specific": [],
+    "references": ["INRS ED 85 — Éclairage artificiel au poste de travail"],
+    "referenceUrls": ["https://www.inrs.fr/media.html?refINRS=ED+85"]
+  }
+]

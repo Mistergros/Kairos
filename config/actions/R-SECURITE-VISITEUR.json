@@ -1,0 +1,15 @@
+[
+  {
+    "id": "A-R-SECURITE-VISITEUR-001",
+    "risk_id": "R-SECURITE-VISITEUR",
+    "title": "Accueil sécurité formalisé et contrôle d'accès pour les personnes extérieures",
+    "type": "Organisationnelle",
+    "description": "Mettre en place un accueil sécurité systématique (consignes essentielles, zones interdites, conduite à tenir en cas d'alerte) pour tout visiteur, livreur ou prestataire. Enregistrer les passages et limiter l'accès aux seules zones nécessaires, en particulier pour les zones à risque.",
+    "impact": "Réduction des accidents impliquant des personnes non familières avec les risques du site, et meilleure traçabilité en cas d'évacuation.",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "naf_specific": [],
+    "references": ["Code de la construction et de l'habitation, art. R.143-2 — sécurité des établissements recevant du public (ERP)"],
+    "referenceUrls": ["https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000043818941"]
+  }
+]

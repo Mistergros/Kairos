@@ -1,0 +1,12 @@
+{
+  "id": "R-NOYADE-ENFOUISSEMENT",
+  "name": "Noyade / ensevelissement",
+  "category": "Accident majeur",
+  "description": "Travaux à proximité de points d'eau (risque de noyade) ou en tranchée/fouille (risque d'ensevelissement en cas d'éboulement).",
+  "units": ["Chantier"],
+  "questions": ["Blindage ou talutage des tranchées mis en place ?", "Équipement de flottaison pour travaux près de l'eau ?"],
+  "factors": [],
+  "sources": ["Code du travail, art. L.4121-1 — obligation générale de l'employeur"],
+  "sources_verified": "2026-07-25",
+  "sourceUrls": ["https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000035640828/"]
+}

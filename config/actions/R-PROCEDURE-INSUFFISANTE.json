@@ -1,0 +1,15 @@
+[
+  {
+    "id": "A-R-PROCEDURE-INSUFFISANTE-001",
+    "risk_id": "R-PROCEDURE-INSUFFISANTE",
+    "title": "Rédaction et communication de modes opératoires écrits pour les tâches à risque",
+    "type": "Organisationnelle",
+    "description": "Formaliser par écrit les modes opératoires des tâches présentant un risque (utilisation de machines, produits dangereux, travaux en hauteur...), les afficher au poste concerné et s'assurer que chaque salarié en a pris connaissance. Mettre à jour ces documents après tout incident ou changement d'équipement.",
+    "impact": "Réduction des accidents liés à l'improvisation ou à la méconnaissance des bonnes pratiques, en cohérence avec les 9 principes généraux de prévention du Code du travail.",
+    "difficulty": "Faible",
+    "cost": "Faible",
+    "naf_specific": [],
+    "references": ["Code du travail, art. L.4121-2 — 9 principes généraux de prévention"],
+    "referenceUrls": ["https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033019913"]
+  }
+]

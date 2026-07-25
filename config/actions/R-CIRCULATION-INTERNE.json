@@ -1,0 +1,15 @@
+[
+  {
+    "id": "A-R-CIRCULATION-INTERNE-001",
+    "risk_id": "R-CIRCULATION-INTERNE",
+    "title": "Plan de circulation avec séparation des flux piétons/engins",
+    "type": "Technique",
+    "description": "Établir un plan de circulation formalisé distinguant les zones et voies piétonnes des voies de circulation des engins (chariots, camions). Matérialiser au sol les zones de croisement, poser une signalisation adaptée et des miroirs aux angles morts, limiter la vitesse des engins.",
+    "impact": "Réduction des collisions piéton/engin, l'une des principales causes d'accidents graves en entrepôt et sur chantier.",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "naf_specific": [],
+    "references": ["INRS ED 6002 — Concevoir l'organisation des flux et des circulations"],
+    "referenceUrls": ["https://www.inrs.fr/media.html?refINRS=ED+6002"]
+  }
+]

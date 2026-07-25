@@ -1,0 +1,15 @@
+[
+  {
+    "id": "A-R-ESPACE-CONFINE-001",
+    "risk_id": "R-ESPACE-CONFINE",
+    "title": "Mesure de l'atmosphère et surveillance permanente avant/pendant l'entrée en espace confiné",
+    "type": "Organisationnelle",
+    "description": "Mesurer la teneur en oxygène et la présence de gaz/vapeurs dangereux avant toute entrée en espace confiné (cuve, réservoir, silo, égout). Organiser une surveillance permanente depuis l'extérieur par une personne formée, avec moyen de communication et de secours immédiat. Ventiler l'espace avant et pendant l'intervention si nécessaire.",
+    "impact": "Prévention de l'asphyxie et de l'intoxication, causes majeures d'accidents mortels en espace confiné, souvent lors de tentatives de sauvetage improvisées.",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "naf_specific": [],
+    "references": ["INRS ED 6184 — Les espaces confinés"],
+    "referenceUrls": ["https://www.inrs.fr/media.html?refINRS=ED+6184"]
+  }
+]

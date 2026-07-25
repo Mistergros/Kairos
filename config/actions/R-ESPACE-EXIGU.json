@@ -1,0 +1,15 @@
+[
+  {
+    "id": "A-R-ESPACE-EXIGU-001",
+    "risk_id": "R-ESPACE-EXIGU",
+    "title": "Réaménagement des postes pour dégager les surfaces de circulation et de travail",
+    "type": "Technique",
+    "description": "Revoir l'implantation du mobilier et des équipements pour dégager des surfaces de circulation suffisantes autour de chaque poste. Prioriser les rangements en hauteur ou hors zone de passage, et prévoir cette contrainte dès la conception lors de tout aménagement ou rénovation de locaux.",
+    "impact": "Réduction des troubles musculosquelettiques liés aux postures contraintes et des risques de chute/heurt liés à l'encombrement.",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "naf_specific": [],
+    "references": ["INRS ED 950 — Conception des lieux et des situations de travail"],
+    "referenceUrls": ["https://www.inrs.fr/media.html?refINRS=ED+950"]
+  }
+]

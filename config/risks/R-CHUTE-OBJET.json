@@ -1,0 +1,12 @@
+{
+  "id": "R-CHUTE-OBJET",
+  "name": "Chute d'objets / effondrement",
+  "category": "Accident",
+  "description": "Chute d'objets stockés en hauteur, effondrement de charges ou de structures de stockage sur des personnes.",
+  "units": ["Entrepôt", "Atelier", "Chantier"],
+  "questions": ["Stockage en hauteur sécurisé (filets, arrimage) ?", "Racks contrôlés périodiquement ?"],
+  "factors": [],
+  "sources": ["INRS ED 6468 — Risques de choc ou d'écrasement, solutions de prévention"],
+  "sources_verified": "2026-07-25",
+  "sourceUrls": ["https://www.inrs.fr/media.html?refINRS=ED+6468"]
+}

@@ -1,0 +1,12 @@
+{
+  "id": "R-SOUS-EFFECTIF",
+  "name": "Sous-effectif chronique",
+  "category": "Organisationnel",
+  "description": "Effectifs durablement insuffisants au regard de la charge de travail réelle, entraînant surcharge et risques associés.",
+  "units": ["Bureau", "Salle", "Atelier"],
+  "questions": ["Charge de travail évaluée régulièrement au regard des effectifs ?", "Recours structurel à des heures supplémentaires ?"],
+  "factors": [],
+  "sources": ["ANACT — Agir sur la charge de travail"],
+  "sources_verified": "2026-07-25",
+  "sourceUrls": ["https://www.anact.fr/sites/default/files/2025-07/guide-anact-charge-travail.pdf"]
+}

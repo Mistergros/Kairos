@@ -1,0 +1,12 @@
+{
+  "id": "R-SILICE",
+  "name": "Poussières de silice cristalline",
+  "category": "Chimique",
+  "description": "Inhalation de poussières de silice cristalline lors du travail de matériaux de construction (béton, pierre, ciment) — agent cancérogène avéré pour le poumon.",
+  "units": ["Chantier", "Atelier"],
+  "questions": ["Travaux générant des poussières identifiés ?", "Aspiration à la source ou voie humide utilisée ?"],
+  "factors": [],
+  "sources": ["INRS — Silice cristalline, ce qu'il faut retenir"],
+  "sources_verified": "2026-07-25",
+  "sourceUrls": ["https://www.inrs.fr/risques/silice-cristalline/ce-qu-il-faut-retenir.html"]
+}

@@ -1,0 +1,12 @@
+{
+  "id": "R-SECURITE-VISITEUR",
+  "name": "Sécurité des visiteurs et du public",
+  "category": "Sécurité",
+  "description": "Personnes extérieures (clients, visiteurs, livreurs) présentes sur le site sans être sensibilisées aux risques ou consignes du lieu.",
+  "units": ["Accueil", "Salle"],
+  "questions": ["Consignes de sécurité communiquées aux visiteurs ?", "Accès aux zones dangereuses contrôlé ?"],
+  "factors": [],
+  "sources": ["Code de la construction et de l'habitation, art. R.143-2 — sécurité des établissements recevant du public (ERP)"],
+  "sources_verified": "2026-07-25",
+  "sourceUrls": ["https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000043818941"]
+}

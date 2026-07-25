@@ -1,0 +1,15 @@
+[
+  {
+    "id": "A-R-SILICE-001",
+    "risk_id": "R-SILICE",
+    "title": "Captage à la source et travail par voie humide pour les opérations poussiéreuses",
+    "type": "Technique",
+    "description": "Privilégier les procédés limitant l'émission de poussières (découpe par voie humide, outils équipés d'aspiration à la source). À défaut, fournir des appareils de protection respiratoire adaptés (FFP3) et organiser un suivi médical renforcé pour les salariés exposés à la silice cristalline.",
+    "impact": "Réduction de l'exposition à un agent cancérogène avéré, responsable de silicose et de cancers du poumon en cas d'exposition prolongée.",
+    "difficulty": "Moyenne",
+    "cost": "Moyen",
+    "naf_specific": [],
+    "references": ["INRS — Silice cristalline, ce qu'il faut retenir"],
+    "referenceUrls": ["https://www.inrs.fr/risques/silice-cristalline/ce-qu-il-faut-retenir.html"]
+  }
+]

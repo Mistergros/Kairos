@@ -1,0 +1,12 @@
+{
+  "id": "R-CIRCULATION-INTERNE",
+  "name": "Circulation interne et engins",
+  "category": "Accident",
+  "description": "Croisement de piétons et d'engins (chariots élévateurs, camions, transpalettes) sur le site, flux de circulation mal organisés.",
+  "units": ["Entrepôt", "Chantier"],
+  "questions": ["Plan de circulation formalisé ?", "Séparation piétons/engins ?"],
+  "factors": [],
+  "sources": ["INRS ED 6002 — Concevoir l'organisation des flux et des circulations"],
+  "sources_verified": "2026-07-25",
+  "sourceUrls": ["https://www.inrs.fr/media.html?refINRS=ED+6002"]
+}
