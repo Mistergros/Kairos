@@ -16,7 +16,7 @@
   {
     "id": "OB-DASRI",
     "title": "DASRI",
-    "reference": "CSP",
+    "reference": "CSP, art. R.1335-2",
     "applies_to_all": false,
     "naf_specific": [
       "86",
@@ -27,7 +27,7 @@
   {
     "id": "OB-HACCP",
     "title": "PMS / HACCP",
-    "reference": "Paquet Hygiène",
+    "reference": "Règlement (CE) n°852/2004, art. 5",
     "applies_to_all": false,
     "naf_specific": [
       "56",
