@@ -530,7 +530,10 @@ createServer(async (req, res) => {
         await handleStripeEvent(event);
       } catch (err) {
         console.error("[Stripe] Webhook handling failed", err);
-        return json(res, { error: "Webhook handling failed" }, 500);
+        // Détail inclus temporairement dans la réponse (visible uniquement dans
+        // le tableau de bord Stripe, pas exposé publiquement) le temps de
+        // diagnostiquer un échec systématique — à retirer une fois résolu.
+        return json(res, { error: "Webhook handling failed", detail: err instanceof Error ? err.message : String(err) }, 500);
       }
       return json(res, { received: true });
     }
