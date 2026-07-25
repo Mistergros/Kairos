@@ -809,6 +809,23 @@ export default function LandingPage() {
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
 
+  // Calculé avant le tout premier rendu, pas dans un useEffect : évite un
+  // flash de la page marketing complète (avec sa nav "Se connecter") juste
+  // après l'inscription, pendant que le paiement démarre en arrière-plan.
+  // C'est ce flash qui donne l'impression de "revenir à la case départ".
+  const [resumingPlan, setResumingPlan] = useState<string | null>(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("checkout")) return null; // succès/annulation gérés séparément
+    const fromUrl = params.get("startCheckout");
+    if (fromUrl) return fromUrl;
+    try {
+      return localStorage.getItem("kaijos_pending_plan");
+    } catch {
+      return null;
+    }
+  });
+  const [checkoutSuccess] = useState(() => new URLSearchParams(window.location.search).get("checkout") === "success");
+
   const startCheckout = async (planId?: PlanId) => {
     if (checkoutState === "loading") return;
     // Si pas connecté → inscription d'abord, avec le plan en paramètre. On le
@@ -852,6 +869,7 @@ export default function LandingPage() {
       console.error(err);
       setCheckoutState("error");
       setCheckoutError("Impossible de démarrer le paiement. Réessayez dans quelques secondes.");
+      setResumingPlan(null); // repasse en page normale pour que l'erreur soit visible et le client puisse réessayer
     }
   };
 
@@ -861,7 +879,6 @@ export default function LandingPage() {
     const params = new URLSearchParams(window.location.search);
     const checkout = params.get("checkout");
     const subscription = params.get("subscription");
-    const autoPlan = params.get("startCheckout");
 
     if (checkout === "success") {
       // Le webhook Stripe a déjà mis à jour l'abonnement côté serveur, mais la
@@ -883,25 +900,45 @@ export default function LandingPage() {
       setNotice("Paiement annulé. Vous pouvez réessayer.");
     } else if (subscription === "required") {
       setNotice("Abonnement inactif. Merci de vous abonner pour accéder à l'application.");
-    } else if (isSignedIn) {
-      // Reprend le plan choisi avant l'inscription (voir SignUpPage), pour ne
-      // pas faire re-choisir le plan une deuxième fois juste après avoir créé
-      // le compte. On accepte aussi bien le paramètre d'URL que le filet de
-      // secours en localStorage (voir startCheckout) — le paramètre peut être
-      // perdu si Clerk redirige ailleurs que vers l'URL demandée après l'inscription.
-      let pendingPlan: string | null = autoPlan;
-      if (!pendingPlan) {
-        try { pendingPlan = localStorage.getItem("kaijos_pending_plan"); } catch {}
-      }
-      if (pendingPlan) {
+    } else if (resumingPlan) {
+      // Reprend le plan choisi avant l'inscription (voir SignUpPage + le state
+      // resumingPlan ci-dessus), pour ne pas faire re-choisir le plan une
+      // deuxième fois juste après avoir créé le compte.
+      if (isSignedIn) {
         try { localStorage.removeItem("kaijos_pending_plan"); } catch {}
-        startCheckout(pendingPlan as PlanId);
+        startCheckout(resumingPlan as PlanId);
+      } else {
+        // Chargé, mais pas connecté malgré un plan en attente (ex. lien rouvert
+        // plus tard, session expirée) — pas la peine de rester bloqué sur
+        // l'écran de reprise, on retourne à la page normale.
+        setResumingPlan(null);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSignedIn, isLoaded]);
 
   const isLoading = checkoutState === "loading";
+
+  // Écran de transition minimal — pas de nav, pas de contenu marketing — pour
+  // les moments où on agit automatiquement en arrière-plan (reprise du
+  // paiement juste après l'inscription, confirmation après Stripe). Sans ça,
+  // l'utilisateur voit la page marketing complète (avec "Se connecter" dans
+  // la nav) pendant la transition, ce qui donne l'impression qu'on lui
+  // redemande de tout recommencer alors que ce n'est pas le cas.
+  if (checkoutSuccess || resumingPlan) {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-white px-6 dark:bg-slate-950">
+        <div className="w-full max-w-sm text-center">
+          <span className="text-xl font-extrabold tracking-tight text-ink dark:text-white">Kaijos</span>
+          <div className="mx-auto mt-6 h-8 w-8 animate-spin rounded-full border-2 border-kairos border-t-transparent" />
+          <p className="mt-5 text-sm font-medium text-slate-700 dark:text-slate-200">
+            {checkoutSuccess ? notice || "Paiement confirmé — activation de votre abonnement…" : "Un instant, on prépare votre paiement…"}
+          </p>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="bg-white dark:bg-slate-950">
       <Navbar isSignedIn={Boolean(isSignedIn)} />
