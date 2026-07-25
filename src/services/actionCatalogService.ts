@@ -66,6 +66,36 @@ export const labelToRiskId: Record<string, string> = {
   "travail de nuit": "r-night",
   "qualite de l air interieur": "r-qualiteair",
   "qualite de l air": "r-qualiteair",
+
+  // Ajoutés le 25/07/2026 : 21 des 57 libellés du mapping NAF détaillé
+  // (kairos_duerp_naf_mapping.json, la source la plus utilisée en pratique —
+  // voir REFERENTIELS.md) tombaient sur le texte générique de secours faute
+  // d'alias, alors qu'un risque déjà sourcé et catalogué existe pour chacun —
+  // juste une formulation différente. Pas de nouveau contenu inventé, juste
+  // la connexion manquante. Les autres écarts restants sont de vrais trous
+  // de contenu (pas de risque/action correspondant du tout), à traiter en
+  // Phase 2 sourcing, pas ici.
+  "agents infectieux": "r-bio",
+  "agression du public": "r-agression",
+  "amenagement poste": "r-ergonomie",
+  "auto": "r-routier",
+  "chaleur": "r-canicule",
+  "chute de hauteur": "r-chute-hauteur",
+  "chute de plain pied": "r-glissades",
+  "deux roues": "r-routier",
+  "dechets objets piquants": "r-dechets",
+  "effort prolonge": "r-tms",
+  "incendie explosion": "r-incendie",
+  "outils machines": "r-machine",
+  "pollutions dechets": "r-dechets",
+  "postures forcees": "r-tms",
+  "produits dangereux": "r-chimique",
+  "qualite de l air ventilation": "r-qualiteair",
+  "risque routier": "r-routier",
+  "robots automates": "r-machine",
+  "repetitivite": "r-tms",
+  "velo edpm": "r-routier",
+  "electricite": "r-electrique",
 };
 
 export const categoryToRiskId: Record<string, string> = {
