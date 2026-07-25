@@ -532,21 +532,7 @@ createServer(async (req, res) => {
         await handleStripeEvent(event);
       } catch (err) {
         console.error("[Stripe] Webhook handling failed", err);
-        // Détail inclus temporairement dans la réponse (visible uniquement dans
-        // le tableau de bord Stripe, pas exposé publiquement) le temps de
-        // diagnostiquer un échec systématique — à retirer une fois résolu.
-        // Les erreurs du SDK Clerk ont souvent un .message vide, le vrai détail
-        // vit dans .errors / .status / .clerkTraceId — on capture tout + la stack.
-        const anyErr = err as any;
-        const detail = {
-          message: err instanceof Error ? err.message : String(err),
-          name: err instanceof Error ? err.name : undefined,
-          status: anyErr?.status,
-          errors: anyErr?.errors,
-          clerkTraceId: anyErr?.clerkTraceId,
-          stack: err instanceof Error ? err.stack : undefined,
-        };
-        return json(res, { error: "Webhook handling failed", detail }, 500);
+        return json(res, { error: "Webhook handling failed" }, 500);
       }
       return json(res, { received: true });
     }
