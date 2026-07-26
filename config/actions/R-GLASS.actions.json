@@ -17,12 +17,12 @@
     "references": [
       "EN ISO 12543",
       "EN 12150",
-      "INRS ED 6029"
+      "INRS ED 6501 — Risques de coupures : solutions de prévention"
     ],
     "referenceUrls": [
       "",
       "",
-      "https://www.inrs.fr/media.html?refINRS=ED+6029"
+      "https://www.inrs.fr/media.html?refINRS=ED+6501"
     ]
   },
   {
@@ -41,12 +41,12 @@
       "10"
     ],
     "references": [
-      "INRS ED 6029",
-      "Guide hygiène restauration collective"
+      "Guide hygiène restauration collective",
+      "INRS ED 6501 — Risques de coupures : solutions de prévention"
     ],
     "referenceUrls": [
-      "https://www.inrs.fr/media.html?refINRS=ED+6029",
-      ""
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6501"
     ]
   },
   {
@@ -63,12 +63,12 @@
       "43"
     ],
     "references": [
-      "INRS ED 6029",
-      "OPPBTP fiche verre"
+      "OPPBTP fiche verre",
+      "INRS ED 6501 — Risques de coupures : solutions de prévention"
     ],
     "referenceUrls": [
-      "https://www.inrs.fr/media.html?refINRS=ED+6029",
-      ""
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6501"
     ]
   },
   {
@@ -87,12 +87,12 @@
     "references": [
       "EN 388",
       "EN 166/175",
-      "INRS ED 112"
+      "INRS ED 6501 — Risques de coupures : solutions de prévention"
     ],
     "referenceUrls": [
       "",
       "",
-      "https://www.inrs.fr/media.html?refINRS=ED+112"
+      "https://www.inrs.fr/media.html?refINRS=ED+6501"
     ]
   }
 ]

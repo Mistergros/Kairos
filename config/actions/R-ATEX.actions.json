@@ -20,13 +20,13 @@
       "Directive ATEX 1999/92/CE",
       "EN 60079-10",
       "Décret 2002-1553",
-      "INRS ED 6077"
+      "INRS ED 945 — Mise en oeuvre de la réglementation relative aux atmosphères explosives (Atex)"
     ],
     "referenceUrls": [
       "",
       "",
       "",
-      "https://www.inrs.fr/media.html?refINRS=ED+6077"
+      "https://www.inrs.fr/media.html?refINRS=ED+945"
     ]
   },
   {
@@ -47,12 +47,12 @@
     "references": [
       "Directive 94/9/CE ATEX",
       "EN 60079-17",
-      "INRS ED 6079"
+      "INRS ED 945 — Mise en oeuvre de la réglementation relative aux atmosphères explosives (Atex)"
     ],
     "referenceUrls": [
       "",
       "",
-      "https://www.inrs.fr/media.html?refINRS=ED+6079"
+      "https://www.inrs.fr/media.html?refINRS=ED+945"
     ]
   },
   {
@@ -66,12 +66,12 @@
     "cost": "Moyen",
     "references": [
       "Décret 2002-1553 Art. 8",
-      "INRS ED 6077",
+      "INRS ED 945 — Mise en oeuvre de la réglementation relative aux atmosphères explosives (Atex)",
       "INERIS guide ATEX"
     ],
     "referenceUrls": [
       "",
-      "https://www.inrs.fr/media.html?refINRS=ED+6077",
+      "https://www.inrs.fr/media.html?refINRS=ED+945",
       ""
     ]
   },
@@ -92,12 +92,10 @@
     ],
     "references": [
       "EN 50271",
-      "INRS ED 6079",
       "INERIS OMEGA 10"
     ],
     "referenceUrls": [
       "",
-      "https://www.inrs.fr/media.html?refINRS=ED+6079",
       ""
     ]
   }

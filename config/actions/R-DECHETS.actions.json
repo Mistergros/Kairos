@@ -11,12 +11,12 @@
     "references": [
       "Code de l'environnement R.541-1",
       "Arrêté BSDD",
-      "INRS ED 6029"
+      "INRS ED 6390 — Tri et traitement des déchets"
     ],
     "referenceUrls": [
       "",
       "",
-      "https://www.inrs.fr/media.html?refINRS=ED+6029"
+      "https://www.inrs.fr/media.html?refINRS=ED+6390"
     ]
   },
   {
@@ -36,13 +36,13 @@
     ],
     "references": [
       "Code de l'environnement L.541-2",
-      "INRS ED 6029",
-      "Arrêté ICPE rubrique 2710"
+      "Arrêté ICPE rubrique 2710",
+      "INRS ED 824 — Déchets dangereux dans l'entreprise, pensez sécurité !"
     ],
     "referenceUrls": [
       "",
-      "https://www.inrs.fr/media.html?refINRS=ED+6029",
-      ""
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+824"
     ]
   },
   {
@@ -75,12 +75,12 @@
     "difficulty": "Faible",
     "cost": "Faible",
     "references": [
-      "INRS ED 6029",
-      "ADEME guide déchets entreprises"
+      "ADEME guide déchets entreprises",
+      "INRS ED 6390 — Tri et traitement des déchets"
     ],
     "referenceUrls": [
-      "https://www.inrs.fr/media.html?refINRS=ED+6029",
-      ""
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6390"
     ]
   }
 ]

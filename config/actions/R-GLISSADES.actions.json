@@ -16,14 +16,14 @@
       "52"
     ],
     "references": [
-      "INRS ED 6102",
       "Norme DIN 51130 (coefficient R)",
-      "Code du travail R.4224-7"
+      "Code du travail R.4224-7",
+      "INRS ED 6433 — Les chutes de plain-pied"
     ],
     "referenceUrls": [
-      "https://www.inrs.fr/media.html?refINRS=ED+6102",
       "",
-      ""
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6433"
     ]
   },
   {
@@ -42,12 +42,12 @@
       "10"
     ],
     "references": [
-      "INRS ED 6102",
-      "Guide restauration collective hygiène et sécurité"
+      "Guide restauration collective hygiène et sécurité",
+      "INRS ED 6433 — Les chutes de plain-pied"
     ],
     "referenceUrls": [
-      "https://www.inrs.fr/media.html?refINRS=ED+6102",
-      ""
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6433"
     ]
   },
   {
@@ -66,11 +66,11 @@
     ],
     "references": [
       "EN ISO 20345 (classe SRC)",
-      "INRS ED 6102"
+      "INRS ED 6433 — Les chutes de plain-pied"
     ],
     "referenceUrls": [
       "",
-      "https://www.inrs.fr/media.html?refINRS=ED+6102"
+      "https://www.inrs.fr/media.html?refINRS=ED+6433"
     ]
   },
   {
@@ -84,13 +84,13 @@
     "cost": "Faible",
     "references": [
       "NF EN 12464-1",
-      "INRS ED 6102",
-      "Code du travail R.4224-7 à R.4224-12"
+      "Code du travail R.4224-7 à R.4224-12",
+      "INRS ED 6433 — Les chutes de plain-pied"
     ],
     "referenceUrls": [
       "",
-      "https://www.inrs.fr/media.html?refINRS=ED+6102",
-      ""
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6433"
     ]
   }
 ]

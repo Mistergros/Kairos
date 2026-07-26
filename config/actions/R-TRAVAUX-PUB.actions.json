@@ -42,12 +42,10 @@
     ],
     "references": [
       "OPPBTP recommandation tranchées",
-      "INRS ED 949",
       "Code du travail R.4534-116 à R.4534-144"
     ],
     "referenceUrls": [
       "",
-      "https://www.inrs.fr/media.html?refINRS=ED+949",
       ""
     ]
   },
@@ -67,13 +65,13 @@
     ],
     "references": [
       "OPPBTP fiche co-activité",
-      "INRS ED 949",
-      "EN ISO 20471"
+      "EN ISO 20471",
+      "INRS ED 6083 — Prévenir les collisions engins-piétons"
     ],
     "referenceUrls": [
       "",
-      "https://www.inrs.fr/media.html?refINRS=ED+949",
-      ""
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6083"
     ]
   },
   {

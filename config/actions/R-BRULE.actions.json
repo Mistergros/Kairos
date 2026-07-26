@@ -15,14 +15,14 @@
       "56"
     ],
     "references": [
-      "INRS ED 6029",
       "EN ISO 13732-1",
-      "Code du travail R.4223-1"
+      "Code du travail R.4223-1",
+      "INRS ED 6490 — Prévenir les risques de brûlures dans les métiers de bouche et la restauration"
     ],
     "referenceUrls": [
-      "https://www.inrs.fr/media.html?refINRS=ED+6029",
       "",
-      ""
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6490"
     ]
   },
   {
@@ -40,12 +40,12 @@
       "20"
     ],
     "references": [
-      "INRS ED 6029",
-      "Fiche risques cuisine professionnelle"
+      "Fiche risques cuisine professionnelle",
+      "INRS ED 6490 — Prévenir les risques de brûlures dans les métiers de bouche et la restauration"
     ],
     "referenceUrls": [
-      "https://www.inrs.fr/media.html?refINRS=ED+6029",
-      ""
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6490"
     ]
   },
   {

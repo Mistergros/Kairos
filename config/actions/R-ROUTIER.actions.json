@@ -17,14 +17,14 @@
       "45"
     ],
     "references": [
-      "INRS ED 6028",
       "Code de la route L.412-6bis",
-      "Accord de branche transport"
+      "Accord de branche transport",
+      "INRS ED 6545 — Le risque routier, les déplacements pour le travail"
     ],
     "referenceUrls": [
-      "https://www.inrs.fr/media.html?refINRS=ED+6028",
       "",
-      ""
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6545"
     ]
   },
   {
@@ -37,12 +37,12 @@
     "difficulty": "Faible",
     "cost": "Moyen",
     "references": [
-      "INRS ED 6028",
-      "Référentiel conduite préventive IBSR"
+      "Référentiel conduite préventive IBSR",
+      "INRS ED 6545 — Le risque routier, les déplacements pour le travail"
     ],
     "referenceUrls": [
-      "https://www.inrs.fr/media.html?refINRS=ED+6028",
-      ""
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6545"
     ]
   },
   {
@@ -60,11 +60,11 @@
     ],
     "references": [
       "Règlement CE 561/2006",
-      "INRS ED 6084"
+      "INRS ED 6545 — Le risque routier, les déplacements pour le travail"
     ],
     "referenceUrls": [
       "",
-      "https://www.inrs.fr/media.html?refINRS=ED+6084"
+      "https://www.inrs.fr/media.html?refINRS=ED+6545"
     ]
   },
   {

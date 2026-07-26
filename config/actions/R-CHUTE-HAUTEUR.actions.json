@@ -16,12 +16,12 @@
       "52"
     ],
     "references": [
-      "INRS ED 131",
-      "Code du travail R.4323-58 à R.4323-90"
+      "Code du travail R.4323-58 à R.4323-90",
+      "INRS ED 6110 — Prévention des risques de chutes de hauteur"
     ],
     "referenceUrls": [
-      "https://www.inrs.fr/media.html?refINRS=ED+131",
-      ""
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6110"
     ]
   },
   {
@@ -59,12 +59,12 @@
     "references": [
       "CACES R408",
       "CACES R486",
-      "INRS ED 6087"
+      "INRS ED 6074 — Guide pratique échafaudage de pied"
     ],
     "referenceUrls": [
       "",
       "",
-      "https://www.inrs.fr/media.html?refINRS=ED+6087"
+      "https://www.inrs.fr/media.html?refINRS=ED+6074"
     ]
   },
   {
@@ -81,16 +81,16 @@
       "43"
     ],
     "references": [
-      "INRS ED 6087",
       "EN 361",
       "EN 795",
-      "Code du travail R.4323-95"
+      "Code du travail R.4323-95",
+      "INRS ED 6110 — Prévention des risques de chutes de hauteur"
     ],
     "referenceUrls": [
-      "https://www.inrs.fr/media.html?refINRS=ED+6087",
       "",
       "",
-      ""
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6110"
     ]
   }
 ]

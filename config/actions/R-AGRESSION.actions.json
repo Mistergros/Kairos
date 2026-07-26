@@ -97,14 +97,14 @@
       "84"
     ],
     "references": [
-      "INRS ED 6127",
       "Norme NF X 50-780 PTI",
-      "Code du travail R.4512-13"
+      "Code du travail R.4512-13",
+      "INRS ED 6288 — Travail isolé, pour une démarche globale de prévention"
     ],
     "referenceUrls": [
-      "https://www.inrs.fr/media.html?refINRS=ED+6127",
       "",
-      ""
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6288"
     ]
   }
 ]

@@ -11,12 +11,12 @@
     "references": [
       "ANSES valeurs guides QAI",
       "Décret 2012-14 (ERP)",
-      "INRS ED 6123"
+      "INRS ED 6497 — Améliorer la qualité de l'air dans les locaux de travail du tertiaire"
     ],
     "referenceUrls": [
       "",
       "",
-      "https://www.inrs.fr/media.html?refINRS=ED+6123"
+      "https://www.inrs.fr/media.html?refINRS=ED+6497"
     ]
   },
   {
@@ -38,13 +38,13 @@
     ],
     "references": [
       "NF EN 16798",
-      "INRS ED 6030",
-      "Arrêté du 1er février 2010 — Surveillance des légionelles dans les installations d'eau chaude sanitaire"
+      "Arrêté du 1er février 2010 — Surveillance des légionelles dans les installations d'eau chaude sanitaire",
+      "INRS ED 6497 — Améliorer la qualité de l'air dans les locaux de travail du tertiaire"
     ],
     "referenceUrls": [
       "",
-      "https://www.inrs.fr/media.html?refINRS=ED+6030",
-      "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000021795143"
+      "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000021795143",
+      "https://www.inrs.fr/media.html?refINRS=ED+6497"
     ]
   },
   {
@@ -64,14 +64,14 @@
       "43"
     ],
     "references": [
-      "INRS ED 6123",
       "ANSES guide QAI",
-      "Label Ecolabel pour produits d'entretien"
+      "Label Ecolabel pour produits d'entretien",
+      "INRS ED 6497 — Améliorer la qualité de l'air dans les locaux de travail du tertiaire"
     ],
     "referenceUrls": [
-      "https://www.inrs.fr/media.html?refINRS=ED+6123",
       "",
-      ""
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6497"
     ]
   },
   {
@@ -84,14 +84,14 @@
     "difficulty": "Faible",
     "cost": "Faible",
     "references": [
-      "INRS ED 6123",
       "ADEME aération logements et bureaux",
-      "Valeur guide CO2 ANSES 1000-1500 ppm"
+      "Valeur guide CO2 ANSES 1000-1500 ppm",
+      "INRS ED 6497 — Améliorer la qualité de l'air dans les locaux de travail du tertiaire"
     ],
     "referenceUrls": [
-      "https://www.inrs.fr/media.html?refINRS=ED+6123",
       "",
-      ""
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6497"
     ]
   }
 ]

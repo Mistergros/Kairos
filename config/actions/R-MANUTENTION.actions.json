@@ -18,7 +18,7 @@
     ],
     "references": [
       "INRS ED 6161 — Méthode d'analyse de la charge physique de travail",
-      "Code du travail R.4541-2"
+      "Code du travail R.4541-3"
     ],
     "referenceUrls": [
       "https://www.inrs.fr/media.html?refINRS=ED+6161",
@@ -76,12 +76,12 @@
       "10"
     ],
     "references": [
-      "INRS ED 959",
-      "Code du travail R.4224-2"
+      "Code du travail R.4224-2",
+      "INRS ED 6350 — Conception et aménagement des plates-formes et entrepôts logistiques"
     ],
     "referenceUrls": [
-      "https://www.inrs.fr/media.html?refINRS=ED+959",
-      ""
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6350"
     ]
   }
 ]

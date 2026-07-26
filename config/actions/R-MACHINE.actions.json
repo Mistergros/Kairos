@@ -56,12 +56,12 @@
     "difficulty": "Faible",
     "cost": "Faible",
     "references": [
-      "INRS ED 6124",
-      "Code du travail R.4323-55"
+      "Code du travail R.4323-55",
+      "INRS ED 6122 — Sécurité des équipements de travail"
     ],
     "referenceUrls": [
-      "https://www.inrs.fr/media.html?refINRS=ED+6124",
-      ""
+      "",
+      "https://www.inrs.fr/media.html?refINRS=ED+6122"
     ]
   },
   {
