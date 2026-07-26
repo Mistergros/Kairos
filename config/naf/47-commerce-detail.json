@@ -11,18 +11,18 @@
     "R-ECRAN"
   ],
   "actions_recommended": [
-    "A-CHUTE-001",
-    "A-COUPURE-001",
-    "A-MANUT-001",
-    "A-RPS-001",
-    "A-FEU-001",
-    "A-ELEC-001",
-    "A-ECRAN-001"
+    "A-R-GLISSADES-001",
+    "A-R-COUPURE-001",
+    "A-R-MANUTENTION-001",
+    "A-R-RPS-001",
+    "A-R-INCENDIE-001",
+    "A-R-ELECTRIQUE-001",
+    "A-R-ECRAN-001"
   ],
   "legal_specific": [
-    "OB-DUERP-ANNUEL",
-    "OB-VERIF-PERIODIQUES",
-    "OB-FORMATION-SECURITE"
+    "OB-DUERP",
+    "OB-VERIF",
+    "OB-FORMATION"
   ],
   "extra_risks": [
     "R-AGRESSION",

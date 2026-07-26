@@ -13,17 +13,17 @@
     "R-MANUTENTION"
   ],
   "actions_recommended": [
-    "A-CHUTE-H-001",
-    "A-ELEC-001",
-    "A-BRUIT-001",
-    "A-CHIM-001",
-    "A-ATEX-001",
-    "A-MANUT-001"
+    "A-R-CHUTE-HAUTEUR-001",
+    "A-R-ELECTRIQUE-001",
+    "A-R-BRUIT-001",
+    "A-R-CHIMIQUE-001",
+    "A-R-ATEX-001",
+    "A-R-MANUTENTION-001"
   ],
   "legal_specific": [
-    "OB-DUERP-ANNUEL",
+    "OB-DUERP",
     "OB-ATEX",
-    "OB-VERIF-PERIODIQUES"
+    "OB-VERIF"
   ],
   "extra_risks": [
     "R-VIBRATIONS",

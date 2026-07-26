@@ -8,12 +8,12 @@
     "R-INCENDIE"
   ],
   "actions_recommended": [
-    "A-ECRAN-001",
-    "A-RPS-001",
-    "A-CHUTE-001",
-    "A-FEU-001"
+    "A-R-ECRAN-001",
+    "A-R-RPS-001",
+    "A-R-GLISSADES-001",
+    "A-R-INCENDIE-001"
   ],
   "legal_specific": [
-    "OB-DUERP-ANNUEL"
+    "OB-DUERP"
   ]
 }

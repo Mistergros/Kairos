@@ -10,16 +10,16 @@
     "R-ROUTIER"
   ],
   "actions_recommended": [
-    "A-CHUTE-001",
-    "A-CHIM-001",
-    "A-TMS-002",
-    "A-MANUT-001",
-    "A-FEU-001",
-    "A-ROUTIER-001"
+    "A-R-GLISSADES-001",
+    "A-R-CHIMIQUE-001",
+    "A-R-TMS-002",
+    "A-R-MANUTENTION-001",
+    "A-R-INCENDIE-001",
+    "A-R-ROUTIER-001"
   ],
   "legal_specific": [
-    "OB-DUERP-ANNUEL",
-    "OB-VERIF-PERIODIQUES",
-    "OB-FORMATION-SECURITE"
+    "OB-DUERP",
+    "OB-VERIF",
+    "OB-FORMATION"
   ]
 }

@@ -12,22 +12,22 @@
     "R-RPS"
   ],
   "actions_recommended": [
-    "A-TMS-001",
-    "A-TMS-002",
-    "A-CHUTE-001",
-    "A-COUPURE-001",
-    "A-BRUIT-001",
-    "A-CHIM-001",
-    "A-FEU-001",
-    "A-ATEX-001",
-    "A-RPS-001"
+    "A-R-TMS-001",
+    "A-R-TMS-002",
+    "A-R-GLISSADES-001",
+    "A-R-COUPURE-001",
+    "A-R-BRUIT-001",
+    "A-R-CHIMIQUE-001",
+    "A-R-INCENDIE-001",
+    "A-R-ATEX-001",
+    "A-R-RPS-001"
   ],
   "legal_specific": [
-    "OB-DUERP-ANNUEL",
-    "OB-EVAC-INCENDIE",
+    "OB-DUERP",
+    "OB-INCENDIE",
     "OB-ATEX",
-    "OB-VERIF-PERIODIQUES",
-    "OB-FORMATION-SECURITE"
+    "OB-VERIF",
+    "OB-FORMATION"
   ],
   "extra_risks": [
     "R-CANICULE",

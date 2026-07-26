@@ -8,13 +8,13 @@
     "R-ROUTIER"
   ],
   "actions_recommended": [
-    "A-ECRAN-001",
-    "A-RPS-001",
-    "A-FEU-001",
-    "A-ROUTIER-001"
+    "A-R-ECRAN-001",
+    "A-R-RPS-001",
+    "A-R-INCENDIE-001",
+    "A-R-ROUTIER-001"
   ],
   "legal_specific": [
-    "OB-DUERP-ANNUEL"
+    "OB-DUERP"
   ],
   "extra_risks": [
     "R-AGRESSION"

@@ -9,15 +9,15 @@
     "R-ECRAN"
   ],
   "actions_recommended": [
-    "A-CHUTE-001",
-    "A-RPS-001",
-    "A-FEU-001",
-    "A-TMS-001",
-    "A-ECRAN-001"
+    "A-R-GLISSADES-001",
+    "A-R-RPS-001",
+    "A-R-INCENDIE-001",
+    "A-R-TMS-001",
+    "A-R-ECRAN-001"
   ],
   "legal_specific": [
-    "OB-DUERP-ANNUEL",
-    "OB-FORMATION-SECURITE"
+    "OB-DUERP",
+    "OB-FORMATION"
   ],
   "extra_risks": [
     "R-AGRESSION",
