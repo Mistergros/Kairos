@@ -154,6 +154,32 @@ export const ActionPlan = () => {
     return Array.from(map.values()).sort((a, b) => a.unitLabel.localeCompare(b.unitLabel));
   }, [filtered, assessments, workUnitById]);
 
+  const groupedByUnitThenRisk = useMemo(() => {
+    const unitMap = new Map<
+      string,
+      { unitId?: string; unitLabel: string; riskMap: Map<string, { riskLabel: string; items: typeof filtered }> }
+    >();
+    filtered.forEach((action) => {
+      const assessment = action.assessmentId ? assessmentById.get(action.assessmentId) : undefined;
+      const unit = assessment ? workUnitById.get(assessment.workUnitId) : undefined;
+      const unitLabel = unit?.name || "Unité non renseignée";
+      if (!unitMap.has(unitLabel)) {
+        unitMap.set(unitLabel, { unitId: unit?.id, unitLabel, riskMap: new Map() });
+      }
+      const unitEntry = unitMap.get(unitLabel)!;
+      const riskLabel = assessment?.riskLabel || "Risque non renseigné";
+      if (!unitEntry.riskMap.has(riskLabel)) unitEntry.riskMap.set(riskLabel, { riskLabel, items: [] });
+      unitEntry.riskMap.get(riskLabel)!.items.push(action);
+    });
+    return Array.from(unitMap.values())
+      .map((u) => ({
+        unitId: u.unitId,
+        unitLabel: u.unitLabel,
+        risks: Array.from(u.riskMap.values()).sort((a, b) => a.riskLabel.localeCompare(b.riskLabel, "fr")),
+      }))
+      .sort((a, b) => a.unitLabel.localeCompare(b.unitLabel, "fr"));
+  }, [filtered, assessmentById, workUnitById]);
+
   const groupedByOwner = useMemo(() => {
     const map = new Map<string, typeof filtered>();
     filtered.forEach((action) => {
@@ -343,7 +369,7 @@ export const ActionPlan = () => {
             className={`flex items-center gap-1.5 rounded-lg px-4 py-1.5 text-sm font-medium transition ${viewMode === "owner" ? "bg-white text-ink shadow-sm" : "text-slate/60 hover:text-slate"}`}
             onClick={() => setViewMode("owner")}
           >
-            <span aria-hidden="true">👤</span> Répartition
+            <span aria-hidden="true">🗂️</span> Répartition
           </button>
           <button
             className={`flex items-center gap-1.5 rounded-lg px-4 py-1.5 text-sm font-medium transition ${viewMode === "unit" ? "bg-white text-ink shadow-sm" : "text-slate/60 hover:text-slate"}`}
@@ -354,7 +380,7 @@ export const ActionPlan = () => {
         </div>
         <p className="mb-4 text-xs text-slate/50">
           {viewMode === "owner"
-            ? "Étape 1 — Attribuez chaque action à un responsable."
+            ? "Étape 1 — Vue d'ensemble par unité de travail puis par risque. Attribuez un responsable à chaque action."
             : "Étape 2 — Planifiez les actions dans le temps, unité par unité."}
         </p>
 
@@ -411,10 +437,10 @@ export const ActionPlan = () => {
           </div>
         </div>
 
-        {/* Vue par responsable */}
+        {/* Vue par unité puis par risque */}
         {viewMode === "owner" && (
           <div className="space-y-4">
-            {groupedByOwner.length === 0 && actions.length === 0 && (
+            {groupedByUnitThenRisk.length === 0 && actions.length === 0 && (
               <div className="rounded-2xl border-2 border-dashed border-slate/20 px-6 py-8 text-center">
                 <p className="text-3xl mb-2">📋</p>
                 <p className="font-semibold text-ink text-base mb-1">Aucune action générée</p>
@@ -424,7 +450,7 @@ export const ActionPlan = () => {
                 </a>
               </div>
             )}
-            {groupedByOwner.length === 0 && actions.length > 0 && (
+            {groupedByUnitThenRisk.length === 0 && actions.length > 0 && (
               <p className="text-sm text-slate/70">Aucune action pour ce filtre.</p>
             )}
             {groupedByOwner.length > 0 && groupedByOwner.every(g => g.owner === "À affecter") && (
@@ -433,60 +459,72 @@ export const ActionPlan = () => {
                 <p>Toutes les actions sont non affectées. Ouvrez chaque action (▼ tâches) et renseignez le champ <strong>Qui ?</strong> pour les assigner à un responsable.</p>
               </div>
             )}
-            {groupedByOwner.map(({ owner, items }) => {
-              const done = items.filter(a => a.status === "DONE").length;
-              const progress = items.length ? Math.round((done / items.length) * 100) : 0;
-              const isUnassigned = owner === "À affecter";
+            {groupedByUnitThenRisk.map(({ unitLabel, risks }) => {
+              const unitItems = risks.flatMap((r) => r.items);
+              const unitDone = unitItems.filter(a => a.status === "DONE").length;
+              const unitProgress = unitItems.length ? Math.round((unitDone / unitItems.length) * 100) : 0;
               return (
-                <div key={owner} className={`rounded-2xl border p-4 shadow-sm ${isUnassigned ? "border-amber-200 bg-amber-50" : "border-slate/10 bg-white"}`}>
+                <div key={unitLabel} className="rounded-2xl border border-slate/10 bg-white p-4 shadow-sm">
                   <div className="mb-3 flex items-center justify-between gap-3">
                     <div className="flex items-center gap-2">
-                      <span className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold text-white ${isUnassigned ? "bg-amber-400" : "bg-kairos"}`}>
-                        {isUnassigned ? "?" : owner.charAt(0).toUpperCase()}
+                      <span className="flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold text-white bg-ocean">
+                        🏢
                       </span>
                       <div>
-                        <p className="font-semibold text-slate">{owner}</p>
-                        <p className="text-xs text-slate/60">{items.length} action{items.length > 1 ? "s" : ""} · {progress}% terminées</p>
+                        <p className="font-semibold text-slate">{unitLabel}</p>
+                        <p className="text-xs text-slate/60">{unitItems.length} action{unitItems.length > 1 ? "s" : ""} · {risks.length} risque{risks.length > 1 ? "s" : ""} · {unitProgress}% terminées</p>
                       </div>
                     </div>
                     {/* Barre de progression */}
                     <div className="hidden md:flex items-center gap-2">
                       <div className="w-32 h-2 rounded-full bg-slate/10 overflow-hidden">
-                        <div className="h-full rounded-full bg-lime transition-all" style={{ width: `${progress}%` }} />
+                        <div className="h-full rounded-full bg-lime transition-all" style={{ width: `${unitProgress}%` }} />
                       </div>
-                      <span className="text-xs text-slate/60 w-8 text-right">{progress}%</span>
+                      <span className="text-xs text-slate/60 w-8 text-right">{unitProgress}%</span>
                     </div>
                   </div>
 
-                  <div className="space-y-2">
-                    {items
-                      .sort((a, b) => (a.priority ?? 9) - (b.priority ?? 9))
-                      .map((a) => {
-                        const linked = a.assessmentId ? assessmentById.get(a.assessmentId) : undefined;
-                        const unit = linked ? workUnitById.get(linked.workUnitId) : undefined;
-                        const statusColors: Record<string, string> = {
-                          TO_DO: "bg-slate/10 text-slate/60",
-                          IN_PROGRESS: "bg-ocean/10 text-ocean",
-                          LATE: "bg-red-100 text-red-600",
-                          DONE: "bg-lime/20 text-lime-700",
-                        };
-                        const statusLabels: Record<string, string> = {
-                          TO_DO: "À faire", IN_PROGRESS: "En cours", LATE: "En retard", DONE: "Terminé",
-                        };
-                        const steps = a.steps || [];
-                        const stepsDone = steps.filter(s => s.done).length;
-                        const isExpanded = expanded === a.id;
-                        return (
-                          <div key={a.id} className="rounded-xl border border-slate/10 bg-slate/3 p-3">
-                            {/* Action header row */}
-                            <div className="flex items-start gap-3">
-                              <PriorityBadge priority={a.priority} />
-                              <div className="flex-1 min-w-0">
-                                <p className="font-medium text-sm text-slate">{formatActionTitle(a.title, linked)}</p>
-                                <div className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-slate/60">
-                                  {linked && <span>🎯 {linked.riskLabel}</span>}
-                                  {unit && <span>🏢 {unit.name}</span>}
-                                  {(a.dueDate || a.endDate) && (
+                  <div className="space-y-3">
+                    {risks.map(({ riskLabel, items }) => {
+                      const riskDone = items.filter(a => a.status === "DONE").length;
+                      return (
+                        <div key={riskLabel} className="rounded-xl border border-slate/10 bg-slate/5 p-3">
+                          <div className="mb-2 flex items-center justify-between gap-2">
+                            <p className="text-sm font-semibold text-slate flex items-center gap-1.5">🎯 {riskLabel}</p>
+                            <p className="text-xs text-slate/50 shrink-0">{riskDone}/{items.length} terminées</p>
+                          </div>
+                          <div className="space-y-2">
+                            {items
+                              .sort((a, b) => (a.priority ?? 9) - (b.priority ?? 9))
+                              .map((a) => {
+                                const linked = a.assessmentId ? assessmentById.get(a.assessmentId) : undefined;
+                                const owner = a.owner?.trim();
+                                const statusColors: Record<string, string> = {
+                                  TO_DO: "bg-slate/10 text-slate/60",
+                                  IN_PROGRESS: "bg-ocean/10 text-ocean",
+                                  LATE: "bg-red-100 text-red-600",
+                                  DONE: "bg-lime/20 text-lime-700",
+                                };
+                                const statusLabels: Record<string, string> = {
+                                  TO_DO: "À faire", IN_PROGRESS: "En cours", LATE: "En retard", DONE: "Terminé",
+                                };
+                                const steps = a.steps || [];
+                                const stepsDone = steps.filter(s => s.done).length;
+                                const isExpanded = expanded === a.id;
+                                return (
+                                  <div key={a.id} className="rounded-xl border border-slate/10 bg-white p-3">
+                                    {/* Action header row */}
+                                    <div className="flex items-start gap-3">
+                                      <PriorityBadge priority={a.priority} />
+                                      <div className="flex-1 min-w-0">
+                                        <p className="font-medium text-sm text-slate">{formatActionTitle(a.title, linked)}</p>
+                                        <div className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-slate/60">
+                                          {owner ? (
+                                            <span>👤 {owner}</span>
+                                          ) : (
+                                            <span className="text-amber-600 font-medium">👤 À affecter</span>
+                                          )}
+                                          {(a.dueDate || a.endDate) && (
                                     <span className={a.status !== "DONE" && new Date(a.dueDate || a.endDate!) < new Date() ? "text-red-500 font-medium" : ""}>
                                       📅 {new Date(a.dueDate || a.endDate!).toLocaleDateString("fr-FR")}
                                     </span>
@@ -603,8 +641,12 @@ export const ActionPlan = () => {
                               </div>
                             )}
                           </div>
-                        );
-                      })}
+                                );
+                              })}
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               );

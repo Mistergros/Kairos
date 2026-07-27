@@ -19,6 +19,7 @@ export type GanttActionItem = {
   start: string | Date;
   end: string | Date;
   color?: string;
+  done?: boolean;
 };
 
 export type GanttRiskItem = {
@@ -107,6 +108,7 @@ const GanttDUERP: React.FC<Props> = ({
           start: parseDate(a.start),
           end: parseDate(a.end),
           color: a.color ?? riskColor,
+          done: a.done ?? false,
         })),
       };
     });
@@ -155,6 +157,7 @@ const GanttDUERP: React.FC<Props> = ({
         label: string;
         shortLabel: string;
         color: string;
+        done: boolean;
       }>;
     }> = [];
 
@@ -177,6 +180,7 @@ const GanttDUERP: React.FC<Props> = ({
           label: a.label,
           shortLabel,
           color: a.color!,
+          done: a.done ?? false,
         };
       });
 
@@ -340,8 +344,21 @@ const GanttDUERP: React.FC<Props> = ({
                   style={{ height: THEME.actionRowH, display: 'flex', alignItems: 'center', paddingLeft: 4, gap: 6 }}
                   title={a.label}
                 >
-                  <span style={{ width: 7, height: 7, borderRadius: '50%', background: a.color, flexShrink: 0, display: 'inline-block' }} />
-                  <span style={{ fontSize: 11.5, color: THEME.muted, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  {a.done ? (
+                    <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#46C37B', flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }} />
+                  ) : (
+                    <span style={{ width: 7, height: 7, borderRadius: '50%', background: a.color, flexShrink: 0, display: 'inline-block' }} />
+                  )}
+                  <span
+                    style={{
+                      fontSize: 11.5,
+                      color: a.done ? '#9AA6B0' : THEME.muted,
+                      textDecoration: a.done ? 'line-through' : 'none',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
                     {a.shortLabel}
                   </span>
                 </div>
@@ -437,6 +454,7 @@ const GanttDUERP: React.FC<Props> = ({
                 const barW = Math.max(rawW, THEME.barH * 2);
                 const barY = y - THEME.barH / 2;
 
+                const barFill = a.done ? '#B7BEC6' : a.color;
                 return (
                   <g key={a.id}>
                     <line
@@ -449,11 +467,11 @@ const GanttDUERP: React.FC<Props> = ({
                       width={barW}
                       height={THEME.barH}
                       rx={THEME.barR}
-                      fill={a.color}
-                      opacity={0.88}
+                      fill={barFill}
+                      opacity={a.done ? 0.6 : 0.88}
                     />
-                    <circle cx={x1} cy={y} r={4} fill="#fff" stroke={a.color} strokeWidth={2} />
-                    <circle cx={x1 + barW} cy={y} r={4} fill={a.color} stroke="#fff" strokeWidth={1.5} />
+                    <circle cx={x1} cy={y} r={4} fill="#fff" stroke={barFill} strokeWidth={2} />
+                    <circle cx={x1 + barW} cy={y} r={4} fill={barFill} stroke="#fff" strokeWidth={1.5} />
                     {barW > 56 && (
                       <text
                         x={x1 + barW / 2}
@@ -462,9 +480,10 @@ const GanttDUERP: React.FC<Props> = ({
                         fontSize={10}
                         fontWeight={600}
                         fill="#fff"
+                        textDecoration={a.done ? 'line-through' : undefined}
                         style={{ pointerEvents: 'none', userSelect: 'none' }}
                       >
-                        {a.shortLabel.length > 22 ? `${a.shortLabel.slice(0, 22)}…` : a.shortLabel}
+                        {a.done ? '✓ ' : ''}{a.shortLabel.length > 22 ? `${a.shortLabel.slice(0, 22)}…` : a.shortLabel}
                       </text>
                     )}
                   </g>

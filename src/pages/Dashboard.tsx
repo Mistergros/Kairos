@@ -142,7 +142,7 @@ export const Dashboard = () => {
         };
         list.push(risk);
       }
-      risk.actions.push({ id: a.id, label: a.title, start: a.startDate, end: a.endDate });
+      risk.actions.push({ id: a.id, label: a.title, start: a.startDate, end: a.endDate, done: a.status === 'DONE' });
 
       const startA = new Date(a.startDate);
       const endA = new Date(a.endDate);
