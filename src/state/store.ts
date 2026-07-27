@@ -244,12 +244,16 @@ export const useDuerpStore = create<DUERPState>()(
       },
 
       removeAssessment: (id) => {
+        const staleActionIds = get().actions.filter((a) => a.assessmentId === id).map((a) => a.id);
         set((state) => ({
           assessments: state.assessments.filter((a) => a.id !== id),
           actions: state.actions.filter((a) => a.assessmentId !== id),
         }));
         const { orgId } = get();
-        if (orgId) sync(() => deleteAssessment(orgId, id));
+        if (orgId) {
+          sync(() => deleteAssessment(orgId, id));
+          staleActionIds.forEach((actionId) => sync(() => deleteAction(orgId, actionId)));
+        }
       },
 
       updateAssessment: (id, payload) => {
@@ -394,15 +398,29 @@ export const useDuerpStore = create<DUERPState>()(
         set({ loadingHazards: true });
         try {
           const { usedGenericFallback, ...result } = await buildPrefillData(naf, sector, targetUnits, state.hazardLibrary, state.assessments, state.actions, state.selectedEstablishmentId);
+          // buildPrefillData régénère de nouveaux id pour les unités ciblées (remplace
+          // plutôt que met à jour) : tout id présent avant l'appel et absent du résultat
+          // a donc été remplacé et doit être supprimé côté API, sinon il ressurgit en
+          // doublon au prochain rechargement (les anciennes lignes ne sont jamais
+          // écrasées, seulement remplacées localement).
+          const staleAssessmentIds = state.assessments
+            .filter((a) => !result.assessments.some((na) => na.id === a.id))
+            .map((a) => a.id);
+          const staleActionIds = state.actions
+            .filter((a) => !result.actions.some((na) => na.id === a.id))
+            .map((a) => a.id);
           set({
             ...result,
             prefillWarning: usedGenericFallback
               ? "Aucun risque spécifique à votre secteur trouvé : liste générique proposée ci-dessous, à affiner manuellement."
               : null,
           });
-          // Sync new assessments + actions vers l'API (Neon)
+          // Sync vers l'API (Neon) : supprime les anciennes lignes remplacées, puis
+          // pousse les nouvelles/actualisées.
           const { orgId } = get();
           if (orgId) {
+            staleAssessmentIds.forEach((id) => sync(() => deleteAssessment(orgId, id)));
+            staleActionIds.forEach((id) => sync(() => deleteAction(orgId, id)));
             result.assessments?.forEach((a) => sync(() => upsertAssessment(orgId, a)));
             result.actions?.forEach((a) => sync(() => upsertAction(orgId, a)));
           }
