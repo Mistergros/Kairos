@@ -35,6 +35,18 @@ const clerkEnabled = Boolean(CLERK_SECRET_KEY);
 const RESEND_API_KEY = process.env.RESEND_API_KEY || "";
 const FROM_EMAIL = process.env.FROM_EMAIL || "noreply@kaijos.com";
 
+// Les emails sortants (invites, rappels) interpolent des champs fournis par
+// l'utilisateur dans du HTML envoyé à un tiers réel — échapper systématiquement
+// pour empêcher l'injection de liens/contenu arbitraires dans un email qui
+// semble provenir de Kaijos.
+const escapeHtml = (value: unknown): string =>
+  String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+
 const json = (res: any, data: any, status = 200) => {
   const originHeader = (res as any)._origin;
   res.writeHead(status, {
@@ -391,9 +403,17 @@ const verifyJwt = (token: string, secret: string): any | null => {
   const [headerB64, payloadB64, sig] = parts;
   const data = `${headerB64}.${payloadB64}`;
   const expected = crypto.createHmac("sha256", secret).update(data).digest("base64url");
-  if (!crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(sig))) return null;
+  const expectedBuf = Buffer.from(expected);
+  const sigBuf = Buffer.from(sig);
+  // timingSafeEqual jette si les tailles diffèrent (ex. signature tronquée) —
+  // ce n'est pas une signature valide, donc rejet plutôt que de propager l'erreur.
+  if (expectedBuf.length !== sigBuf.length || !crypto.timingSafeEqual(expectedBuf, sigBuf)) return null;
   try {
-    return JSON.parse(base64urlDecode(payloadB64));
+    const payload = JSON.parse(base64urlDecode(payloadB64));
+    // La signature seule ne suffit pas : un jeton valide mais expiré doit être
+    // rejeté, sinon un jeton émis une fois reste utilisable indéfiniment.
+    if (payload?.exp && Date.now() >= Number(payload.exp) * 1000) return null;
+    return payload;
   } catch {
     return null;
   }
@@ -545,7 +565,12 @@ createServer(async (req, res) => {
       const priceId = (typeof body?.priceId === "string" && body.priceId) || getStripePriceId(planId, billing);
       if (!priceId) return json(res, { error: "Stripe price not configured" }, 500);
       const customerEmail = typeof body?.email === "string" ? body.email : undefined;
-      const clerkUserId = typeof body?.clerkUserId === "string" ? body.clerkUserId : undefined;
+      // clerkUserId vient du jeton de session vérifié s'il y en a un (utilisateur
+      // déjà inscrit qui repasse par le checkout), jamais du corps de la requête
+      // — sinon un attaquant peut rattacher un abonnement payé par sa propre
+      // carte au compte Clerk d'un tiers. Un visiteur pas encore inscrit n'a pas
+      // de jeton : clerkUserId reste undefined, le checkout se fait par email.
+      const clerkUserId = (await getClerkOrgId(req)) || undefined;
       const successUrl = typeof body?.successUrl === "string" ? body.successUrl : STRIPE_SUCCESS_URL;
       const cancelUrl = typeof body?.cancelUrl === "string" ? body.cancelUrl : STRIPE_CANCEL_URL;
       let customerId: string | undefined;
@@ -583,9 +608,12 @@ createServer(async (req, res) => {
     if (req.method === "POST" && basePath === "/api/customer-portal") {
       if (!stripe) return json(res, { error: "Stripe not configured" }, 500);
       if (!clerkEnabled) return json(res, { error: "Clerk not configured" }, 500);
+      // clerkUserId vient du jeton de session vérifié, jamais du corps de la
+      // requête (sinon n'importe qui peut ouvrir le portail de facturation
+      // Stripe — moyens de paiement, factures, abonnement — d'un autre client).
+      const clerkUserId = await getClerkOrgId(req);
+      if (!clerkUserId) return json(res, { error: "Unauthorized" }, 401);
       const body = await readBody(req).catch(() => null);
-      const clerkUserId = typeof body?.clerkUserId === "string" ? body.clerkUserId : null;
-      if (!clerkUserId) return json(res, { error: "Missing clerkUserId" }, 400);
       const user = await clerkClient.users.getUser(clerkUserId).catch(() => null);
       if (!user) return json(res, { error: "User not found" }, 404);
       const metadata = (user.publicMetadata || {}) as Record<string, any>;
@@ -820,15 +848,15 @@ createServer(async (req, res) => {
             <div style="background:#f9fafb;padding:28px 32px;border-radius:0 0 12px 12px;border:1px solid #e5e7eb">
               <p style="font-size:15px;color:#1e293b">Bonjour,</p>
               <p style="font-size:15px;color:#1e293b">
-                <strong>${body.ownerName || "Un utilisateur"}</strong> vous invite à collaborer
-                sur le DUERP de <strong>${body.establishmentName || "son établissement"}</strong> sur Kaijos.
+                <strong>${escapeHtml(body.ownerName || "Un utilisateur")}</strong> vous invite à collaborer
+                sur le DUERP de <strong>${escapeHtml(body.establishmentName || "son établissement")}</strong> sur Kaijos.
               </p>
               <a href="${appUrl}/sign-up"
                  style="display:inline-block;margin-top:16px;background:#5B61F6;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:bold">
                 Créer mon compte →
               </a>
               <p style="margin-top:24px;font-size:12px;color:#94a3b8">
-                Connectez-vous avec cette adresse email (${body.email}) pour accéder au projet partagé.
+                Connectez-vous avec cette adresse email (${escapeHtml(body.email)}) pour accéder au projet partagé.
               </p>
             </div>
           </div>`;
@@ -882,8 +910,8 @@ createServer(async (req, res) => {
           <div style="background:#f9fafb;padding:28px 32px;border-radius:0 0 12px 12px;border:1px solid #e5e7eb">
             <p style="font-size:15px;color:#1e293b">Bonjour,</p>
             <p style="font-size:15px;color:#1e293b">
-              Le DUERP de l'établissement <strong>${body.establishmentName}</strong>
-              ${body.monthsOld ? `n'a pas été mis à jour depuis <strong>${body.monthsOld} mois</strong>` : "approche de son délai de révision annuelle"}.
+              Le DUERP de l'établissement <strong>${escapeHtml(body.establishmentName)}</strong>
+              ${body.monthsOld ? `n'a pas été mis à jour depuis <strong>${escapeHtml(body.monthsOld)} mois</strong>` : "approche de son délai de révision annuelle"}.
             </p>
             <p style="font-size:14px;color:#64748b">
               Le Code du travail (art. R.4121-2) impose une mise à jour au moins annuelle.

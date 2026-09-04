@@ -8,8 +8,7 @@
 import React, { useEffect, useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
-
-const API_BASE = import.meta.env.VITE_DUERP_API_BASE || "http://localhost:8787";
+import { apiPost } from "../utils/apiClient";
 
 /* ------------------------------------------------------------
    ICONES PERSONNALISÉES
@@ -884,20 +883,12 @@ export default function LandingPage() {
     setCheckoutState("loading");
     setCheckoutError(null);
     try {
-      const res = await fetch(`${API_BASE}/api/checkout-sessions`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          planId,
-          clerkUserId: user?.id,
-          email: user?.primaryEmailAddress?.emailAddress,
-        }),
+      // clerkUserId n'est plus envoyé : le serveur le dérive du jeton de
+      // session que apiPost attache automatiquement, pas d'un champ du body.
+      const data = await apiPost<{ url?: string }>("/api/checkout-sessions", {
+        planId,
+        email: user?.primaryEmailAddress?.emailAddress,
       });
-      if (!res.ok) {
-        const text = await res.text().catch(() => "");
-        throw new Error(text || `Checkout failed (${res.status})`);
-      }
-      const data = await res.json();
       if (!data?.url) throw new Error("Checkout session url missing");
       window.location.href = data.url;
     } catch (err) {

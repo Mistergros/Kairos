@@ -5,8 +5,6 @@ import { useDuerpStore } from "../state/store";
 import { PLAN_CONFIG, type PlanId } from "../hooks/usePlan";
 import { apiGet, apiPost } from "../utils/apiClient";
 
-const API_BASE = import.meta.env.VITE_DUERP_API_BASE || "http://localhost:8787";
-
 type Invite = { id: string; invitee_email: string; role: string; status: string; created_at: string };
 
 export default function AccountPage() {
@@ -81,16 +79,10 @@ export default function AccountPage() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`${API_BASE}/api/customer-portal`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ clerkUserId: user.id }),
-      });
-      if (!res.ok) {
-        const text = await res.text().catch(() => "");
-        throw new Error(text || `Portal failed (${res.status})`);
-      }
-      const data = await res.json();
+      // clerkUserId n'est plus envoyé : le serveur dérive l'utilisateur du
+      // jeton de session vérifié (apiPost l'attache automatiquement) plutôt
+      // que de faire confiance à un champ du corps de la requête.
+      const data = await apiPost<{ url?: string }>("/api/customer-portal", {});
       if (!data?.url) throw new Error("Portal url missing");
       window.location.href = data.url;
     } catch (err) {

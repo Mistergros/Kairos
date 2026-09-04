@@ -3,8 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "@clerk/clerk-react";
 import pricingData from "../data/pricing.json";
 import { usePlan } from "../hooks/usePlan";
-
-const API_BASE = import.meta.env.VITE_DUERP_API_BASE || "http://localhost:8787";
+import { apiPost } from "../utils/apiClient";
 
 type Plan = typeof pricingData.plans[number];
 
@@ -15,7 +14,7 @@ const BADGE: Record<string, { label: string; color: string }> = {
 };
 
 export function Pricing() {
-  const { user, isSignedIn } = useUser();
+  const { isSignedIn } = useUser();
   const navigate = useNavigate();
   const currentPlan = usePlan();
   const [annual, setAnnual] = useState(false);
@@ -40,16 +39,12 @@ export function Pricing() {
     setLoading(planId);
     setCheckoutError(null);
     try {
-      const res = await fetch(`${API_BASE}/api/checkout-sessions`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ clerkUserId: user?.id, planId, billing: annual ? "annual" : "monthly" }),
+      // clerkUserId n'est plus envoyé : le serveur le dérive du jeton de
+      // session que apiPost attache automatiquement, pas d'un champ du body.
+      const data = await apiPost<{ url?: string }>("/api/checkout-sessions", {
+        planId,
+        billing: annual ? "annual" : "monthly",
       });
-      if (!res.ok) {
-        const text = await res.text().catch(() => "");
-        throw new Error(text || `Le paiement n'a pas pu démarrer (${res.status}).`);
-      }
-      const data = await res.json();
       if (!data?.url) throw new Error("Le paiement n'a pas pu démarrer (réponse inattendue du serveur).");
       window.location.href = data.url;
     } catch (err) {
