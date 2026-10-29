@@ -64,7 +64,7 @@ function Navbar({
         </div>
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-500">
           <a href="#features" className="hover:text-ink transition">Fonctionnalités</a>
-          <a href="#use-cases" className="hover:text-ink transition">Cas pratiques</a>
+          <a href="#use-cases" className="hover:text-ink transition">Par secteur</a>
           <a href="#how" className="hover:text-ink transition">Étapes</a>
           <a href="#pricing" className="hover:text-ink transition">Tarifs</a>
         </nav>
@@ -246,7 +246,7 @@ function ValueProps() {
           <span className="inline-block rounded-full bg-[#5b61f6]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[#5b61f6] mb-4">Fonctionnalités</span>
           <h2 className="text-4xl font-extrabold text-[#0f172a]">L’essentiel, sans complexité</h2>
           <p className="mt-4 text-lg text-slate-500 max-w-xl mx-auto">
-            Tout ce qu’il faut pour être conforme — rien de superflu.
+            Tout ce qu’il faut pour tenir votre DUERP à jour, rien de superflu.
           </p>
         </div>
         <div className="grid md:grid-cols-2 gap-8">
@@ -549,7 +549,7 @@ const PRICING_PLANS = [
     name: "Starter",
     priceMonthly: 39,
     priceYearly: 390,
-    tagline: "DUERP simple et conforme pour les TPE",
+    tagline: "Un DUERP simple et complet pour les TPE",
     bullets: ["1 établissement", "5 unités de travail", "Inventaire des risques illimité", "Plan d'action & Gantt", "Export PDF"],
     badge: "TPE",
     recommended: false,
