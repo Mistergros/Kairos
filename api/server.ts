@@ -379,6 +379,10 @@ const reminderEmailHtml = (items: DueEstablishment[]) => {
 };
 
 const sendRevisionReminders = async (now: Date = new Date()) => {
+  // La requête lit client_name : la migration doit être passée même si
+  // personne n'a encore appelé les routes des établissements depuis le
+  // déploiement (sinon « column e.client_name does not exist » → 500).
+  await ensureEstablishmentsSchema();
   await ensureReminderSchema();
   const rows = (
     await query(
