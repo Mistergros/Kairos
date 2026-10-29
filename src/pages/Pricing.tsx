@@ -10,7 +10,7 @@ type Plan = typeof pricingData.plans[number];
 const BADGE: Record<string, { label: string; color: string }> = {
   starter:     { label: "TPE",          color: "bg-slate/10 text-slate" },
   pme:         { label: "RECOMMANDÉ",   color: "bg-kairos text-white" },
-  consultants: { label: "CABINET",      color: "bg-ink text-white" },
+  consultants: { label: "CABINETS",     color: "bg-ink text-white" },
 };
 
 export function Pricing() {
@@ -23,16 +23,18 @@ export function Pricing() {
   const [showTermsHint, setShowTermsHint] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
 
-  const monthlyPrice = (plan: Plan) =>
-    annual ? Math.round(plan.priceYearly / 12) : plan.priceMonthly;
-
   const handleSubscribe = async (planId: string) => {
+    const plan = pricingData.plans.find((p) => p.id === planId);
+    const billing = plan?.annualOnly || annual ? "annual" : "monthly";
     if (!acceptedTerms) {
       setShowTermsHint(true);
       return;
     }
     if (!isSignedIn) {
-      try { localStorage.setItem("kaijos_pending_plan", planId); } catch {}
+      try {
+        localStorage.setItem("kaijos_pending_plan", planId);
+        localStorage.setItem("kaijos_pending_billing", billing);
+      } catch {}
       navigate(`/sign-up?plan=${planId}`);
       return;
     }
@@ -43,7 +45,7 @@ export function Pricing() {
       // session que apiPost attache automatiquement, pas d'un champ du body.
       const data = await apiPost<{ url?: string }>("/api/checkout-sessions", {
         planId,
-        billing: annual ? "annual" : "monthly",
+        billing,
       });
       if (!data?.url) throw new Error("Le paiement n'a pas pu démarrer (réponse inattendue du serveur).");
       window.location.href = data.url;
@@ -92,7 +94,6 @@ export function Pricing() {
           const badge = BADGE[plan.id];
           const isCurrent = currentPlan.planId === plan.id;
           const isRecommended = plan.mostPopular;
-          const price = monthlyPrice(plan);
           const isLoading = loading === plan.id;
 
           return (
@@ -118,15 +119,7 @@ export function Pricing() {
               <h3 className="text-xl font-extrabold text-ink mt-2">{plan.name}</h3>
               <p className="text-xs text-slate/60 mt-0.5 mb-4">{plan.tagline}</p>
 
-              <div className="flex items-end gap-1.5 mb-1">
-                <span className="text-4xl font-extrabold text-ink">{price} €</span>
-                <span className="text-slate/50 mb-1 text-sm">/ mois</span>
-              </div>
-              {annual && (
-                <p className="text-xs text-slate/50 mb-4">
-                  soit {plan.priceYearly} € / an · 2 mois offerts
-                </p>
-              )}
+              <PlanPrice plan={plan} annual={annual} />
 
               <ul className="mt-3 space-y-2.5 flex-1">
                 {plan.bullets.map((b) => (
@@ -187,6 +180,31 @@ export function Pricing() {
       </div>
       </div>
     </div>
+  );
+}
+
+// Une offre « annuel uniquement » (Essentiel) affiche son prix annuel quel que
+// soit le choix mensuel/annuel ; les autres suivent la bascule.
+function PlanPrice({ plan, annual }: { plan: Plan; annual: boolean }) {
+  if (plan.annualOnly || plan.priceMonthly === null) {
+    return (
+      <>
+        <div className="flex items-end gap-1.5 mb-1">
+          <span className="text-4xl font-extrabold text-ink">{plan.priceYearly} €</span>
+          <span className="text-slate/50 mb-1 text-sm">/ an</span>
+        </div>
+        <p className="text-xs text-slate/50 mb-4">soit environ {Math.round(plan.priceYearly / 12)} € par mois, payé une fois par an</p>
+      </>
+    );
+  }
+  return (
+    <>
+      <div className="flex items-end gap-1.5 mb-1">
+        <span className="text-4xl font-extrabold text-ink">{annual ? Math.round(plan.priceYearly / 12) : plan.priceMonthly} €</span>
+        <span className="text-slate/50 mb-1 text-sm">/ mois</span>
+      </div>
+      {annual && <p className="text-xs text-slate/50 mb-4">soit {plan.priceYearly} € / an · 2 mois offerts</p>}
+    </>
   );
 }
 

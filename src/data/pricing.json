@@ -3,9 +3,10 @@
   "plans": [
     {
       "id": "starter",
-      "name": "Starter",
-      "priceMonthly": 39,
-      "priceYearly": 390,
+      "name": "Essentiel",
+      "priceMonthly": null,
+      "priceYearly": 149,
+      "annualOnly": true,
       "tagline": "Un DUERP simple et complet pour les TPE",
       "maxWorkUnits": 5,
       "maxEstablishments": 1,
@@ -14,16 +15,18 @@
         "5 unités de travail",
         "Inventaire des risques illimité",
         "Plan d'action & Gantt",
-        "Export PDF"
+        "Export PDF prêt à signer",
+        "Rappel automatique de révision annuelle"
       ],
-      "cta": "Choisir Starter",
+      "cta": "Choisir Essentiel",
       "mostPopular": false
     },
     {
       "id": "pme",
       "name": "PME",
-      "priceMonthly": 89,
-      "priceYearly": 890,
+      "priceMonthly": 49,
+      "priceYearly": 490,
+      "annualOnly": false,
       "tagline": "Pour les PME et les équipes HSE internes",
       "maxWorkUnits": 20,
       "maxEstablishments": 5,
@@ -31,6 +34,7 @@
         "Jusqu'à 5 établissements",
         "20 unités de travail",
         "Export XLSX par responsable",
+        "Rapport PDF multi-sites",
         "Rappels automatiques (annuel légal)",
         "Historique des versions complet",
         "Support email prioritaire"
@@ -40,22 +44,22 @@
     },
     {
       "id": "consultants",
-      "name": "Consultants",
-      "priceMonthly": 199,
-      "priceYearly": 1990,
-      "tagline": "Pour cabinets RH / HSE multi-clients",
+      "name": "Pro",
+      "priceMonthly": 149,
+      "priceYearly": 1490,
+      "annualOnly": false,
+      "tagline": "Pour consultants, cabinets RH / HSE et experts-comptables",
       "maxWorkUnits": -1,
       "maxEstablishments": -1,
       "bullets": [
+        "Portefeuille de 25 clients",
         "Établissements & unités illimités",
-        "Portefeuille clients (jusqu'à 50 clients)",
         "Suivi des révisions annuelles par client",
         "Export XLSX & PDF par client",
         "Historique complet des versions",
-        "Support prioritaire dédié",
-        "Accès bêta aux nouvelles fonctionnalités"
+        "Support prioritaire dédié"
       ],
-      "cta": "Choisir Consultants",
+      "cta": "Choisir Pro",
       "mostPopular": false
     }
   ]

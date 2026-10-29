@@ -39,7 +39,8 @@ function IconTrack(props: React.SVGProps<SVGSVGElement>) {
 }
 
 type PlanId = "starter" | "pme" | "consultants";
-type SubscribeHandler = (planId?: PlanId) => void;
+type Billing = "monthly" | "annual";
+type SubscribeHandler = (planId?: PlanId, billing?: Billing) => void;
 
 /* ------------------------------------------------------------
    BADGE DES TARIFS
@@ -544,21 +545,24 @@ function Steps() {
    PRICING
 ------------------------------------------------------------ */
 const PRICING_PLANS = [
+  // Garder aligné sur src/data/pricing.json et sur les tarifs Stripe.
   {
     id: "starter" as PlanId,
-    name: "Starter",
-    priceMonthly: 39,
-    priceYearly: 390,
+    name: "Essentiel",
+    priceMonthly: null,
+    priceYearly: 149,
+    annualOnly: true,
     tagline: "Un DUERP simple et complet pour les TPE",
-    bullets: ["1 établissement", "5 unités de travail", "Inventaire des risques illimité", "Plan d'action & Gantt", "Export PDF"],
+    bullets: ["1 établissement", "5 unités de travail", "Inventaire des risques illimité", "Export PDF prêt à signer", "Rappel automatique de révision annuelle"],
     badge: "TPE",
     recommended: false,
   },
   {
     id: "pme" as PlanId,
     name: "PME",
-    priceMonthly: 89,
-    priceYearly: 890,
+    priceMonthly: 49,
+    priceYearly: 490,
+    annualOnly: false,
     tagline: "Pour les PME et équipes HSE internes",
     bullets: ["Jusqu'à 5 établissements", "20 unités de travail", "Export XLSX par responsable", "Rapport PDF multi-sites", "Historique des versions"],
     badge: "RECOMMANDÉ",
@@ -566,12 +570,13 @@ const PRICING_PLANS = [
   },
   {
     id: "consultants" as PlanId,
-    name: "Consultants",
-    priceMonthly: 199,
-    priceYearly: 1990,
-    tagline: "Pour cabinets RH / HSE multi-clients",
-    bullets: ["Établissements & unités illimités", "Portefeuille clients (jusqu'à 50 clients)", "Suivi des révisions annuelles par client", "Export XLSX & PDF par client"],
-    badge: "CABINET",
+    name: "Pro",
+    priceMonthly: 149,
+    priceYearly: 1490,
+    annualOnly: false,
+    tagline: "Pour consultants, cabinets RH / HSE et experts-comptables",
+    bullets: ["Portefeuille de 25 clients", "Établissements & unités illimités", "Suivi des révisions annuelles par client", "Export XLSX & PDF par client"],
+    badge: "CABINETS",
     recommended: false,
   },
 ];
@@ -592,7 +597,8 @@ function PricingSection({
       setShowTermsHint(true);
       return;
     }
-    onSubscribe(planId);
+    const plan = PRICING_PLANS.find((p) => p.id === planId);
+    onSubscribe(planId, plan?.annualOnly || annual ? "annual" : "monthly");
   };
 
   return (
@@ -623,7 +629,8 @@ function PricingSection({
 
         <div className="grid md:grid-cols-3 gap-6">
           {PRICING_PLANS.map((p) => {
-            const price = annual ? Math.round(p.priceYearly / 12) : p.priceMonthly;
+            const yearlyOnly = p.annualOnly || p.priceMonthly === null;
+            const price = yearlyOnly ? p.priceYearly : annual ? Math.round(p.priceYearly / 12) : p.priceMonthly;
             return (
               <article
                 key={p.id}
@@ -642,10 +649,12 @@ function PricingSection({
                 <p className="text-slate-500 mt-1 text-sm">{p.tagline}</p>
                 <div className="mt-5 flex items-end gap-1.5">
                   <span className="text-4xl font-extrabold text-[#0f172a]">{price} €</span>
-                  <span className="text-slate-400 mb-1 text-sm">/ mois</span>
+                  <span className="text-slate-400 mb-1 text-sm">{yearlyOnly ? "/ an" : "/ mois"}</span>
                 </div>
-                {annual && (
-                  <p className="text-xs text-slate-400 mt-0.5">soit {p.priceYearly} € / an</p>
+                {yearlyOnly ? (
+                  <p className="text-xs text-slate-400 mt-0.5">soit environ {Math.round(p.priceYearly / 12)} € par mois</p>
+                ) : (
+                  annual && <p className="text-xs text-slate-400 mt-0.5">soit {p.priceYearly} € / an</p>
                 )}
                 <ul className="mt-6 space-y-3 flex-1">
                   {p.bullets.map((b) => (
@@ -751,7 +760,7 @@ export default function LandingPage() {
   });
   const [checkoutSuccess] = useState(() => new URLSearchParams(window.location.search).get("checkout") === "success");
 
-  const startCheckout = async (planId?: PlanId) => {
+  const startCheckout = async (planId?: PlanId, billing?: Billing) => {
     if (checkoutState === "loading") return;
     // Si pas connecté → inscription d'abord, avec le plan en paramètre. On le
     // garde aussi en localStorage : le "afterSignUpUrl" de Clerk ne survit pas
@@ -759,7 +768,10 @@ export default function LandingPage() {
     // "/" plutôt que vers l'URL demandée) — sans ce filet, l'utilisateur revient
     // sur /landing après inscription sans que le paiement ne reprenne jamais.
     if (!isSignedIn) {
-      try { localStorage.setItem("kaijos_pending_plan", planId || "starter"); } catch {}
+      try {
+        localStorage.setItem("kaijos_pending_plan", planId || "starter");
+        localStorage.setItem("kaijos_pending_billing", billing || "monthly");
+      } catch {}
       navigate(`/sign-up?plan=${planId || "starter"}`);
       return;
     }
@@ -778,6 +790,7 @@ export default function LandingPage() {
       // session que apiPost attache automatiquement, pas d'un champ du body.
       const data = await apiPost<{ url?: string }>("/api/checkout-sessions", {
         planId,
+        billing,
         email: user?.primaryEmailAddress?.emailAddress,
       });
       if (!data?.url) throw new Error("Checkout session url missing");
@@ -822,8 +835,13 @@ export default function LandingPage() {
       // resumingPlan ci-dessus), pour ne pas faire re-choisir le plan une
       // deuxième fois juste après avoir créé le compte.
       if (isSignedIn) {
-        try { localStorage.removeItem("kaijos_pending_plan"); } catch {}
-        startCheckout(resumingPlan as PlanId);
+        let pendingBilling: Billing | undefined;
+        try {
+          pendingBilling = localStorage.getItem("kaijos_pending_billing") === "annual" ? "annual" : undefined;
+          localStorage.removeItem("kaijos_pending_plan");
+          localStorage.removeItem("kaijos_pending_billing");
+        } catch {}
+        startCheckout(resumingPlan as PlanId, pendingBilling);
       } else {
         // Chargé, mais pas connecté malgré un plan en attente (ex. lien rouvert
         // plus tard, session expirée) — pas la peine de rester bloqué sur

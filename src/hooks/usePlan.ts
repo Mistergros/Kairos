@@ -18,7 +18,7 @@ export const PLAN_CONFIG: Record<PlanId, PlanLimits> = {
     maxEstablishments: 1,
     canExportXLSX: false,
     canSeeFullHistory: false,
-    label: "Starter",
+    label: "Essentiel",
   },
   pme: {
     planId: "pme",
@@ -34,7 +34,7 @@ export const PLAN_CONFIG: Record<PlanId, PlanLimits> = {
     maxEstablishments: -1,
     canExportXLSX: true,
     canSeeFullHistory: true,
-    label: "Consultants",
+    label: "Pro",
   },
 };
 

@@ -10,7 +10,7 @@ export interface Establishment {
   sector?: string;
   address?: string;
   headcount?: number;
-  /** Offre Consultants : client final auquel appartient l'établissement. */
+  /** Offre Pro (id "consultants") : client final auquel appartient l'établissement. */
   clientName?: string;
 }
 

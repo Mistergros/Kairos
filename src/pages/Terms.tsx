@@ -17,13 +17,13 @@ export default function TermsPage() {
       </Section>
 
       <Section title="2. Description des offres">
-        <p>Trois formules d'abonnement mensuel ou annuel sont proposées :</p>
+        <p>Trois formules d'abonnement sont proposées :</p>
         <ul className="list-disc pl-5 space-y-1">
-          <li><strong>Starter</strong> — 39 € HT/mois : 1 établissement, 5 unités de travail, inventaire des risques illimité, plan d'action et export PDF.</li>
-          <li><strong>PME</strong> — 89 € HT/mois : jusqu'à 5 établissements, 20 unités de travail, export XLSX, rappels automatiques, historique des versions.</li>
-          <li><strong>Consultants</strong> — 199 € HT/mois : établissements et unités illimités, portefeuille de 50 clients maximum, export XLSX et PDF par client, support prioritaire.</li>
+          <li><strong>Essentiel</strong> — 149 € HT/an, abonnement annuel uniquement : 1 établissement, 5 unités de travail, inventaire des risques illimité, plan d'action, export PDF, rappel automatique de révision annuelle.</li>
+          <li><strong>PME</strong> — 49 € HT/mois ou 490 € HT/an : jusqu'à 5 établissements, 20 unités de travail, export XLSX, rapport PDF multi-sites, rappels automatiques, historique des versions.</li>
+          <li><strong>Pro</strong> — 149 € HT/mois ou 1 490 € HT/an : portefeuille de 25 clients maximum, établissements et unités illimités, suivi des révisions par client, export XLSX et PDF par client, support prioritaire.</li>
         </ul>
-        <p>L'abonnement annuel bénéficie d'une remise équivalant à deux mois offerts. Le détail à jour des offres et de leurs tarifs est disponible sur la page <a className="text-blue-600 hover:underline" href="/pricing">Tarifs</a>.</p>
+        <p>Pour les formules PME et Pro, l'abonnement annuel bénéficie d'une remise équivalant à deux mois offerts. Le détail à jour des offres et de leurs tarifs est disponible sur la page <a className="text-blue-600 hover:underline" href="/pricing">Tarifs</a>.</p>
       </Section>
 
       <Section title="3. Prix et paiement">

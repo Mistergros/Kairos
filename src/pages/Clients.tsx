@@ -6,7 +6,7 @@ import { usePlan } from "../hooks/usePlan";
 import { summarizeClients, REVISION_WARNING_DAYS, type ClientSummary, type RevisionStatus } from "../utils/revision";
 
 // Doit rester aligné sur PLAN_LIMITS.consultants.maxClients (api/server.ts).
-const MAX_CLIENTS = 50;
+const MAX_CLIENTS = 25;
 
 const STATUS_LABEL: Record<RevisionStatus, { label: string; cls: string }> = {
   overdue: { label: "Révision en retard", cls: "bg-rose-100 text-rose-700" },
@@ -49,12 +49,12 @@ export const Clients = () => {
 
   if (plan.planId !== "consultants") {
     return (
-      <Card title="Portefeuille clients" subtitle="Réservé à l'offre Consultants">
+      <Card title="Portefeuille clients" subtitle="Réservé à l'offre Pro">
         <p className="text-sm text-slate/70">
           Gérez les DUERP de plusieurs entreprises clientes depuis un seul compte, avec le suivi des révisions annuelles de chacune.
         </p>
         <a href="/pricing" className="mt-4 inline-block rounded-xl bg-ink px-4 py-2 text-sm font-semibold text-white">
-          Voir l'offre Consultants
+          Voir l'offre Pro
         </a>
       </Card>
     );

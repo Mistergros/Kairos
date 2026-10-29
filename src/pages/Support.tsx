@@ -8,7 +8,7 @@ export default function SupportPage() {
     >
       <Section title="Une question, un problème ?">
         <p>
-          Écrivez-nous à <a className="text-blue-600 hover:underline" href="mailto:contact@kaijos.com">contact@kaijos.com</a> — nous répondons sous 48h ouvrées (support prioritaire pour les offres PME et Consultants).
+          Écrivez-nous à <a className="text-blue-600 hover:underline" href="mailto:contact@kaijos.com">contact@kaijos.com</a> — nous répondons sous 48h ouvrées (support prioritaire pour les offres PME et Pro).
         </p>
       </Section>
       <Section title="Documents utiles">

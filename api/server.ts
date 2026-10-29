@@ -75,8 +75,10 @@ const getStripePriceId = (planId?: string | null, billing?: string | null) => {
   const isAnnual = billing === "annual";
   if (plan === "consultants") return isAnnual ? (STRIPE_PRICE_ID_CONSULTANTS_ANNUAL || STRIPE_PRICE_ID_CONSULTANTS) : STRIPE_PRICE_ID_CONSULTANTS;
   if (plan === "pme")         return isAnnual ? (STRIPE_PRICE_ID_PME_ANNUAL || STRIPE_PRICE_ID_PME) : STRIPE_PRICE_ID_PME;
-  // starter (default)
-  return isAnnual ? (STRIPE_PRICE_ID_STARTER_ANNUAL || STRIPE_PRICE_ID_STARTER) : STRIPE_PRICE_ID_STARTER;
+  // starter (« Essentiel », défaut) : vendu à l'année uniquement (149 €/an).
+  // STRIPE_PRICE_ID_STARTER_ANNUAL est le tarif de référence ; l'ancien
+  // STRIPE_PRICE_ID_STARTER ne sert plus que de repli s'il n'est pas défini.
+  return STRIPE_PRICE_ID_STARTER_ANNUAL || STRIPE_PRICE_ID_STARTER;
 };
 
 const readRawBody = async (req: any) =>
@@ -426,7 +428,7 @@ const sendRevisionReminders = async (now: Date = new Date()) => {
 const PLAN_LIMITS: Record<string, { maxEstablishments: number; maxClients: number }> = {
   starter: { maxEstablishments: 1, maxClients: -1 },
   pme: { maxEstablishments: 5, maxClients: -1 },
-  consultants: { maxEstablishments: -1, maxClients: 50 },
+  consultants: { maxEstablishments: -1, maxClients: 25 },
 };
 type UserPlan = { planId: string; active: boolean };
 const planCache = new Map<string, { plan: UserPlan; expires: number }>();
@@ -776,7 +778,10 @@ createServer(async (req, res) => {
       const body = await readBody(req).catch(() => null);
       const planId = typeof body?.planId === "string" ? body.planId : typeof body?.plan === "string" ? body.plan : null;
       const billing = typeof body?.billing === "string" ? body.billing : null;
-      const priceId = (typeof body?.priceId === "string" && body.priceId) || getStripePriceId(planId, billing);
+      // Le tarif est toujours choisi par le serveur à partir de l'offre : un
+      // priceId venu du navigateur permettait de payer le tarif le moins cher
+      // tout en recevant une offre supérieure (planId en metadata).
+      const priceId = getStripePriceId(planId, billing);
       if (!priceId) return json(res, { error: "Stripe price not configured" }, 500);
       const customerEmail = typeof body?.email === "string" ? body.email : undefined;
       // clerkUserId vient du jeton de session vérifié s'il y en a un (utilisateur
