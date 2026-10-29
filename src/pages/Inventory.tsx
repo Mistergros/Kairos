@@ -347,13 +347,13 @@ export const Inventory = () => {
         title="Inventaire des risques"
         subtitle="Grille des risques, cotations et priorisation"
         corner={
-          <div className="flex items-center gap-2">
+          <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto">
             <div className="text-sm text-slate/60">
               Unité: <span className="font-semibold text-slate-800">{currentUnit?.name || "Non selectionnee"}</span>
               {currentUnit?.activity ? ` - Activité: ${currentUnit.activity}` : ""}
             </div>
             <input
-              className="rounded-xl border border-slate/20 px-3 py-2 text-sm"
+              className="w-full rounded-xl border border-slate/20 px-3 py-2 text-sm sm:w-auto"
               placeholder="Recherche..."
               title="Filtrer par texte (risque ou categorie)"
               value={filters.search}

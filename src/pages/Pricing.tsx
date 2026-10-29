@@ -71,7 +71,7 @@ export function Pricing() {
         <p className="mt-2 text-slate/60 text-sm">Abonnement annuel, prix HT. La création du DUERP est gratuite : vous ne payez que pour le télécharger.</p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
         {pricingData.plans.map((plan) => {
           const badge = BADGE[plan.id];
           const isCurrent = currentPlan.planId === plan.id;

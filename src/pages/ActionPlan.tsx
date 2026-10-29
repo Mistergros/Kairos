@@ -514,9 +514,9 @@ export const ActionPlan = () => {
                                 return (
                                   <div key={a.id} className="rounded-xl border border-slate/10 bg-white p-3">
                                     {/* Action header row */}
-                                    <div className="flex items-start gap-3">
+                                    <div className="flex flex-wrap items-start gap-3">
                                       <PriorityBadge priority={a.priority} />
-                                      <div className="flex-1 min-w-0">
+                                      <div className="flex-1 min-w-[10rem]">
                                         <p className="font-medium text-sm text-slate">{formatActionTitle(a.title, linked)}</p>
                                         <div className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-slate/60">
                                           {owner ? (
@@ -534,7 +534,7 @@ export const ActionPlan = () => {
                                   )}
                                 </div>
                               </div>
-                              <div className="flex items-center gap-2 shrink-0">
+                              <div className="flex w-full items-center justify-end gap-2 sm:w-auto sm:shrink-0">
                                 <select
                                   className={`rounded-lg border-0 px-2 py-1 text-xs font-medium ${statusColors[a.status] || "bg-slate/10"}`}
                                   value={a.status}
@@ -682,7 +682,7 @@ export const ActionPlan = () => {
                       key={a.id}
                       className="rounded-xl border border-slate/10 bg-slate/5 p-3"
                     >
-                      <div className="grid gap-3 md:grid-cols-[1.3fr,1.3fr,1.3fr,auto] items-start">
+                      <div className="grid grid-cols-1 gap-3 md:grid-cols-[1.3fr,1.3fr,1.3fr,auto] items-start">
                         <div className="space-y-1 text-sm">
                           <p className="font-semibold text-slate">
                             {linked?.riskLabel || "Risque non renseigné"}
@@ -762,7 +762,7 @@ export const ActionPlan = () => {
 
                       {expanded === a.id && (
                         <div className="mt-3 rounded-xl border border-slate/10 bg-white p-3 text-sm text-slate/80">
-                          <div className="grid gap-3 md:grid-cols-2">
+                          <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                             <div className="space-y-2">
                               <p className="font-semibold text-slate">Quand ?</p>
                               <label className="block text-xs text-slate/60">
@@ -861,7 +861,7 @@ export const ActionPlan = () => {
         <p className="mb-2 text-xs text-slate/60">
           Début/Fin obligatoires (format JJ/MM/AA via le calendrier) : alimentent la roadmap Gantt par unité. Qui ? et Comment ? sont facultatifs.
         </p>
-        <div className="grid gap-3 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
           <input
             className="rounded-xl border border-slate/20 px-3 py-2"
             placeholder="Titre"

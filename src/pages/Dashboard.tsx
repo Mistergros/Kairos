@@ -338,7 +338,7 @@ export const Dashboard = () => {
 
       {/* KPIs couverture + progression */}
       {(coverage !== null || actionProgress !== null) && (
-        <div className="grid gap-3 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
           {coverage !== null && (
             <div className="rounded-2xl border border-slate/10 bg-white px-5 py-4 shadow-sm">
               <p className="text-xs uppercase tracking-wide text-slate/50 mb-1">Couverture des risques</p>
@@ -374,7 +374,7 @@ export const Dashboard = () => {
         </div>
       )}
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <Card
           title="Actions en retard"
           subtitle="Échéance dépassée et non terminées"

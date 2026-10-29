@@ -118,7 +118,7 @@ export const Exports = () => {
         </div>
       )}
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         <Card
           title="DUERP complet (PDF)"
           subtitle="Document structuré selon l'art. R.4121-1 du Code du travail"

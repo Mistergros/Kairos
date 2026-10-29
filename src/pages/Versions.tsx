@@ -75,7 +75,7 @@ export const Versions = () => {
       </Card>
 
       <Card title="Créer une version" subtitle="Archive l'état complet des unités, risques et actions à cette date">
-        <div className="grid gap-2 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
           <input
             className="rounded-xl border border-slate/20 px-3 py-2"
             placeholder="Label"

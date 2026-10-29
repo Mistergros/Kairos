@@ -56,12 +56,12 @@ function Navbar({
 }) {
   return (
     <header className="sticky top-0 z-20 w-full border-b border-slate-100 bg-white shadow-sm">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-        <div className="flex items-center gap-2.5">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
+        <div className="flex shrink-0 items-center gap-2.5">
           <div className="h-7 w-7 rounded-lg bg-kairos flex items-center justify-center">
             <span className="text-white font-extrabold text-sm">K</span>
           </div>
-          <span className="font-bold text-ink text-lg tracking-tight">Kaijos</span>
+          <span className="font-bold text-ink text-lg tracking-tight">Kaijos<sup className="ml-0.5 text-[0.55em] font-semibold align-super">™</sup></span>
         </div>
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-500">
           <a href="#features" className="hover:text-ink transition">Fonctionnalités</a>
@@ -69,17 +69,21 @@ function Navbar({
           <a href="#how" className="hover:text-ink transition">Étapes</a>
           <a href="#pricing" className="hover:text-ink transition">Tarifs</a>
         </nav>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 whitespace-nowrap">
           {isSignedIn ? (
-            <a href="/mon-compte" className="text-sm font-medium text-slate-600 hover:text-ink transition">Mon compte</a>
+            <a href="/mon-compte" className="hidden sm:inline text-sm font-medium text-slate-600 hover:text-ink transition">Mon compte</a>
           ) : (
-            <a href="/sign-in" className="text-sm font-medium text-slate-600 hover:text-ink transition">Se connecter</a>
+            <a href="/sign-in" className="text-sm font-medium text-slate-600 hover:text-ink transition">Connexion</a>
           )}
           <a
             href={isSignedIn ? "/" : "/sign-up"}
-            className="rounded-lg bg-kairos px-5 py-2 text-sm font-semibold text-white hover:opacity-90 transition"
+            className="rounded-lg bg-kairos px-3 sm:px-5 py-2 text-sm font-semibold text-white hover:opacity-90 transition"
           >
-            {isSignedIn ? "Ouvrir l'application" : "Essayer gratuitement"}
+            {isSignedIn ? (
+              <>Ouvrir<span className="hidden sm:inline"> l'application</span></>
+            ) : (
+              <>Essayer<span className="hidden sm:inline"> gratuitement</span></>
+            )}
           </a>
         </div>
       </div>
@@ -103,7 +107,7 @@ function Hero() {
           </h1>
 
           <p className="mt-6 text-lg text-gray-300 leading-relaxed">
-            Kaijos structure votre évaluation des risques professionnels, pré-remplit l’inventaire selon votre secteur NAF et génère le document légal prêt à signer.
+            Kaijos™ structure votre évaluation des risques professionnels, pré-remplit l’inventaire selon votre secteur NAF et génère le document légal prêt à signer.
           </p>
 
           <div className="mt-4 space-y-2">
@@ -697,14 +701,15 @@ function PricingSection({
 function Footer() {
   return (
     <footer className="border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 py-8">
-      <div className="mx-auto max-w-7xl flex justify-between px-6 text-sm text-slate-600 dark:text-slate-300">
-        <div className="flex gap-6">
+      <div className="mx-auto max-w-7xl flex flex-wrap items-center justify-between gap-4 px-6 text-sm text-slate-600 dark:text-slate-300">
+        <div className="flex flex-wrap gap-x-6 gap-y-2">
           <a href="/legal" className="hover:underline">Mentions légales</a>
           <a href="/cgv" className="hover:underline">CGV</a>
           <a href="/privacy" className="hover:underline">Confidentialité</a>
+          <a href="/dpa" className="hover:underline">Traitement des données</a>
           <a href="/support" className="hover:underline">Support</a>
         </div>
-        <span>© {new Date().getFullYear()} Kaijos</span>
+        <span>© {new Date().getFullYear()} Kaijos™</span>
       </div>
     </footer>
   );
@@ -841,7 +846,7 @@ export default function LandingPage() {
     return (
       <main className="flex min-h-screen items-center justify-center bg-white px-6 dark:bg-slate-950">
         <div className="w-full max-w-sm text-center">
-          <span className="text-xl font-extrabold tracking-tight text-ink dark:text-white">Kaijos</span>
+          <span className="text-xl font-extrabold tracking-tight text-ink dark:text-white">Kaijos<sup className="ml-0.5 text-[0.55em] font-semibold align-super">™</sup></span>
           <div className="mx-auto mt-6 h-8 w-8 animate-spin rounded-full border-2 border-kairos border-t-transparent" />
           <p className="mt-5 text-sm font-medium text-slate-700 dark:text-slate-200">
             {checkoutSuccess ? notice || "Paiement confirmé — activation de votre abonnement…" : "Un instant, on prépare votre paiement…"}

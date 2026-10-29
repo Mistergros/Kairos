@@ -225,7 +225,7 @@ export const Units = () => {
   };
 
   return (
-    <div className="grid gap-4 md:grid-cols-2">
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
       <Card title="Etablissements" subtitle="Raison sociale, NAF/secteur, coordonnees">
         <div className="mb-3 rounded-xl bg-slate/5 px-3 py-2 text-xs text-slate/70">
           Astuce : cherchez l'entreprise (SIREN/SIRET ou nom) pour preremplir les champs. Vous pouvez ensuite modifier le secteur/NAF avant d'enregistrer.
@@ -301,7 +301,7 @@ export const Units = () => {
 
         <div className="mt-6 rounded-2xl bg-slate/5 p-4">
           <p className="mb-2 font-semibold text-slate">Nouvel etablissement</p>
-          <div className="grid gap-2 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
             <input
               className="rounded-lg border border-slate/20 px-3 py-2"
               placeholder="Nom"
@@ -414,7 +414,7 @@ export const Units = () => {
         </div>
         <div className="mt-6 rounded-2xl bg-slate/5 p-4">
           <p className="mb-2 font-semibold text-slate">Nouvelle unite</p>
-          <div className="grid gap-2 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
             <input
               className="rounded-lg border border-slate/20 px-3 py-2"
               placeholder="Nom"
@@ -455,7 +455,7 @@ export const Units = () => {
           </div>
           <div className="mt-3 space-y-2">
             <p className="text-sm font-semibold text-slate-700">Facteurs / Activite</p>
-            <div className="grid gap-2 md:grid-cols-2">
+            <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
               {visibleOptions.map((opt) => (
                 <label
                   key={opt.key}
