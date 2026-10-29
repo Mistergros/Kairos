@@ -1,0 +1,16 @@
+{
+  "code": "8623Z",
+  "label": "Pratique dentaire",
+  "risks_priority": [
+    "R-TMS",
+    "R-CHIMIQUE",
+    "R-BRUIT",
+    "R-COUPURE",
+    "R-RAYONNEMENT",
+    "R-ERGONOMIE",
+    "R-RPS"
+  ],
+  "risks_mandatory": [
+    "R-BIO"
+  ]
+}

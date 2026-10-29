@@ -1,0 +1,15 @@
+{
+  "code": "8720A",
+  "label": "Hébergement social pour handicapés mentaux et malades mentaux",
+  "risks_priority": [
+    "R-AGRESSION",
+    "R-TMS",
+    "R-RPS",
+    "R-BIO",
+    "R-TRAVAIL-ISOLE",
+    "R-GLISSADES",
+    "R-SOUS-EFFECTIF",
+    "R-INCENDIE"
+  ],
+  "risks_mandatory": []
+}

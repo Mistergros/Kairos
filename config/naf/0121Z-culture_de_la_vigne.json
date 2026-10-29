@@ -1,0 +1,16 @@
+{
+  "code": "0121Z",
+  "label": "Culture de la vigne",
+  "risks_priority": [
+    "R-TMS",
+    "R-MANUTENTION",
+    "R-MACHINE",
+    "R-CANICULE",
+    "R-COUPURE",
+    "R-ROUTIER",
+    "R-CIRCULATION-INTERNE"
+  ],
+  "risks_mandatory": [
+    "R-CHIMIQUE"
+  ]
+}

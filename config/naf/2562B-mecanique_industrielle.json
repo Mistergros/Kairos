@@ -1,0 +1,16 @@
+{
+  "code": "2562B",
+  "label": "Mécanique industrielle",
+  "risks_priority": [
+    "R-COUPURE",
+    "R-BRUIT",
+    "R-CHIMIQUE",
+    "R-MANUTENTION",
+    "R-TMS",
+    "R-CHUTE-OBJET",
+    "R-ELECTRIQUE"
+  ],
+  "risks_mandatory": [
+    "R-MACHINE"
+  ]
+}

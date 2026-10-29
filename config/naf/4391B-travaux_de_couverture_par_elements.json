@@ -1,0 +1,17 @@
+{
+  "code": "4391B",
+  "label": "Travaux de couverture par éléments",
+  "risks_priority": [
+    "R-CHUTE-OBJET",
+    "R-MANUTENTION",
+    "R-TMS",
+    "R-CANICULE",
+    "R-FROID",
+    "R-COUPURE",
+    "R-ELECTRIQUE"
+  ],
+  "risks_mandatory": [
+    "R-CHUTE-HAUTEUR",
+    "R-CMR"
+  ]
+}

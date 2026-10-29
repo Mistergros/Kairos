@@ -1,0 +1,15 @@
+{
+  "code": "8690A",
+  "label": "Ambulances",
+  "risks_priority": [
+    "R-TMS",
+    "R-MANUTENTION",
+    "R-BIO",
+    "R-AGRESSION",
+    "R-RPS",
+    "R-TRAVAIL-ISOLE"
+  ],
+  "risks_mandatory": [
+    "R-ROUTIER"
+  ]
+}

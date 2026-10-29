@@ -1,0 +1,16 @@
+{
+  "code": "8891A",
+  "label": "Accueil de jeunes enfants",
+  "risks_priority": [
+    "R-BIO",
+    "R-BRUIT",
+    "R-RPS",
+    "R-GLISSADES",
+    "R-CHIMIQUE",
+    "R-ERGONOMIE",
+    "R-SOUS-EFFECTIF"
+  ],
+  "risks_mandatory": [
+    "R-TMS"
+  ]
+}

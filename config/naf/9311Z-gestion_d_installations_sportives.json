@@ -1,0 +1,17 @@
+{
+  "code": "9311Z",
+  "label": "Gestion d'installations sportives",
+  "risks_priority": [
+    "R-NOYADE-ENFOUISSEMENT",
+    "R-AGRESSION",
+    "R-SECURITE-VISITEUR",
+    "R-MANUTENTION",
+    "R-GLISSADES",
+    "R-ELECTRIQUE",
+    "R-TRAVAIL-ISOLE",
+    "R-BRUIT"
+  ],
+  "risks_mandatory": [
+    "R-CHIMIQUE"
+  ]
+}

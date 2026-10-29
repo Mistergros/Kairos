@@ -1,0 +1,16 @@
+{
+  "code": "1013B",
+  "label": "Charcuterie",
+  "risks_priority": [
+    "R-MACHINE",
+    "R-BRULE",
+    "R-GLISSADES",
+    "R-TMS",
+    "R-MANUTENTION",
+    "R-CHIMIQUE"
+  ],
+  "risks_mandatory": [
+    "R-COUPURE",
+    "R-FROID"
+  ]
+}

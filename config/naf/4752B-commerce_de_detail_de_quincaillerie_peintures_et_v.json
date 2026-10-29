@@ -1,0 +1,16 @@
+{
+  "code": "4752B",
+  "label": "Commerce de détail de quincaillerie, peintures et verres en grandes surfaces (400 m² et plus)",
+  "risks_priority": [
+    "R-MANUTENTION",
+    "R-CIRCULATION-INTERNE",
+    "R-CHUTE-OBJET",
+    "R-TMS",
+    "R-AGRESSION",
+    "R-CHIMIQUE",
+    "R-COUPURE",
+    "R-SECURITE-VISITEUR",
+    "R-RPS"
+  ],
+  "risks_mandatory": []
+}

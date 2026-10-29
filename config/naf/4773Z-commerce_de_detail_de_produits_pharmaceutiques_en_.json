@@ -1,0 +1,15 @@
+{
+  "code": "4773Z",
+  "label": "Commerce de détail de produits pharmaceutiques en magasin spécialisé",
+  "risks_priority": [
+    "R-AGRESSION",
+    "R-RPS",
+    "R-TMS",
+    "R-BIO",
+    "R-CHIMIQUE",
+    "R-ECRAN",
+    "R-MANUTENTION",
+    "R-TRAVAIL-ISOLE"
+  ],
+  "risks_mandatory": []
+}

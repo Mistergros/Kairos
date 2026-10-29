@@ -1,0 +1,17 @@
+{
+  "code": "1013A",
+  "label": "Préparation industrielle de produits à base de viande",
+  "risks_priority": [
+    "R-TMS",
+    "R-MACHINE",
+    "R-GLISSADES",
+    "R-BIO",
+    "R-BRUIT",
+    "R-CHIMIQUE",
+    "R-MANUTENTION"
+  ],
+  "risks_mandatory": [
+    "R-COUPURE",
+    "R-FROID"
+  ]
+}

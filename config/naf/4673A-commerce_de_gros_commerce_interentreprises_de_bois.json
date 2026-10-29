@@ -1,0 +1,14 @@
+{
+  "code": "4673A",
+  "label": "Commerce de gros (commerce interentreprises) de bois et de matériaux de construction",
+  "risks_priority": [
+    "R-CIRCULATION-INTERNE",
+    "R-CHUTE-OBJET",
+    "R-MANUTENTION",
+    "R-ROUTIER",
+    "R-COUPURE",
+    "R-TMS",
+    "R-BRUIT"
+  ],
+  "risks_mandatory": []
+}

@@ -1,0 +1,14 @@
+{
+  "code": "8690E",
+  "label": "Activités des professionnels de la rééducation, de l'appareillage et des pédicures-podologues",
+  "risks_priority": [
+    "R-TMS",
+    "R-BIO",
+    "R-ROUTIER",
+    "R-RPS",
+    "R-ERGONOMIE",
+    "R-GLISSADES",
+    "R-TRAVAIL-ISOLE"
+  ],
+  "risks_mandatory": []
+}

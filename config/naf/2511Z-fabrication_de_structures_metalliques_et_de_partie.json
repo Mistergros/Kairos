@@ -1,0 +1,18 @@
+{
+  "code": "2511Z",
+  "label": "Fabrication de structures métalliques et de parties de structures",
+  "risks_priority": [
+    "R-CHUTE-OBJET",
+    "R-MANUTENTION",
+    "R-BRUIT",
+    "R-RAYONNEMENT",
+    "R-CHUTE-HAUTEUR",
+    "R-CIRCULATION-INTERNE",
+    "R-INCENDIE",
+    "R-COUPURE"
+  ],
+  "risks_mandatory": [
+    "R-MACHINE",
+    "R-CMR"
+  ]
+}

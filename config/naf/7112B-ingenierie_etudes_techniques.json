@@ -1,0 +1,14 @@
+{
+  "code": "7112B",
+  "label": "Ingénierie, études techniques",
+  "risks_priority": [
+    "R-ECRAN",
+    "R-ROUTIER",
+    "R-RPS",
+    "R-COORDINATION-PREVENTION",
+    "R-CHUTE-HAUTEUR",
+    "R-ERGONOMIE",
+    "R-TRAVAIL-ISOLE"
+  ],
+  "risks_mandatory": []
+}

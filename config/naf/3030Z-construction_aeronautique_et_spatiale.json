@@ -1,0 +1,17 @@
+{
+  "code": "3030Z",
+  "label": "Construction aéronautique et spatiale",
+  "risks_priority": [
+    "R-CHIMIQUE",
+    "R-TMS",
+    "R-BRUIT",
+    "R-CHUTE-HAUTEUR",
+    "R-MACHINE",
+    "R-ESPACE-CONFINE",
+    "R-ERGONOMIE",
+    "R-ELECTRIQUE"
+  ],
+  "risks_mandatory": [
+    "R-CMR"
+  ]
+}

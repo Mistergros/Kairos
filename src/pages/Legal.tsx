@@ -52,6 +52,9 @@ export default function LegalPage() {
           L'ensemble des éléments du Site (textes, structure, base de données de risques et de mesures de prévention, logiciel, mise en forme) est la propriété de Milante Consulting ou de ses partenaires, et est protégé par le droit de la propriété intellectuelle. Toute reproduction, représentation ou exploitation non autorisée, totale ou partielle, est interdite.
         </p>
         <p>
+          Kaijos™ est une marque de Milante Consulting. Toute utilisation du nom ou du logo sans autorisation préalable est interdite.
+        </p>
+        <p>
           Les contenus réglementaires cités (Code du travail, publications INRS, CARSAT, etc.) demeurent la propriété de leurs auteurs respectifs ; Kaijos n'en revendique aucune exclusivité et cite ses sources conformément au droit de citation.
         </p>
       </Section>

@@ -1,0 +1,19 @@
+{
+  "code": "8610Z",
+  "label": "Activités hospitalières",
+  "risks_priority": [
+    "R-RPS",
+    "R-AGRESSION",
+    "R-CHIMIQUE",
+    "R-CMR",
+    "R-COUPURE",
+    "R-GLISSADES",
+    "R-SOUS-EFFECTIF",
+    "R-TRAVAIL-ISOLE",
+    "R-INCENDIE"
+  ],
+  "risks_mandatory": [
+    "R-BIO",
+    "R-TMS"
+  ]
+}

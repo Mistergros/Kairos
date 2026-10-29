@@ -1,0 +1,16 @@
+{
+  "code": "4312A",
+  "label": "Travaux de terrassement courants et travaux préparatoires",
+  "risks_priority": [
+    "R-CIRCULATION-INTERNE",
+    "R-VIBRATIONS",
+    "R-BRUIT",
+    "R-SILICE",
+    "R-ROUTIER",
+    "R-ELECTRIQUE"
+  ],
+  "risks_mandatory": [
+    "R-TRAVAUX-PUB",
+    "R-NOYADE-ENFOUISSEMENT"
+  ]
+}

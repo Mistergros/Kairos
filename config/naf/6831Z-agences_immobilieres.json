@@ -1,0 +1,13 @@
+{
+  "code": "6831Z",
+  "label": "Agences immobilières",
+  "risks_priority": [
+    "R-ROUTIER",
+    "R-ECRAN",
+    "R-RPS",
+    "R-AGRESSION",
+    "R-TRAVAIL-ISOLE",
+    "R-GLISSADES"
+  ],
+  "risks_mandatory": []
+}

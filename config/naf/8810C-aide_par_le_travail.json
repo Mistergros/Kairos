@@ -1,0 +1,16 @@
+{
+  "code": "8810C",
+  "label": "Aide par le travail",
+  "risks_priority": [
+    "R-TMS",
+    "R-MACHINE",
+    "R-MANUTENTION",
+    "R-RPS",
+    "R-CHIMIQUE",
+    "R-ROUTIER",
+    "R-GLISSADES"
+  ],
+  "risks_mandatory": [
+    "R-ACCUEIL-FORMATION"
+  ]
+}

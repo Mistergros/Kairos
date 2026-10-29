@@ -1,0 +1,17 @@
+{
+  "code": "1071C",
+  "label": "Boulangerie et boulangerie-pâtisserie",
+  "risks_priority": [
+    "R-ATEX",
+    "R-CHIMIQUE",
+    "R-TMS",
+    "R-MANUTENTION",
+    "R-GLISSADES",
+    "R-RPS",
+    "R-CANICULE"
+  ],
+  "risks_mandatory": [
+    "R-BRULE",
+    "R-MACHINE"
+  ]
+}

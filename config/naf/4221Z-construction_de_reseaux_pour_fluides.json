@@ -1,0 +1,17 @@
+{
+  "code": "4221Z",
+  "label": "Construction de réseaux pour fluides",
+  "risks_priority": [
+    "R-ESPACE-CONFINE",
+    "R-CIRCULATION-INTERNE",
+    "R-ELECTRIQUE",
+    "R-MANUTENTION",
+    "R-VIBRATIONS",
+    "R-BRUIT",
+    "R-SILICE"
+  ],
+  "risks_mandatory": [
+    "R-TRAVAUX-PUB",
+    "R-NOYADE-ENFOUISSEMENT"
+  ]
+}

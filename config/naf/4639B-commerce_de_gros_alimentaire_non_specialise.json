@@ -1,0 +1,15 @@
+{
+  "code": "4639B",
+  "label": "Commerce de gros alimentaire non spécialisé",
+  "risks_priority": [
+    "R-MANUTENTION",
+    "R-CIRCULATION-INTERNE",
+    "R-FROID",
+    "R-TMS",
+    "R-ROUTIER",
+    "R-CHUTE-OBJET",
+    "R-GLISSADES",
+    "R-RPS"
+  ],
+  "risks_mandatory": []
+}

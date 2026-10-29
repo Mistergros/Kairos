@@ -1,0 +1,14 @@
+{
+  "code": "4511Z",
+  "label": "Commerce de voitures et de véhicules automobiles légers",
+  "risks_priority": [
+    "R-ROUTIER",
+    "R-CIRCULATION-INTERNE",
+    "R-RPS",
+    "R-ECRAN",
+    "R-GLISSADES",
+    "R-MANUTENTION",
+    "R-CHIMIQUE"
+  ],
+  "risks_mandatory": []
+}

@@ -1,0 +1,18 @@
+{
+  "code": "4211Z",
+  "label": "Construction de routes et autoroutes",
+  "risks_priority": [
+    "R-ROUTIER",
+    "R-CHIMIQUE",
+    "R-BRULE",
+    "R-BRUIT",
+    "R-VIBRATIONS",
+    "R-CANICULE",
+    "R-SILICE",
+    "R-TMS"
+  ],
+  "risks_mandatory": [
+    "R-TRAVAUX-PUB",
+    "R-CIRCULATION-INTERNE"
+  ]
+}

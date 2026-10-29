@@ -1,0 +1,17 @@
+{
+  "code": "7820Z",
+  "label": "Activités des agences de travail temporaire",
+  "risks_priority": [
+    "R-MANUTENTION",
+    "R-CHUTE-HAUTEUR",
+    "R-MACHINE",
+    "R-CIRCULATION-INTERNE",
+    "R-ROUTIER",
+    "R-TMS",
+    "R-COORDINATION-PREVENTION",
+    "R-RPS"
+  ],
+  "risks_mandatory": [
+    "R-ACCUEIL-FORMATION"
+  ]
+}

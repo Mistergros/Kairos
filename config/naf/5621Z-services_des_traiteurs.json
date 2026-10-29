@@ -1,0 +1,17 @@
+{
+  "code": "5621Z",
+  "label": "Services des traiteurs",
+  "risks_priority": [
+    "R-GLISSADES",
+    "R-FROID",
+    "R-TMS",
+    "R-MANUTENTION",
+    "R-ROUTIER",
+    "R-RPS",
+    "R-CHIMIQUE"
+  ],
+  "risks_mandatory": [
+    "R-BRULE",
+    "R-COUPURE"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "code": "4690Z",
+  "label": "Commerce de gros (commerce interentreprises) non spécialisé",
+  "risks_priority": [
+    "R-MANUTENTION",
+    "R-CIRCULATION-INTERNE",
+    "R-CHUTE-OBJET",
+    "R-TMS",
+    "R-ROUTIER",
+    "R-ECRAN",
+    "R-RPS",
+    "R-GLISSADES"
+  ],
+  "risks_mandatory": []
+}

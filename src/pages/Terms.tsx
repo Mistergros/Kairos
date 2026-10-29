@@ -64,6 +64,11 @@ export default function TermsPage() {
 
       <Section title="7. Données personnelles">
         <p>Le traitement des données personnelles dans le cadre du service est détaillé dans notre <a className="text-blue-600 hover:underline" href="/privacy">politique de confidentialité</a>.</p>
+        <p>
+          Pour les données que le client saisit dans l'outil, Milante Consulting agit en qualité de sous-traitant au sens de l'article 28
+          du RGPD, dans les conditions de l'<a className="text-blue-600 hover:underline" href="/dpa">accord de traitement des données</a>,
+          qui fait partie intégrante des présentes CGV.
+        </p>
       </Section>
 
       <Section title="8. Droit applicable et litiges">

@@ -1,0 +1,18 @@
+{
+  "code": "8130Z",
+  "label": "Services d'aménagement paysager",
+  "risks_priority": [
+    "R-CHIMIQUE",
+    "R-BRUIT",
+    "R-VIBRATIONS",
+    "R-CHUTE-HAUTEUR",
+    "R-CANICULE",
+    "R-ROUTIER",
+    "R-TMS",
+    "R-COUPURE",
+    "R-BIO"
+  ],
+  "risks_mandatory": [
+    "R-MACHINE"
+  ]
+}

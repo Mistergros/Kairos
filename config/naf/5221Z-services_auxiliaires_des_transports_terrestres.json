@@ -1,0 +1,15 @@
+{
+  "code": "5221Z",
+  "label": "Services auxiliaires des transports terrestres",
+  "risks_priority": [
+    "R-CIRCULATION-INTERNE",
+    "R-ROUTIER",
+    "R-TRAVAIL-ISOLE",
+    "R-AGRESSION",
+    "R-BRUIT",
+    "R-RPS",
+    "R-FROID",
+    "R-CANICULE"
+  ],
+  "risks_mandatory": []
+}

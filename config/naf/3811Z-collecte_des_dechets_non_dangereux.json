@@ -1,0 +1,18 @@
+{
+  "code": "3811Z",
+  "label": "Collecte des déchets non dangereux",
+  "risks_priority": [
+    "R-ROUTIER",
+    "R-TMS",
+    "R-MANUTENTION",
+    "R-COUPURE",
+    "R-BRUIT",
+    "R-MACHINE",
+    "R-CANICULE",
+    "R-FROID"
+  ],
+  "risks_mandatory": [
+    "R-CIRCULATION-INTERNE",
+    "R-BIO"
+  ]
+}

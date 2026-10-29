@@ -1,0 +1,13 @@
+{
+  "code": "8899B",
+  "label": "Action sociale sans hébergement n.c.a.",
+  "risks_priority": [
+    "R-RPS",
+    "R-AGRESSION",
+    "R-ROUTIER",
+    "R-TRAVAIL-ISOLE",
+    "R-ECRAN",
+    "R-BIO"
+  ],
+  "risks_mandatory": []
+}

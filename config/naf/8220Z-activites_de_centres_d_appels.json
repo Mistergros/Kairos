@@ -1,0 +1,15 @@
+{
+  "code": "8220Z",
+  "label": "Activités de centres d'appels",
+  "risks_priority": [
+    "R-ECRAN",
+    "R-BRUIT",
+    "R-ERGONOMIE",
+    "R-AGRESSION",
+    "R-QUALITEAIR",
+    "R-TMS"
+  ],
+  "risks_mandatory": [
+    "R-RPS"
+  ]
+}

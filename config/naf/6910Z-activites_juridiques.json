@@ -1,0 +1,13 @@
+{
+  "code": "6910Z",
+  "label": "Activités juridiques",
+  "risks_priority": [
+    "R-ECRAN",
+    "R-RPS",
+    "R-ERGONOMIE",
+    "R-AGRESSION",
+    "R-GLISSADES",
+    "R-INCENDIE"
+  ],
+  "risks_mandatory": []
+}

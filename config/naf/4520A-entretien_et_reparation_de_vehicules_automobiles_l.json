@@ -1,0 +1,18 @@
+{
+  "code": "4520A",
+  "label": "Entretien et réparation de véhicules automobiles légers",
+  "risks_priority": [
+    "R-CMR",
+    "R-CHUTE-OBJET",
+    "R-TMS",
+    "R-MANUTENTION",
+    "R-BRUIT",
+    "R-INCENDIE",
+    "R-GLISSADES",
+    "R-COUPURE"
+  ],
+  "risks_mandatory": [
+    "R-CHIMIQUE",
+    "R-ELECTRIQUE"
+  ]
+}

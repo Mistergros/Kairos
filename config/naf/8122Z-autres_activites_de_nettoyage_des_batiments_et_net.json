@@ -1,0 +1,17 @@
+{
+  "code": "8122Z",
+  "label": "Autres activités de nettoyage des bâtiments et nettoyage industriel",
+  "risks_priority": [
+    "R-CHUTE-HAUTEUR",
+    "R-ESPACE-CONFINE",
+    "R-MACHINE",
+    "R-GLISSADES",
+    "R-TMS",
+    "R-BRUIT",
+    "R-COORDINATION-PREVENTION",
+    "R-TRAVAIL-ISOLE"
+  ],
+  "risks_mandatory": [
+    "R-CHIMIQUE"
+  ]
+}

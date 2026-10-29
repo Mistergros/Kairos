@@ -1,0 +1,17 @@
+{
+  "code": "3312Z",
+  "label": "Réparation de machines et équipements mécaniques",
+  "risks_priority": [
+    "R-ELECTRIQUE",
+    "R-CHUTE-HAUTEUR",
+    "R-ROUTIER",
+    "R-MANUTENTION",
+    "R-CHIMIQUE",
+    "R-TRAVAIL-ISOLE",
+    "R-COORDINATION-PREVENTION",
+    "R-BRUIT"
+  ],
+  "risks_mandatory": [
+    "R-MACHINE"
+  ]
+}

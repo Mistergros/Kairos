@@ -19,6 +19,7 @@ import SignUpPage from "./pages/SignUp";
 import LegalPage from "./pages/Legal";
 import PrivacyPage from "./pages/Privacy";
 import TermsPage from "./pages/Terms";
+import DpaPage from "./pages/Dpa";
 import SupportPage from "./pages/Support";
 import { ContextSelectors } from "./components/Selectors";
 import { Onboarding } from "./components/Onboarding";
@@ -204,7 +205,7 @@ function DashboardRoutes() {
           >
             <Menu size={18} />
           </button>
-          <div className="flex-1 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+          <div className="flex-1 min-w-0 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
           <div>
             <p className="text-xs text-slate/60">
               Dernière MAJ : {lastUpdateLabel}
@@ -280,6 +281,7 @@ export default function App() {
         <Route path="/legal" element={<LegalPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/cgv" element={<TermsPage />} />
+        <Route path="/dpa" element={<DpaPage />} />
         <Route path="/support" element={<SupportPage />} />
         <Route
           path="/mon-compte"

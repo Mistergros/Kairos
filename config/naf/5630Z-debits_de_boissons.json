@@ -1,0 +1,15 @@
+{
+  "code": "5630Z",
+  "label": "Débits de boissons",
+  "risks_priority": [
+    "R-AGRESSION",
+    "R-RPS",
+    "R-GLASS",
+    "R-GLISSADES",
+    "R-MANUTENTION",
+    "R-TMS",
+    "R-BRUIT",
+    "R-TRAVAIL-ISOLE"
+  ],
+  "risks_mandatory": []
+}

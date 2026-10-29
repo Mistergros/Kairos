@@ -1,0 +1,14 @@
+{
+  "code": "6920Z",
+  "label": "Activités comptables",
+  "risks_priority": [
+    "R-ECRAN",
+    "R-RPS",
+    "R-ERGONOMIE",
+    "R-ROUTIER",
+    "R-GLISSADES",
+    "R-INCENDIE",
+    "R-QUALITEAIR"
+  ],
+  "risks_mandatory": []
+}

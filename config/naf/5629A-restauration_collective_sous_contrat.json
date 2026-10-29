@@ -1,0 +1,18 @@
+{
+  "code": "5629A",
+  "label": "Restauration collective sous contrat",
+  "risks_priority": [
+    "R-GLISSADES",
+    "R-TMS",
+    "R-MANUTENTION",
+    "R-CHIMIQUE",
+    "R-FROID",
+    "R-BRUIT",
+    "R-RPS",
+    "R-MACHINE"
+  ],
+  "risks_mandatory": [
+    "R-BRULE",
+    "R-COUPURE"
+  ]
+}

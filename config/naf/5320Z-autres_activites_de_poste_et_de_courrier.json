@@ -1,0 +1,17 @@
+{
+  "code": "5320Z",
+  "label": "Autres activités de poste et de courrier",
+  "risks_priority": [
+    "R-MANUTENTION",
+    "R-TMS",
+    "R-AGRESSION",
+    "R-CANICULE",
+    "R-FROID",
+    "R-GLISSADES",
+    "R-RPS",
+    "R-CIRCULATION-INTERNE"
+  ],
+  "risks_mandatory": [
+    "R-ROUTIER"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "code": "3700Z",
+  "label": "Collecte et traitement des eaux usées",
+  "risks_priority": [
+    "R-NOYADE-ENFOUISSEMENT",
+    "R-CHIMIQUE",
+    "R-TRAVAIL-ISOLE",
+    "R-CHUTE-HAUTEUR",
+    "R-ELECTRIQUE",
+    "R-ROUTIER"
+  ],
+  "risks_mandatory": [
+    "R-ESPACE-CONFINE",
+    "R-BIO"
+  ]
+}

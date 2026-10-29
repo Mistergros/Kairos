@@ -39,6 +39,10 @@ export default function PrivacyPage() {
           <li><strong>Resend</strong> — envoi des emails transactionnels (invitations, rappels).</li>
         </ul>
         <p>Chacun de ces prestataires agit en tant que sous-traitant au sens du RGPD et n'utilise vos données que pour exécuter les services qui lui sont confiés.</p>
+        <p>
+          Pour les données que vous saisissez dans votre document unique (notamment celles de vos salariés), Kaijos agit comme votre
+          sous-traitant : les engagements correspondants figurent dans l'<a className="text-blue-600 hover:underline" href="/dpa">accord de traitement des données</a>.
+        </p>
       </Section>
 
       <Section title="Durée de conservation">

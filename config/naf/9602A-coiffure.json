@@ -1,0 +1,17 @@
+{
+  "code": "9602A",
+  "label": "Coiffure",
+  "risks_priority": [
+    "R-TMS",
+    "R-GLISSADES",
+    "R-ERGONOMIE",
+    "R-ELECTRIQUE",
+    "R-BRULE",
+    "R-QUALITEAIR",
+    "R-COUPURE",
+    "R-RPS"
+  ],
+  "risks_mandatory": [
+    "R-CHIMIQUE"
+  ]
+}

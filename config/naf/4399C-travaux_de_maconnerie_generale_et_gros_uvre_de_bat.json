@@ -1,0 +1,19 @@
+{
+  "code": "4399C",
+  "label": "Travaux de maçonnerie générale et gros œuvre de bâtiment",
+  "risks_priority": [
+    "R-CHUTE-OBJET",
+    "R-MANUTENTION",
+    "R-TMS",
+    "R-CHIMIQUE",
+    "R-BRUIT",
+    "R-VIBRATIONS",
+    "R-CIRCULATION-INTERNE",
+    "R-CANICULE",
+    "R-COORDINATION-PREVENTION"
+  ],
+  "risks_mandatory": [
+    "R-CHUTE-HAUTEUR",
+    "R-SILICE"
+  ]
+}

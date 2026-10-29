@@ -1,0 +1,15 @@
+{
+  "code": "4771Z",
+  "label": "Commerce de détail d'habillement en magasin spécialisé",
+  "risks_priority": [
+    "R-TMS",
+    "R-AGRESSION",
+    "R-RPS",
+    "R-MANUTENTION",
+    "R-CHUTE-HAUTEUR",
+    "R-SECURITE-VISITEUR",
+    "R-TRAVAIL-ISOLE",
+    "R-INCENDIE"
+  ],
+  "risks_mandatory": []
+}
