@@ -1,3 +1,5 @@
+> **Reprendre ou maintenir le projet :** commencez par [docs/GUIDE-MAINTENEUR.md](docs/GUIDE-MAINTENEUR.md).
+
 # DUERP – moteur V4 opérationnel
 
 ## Exemple d'utilisation
