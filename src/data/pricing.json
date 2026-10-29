@@ -45,16 +45,15 @@
     {
       "id": "consultants",
       "name": "Pro",
-      "priceMonthly": 199,
+      "priceMonthly": null,
       "priceYearly": 1990,
-      "annualOnly": false,
+      "annualOnly": true,
       "tagline": "Pour consultants, cabinets RH / HSE et experts-comptables",
       "maxWorkUnits": -1,
       "maxEstablishments": -1,
       "bullets": [
         "Portefeuille de 25 clients",
         "Établissements & unités illimités",
-        "Mensuel avec engagement 12 mois, ou annuel",
         "Suivi des révisions annuelles par client",
         "Export XLSX & PDF par client",
         "Historique complet des versions",

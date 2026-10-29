@@ -24,7 +24,7 @@ export default function TermsPage() {
         <ul className="list-disc pl-5 space-y-1">
           <li><strong>Essentiel</strong> — 149 € HT/an, abonnement annuel : 1 établissement, 5 unités de travail, inventaire des risques illimité, plan d'action, export PDF, rappel automatique de révision annuelle.</li>
           <li><strong>PME</strong> — 490 € HT/an, abonnement annuel : jusqu'à 5 établissements, 20 unités de travail, export XLSX, rapport PDF multi-sites, rappels automatiques, historique des versions.</li>
-          <li><strong>Pro</strong> — 199 € HT/mois avec engagement de 12 mois, ou 1 990 € HT/an : portefeuille de 25 clients maximum, établissements et unités illimités, suivi des révisions par client, export XLSX et PDF par client, support prioritaire.</li>
+          <li><strong>Pro</strong> — 1 990 € HT/an, abonnement annuel : portefeuille de 25 clients maximum, établissements et unités illimités, suivi des révisions par client, export XLSX et PDF par client, support prioritaire.</li>
         </ul>
         <p>
           Les nombres d'établissements et de clients s'apprécient sur une période glissante de 12 mois : un établissement ou un client
@@ -36,18 +36,13 @@ export default function TermsPage() {
 
       <Section title="3. Prix et paiement">
         <p>
-          Les prix sont exprimés hors taxes. Milante Consulting bénéficie de la franchise en base de TVA (art. 293 B du Code général des impôts) : la TVA n'est donc pas applicable à ce jour. Le paiement est prélevé automatiquement, par carte bancaire, via notre prestataire de paiement Stripe, selon la périodicité choisie (mensuelle ou annuelle) à la date anniversaire de la souscription.
+          Les prix sont exprimés hors taxes. Milante Consulting bénéficie de la franchise en base de TVA (art. 293 B du Code général des impôts) : la TVA n'est donc pas applicable à ce jour. Le paiement est prélevé automatiquement, par carte bancaire, via notre prestataire de paiement Stripe, une fois par an, à la date anniversaire de la souscription.
         </p>
       </Section>
 
       <Section title="4. Durée et résiliation">
         <p>
-          L'abonnement est conclu pour la durée choisie lors de la souscription (mensuelle ou annuelle) et se renouvelle tacitement pour une durée identique, sauf résiliation. La résiliation s'effectue à tout moment depuis l'espace « Mon compte » du Site, via le portail de gestion d'abonnement. Elle prend effet à la fin de la période en cours déjà payée ; aucun remboursement au prorata n'est effectué pour la période en cours, sauf disposition légale contraire.
-        </p>
-        <p>
-          La formule Pro à paiement mensuel comporte une période d'engagement de 12 mois à compter de la souscription : une
-          résiliation demandée avant la fin de cette période prend effet à son terme, les mensualités restant dues jusque-là.
-          Au-delà, elle se poursuit de mois en mois et reste résiliable à tout moment dans les conditions ci-dessus.
+          L'abonnement est conclu pour une durée d'un an et se renouvelle tacitement pour une durée identique, sauf résiliation. La résiliation s'effectue à tout moment depuis l'espace « Mon compte » du Site, via le portail de gestion d'abonnement. Elle prend effet à la fin de la période en cours déjà payée ; aucun remboursement au prorata n'est effectué pour la période en cours, sauf disposition légale contraire.
         </p>
         <p>
           À la fin de l'abonnement, le compte repasse en formule Découverte : les données restent consultables et exportables

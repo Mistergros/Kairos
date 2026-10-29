@@ -73,8 +73,10 @@ const error = (res: any, err: any) => {
 
 const getStripePriceId = (planId?: string | null, billing?: string | null) => {
   const plan = (planId || "starter").toLowerCase();
-  const isAnnual = billing === "annual";
-  if (plan === "consultants") return isAnnual ? (STRIPE_PRICE_ID_CONSULTANTS_ANNUAL || STRIPE_PRICE_ID_CONSULTANTS) : STRIPE_PRICE_ID_CONSULTANTS;
+  // Toutes les offres sont vendues à l'année ; `billing` est ignoré.
+  void billing;
+  // Pro : 1 990 €/an.
+  if (plan === "consultants") return STRIPE_PRICE_ID_CONSULTANTS_ANNUAL || STRIPE_PRICE_ID_CONSULTANTS;
   // PME : vendu à l'année uniquement (490 €/an), comme Essentiel.
   if (plan === "pme")         return STRIPE_PRICE_ID_PME_ANNUAL || STRIPE_PRICE_ID_PME;
   // starter (« Essentiel », défaut) : vendu à l'année uniquement (149 €/an).

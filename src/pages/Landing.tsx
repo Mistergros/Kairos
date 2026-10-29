@@ -571,11 +571,11 @@ const PRICING_PLANS = [
   {
     id: "consultants" as PlanId,
     name: "Pro",
-    priceMonthly: 199,
+    priceMonthly: null,
     priceYearly: 1990,
-    annualOnly: false,
+    annualOnly: true,
     tagline: "Pour consultants, cabinets RH / HSE et experts-comptables",
-    bullets: ["Portefeuille de 25 clients", "Établissements & unités illimités", "Mensuel avec engagement 12 mois, ou annuel", "Suivi des révisions annuelles par client", "Export XLSX & PDF par client"],
+    bullets: ["Portefeuille de 25 clients", "Établissements & unités illimités", "Suivi des révisions annuelles par client", "Export XLSX & PDF par client"],
     badge: "CABINETS",
     recommended: false,
   },
@@ -588,7 +588,6 @@ function PricingSection({
   onSubscribe: SubscribeHandler;
   isLoading: boolean;
 }) {
-  const [annual, setAnnual] = React.useState(false);
   const [acceptedTerms, setAcceptedTerms] = React.useState(false);
   const [showTermsHint, setShowTermsHint] = React.useState(false);
 
@@ -597,8 +596,8 @@ function PricingSection({
       setShowTermsHint(true);
       return;
     }
-    const plan = PRICING_PLANS.find((p) => p.id === planId);
-    onSubscribe(planId, plan?.annualOnly || annual ? "annual" : "monthly");
+    // Toutes les offres sont annuelles.
+    onSubscribe(planId, "annual");
   };
 
   return (
@@ -608,29 +607,11 @@ function PricingSection({
           <span className="inline-block rounded-full bg-[#5b61f6]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[#5b61f6] mb-4">Tarifs</span>
           <h2 className="text-4xl font-extrabold text-[#0f172a]">Simple. Transparent.</h2>
           <p className="mt-3 text-lg text-slate-500">Créez votre DUERP gratuitement : vous ne payez qu'au moment de le télécharger.</p>
-
-          {/* Toggle mensuel / annuel */}
-          <div className="mt-6 inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white p-1.5 shadow-sm">
-            <button
-              className={`rounded-xl px-5 py-2 text-sm font-semibold transition ${!annual ? "bg-[#0f172a] text-white shadow" : "text-slate-500 hover:text-slate-700"}`}
-              onClick={() => setAnnual(false)}
-            >
-              Mensuel
-            </button>
-            <button
-              className={`rounded-xl px-5 py-2 text-sm font-semibold transition ${annual ? "bg-[#0f172a] text-white shadow" : "text-slate-500 hover:text-slate-700"}`}
-              onClick={() => setAnnual(true)}
-            >
-              Annuel
-              <span className="ml-2 rounded-full bg-emerald-100 px-2 py-0.5 text-xs text-emerald-700 font-bold">−2 mois</span>
-            </button>
-          </div>
+          <p className="mt-1 text-sm text-slate-400">Abonnement annuel, prix HT.</p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
           {PRICING_PLANS.map((p) => {
-            const yearlyOnly = p.annualOnly || p.priceMonthly === null;
-            const price = yearlyOnly ? p.priceYearly : annual ? Math.round(p.priceYearly / 12) : p.priceMonthly;
             return (
               <article
                 key={p.id}
@@ -648,14 +629,10 @@ function PricingSection({
                 <h3 className="text-2xl font-extrabold text-[#0f172a] mt-2">{p.name}</h3>
                 <p className="text-slate-500 mt-1 text-sm">{p.tagline}</p>
                 <div className="mt-5 flex items-end gap-1.5">
-                  <span className="text-4xl font-extrabold text-[#0f172a]">{price} €</span>
-                  <span className="text-slate-400 mb-1 text-sm">{yearlyOnly ? "/ an" : "/ mois"}</span>
+                  <span className="text-4xl font-extrabold text-[#0f172a]">{p.priceYearly.toLocaleString("fr-FR")} €</span>
+                  <span className="text-slate-400 mb-1 text-sm">/ an</span>
                 </div>
-                {yearlyOnly ? (
-                  <p className="text-xs text-slate-400 mt-0.5">soit environ {Math.round(p.priceYearly / 12)} € par mois</p>
-                ) : (
-                  annual && <p className="text-xs text-slate-400 mt-0.5">soit {p.priceYearly} € / an</p>
-                )}
+                <p className="text-xs text-slate-400 mt-0.5">soit environ {Math.round(p.priceYearly / 12)} € par mois</p>
                 <ul className="mt-6 space-y-3 flex-1">
                   {p.bullets.map((b) => (
                     <li key={b} className="flex items-start gap-3 text-sm text-slate-600">
@@ -707,7 +684,7 @@ function PricingSection({
         </div>
 
         <p className="text-center text-xs text-slate-400 mt-4">
-          Paiement sécurisé par Stripe · Essentiel et PME : abonnement annuel · Pro : engagement de 12 mois · TVA non applicable (Art. 293B du CGI)
+          Paiement sécurisé par Stripe · Abonnement annuel · TVA non applicable (Art. 293B du CGI)
         </p>
       </div>
     </section>
@@ -770,7 +747,7 @@ export default function LandingPage() {
     if (!isSignedIn) {
       try {
         localStorage.setItem("kaijos_pending_plan", planId || "starter");
-        localStorage.setItem("kaijos_pending_billing", billing || "monthly");
+        localStorage.setItem("kaijos_pending_billing", billing || "annual");
       } catch {}
       navigate(`/sign-up?plan=${planId || "starter"}`);
       return;

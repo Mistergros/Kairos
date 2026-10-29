@@ -17,15 +17,14 @@ export function Pricing() {
   const { isSignedIn } = useUser();
   const navigate = useNavigate();
   const currentPlan = usePlan();
-  const [annual, setAnnual] = useState(false);
   const [loading, setLoading] = useState<string | null>(null);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [showTermsHint, setShowTermsHint] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
 
   const handleSubscribe = async (planId: string) => {
-    const plan = pricingData.plans.find((p) => p.id === planId);
-    const billing = plan?.annualOnly || annual ? "annual" : "monthly";
+    // Toutes les offres sont annuelles.
+    const billing = "annual";
     if (!acceptedTerms) {
       setShowTermsHint(true);
       return;
@@ -69,24 +68,7 @@ export function Pricing() {
         </div>
         <div className="text-center">
         <h1 className="text-3xl font-extrabold text-ink">Plans & Tarifs</h1>
-        <p className="mt-2 text-slate/60 text-sm">Engagez-vous annuellement et économisez 2 mois.</p>
-
-        {/* Toggle mensuel / annuel */}
-        <div className="mt-5 inline-flex items-center gap-3 rounded-2xl border border-slate/15 bg-slate/5 p-1.5">
-          <button
-            className={`rounded-xl px-5 py-2 text-sm font-semibold transition ${!annual ? "bg-white shadow-sm text-ink" : "text-slate/50"}`}
-            onClick={() => setAnnual(false)}
-          >
-            Mensuel
-          </button>
-          <button
-            className={`rounded-xl px-5 py-2 text-sm font-semibold transition ${annual ? "bg-white shadow-sm text-ink" : "text-slate/50"}`}
-            onClick={() => setAnnual(true)}
-          >
-            Annuel
-            <span className="ml-2 rounded-full bg-lime/20 px-2 py-0.5 text-xs text-lime-700 font-bold">−2 mois</span>
-          </button>
-        </div>
+        <p className="mt-2 text-slate/60 text-sm">Abonnement annuel, prix HT. La création du DUERP est gratuite : vous ne payez que pour le télécharger.</p>
       </div>
 
       <div className="grid gap-6 md:grid-cols-3">
@@ -119,7 +101,7 @@ export function Pricing() {
               <h3 className="text-xl font-extrabold text-ink mt-2">{plan.name}</h3>
               <p className="text-xs text-slate/60 mt-0.5 mb-4">{plan.tagline}</p>
 
-              <PlanPrice plan={plan} annual={annual} />
+              <PlanPrice plan={plan} />
 
               <ul className="mt-3 space-y-2.5 flex-1">
                 {plan.bullets.map((b) => (
@@ -175,7 +157,7 @@ export function Pricing() {
           <p className="text-xs font-semibold text-rose-600">Coche cette case pour continuer.</p>
         )}
         <p className="text-center text-xs text-slate/50">
-          Résiliable à tout moment depuis votre espace compte — prend effet à la fin de la période déjà payée (mensuelle ou annuelle selon votre choix), sans reconduction ensuite. Paiement sécurisé via Stripe.
+          Résiliable à tout moment depuis votre espace compte — prend effet à la fin de l'année déjà payée, sans reconduction ensuite. Paiement sécurisé via Stripe.
         </p>
       </div>
       </div>
@@ -183,27 +165,15 @@ export function Pricing() {
   );
 }
 
-// Une offre « annuel uniquement » (Essentiel) affiche son prix annuel quel que
-// soit le choix mensuel/annuel ; les autres suivent la bascule.
-function PlanPrice({ plan, annual }: { plan: Plan; annual: boolean }) {
-  if (plan.annualOnly || plan.priceMonthly === null) {
-    return (
-      <>
-        <div className="flex items-end gap-1.5 mb-1">
-          <span className="text-4xl font-extrabold text-ink">{plan.priceYearly} €</span>
-          <span className="text-slate/50 mb-1 text-sm">/ an</span>
-        </div>
-        <p className="text-xs text-slate/50 mb-4">soit environ {Math.round(plan.priceYearly / 12)} € par mois, payé une fois par an</p>
-      </>
-    );
-  }
+// Toutes les offres sont annuelles : prix à l'année, équivalent mensuel en dessous.
+function PlanPrice({ plan }: { plan: Plan }) {
   return (
     <>
       <div className="flex items-end gap-1.5 mb-1">
-        <span className="text-4xl font-extrabold text-ink">{annual ? Math.round(plan.priceYearly / 12) : plan.priceMonthly} €</span>
-        <span className="text-slate/50 mb-1 text-sm">/ mois</span>
+        <span className="text-4xl font-extrabold text-ink">{plan.priceYearly.toLocaleString("fr-FR")} €</span>
+        <span className="text-slate/50 mb-1 text-sm">/ an</span>
       </div>
-      {annual && <p className="text-xs text-slate/50 mb-4">soit {plan.priceYearly} € / an · 2 mois offerts</p>}
+      <p className="text-xs text-slate/50 mb-4">soit environ {Math.round(plan.priceYearly / 12)} € par mois, payé une fois par an</p>
     </>
   );
 }
