@@ -28,5 +28,8 @@ jobs:
       - name: Quotas d'établissements et de clients sur 12 mois
         run: npm run test:slots
 
+      - name: Marque du cabinet sur les documents
+        run: npm run test:branding
+
       - name: Build de production
         run: npm run build

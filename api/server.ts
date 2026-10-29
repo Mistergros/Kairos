@@ -10,6 +10,7 @@ dotenv.config({ path: ".env.local" });
 dotenv.config();
 import { query } from "../apps/web/server/db.js";
 import RiskEngineV4 from "../src/core/engine/risk-engine.server.js";
+import { BRANDING_DDL, getBranding, sanitizeBranding, saveBranding } from "./branding.js";
 import { checkEstablishmentLimits as checkEstablishmentLimitsWith, recordSlots as recordSlotsWith, SLOT_LOG_DDL } from "./slots.js";
 
 const PORT = Number(process.env.API_PORT || 8787);
@@ -269,6 +270,17 @@ const ensureEstablishmentsSchema = () => {
     });
   }
   return establishmentsSchemaReady;
+};
+
+let brandingSchemaReady: Promise<unknown> | null = null;
+const ensureBrandingSchema = () => {
+  if (!brandingSchemaReady) {
+    brandingSchemaReady = query(BRANDING_DDL).catch((err) => {
+      brandingSchemaReady = null;
+      throw err;
+    });
+  }
+  return brandingSchemaReady;
 };
 
 const listEstablishmentsDb = async (orgId: string) => {
@@ -825,6 +837,24 @@ createServer(async (req, res) => {
       const returnUrl = typeof body?.returnUrl === "string" ? body.returnUrl : STRIPE_PORTAL_RETURN_URL;
       const session = await stripe.billingPortal.sessions.create({ customer: customerId, return_url: returnUrl });
       return json(res, { url: session.url });
+    }
+
+    // Marque du cabinet sur les documents : lecture pour tout compte connecté
+    // (les PDF n'en tiennent compte qu'en offre Pro), écriture réservée au Pro.
+    if (basePath === "/api/branding") {
+      const orgId = await getClerkOrgId(req);
+      if (!orgId) return json(res, { error: "Unauthorized" }, 401);
+      await ensureBrandingSchema();
+      if (req.method === "GET") return json(res, await getBranding(query, orgId));
+      if (req.method === "POST") {
+        const plan = await getUserPlan(orgId);
+        if (plan.planId !== "consultants") return json(res, { error: "La personnalisation des documents est incluse dans l'offre Pro." }, 403);
+        const body = await readBody(req).catch(() => null);
+        const result = sanitizeBranding(body);
+        if ("error" in result) return json(res, { error: result.error }, 400);
+        await saveBranding(query, orgId, result.branding);
+        return json(res, result.branding);
+      }
     }
 
     // --- App data: establishments / work-units / assessments / actions / versions ---

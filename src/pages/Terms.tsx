@@ -24,7 +24,7 @@ export default function TermsPage() {
         <ul className="list-disc pl-5 space-y-1">
           <li><strong>Essentiel</strong> — 149 € HT/an, abonnement annuel : 1 établissement, 5 unités de travail, inventaire des risques illimité, plan d'action, export PDF, rappel automatique de révision annuelle.</li>
           <li><strong>PME</strong> — 490 € HT/an, abonnement annuel : jusqu'à 5 établissements, 20 unités de travail, export XLSX, rapport PDF multi-sites, rappels automatiques, historique des versions.</li>
-          <li><strong>Pro</strong> — 1 990 € HT/an, abonnement annuel : portefeuille de 25 clients maximum, établissements et unités illimités, suivi des révisions par client, export XLSX et PDF par client, support prioritaire.</li>
+          <li><strong>Pro</strong> — 1 990 € HT/an, abonnement annuel : portefeuille de 25 clients maximum, établissements et unités illimités, suivi des révisions par client, export XLSX et PDF par client, documents PDF à la marque du cabinet (logo, couleur, coordonnées), support prioritaire.</li>
         </ul>
         <p>
           Les nombres d'établissements et de clients s'apprécient sur une période glissante de 12 mois : un établissement ou un client

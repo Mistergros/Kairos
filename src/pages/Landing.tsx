@@ -579,7 +579,7 @@ const PRICING_PLANS = [
     priceYearly: 1990,
     annualOnly: true,
     tagline: "Pour consultants, cabinets RH / HSE et experts-comptables",
-    bullets: ["Portefeuille de 25 clients", "Établissements & unités illimités", "Suivi des révisions annuelles par client", "Export XLSX & PDF par client"],
+    bullets: ["Portefeuille de 25 clients", "Établissements & unités illimités", "PDF à la marque de votre cabinet", "Suivi des révisions annuelles par client", "Export XLSX & PDF par client"],
     badge: "CABINETS",
     recommended: false,
   },

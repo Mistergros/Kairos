@@ -130,3 +130,10 @@ CREATE TABLE IF NOT EXISTS reminder_log (
   sent_at TIMESTAMPTZ NOT NULL DEFAULT now(),
   PRIMARY KEY (establishment_id, kind, due_date)
 );
+
+-- Marque du cabinet sur les documents (offre Pro), voir api/branding.ts
+CREATE TABLE IF NOT EXISTS org_branding (
+  org_id TEXT PRIMARY KEY,
+  data JSONB NOT NULL,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);

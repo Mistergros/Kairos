@@ -11,6 +11,7 @@ export type PlanLimits = {
   canExportDocuments: boolean;
   canExportXLSX: boolean;
   canSeeFullHistory: boolean;
+  canBrandDocuments: boolean; // PDF à la marque du cabinet
   label: string;
 };
 
@@ -23,6 +24,7 @@ export const PLAN_CONFIG: Record<PlanId, PlanLimits> = {
     canExportDocuments: false,
     canExportXLSX: false,
     canSeeFullHistory: false,
+    canBrandDocuments: false,
     label: "Découverte",
   },
   starter: {
@@ -32,6 +34,7 @@ export const PLAN_CONFIG: Record<PlanId, PlanLimits> = {
     canExportDocuments: true,
     canExportXLSX: false,
     canSeeFullHistory: false,
+    canBrandDocuments: false,
     label: "Essentiel",
   },
   pme: {
@@ -41,6 +44,7 @@ export const PLAN_CONFIG: Record<PlanId, PlanLimits> = {
     canExportDocuments: true,
     canExportXLSX: true,
     canSeeFullHistory: true,
+    canBrandDocuments: false,
     label: "PME",
   },
   consultants: {
@@ -50,6 +54,7 @@ export const PLAN_CONFIG: Record<PlanId, PlanLimits> = {
     canExportDocuments: true,
     canExportXLSX: true,
     canSeeFullHistory: true,
+    canBrandDocuments: true,
     label: "Pro",
   },
 };

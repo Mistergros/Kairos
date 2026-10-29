@@ -1,12 +1,13 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import type { Assessment, ActionItem, WorkUnit, Establishment } from "../types";
+import type { Assessment, ActionItem, WorkUnit, Establishment, Branding } from "../types";
 
 interface PrintData {
   establishment?: Establishment;
   workUnits: WorkUnit[];
   assessments: Assessment[];
   actions: ActionItem[];
+  branding?: Branding;
 }
 
 interface MultiSiteData {
@@ -14,6 +15,96 @@ interface MultiSiteData {
   workUnits: WorkUnit[];
   assessments: Assessment[];
   actions: ActionItem[];
+  branding?: Branding;
+}
+
+type RGB = [number, number, number];
+const KAIJOS_BLUE: RGB = [91, 97, 246];
+
+// Marque du cabinet (offre Pro) : couleur des bandeaux, nom en pied de page et
+// bloc « Réalisé par » avec logo. Sans marque, le document reste aux couleurs
+// de Kaijos.
+function brandTheme(branding?: Branding) {
+  const hex = branding?.color && /^#[0-9a-f]{6}$/i.test(branding.color) ? branding.color : null;
+  const color: RGB = hex ? [parseInt(hex.slice(1, 3), 16), parseInt(hex.slice(3, 5), 16), parseInt(hex.slice(5, 7), 16)] : KAIJOS_BLUE;
+  // Texte foncé sur une couleur claire (jaune, vert pâle…), blanc sinon.
+  const luminance = (0.299 * color[0] + 0.587 * color[1] + 0.114 * color[2]) / 255;
+  const onColor: RGB = luminance > 0.65 ? [30, 30, 50] : [255, 255, 255];
+  const name = branding?.name?.trim();
+  const footerBrand = name ? (branding?.hideKaijos ? name : `${name} — réalisé avec Kaijos`) : "Kaijos";
+  return { color, onColor, name, footerBrand };
+}
+
+function hasCabinetBlock(branding?: Branding) {
+  return Boolean(branding?.name?.trim() || branding?.logo);
+}
+
+// Dessine logo + nom + coordonnées à partir de (x, y), dans une largeur
+// maximale. Renvoie l'ordonnée sous le bloc.
+function drawCabinetBlock(doc: jsPDF, branding: Branding, x: number, y: number, maxWidth: number, title = "Réalisé par"): number {
+  const DARK: RGB = [30, 30, 50];
+  doc.setFontSize(8);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(120, 120, 130);
+  doc.text(title, x, y);
+  const top = y + 3;
+  let textX = x;
+  let logoBottom = top;
+  const logo = branding.logo;
+  if (logo?.dataUrl) {
+    const maxW = Math.min(45, maxWidth * 0.45);
+    const maxH = 18;
+    const ratio = Math.min(maxW / logo.width, maxH / logo.height);
+    const w = logo.width * ratio;
+    const h = logo.height * ratio;
+    try {
+      doc.addImage(logo.dataUrl, logo.dataUrl.startsWith("data:image/jpeg") ? "JPEG" : "PNG", x, top, w, h);
+      textX = x + w + 5;
+      logoBottom = top + h;
+    } catch {
+      // image illisible : on garde le texte seul
+    }
+  }
+  // Encadré étroit (couverture paysage) : téléphone et email sur deux lignes.
+  const contact = maxWidth < 130 ? [branding.phone, branding.email] : [[branding.phone, branding.email].filter(Boolean).join("  •  ")];
+  const lines = [branding.address, ...contact, branding.website].filter(
+    (l): l is string => Boolean(l && l.trim())
+  );
+  const textWidth = Math.max(30, maxWidth - (textX - x));
+  let ty = top + 4;
+  if (branding.name) {
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(11);
+    doc.setTextColor(...DARK);
+    const nameLines = doc.splitTextToSize(branding.name, textWidth);
+    doc.text(nameLines, textX, ty);
+    ty += nameLines.length * 5;
+  }
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(8);
+  doc.setTextColor(80, 80, 95);
+  for (const line of lines) {
+    const wrapped = doc.splitTextToSize(line, textWidth);
+    doc.text(wrapped, textX, ty);
+    ty += wrapped.length * 3.8;
+  }
+  return Math.max(logoBottom, ty) + 2;
+}
+
+// Bandeau de titre des pages intérieures, avec le nom du cabinet à droite.
+function drawPageBand(doc: jsPDF, theme: ReturnType<typeof brandTheme>, title: string, height = 14) {
+  const pageW = doc.internal.pageSize.getWidth();
+  doc.setFillColor(...theme.color);
+  doc.rect(0, 0, pageW, height, "F");
+  doc.setTextColor(...theme.onColor);
+  doc.setFontSize(height > 14 ? 12 : 13);
+  doc.setFont("helvetica", "bold");
+  doc.text(title, 14, height / 2 + 2);
+  if (theme.name) {
+    doc.setFontSize(8);
+    doc.setFont("helvetica", "normal");
+    doc.text(theme.name, pageW - 14, height / 2 + 1.5, { align: "right" });
+  }
 }
 
 const PRIORITY_COLORS: Record<number, [number, number, number]> = {
@@ -42,25 +133,26 @@ function priorityLabel(p: number): string {
 }
 
 export function printDuerpDocument(data: PrintData): void {
-  const { establishment, workUnits, assessments, actions } = data;
+  const { establishment, workUnits, assessments, actions, branding } = data;
   const doc = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
   const pageW = doc.internal.pageSize.getWidth();
   const pageH = doc.internal.pageSize.getHeight();
   const today = new Date().toLocaleDateString("fr-FR", { day: "2-digit", month: "long", year: "numeric" });
-  const BLUE: [number, number, number] = [91, 97, 246];
+  const theme = brandTheme(branding);
+  const BLUE = theme.color;
   const DARK: [number, number, number] = [30, 30, 50];
 
   // ── PAGE DE GARDE ──────────────────────────────────────────────────────────
   doc.setFillColor(...BLUE);
   doc.rect(0, 0, pageW, 28, "F");
 
-  doc.setTextColor(255, 255, 255);
+  doc.setTextColor(...theme.onColor);
   doc.setFontSize(18);
   doc.setFont("helvetica", "bold");
   doc.text("DOCUMENT UNIQUE D'ÉVALUATION DES RISQUES PROFESSIONNELS", pageW / 2, 12, { align: "center" });
   doc.setFontSize(10);
   doc.setFont("helvetica", "normal");
-  doc.text("Conformément à l'art. R.4121-1 du Code du travail", pageW / 2, 20, { align: "center" });
+  doc.text("Établi selon l'art. R.4121-1 du Code du travail", pageW / 2, 20, { align: "center" });
 
   doc.setTextColor(...DARK);
   let y = 38;
@@ -78,13 +170,18 @@ export function printDuerpDocument(data: PrintData): void {
     head: [["Informations", "Valeur"]],
     body: estabData,
     theme: "grid",
-    headStyles: { fillColor: BLUE, textColor: 255, fontStyle: "bold", fontSize: 9 },
+    headStyles: { fillColor: BLUE, textColor: theme.onColor, fontStyle: "bold", fontSize: 9 },
     bodyStyles: { fontSize: 9 },
     columnStyles: { 0: { fontStyle: "bold", cellWidth: 55 }, 1: { cellWidth: 100 } },
     margin: { left: 14, right: 14 },
   });
 
   y = (doc as any).lastAutoTable.finalY + 8;
+
+  // Bloc « Réalisé par » à droite du tableau d'identification.
+  if (branding && hasCabinetBlock(branding)) {
+    drawCabinetBlock(doc, branding, 185, 42, pageW - 185 - 14);
+  }
 
   // KPIs
   const p1 = assessments.filter((a) => a.priority === 1).length;
@@ -106,12 +203,7 @@ export function printDuerpDocument(data: PrintData): void {
 
   // ── PAGE INVENTAIRE DES RISQUES ─────────────────────────────────────────────
   doc.addPage();
-  doc.setFillColor(...BLUE);
-  doc.rect(0, 0, pageW, 14, "F");
-  doc.setTextColor(255, 255, 255);
-  doc.setFontSize(13);
-  doc.setFont("helvetica", "bold");
-  doc.text("INVENTAIRE DES RISQUES", 14, 9);
+  drawPageBand(doc, theme, "INVENTAIRE DES RISQUES");
   doc.setTextColor(...DARK);
 
   const riskRows = assessments.map((a) => {
@@ -140,7 +232,7 @@ export function printDuerpDocument(data: PrintData): void {
     head: [["Unité", "Catégorie", "Risque", "G", "F", "M", "Score", "Priorité", "Mesures existantes", "Mesures proposées"]],
     body: riskRows.map((r) => r.row),
     theme: "striped",
-    headStyles: { fillColor: BLUE, textColor: 255, fontStyle: "bold", fontSize: 8 },
+    headStyles: { fillColor: BLUE, textColor: theme.onColor, fontStyle: "bold", fontSize: 8 },
     bodyStyles: { fontSize: 7, cellPadding: 2 },
     columnStyles: {
       0: { cellWidth: 25 },
@@ -169,12 +261,7 @@ export function printDuerpDocument(data: PrintData): void {
 
   // ── PAGE PLAN D'ACTION ──────────────────────────────────────────────────────
   doc.addPage();
-  doc.setFillColor(...BLUE);
-  doc.rect(0, 0, pageW, 14, "F");
-  doc.setTextColor(255, 255, 255);
-  doc.setFontSize(13);
-  doc.setFont("helvetica", "bold");
-  doc.text("PLAN D'ACTION", 14, 9);
+  drawPageBand(doc, theme, "PLAN D'ACTION");
   doc.setTextColor(...DARK);
 
   const actionRows = actions.map((a) => {
@@ -198,7 +285,7 @@ export function printDuerpDocument(data: PrintData): void {
     head: [["Action", "Risque lié", "Responsable", "Échéance", "Statut", "Priorité"]],
     body: actionRows.map((r) => r.row),
     theme: "striped",
-    headStyles: { fillColor: BLUE, textColor: 255, fontStyle: "bold", fontSize: 9 },
+    headStyles: { fillColor: BLUE, textColor: theme.onColor, fontStyle: "bold", fontSize: 9 },
     bodyStyles: { fontSize: 8, cellPadding: 2.5 },
     columnStyles: {
       0: { cellWidth: 80 },
@@ -261,7 +348,7 @@ export function printDuerpDocument(data: PrintData): void {
     doc.setFontSize(7);
     doc.setTextColor(150, 150, 150);
     doc.text(
-      `Kaijos — ${establishment?.name || ""} — Édité le ${today} — Page ${i} / ${totalPages}`,
+      `${theme.footerBrand} — ${establishment?.name || ""} — Édité le ${today} — Page ${i} / ${totalPages}`,
       pageW / 2,
       pageH - 5,
       { align: "center" }
@@ -273,16 +360,17 @@ export function printDuerpDocument(data: PrintData): void {
 
 // ── FORMAT SIMPLIFIÉ TPE ────────────────────────────────────────────────────
 export function printDuerpSimplified(data: PrintData): void {
-  const { establishment, workUnits, assessments, actions } = data;
+  const { establishment, workUnits, assessments, actions, branding } = data;
   const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
   const pageW = doc.internal.pageSize.getWidth();
   const today = new Date().toLocaleDateString("fr-FR", { day: "2-digit", month: "long", year: "numeric" });
-  const BLUE: [number, number, number] = [91, 97, 246];
+  const theme = brandTheme(branding);
+  const BLUE = theme.color;
 
   // En-tête
   doc.setFillColor(...BLUE);
   doc.rect(0, 0, pageW, 22, "F");
-  doc.setTextColor(255, 255, 255);
+  doc.setTextColor(...theme.onColor);
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
   doc.text("DOCUMENT UNIQUE — RÉSUMÉ EXÉCUTIF", pageW / 2, 10, { align: "center" });
@@ -291,6 +379,9 @@ export function printDuerpSimplified(data: PrintData): void {
   doc.text(`${establishment?.name || ""}  •  NAF : ${establishment?.codeNaf || "—"}  •  Effectif : ${establishment?.headcount ?? "—"}  •  ${today}`, pageW / 2, 18, { align: "center" });
 
   let y = 28;
+  if (branding && hasCabinetBlock(branding)) {
+    y = drawCabinetBlock(doc, branding, 14, 30, pageW - 28) + 4;
+  }
 
   // Risques prioritaires P1 + P2 uniquement
   const criticalRisks = assessments
@@ -308,7 +399,7 @@ export function printDuerpSimplified(data: PrintData): void {
       a.proposedMeasures || "—",
     ]),
     theme: "striped",
-    headStyles: { fillColor: BLUE, textColor: 255, fontSize: 8, fontStyle: "bold" },
+    headStyles: { fillColor: BLUE, textColor: theme.onColor, fontSize: 8, fontStyle: "bold" },
     bodyStyles: { fontSize: 8 },
     columnStyles: { 0: { cellWidth: 30 }, 1: { cellWidth: 50 }, 2: { cellWidth: 14, halign: "center" }, 3: { cellWidth: 14, halign: "center" }, 4: { cellWidth: 70 } },
     margin: { left: 14, right: 14 },
@@ -360,7 +451,8 @@ export function printDuerpSimplified(data: PrintData): void {
     doc.setPage(i);
     doc.setFontSize(7);
     doc.setTextColor(150, 150, 150);
-    doc.text(`Kaijos — ${today} — Page ${i}/${totalPages}`, pageW / 2, 290, { align: "center" });
+    doc.setFont("helvetica", "normal");
+    doc.text(`${theme.footerBrand} — ${today} — Page ${i}/${totalPages}`, pageW / 2, 290, { align: "center" });
   }
 
   doc.save(`DUERP_simplifie_${(establishment?.name || "tpe").replace(/\s+/g, "_")}_${new Date().getFullYear()}.pdf`);
@@ -368,16 +460,17 @@ export function printDuerpSimplified(data: PrintData): void {
 
 // ── RAPPORT MULTI-SITES ─────────────────────────────────────────────────────
 export function printDuerpMultiSites(data: MultiSiteData): void {
-  const { establishments, workUnits, assessments, actions } = data;
+  const { establishments, workUnits, assessments, actions, branding } = data;
   const doc = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
   const pageW = doc.internal.pageSize.getWidth();
   const today = new Date().toLocaleDateString("fr-FR", { day: "2-digit", month: "long", year: "numeric" });
-  const BLUE: [number, number, number] = [91, 97, 246];
+  const theme = brandTheme(branding);
+  const BLUE = theme.color;
 
   // Page de garde
   doc.setFillColor(...BLUE);
   doc.rect(0, 0, pageW, 28, "F");
-  doc.setTextColor(255, 255, 255);
+  doc.setTextColor(...theme.onColor);
   doc.setFontSize(16);
   doc.setFont("helvetica", "bold");
   doc.text("RAPPORT DUERP MULTI-SITES", pageW / 2, 12, { align: "center" });
@@ -397,12 +490,13 @@ export function printDuerpMultiSites(data: MultiSiteData): void {
     return [e.name, e.codeNaf || "—", String(units.length), String(estabAssessments.length), String(p1), String(late), progress];
   });
 
+  const synthStart = branding && hasCabinetBlock(branding) ? drawCabinetBlock(doc, branding, 14, 36, pageW - 28) + 4 : 34;
   autoTable(doc, {
-    startY: 34,
+    startY: synthStart,
     head: [["Établissement", "NAF", "Unités", "Risques", "P1", "Actions retard", "Avancement"]],
     body: synthRows,
     theme: "striped",
-    headStyles: { fillColor: BLUE, textColor: 255, fontStyle: "bold", fontSize: 9 },
+    headStyles: { fillColor: BLUE, textColor: theme.onColor, fontStyle: "bold", fontSize: 9 },
     bodyStyles: { fontSize: 9 },
     margin: { left: 14, right: 14 },
   });
@@ -410,12 +504,7 @@ export function printDuerpMultiSites(data: MultiSiteData): void {
   // Une section par établissement
   establishments.forEach((e) => {
     doc.addPage();
-    doc.setFillColor(...BLUE);
-    doc.rect(0, 0, pageW, 16, "F");
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(12);
-    doc.setFont("helvetica", "bold");
-    doc.text(`${e.name}  —  NAF ${e.codeNaf || "—"}  —  Effectif : ${e.headcount ?? "—"}`, 14, 10);
+    drawPageBand(doc, theme, `${e.name}  —  NAF ${e.codeNaf || "—"}  —  Effectif : ${e.headcount ?? "—"}`, 16);
 
     const units = workUnits.filter((u) => u.establishmentId === e.id);
     const estabAssessments = assessments.filter((a) => units.some((u) => u.id === a.workUnitId));
@@ -433,7 +522,7 @@ export function printDuerpMultiSites(data: MultiSiteData): void {
         a.proposedMeasures || "—",
       ]),
       theme: "striped",
-      headStyles: { fillColor: BLUE, textColor: 255, fontSize: 7, fontStyle: "bold" },
+      headStyles: { fillColor: BLUE, textColor: theme.onColor, fontSize: 7, fontStyle: "bold" },
       bodyStyles: { fontSize: 7 },
       margin: { left: 14, right: 14 },
     });
@@ -445,7 +534,7 @@ export function printDuerpMultiSites(data: MultiSiteData): void {
     doc.setPage(i);
     doc.setFontSize(7);
     doc.setTextColor(150, 150, 150);
-    doc.text(`Kaijos — Rapport multi-sites — ${today} — Page ${i}/${totalPages}`, pageW / 2, (doc.internal.pageSize.getHeight()) - 5, { align: "center" });
+    doc.text(`${theme.footerBrand} — Rapport multi-sites — ${today} — Page ${i}/${totalPages}`, pageW / 2, (doc.internal.pageSize.getHeight()) - 5, { align: "center" });
   }
 
   doc.save(`DUERP_multi_sites_${new Date().getFullYear()}.pdf`);

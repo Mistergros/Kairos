@@ -96,3 +96,15 @@ export interface VersionEntry {
   createdAt: string;
   snapshot?: VersionSnapshot;
 }
+
+// Marque du cabinet sur les documents PDF (offre Pro), voir api/branding.ts.
+export type Branding = {
+  name?: string;
+  address?: string;
+  phone?: string;
+  email?: string;
+  website?: string;
+  color?: string;
+  logo?: { dataUrl: string; width: number; height: number } | null;
+  hideKaijos?: boolean;
+};

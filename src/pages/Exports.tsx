@@ -1,4 +1,8 @@
+import { useEffect, useState } from "react";
 import { Card } from "../components/Card";
+import { BrandingCard } from "../components/BrandingCard";
+import { cachedBranding, loadBranding } from "../services/brandingService";
+import type { Branding } from "../types";
 import { useDuerpStore } from "../state/store";
 import { useNavigate } from "react-router-dom";
 import { printDuerpDocument, printDuerpSimplified, printDuerpMultiSites } from "../services/printService";
@@ -26,6 +30,13 @@ export const Exports = () => {
   // est payant. Le JSON reste libre (portabilité des données, RGPD).
   const locked = !plan.canExportDocuments;
   const paid = (fn: () => void) => () => (locked ? navigate("/pricing") : fn());
+
+  // Marque du cabinet : appliquée aux PDF uniquement en offre Pro.
+  const [branding, setBranding] = useState<Branding>(cachedBranding);
+  useEffect(() => {
+    loadBranding().then(setBranding).catch(() => {});
+  }, []);
+  const pdfBranding = plan.canBrandDocuments ? branding : undefined;
 
   const establishment = establishments.find((e) => e.id === selectedEstablishmentId) || establishments[0];
   const isTPE = (establishment?.headcount ?? 0) < 10 || !establishment?.headcount;
@@ -86,15 +97,15 @@ export const Exports = () => {
   };
 
   const handlePrintPdf = () => {
-    printDuerpDocument({ establishment, workUnits: estabWorkUnits, assessments: estabAssessments, actions: estabActions });
+    printDuerpDocument({ establishment, workUnits: estabWorkUnits, assessments: estabAssessments, actions: estabActions, branding: pdfBranding });
   };
 
   const handlePrintSimplified = () => {
-    printDuerpSimplified({ establishment, workUnits: estabWorkUnits, assessments: estabAssessments, actions: estabActions });
+    printDuerpSimplified({ establishment, workUnits: estabWorkUnits, assessments: estabAssessments, actions: estabActions, branding: pdfBranding });
   };
 
   const handlePrintMultiSites = () => {
-    printDuerpMultiSites({ establishments, workUnits, assessments, actions });
+    printDuerpMultiSites({ establishments, workUnits, assessments, actions, branding: pdfBranding });
   };
 
   const hasData = estabAssessments.length > 0;
@@ -216,6 +227,8 @@ export const Exports = () => {
           </button>
         </Card>
       </div>
+
+      <BrandingCard branding={branding} canEdit={plan.canBrandDocuments} onSaved={setBranding} />
     </div>
   );
 };

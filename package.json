@@ -19,7 +19,8 @@
     "config:validate": "tsx scripts/config/validate-config.ts",
     "test:api:smoke": "tsx scripts/tests/api-smoke.ts",
     "test:api:integration": "tsx scripts/tests/api-integration.ts",
-    "test:slots": "tsx scripts/tests/slots.ts"
+    "test:slots": "tsx scripts/tests/slots.ts",
+    "test:branding": "tsx scripts/tests/branding.ts"
   },
   "engines": {
     "node": ">=18"
