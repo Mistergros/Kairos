@@ -24,9 +24,9 @@
     {
       "id": "pme",
       "name": "PME",
-      "priceMonthly": 49,
+      "priceMonthly": null,
       "priceYearly": 490,
-      "annualOnly": false,
+      "annualOnly": true,
       "tagline": "Pour les PME et les équipes HSE internes",
       "maxWorkUnits": 20,
       "maxEstablishments": 5,
@@ -45,8 +45,8 @@
     {
       "id": "consultants",
       "name": "Pro",
-      "priceMonthly": 149,
-      "priceYearly": 1490,
+      "priceMonthly": 199,
+      "priceYearly": 1990,
       "annualOnly": false,
       "tagline": "Pour consultants, cabinets RH / HSE et experts-comptables",
       "maxWorkUnits": -1,
@@ -54,6 +54,7 @@
       "bullets": [
         "Portefeuille de 25 clients",
         "Établissements & unités illimités",
+        "Mensuel avec engagement 12 mois, ou annuel",
         "Suivi des révisions annuelles par client",
         "Export XLSX & PDF par client",
         "Historique complet des versions",

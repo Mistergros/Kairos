@@ -17,13 +17,21 @@ export default function TermsPage() {
       </Section>
 
       <Section title="2. Description des offres">
-        <p>Trois formules d'abonnement sont proposées :</p>
+        <p>
+          La création d'un compte est gratuite (formule <strong>Découverte</strong>) : elle permet de construire le document unique d'un
+          établissement dans l'outil, sans pouvoir le télécharger. Trois formules d'abonnement donnent accès au téléchargement :
+        </p>
         <ul className="list-disc pl-5 space-y-1">
-          <li><strong>Essentiel</strong> — 149 € HT/an, abonnement annuel uniquement : 1 établissement, 5 unités de travail, inventaire des risques illimité, plan d'action, export PDF, rappel automatique de révision annuelle.</li>
-          <li><strong>PME</strong> — 49 € HT/mois ou 490 € HT/an : jusqu'à 5 établissements, 20 unités de travail, export XLSX, rapport PDF multi-sites, rappels automatiques, historique des versions.</li>
-          <li><strong>Pro</strong> — 149 € HT/mois ou 1 490 € HT/an : portefeuille de 25 clients maximum, établissements et unités illimités, suivi des révisions par client, export XLSX et PDF par client, support prioritaire.</li>
+          <li><strong>Essentiel</strong> — 149 € HT/an, abonnement annuel : 1 établissement, 5 unités de travail, inventaire des risques illimité, plan d'action, export PDF, rappel automatique de révision annuelle.</li>
+          <li><strong>PME</strong> — 490 € HT/an, abonnement annuel : jusqu'à 5 établissements, 20 unités de travail, export XLSX, rapport PDF multi-sites, rappels automatiques, historique des versions.</li>
+          <li><strong>Pro</strong> — 199 € HT/mois avec engagement de 12 mois, ou 1 990 € HT/an : portefeuille de 25 clients maximum, établissements et unités illimités, suivi des révisions par client, export XLSX et PDF par client, support prioritaire.</li>
         </ul>
-        <p>Pour les formules PME et Pro, l'abonnement annuel bénéficie d'une remise équivalant à deux mois offerts. Le détail à jour des offres et de leurs tarifs est disponible sur la page <a className="text-blue-600 hover:underline" href="/pricing">Tarifs</a>.</p>
+        <p>
+          Les nombres d'établissements et de clients s'apprécient sur une période glissante de 12 mois : un établissement ou un client
+          supprimé, ou un client renommé, continue d'être décompté pendant 12 mois à compter de sa dernière modification. Une marge
+          de 10 % (au moins une unité) permet de corriger une erreur de saisie.
+        </p>
+        <p>Le détail à jour des offres et de leurs tarifs est disponible sur la page <a className="text-blue-600 hover:underline" href="/pricing">Tarifs</a>.</p>
       </Section>
 
       <Section title="3. Prix et paiement">
@@ -35,6 +43,15 @@ export default function TermsPage() {
       <Section title="4. Durée et résiliation">
         <p>
           L'abonnement est conclu pour la durée choisie lors de la souscription (mensuelle ou annuelle) et se renouvelle tacitement pour une durée identique, sauf résiliation. La résiliation s'effectue à tout moment depuis l'espace « Mon compte » du Site, via le portail de gestion d'abonnement. Elle prend effet à la fin de la période en cours déjà payée ; aucun remboursement au prorata n'est effectué pour la période en cours, sauf disposition légale contraire.
+        </p>
+        <p>
+          La formule Pro à paiement mensuel comporte une période d'engagement de 12 mois à compter de la souscription : une
+          résiliation demandée avant la fin de cette période prend effet à son terme, les mensualités restant dues jusque-là.
+          Au-delà, elle se poursuit de mois en mois et reste résiliable à tout moment dans les conditions ci-dessus.
+        </p>
+        <p>
+          À la fin de l'abonnement, le compte repasse en formule Découverte : les données restent consultables et exportables
+          au format JSON, mais le téléchargement des documents n'est plus disponible.
         </p>
       </Section>
 

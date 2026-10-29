@@ -64,13 +64,19 @@ function RequireAuth({ children }: { children: ReactNode }) {
   return <>{children}</>;
 }
 
-function RequireSubscription({ children }: { children: ReactNode }) {
-  const { isLoaded, isSignedIn, user } = useUser();
+// L'application est ouverte à tout compte connecté : sans abonnement, l'offre
+// Découverte permet de construire son DUERP, seul le téléchargement est payant
+// (voir usePlan et la page Exports).
+function RequireSignedIn({ children }: { children: ReactNode }) {
+  const { isLoaded, isSignedIn } = useUser();
   if (bypassAuth) return <>{children}</>;
   if (!isLoaded) return <FullPageLoader />;
   if (!isSignedIn) return <Navigate to="/landing" replace />;
-  const status = (user?.publicMetadata as any)?.subscriptionStatus;
-  if (status !== "active") return <Navigate to="/landing" replace />;
+  // Offre choisie avant l'inscription (voir Landing/Pricing) : Clerk renvoie
+  // parfois vers "/" au lieu de l'URL demandée, on reprend le paiement ici.
+  let pendingPlan: string | null = null;
+  try { pendingPlan = localStorage.getItem("kaijos_pending_plan"); } catch {}
+  if (pendingPlan) return <Navigate to={`/landing?startCheckout=${encodeURIComponent(pendingPlan)}`} replace />;
   return <>{children}</>;
 }
 
@@ -205,6 +211,12 @@ function DashboardRoutes() {
               {syncStatus === "syncing" && <span className="ml-2 text-ocean animate-pulse">● Sync…</span>}
               {syncStatus === "error" && <span className="ml-2 text-amber-500" title="Données locales — reconnexion en attente">● Hors ligne</span>}
             </p>
+            {plan.planId === "free" && (
+              <p className="text-xs text-slate/70">
+                Offre Découverte : construisez votre DUERP gratuitement.{" "}
+                <NavLink to="/pricing" className="font-semibold text-kairos hover:underline">Débloquer le téléchargement</NavLink>
+              </p>
+            )}
           </div>
           <div data-tour="context-selector">
             <ContextSelectors
@@ -288,9 +300,9 @@ export default function App() {
         <Route
           path="/*"
           element={
-            <RequireSubscription>
+            <RequireSignedIn>
               <DashboardRoutes />
-            </RequireSubscription>
+            </RequireSignedIn>
           }
         />
       </Routes>

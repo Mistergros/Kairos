@@ -1,6 +1,8 @@
 import { Card } from "../components/Card";
 import { useDuerpStore } from "../state/store";
+import { useNavigate } from "react-router-dom";
 import { printDuerpDocument, printDuerpSimplified, printDuerpMultiSites } from "../services/printService";
+import { usePlan } from "../hooks/usePlan";
 
 // Le BOM UTF-8 (U+FEFF) est nécessaire pour qu'Excel sur Windows détecte
 // l'encodage correctement — sans lui, les caractères accentués (é, è, à...)
@@ -18,6 +20,12 @@ const downloadText = (filename: string, data: string, mime = "text/plain;charset
 
 export const Exports = () => {
   const { assessments, actions, versions, establishments, workUnits, selectedEstablishmentId } = useDuerpStore();
+  const plan = usePlan();
+  const navigate = useNavigate();
+  // Offre Découverte : tout est consultable dans l'app, seul le téléchargement
+  // est payant. Le JSON reste libre (portabilité des données, RGPD).
+  const locked = !plan.canExportDocuments;
+  const paid = (fn: () => void) => () => (locked ? navigate("/pricing") : fn());
 
   const establishment = establishments.find((e) => e.id === selectedEstablishmentId) || establishments[0];
   const isTPE = (establishment?.headcount ?? 0) < 10 || !establishment?.headcount;
@@ -93,6 +101,17 @@ export const Exports = () => {
 
   return (
     <div className="space-y-4">
+      {locked && (
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-kairos/30 bg-kairos/5 px-5 py-4 text-sm text-ink">
+          <span>
+            <strong>Votre DUERP est prêt à être téléchargé.</strong> Le téléchargement du PDF et des tableaux est inclus dans les offres payantes, à partir de 149 € par an.
+          </span>
+          <button onClick={() => navigate("/pricing")} className="rounded-xl bg-kairos px-4 py-2 text-sm font-semibold text-white shadow">
+            Débloquer le téléchargement
+          </button>
+        </div>
+      )}
+
       {!hasData && (
         <div className="rounded-2xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm text-amber-800">
           <strong>Aucun risque évalué pour le moment.</strong> Ajoutez des unités de travail et laissez le moteur pré-remplir votre inventaire pour pouvoir exporter le DUERP.
@@ -102,7 +121,7 @@ export const Exports = () => {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <Card
           title="DUERP complet (PDF)"
-          subtitle="Document légal conforme art. R.4121-1 du Code du travail"
+          subtitle="Document structuré selon l'art. R.4121-1 du Code du travail"
         >
           <p className="mb-3 text-sm text-slate/70">
             Génère le Document Unique mis en page — unités, inventaire des risques coté G×F/M, plan d'action avec responsables, bloc de signatures.
@@ -111,7 +130,7 @@ export const Exports = () => {
             Le fichier PDF est généré directement et téléchargé — aucune boîte d'impression à configurer.
           </p>
           <button
-            onClick={handlePrintPdf}
+            onClick={paid(handlePrintPdf)}
             className="rounded-xl bg-ink px-5 py-2.5 text-sm font-semibold text-white shadow-lg hover:bg-ink/90 transition disabled:opacity-40"
           >
             Générer le PDF
@@ -127,7 +146,7 @@ export const Exports = () => {
               Résumé exécutif : risques P1/P2, actions prioritaires, bloc signature. Idéal pour les très petites entreprises.
             </p>
             <button
-              onClick={handlePrintSimplified}
+              onClick={paid(handlePrintSimplified)}
               className="rounded-xl bg-kairos px-5 py-2.5 text-sm font-semibold text-white shadow-lg hover:opacity-90 transition"
             >
               Générer PDF simplifié
@@ -144,7 +163,7 @@ export const Exports = () => {
               Vue consolidée de l'ensemble de vos {establishments.length} établissements : synthèse par site, risques critiques globaux.
             </p>
             <button
-              onClick={handlePrintMultiSites}
+              onClick={paid(handlePrintMultiSites)}
               className="rounded-xl bg-azure px-5 py-2.5 text-sm font-semibold text-white shadow-lg hover:opacity-90 transition"
             >
               Générer rapport multi-sites
@@ -160,7 +179,7 @@ export const Exports = () => {
             Colonnes : unité, catégorie, risque, G, F, M, score, priorité, mesures existantes, mesures proposées. Compatible Excel.
           </p>
           <button
-            onClick={exportCsv}
+            onClick={paid(exportCsv)}
             className="rounded-xl bg-ocean px-5 py-2.5 text-sm font-semibold text-white shadow-lg hover:bg-ocean/90 transition"
           >
             Télécharger CSV
@@ -175,7 +194,7 @@ export const Exports = () => {
             Colonnes : action, description, responsable, échéance, statut, priorité, risque lié. Suivi opérationnel.
           </p>
           <button
-            onClick={exportActions}
+            onClick={paid(exportActions)}
             className="rounded-xl bg-sunset px-5 py-2.5 text-sm font-semibold text-white shadow-lg hover:bg-sunset/90 transition"
           >
             Télécharger CSV

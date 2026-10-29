@@ -108,6 +108,19 @@ CREATE TABLE IF NOT EXISTS duerp_versions (
 ALTER TABLE duerp_versions ADD COLUMN IF NOT EXISTS snapshot JSONB;
 CREATE INDEX IF NOT EXISTS idx_versions_org ON duerp_versions(org_id);
 
+-- Quotas sur 12 mois glissants (api/server.ts, checkEstablishmentLimits) :
+-- un établissement ou un client supprimé garde sa place 12 mois après sa
+-- dernière modification. kind = 'establishment' (slot_key = id:<id>, siret
+-- connu) ou 'client' (slot_key = nom du client en minuscules, ou id:<id>).
+CREATE TABLE IF NOT EXISTS slot_log (
+  org_id TEXT NOT NULL,
+  kind TEXT NOT NULL,
+  slot_key TEXT NOT NULL,
+  siret TEXT,
+  last_seen TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (org_id, kind, slot_key)
+);
+
 -- Rappels automatiques de révision annuelle (api/server.ts, sendRevisionReminders) :
 -- un rappel par (établissement, type, échéance), jamais envoyé deux fois.
 CREATE TABLE IF NOT EXISTS reminder_log (

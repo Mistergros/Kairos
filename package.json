@@ -18,7 +18,8 @@
     "config:build:front": "tsx scripts/config/build-front.ts",
     "config:validate": "tsx scripts/config/validate-config.ts",
     "test:api:smoke": "tsx scripts/tests/api-smoke.ts",
-    "test:api:integration": "tsx scripts/tests/api-integration.ts"
+    "test:api:integration": "tsx scripts/tests/api-integration.ts",
+    "test:slots": "tsx scripts/tests/slots.ts"
   },
   "engines": {
     "node": ">=18"
@@ -49,6 +50,7 @@
     "zustand": "^4.4.7"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "^0.2.17",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "@vitejs/plugin-react": "^4.2.0",

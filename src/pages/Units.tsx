@@ -69,7 +69,7 @@ export const Units = () => {
 
   const isConsultant = plan.planId === "consultants";
   const knownClients = Array.from(new Set(establishments.map((e) => e.clientName).filter(Boolean) as string[])).sort();
-  const [establishmentForm, setEstablishmentForm] = useState({ name: "", sector: "", codeNaf: "", address: "", clientName: "" });
+  const [establishmentForm, setEstablishmentForm] = useState({ name: "", sector: "", codeNaf: "", address: "", siret: "", clientName: "" });
   const [unitForm, setUnitForm] = useState({ name: "", description: "", headcount: 0 });
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
   const [customExtra, setCustomExtra] = useState<string>("");
@@ -98,10 +98,11 @@ export const Units = () => {
       sector: establishmentForm.sector,
       codeNaf: establishmentForm.codeNaf,
       address: establishmentForm.address,
+      siret: establishmentForm.siret.replace(/\D/g, "") || undefined,
       clientName: isConsultant ? establishmentForm.clientName.trim() || undefined : undefined,
     });
     // Le client est souvent le même pour plusieurs établissements saisis à la suite.
-    setEstablishmentForm((v) => ({ name: "", sector: "", codeNaf: "", address: "", clientName: v.clientName }));
+    setEstablishmentForm((v) => ({ name: "", sector: "", codeNaf: "", address: "", siret: "", clientName: v.clientName }));
   };
 
   const onCreateUnit = async () => {
@@ -149,6 +150,7 @@ export const Units = () => {
       ...prev,
       name: hit.name || prev.name,
       codeNaf: hit.naf || prev.codeNaf,
+      siret: hit.siret || prev.siret,
       address: addressParts.join(" ") || prev.address,
     }));
   };
@@ -322,7 +324,16 @@ export const Units = () => {
               onChange={(e) => setEstablishmentForm((v) => ({ ...v, codeNaf: e.target.value }))}
             />
             <input
-              className="md:col-span-2 rounded-lg border border-slate/20 px-3 py-2"
+              id="establishment-siret"
+              className="rounded-lg border border-slate/20 px-3 py-2"
+              placeholder="SIRET (14 chiffres)"
+              title="Rempli automatiquement par la recherche d'entreprise"
+              inputMode="numeric"
+              value={establishmentForm.siret}
+              onChange={(e) => setEstablishmentForm((v) => ({ ...v, siret: e.target.value }))}
+            />
+            <input
+              className="rounded-lg border border-slate/20 px-3 py-2"
               placeholder="Adresse"
               title="Adresse complete"
               value={establishmentForm.address}

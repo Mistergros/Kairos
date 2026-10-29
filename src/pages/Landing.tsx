@@ -76,10 +76,10 @@ function Navbar({
             <a href="/sign-in" className="text-sm font-medium text-slate-600 hover:text-ink transition">Se connecter</a>
           )}
           <a
-            href="#pricing"
+            href={isSignedIn ? "/" : "/sign-up"}
             className="rounded-lg bg-kairos px-5 py-2 text-sm font-semibold text-white hover:opacity-90 transition"
           >
-            Démarrer
+            {isSignedIn ? "Ouvrir l'application" : "Essayer gratuitement"}
           </a>
         </div>
       </div>
@@ -122,10 +122,10 @@ function Hero() {
 
           <div className="mt-10 flex flex-wrap gap-4">
             <a
-              href="#pricing"
+              href="/sign-up"
               className="rounded-xl bg-kairos px-8 py-3.5 text-base font-bold text-white hover:opacity-90 transition"
             >
-              Démarrer maintenant
+              Créer mon DUERP gratuitement
             </a>
             <a href="#pricing" className="rounded-xl border border-gray-500 px-8 py-3.5 text-base font-semibold text-white hover:border-white transition">
               Voir les offres
@@ -560,9 +560,9 @@ const PRICING_PLANS = [
   {
     id: "pme" as PlanId,
     name: "PME",
-    priceMonthly: 49,
+    priceMonthly: null,
     priceYearly: 490,
-    annualOnly: false,
+    annualOnly: true,
     tagline: "Pour les PME et équipes HSE internes",
     bullets: ["Jusqu'à 5 établissements", "20 unités de travail", "Export XLSX par responsable", "Rapport PDF multi-sites", "Historique des versions"],
     badge: "RECOMMANDÉ",
@@ -571,11 +571,11 @@ const PRICING_PLANS = [
   {
     id: "consultants" as PlanId,
     name: "Pro",
-    priceMonthly: 149,
-    priceYearly: 1490,
+    priceMonthly: 199,
+    priceYearly: 1990,
     annualOnly: false,
     tagline: "Pour consultants, cabinets RH / HSE et experts-comptables",
-    bullets: ["Portefeuille de 25 clients", "Établissements & unités illimités", "Suivi des révisions annuelles par client", "Export XLSX & PDF par client"],
+    bullets: ["Portefeuille de 25 clients", "Établissements & unités illimités", "Mensuel avec engagement 12 mois, ou annuel", "Suivi des révisions annuelles par client", "Export XLSX & PDF par client"],
     badge: "CABINETS",
     recommended: false,
   },
@@ -607,7 +607,7 @@ function PricingSection({
         <div className="text-center mb-12">
           <span className="inline-block rounded-full bg-[#5b61f6]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[#5b61f6] mb-4">Tarifs</span>
           <h2 className="text-4xl font-extrabold text-[#0f172a]">Simple. Transparent.</h2>
-          <p className="mt-3 text-lg text-slate-500">Résiliable à tout moment, sans reconduction — 2 mois offerts sur l'abonnement annuel.</p>
+          <p className="mt-3 text-lg text-slate-500">Créez votre DUERP gratuitement : vous ne payez qu'au moment de le télécharger.</p>
 
           {/* Toggle mensuel / annuel */}
           <div className="mt-6 inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white p-1.5 shadow-sm">
@@ -707,7 +707,7 @@ function PricingSection({
         </div>
 
         <p className="text-center text-xs text-slate-400 mt-4">
-          Paiement sécurisé par Stripe · Résiliation en 1 clic · TVA non applicable (Art. 293B du CGI)
+          Paiement sécurisé par Stripe · Essentiel et PME : abonnement annuel · Pro : engagement de 12 mois · TVA non applicable (Art. 293B du CGI)
         </p>
       </div>
     </section>

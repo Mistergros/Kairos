@@ -10,6 +10,7 @@ dotenv.config({ path: ".env.local" });
 dotenv.config();
 import { query } from "../apps/web/server/db.js";
 import RiskEngineV4 from "../src/core/engine/risk-engine.server.js";
+import { checkEstablishmentLimits as checkEstablishmentLimitsWith, recordSlots as recordSlotsWith, SLOT_LOG_DDL } from "./slots.js";
 
 const PORT = Number(process.env.API_PORT || 8787);
 const engineV4 = new RiskEngineV4(path.join(process.cwd(), "config"));
@@ -74,7 +75,8 @@ const getStripePriceId = (planId?: string | null, billing?: string | null) => {
   const plan = (planId || "starter").toLowerCase();
   const isAnnual = billing === "annual";
   if (plan === "consultants") return isAnnual ? (STRIPE_PRICE_ID_CONSULTANTS_ANNUAL || STRIPE_PRICE_ID_CONSULTANTS) : STRIPE_PRICE_ID_CONSULTANTS;
-  if (plan === "pme")         return isAnnual ? (STRIPE_PRICE_ID_PME_ANNUAL || STRIPE_PRICE_ID_PME) : STRIPE_PRICE_ID_PME;
+  // PME : vendu à l'année uniquement (490 €/an), comme Essentiel.
+  if (plan === "pme")         return STRIPE_PRICE_ID_PME_ANNUAL || STRIPE_PRICE_ID_PME;
   // starter (« Essentiel », défaut) : vendu à l'année uniquement (149 €/an).
   // STRIPE_PRICE_ID_STARTER_ANNUAL est le tarif de référence ; l'ancien
   // STRIPE_PRICE_ID_STARTER ne sert plus que de repli s'il n'est pas défini.
@@ -256,7 +258,10 @@ const handleStripeEvent = async (event: Stripe.Event) => {
 let establishmentsSchemaReady: Promise<unknown> | null = null;
 const ensureEstablishmentsSchema = () => {
   if (!establishmentsSchemaReady) {
-    establishmentsSchemaReady = query(`ALTER TABLE establishments ADD COLUMN IF NOT EXISTS client_name TEXT`).catch((err) => {
+    establishmentsSchemaReady = (async () => {
+      await query(`ALTER TABLE establishments ADD COLUMN IF NOT EXISTS client_name TEXT`);
+      await query(SLOT_LOG_DDL);
+    })().catch((err) => {
       establishmentsSchemaReady = null; // réessaie au prochain appel
       throw err;
     });
@@ -421,11 +426,12 @@ const sendRevisionReminders = async (now: Date = new Date()) => {
   return { establishmentsChecked: rows.length, emailsSent, skippedInactive, failures: failures.length };
 };
 
-// --- Abonnement et limites d'offre, vérifiés côté serveur ---
-// Avant, seul le front les appliquait : un compte Clerk sans abonnement, ou un
-// Starter, pouvait écrire sans limite en appelant l'API directement. Garder
-// ces valeurs alignées sur PLAN_CONFIG (src/hooks/usePlan.ts).
+// --- Offres et limites, vérifiées côté serveur ---
+// Garder ces valeurs alignées sur PLAN_CONFIG (src/hooks/usePlan.ts).
+// "free" (Découverte) = compte sans abonnement actif : il peut construire son
+// DUERP sur un établissement, seul le téléchargement est payant (côté front).
 const PLAN_LIMITS: Record<string, { maxEstablishments: number; maxClients: number }> = {
+  free: { maxEstablishments: 1, maxClients: -1 },
   starter: { maxEstablishments: 1, maxClients: -1 },
   pme: { maxEstablishments: 5, maxClients: -1 },
   consultants: { maxEstablishments: -1, maxClients: 25 },
@@ -438,10 +444,11 @@ const getUserPlan = async (userId: string): Promise<UserPlan> => {
   if (cached && cached.expires > Date.now()) return cached.plan;
   const user = await clerkClient.users.getUser(userId);
   const md = (user.publicMetadata || {}) as Record<string, any>;
+  const active = md.subscriptionStatus === "active";
   const rawPlan = String(md.planId || "starter").toLowerCase();
   const plan: UserPlan = {
-    planId: PLAN_LIMITS[rawPlan] ? rawPlan : "starter",
-    active: md.subscriptionStatus === "active",
+    planId: !active ? "free" : PLAN_LIMITS[rawPlan] ? rawPlan : "starter",
+    active,
   };
   // Un abonnement inactif n'est pas mis en cache : l'accès doit s'ouvrir dès
   // que le webhook Stripe a activé le compte, sans attendre l'expiration.
@@ -449,38 +456,13 @@ const getUserPlan = async (userId: string): Promise<UserPlan> => {
   return plan;
 };
 
-// Renvoie un message d'erreur si l'écriture doit être refusée, null sinon.
-const checkWriteAllowed = async (orgId: string): Promise<string | null> => {
-  const plan = await getUserPlan(orgId);
-  if (!plan.active) return "Abonnement inactif : vos données restent consultables, mais la modification nécessite un abonnement actif.";
-  return null;
-};
-
+// Quotas sur 12 mois glissants : voir api/slots.ts.
 const checkEstablishmentLimits = async (orgId: string, e: any): Promise<string | null> => {
+  await ensureEstablishmentsSchema();
   const plan = await getUserPlan(orgId);
-  const limits = PLAN_LIMITS[plan.planId];
-  const existing = (
-    await query(`SELECT id, client_name FROM establishments WHERE org_id=$1`, [orgId])
-  ).rows as { id: string; client_name: string | null }[];
-  const isNew = !existing.some((row) => row.id === e.id);
-  if (isNew && limits.maxEstablishments !== -1 && existing.length >= limits.maxEstablishments) {
-    return `Votre offre permet ${limits.maxEstablishments} établissement${limits.maxEstablishments > 1 ? "s" : ""} au maximum.`;
-  }
-  if (limits.maxClients !== -1) {
-    // Un établissement sans client renseigné compte comme un client à part entière.
-    const clientKey = (row: { id: string; client_name: string | null }) => row.client_name?.trim().toLowerCase() || `#${row.id}`;
-    const next = existing.filter((row) => row.id !== e.id);
-    next.push({ id: e.id, client_name: typeof e.clientName === "string" ? e.clientName : null });
-    const before = new Set(existing.map(clientKey)).size;
-    const after = new Set(next.map(clientKey)).size;
-    // On ne bloque que ce qui ajoute un client : un compte déjà au-delà (ex.
-    // ancien plan) peut toujours modifier ses établissements existants.
-    if (after > limits.maxClients && after > before) {
-      return `Votre offre permet ${limits.maxClients} clients au maximum.`;
-    }
-  }
-  return null;
+  return checkEstablishmentLimitsWith(query, orgId, e, PLAN_LIMITS[plan.planId], plan.active);
 };
+const recordSlots = (orgId: string, e: any) => recordSlotsWith(query, orgId, e);
 const deleteEstablishmentDb = async (orgId: string, id: string) => {
   await query(`DELETE FROM establishments WHERE id=$1 AND org_id=$2`, [id, orgId]);
 };
@@ -848,17 +830,15 @@ createServer(async (req, res) => {
     if (basePath === "/api/establishments" || basePath.startsWith("/api/establishments/")) {
       const orgId = await getClerkOrgId(req);
       if (!orgId) return json(res, { error: "Unauthorized" }, 401);
-      if (req.method !== "GET") {
-        const denied = await checkWriteAllowed(orgId);
-        if (denied) return json(res, { error: denied }, 402);
-      }
       if (req.method === "GET") return json(res, await listEstablishmentsDb(orgId));
       if (req.method === "POST") {
         const body = await readBody(req).catch(() => null);
         if (!body?.id || !body?.name) return json(res, { error: "Bad Request" }, 400);
         const overLimit = await checkEstablishmentLimits(orgId, body);
         if (overLimit) return json(res, { error: overLimit }, 403);
-        return json(res, await upsertEstablishmentDb(orgId, body), 201);
+        const saved = await upsertEstablishmentDb(orgId, body);
+        await recordSlots(orgId, body);
+        return json(res, saved, 201);
       }
       if (req.method === "DELETE") {
         const id = decodeURIComponent(basePath.replace("/api/establishments/", ""));
@@ -869,10 +849,6 @@ createServer(async (req, res) => {
     if (basePath === "/api/work-units" || basePath.startsWith("/api/work-units/")) {
       const orgId = await getClerkOrgId(req);
       if (!orgId) return json(res, { error: "Unauthorized" }, 401);
-      if (req.method !== "GET") {
-        const denied = await checkWriteAllowed(orgId);
-        if (denied) return json(res, { error: denied }, 402);
-      }
       if (req.method === "GET") return json(res, await listWorkUnitsDb(orgId));
       if (req.method === "POST") {
         const body = await readBody(req).catch(() => null);
@@ -888,10 +864,6 @@ createServer(async (req, res) => {
     if (basePath === "/api/assessments" || basePath.startsWith("/api/assessments/")) {
       const orgId = await getClerkOrgId(req);
       if (!orgId) return json(res, { error: "Unauthorized" }, 401);
-      if (req.method !== "GET") {
-        const denied = await checkWriteAllowed(orgId);
-        if (denied) return json(res, { error: denied }, 402);
-      }
       if (req.method === "GET") return json(res, await listAssessmentsDb(orgId));
       if (req.method === "POST") {
         const body = await readBody(req).catch(() => null);
@@ -907,10 +879,6 @@ createServer(async (req, res) => {
     if (basePath === "/api/actions" || basePath.startsWith("/api/actions/")) {
       const orgId = await getClerkOrgId(req);
       if (!orgId) return json(res, { error: "Unauthorized" }, 401);
-      if (req.method !== "GET") {
-        const denied = await checkWriteAllowed(orgId);
-        if (denied) return json(res, { error: denied }, 402);
-      }
       if (req.method === "GET") return json(res, await listActionsDb(orgId));
       if (req.method === "POST") {
         const body = await readBody(req).catch(() => null);
@@ -926,10 +894,6 @@ createServer(async (req, res) => {
     if (basePath === "/api/versions") {
       const orgId = await getClerkOrgId(req);
       if (!orgId) return json(res, { error: "Unauthorized" }, 401);
-      if (req.method !== "GET") {
-        const denied = await checkWriteAllowed(orgId);
-        if (denied) return json(res, { error: denied }, 402);
-      }
       if (req.method === "GET") return json(res, await listVersionsDb(orgId));
       if (req.method === "POST") {
         const body = await readBody(req).catch(() => null);
