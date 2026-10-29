@@ -10,6 +10,7 @@ const SUBPROCESSORS = [
   { name: "Clerk", role: "Gestion des comptes et de l'authentification", location: "États-Unis" },
   { name: "Resend", role: "Envoi des emails transactionnels (invitations, rappels)", location: "États-Unis" },
   { name: "Stripe", role: "Paiement et facturation de l'abonnement", location: "Irlande et États-Unis" },
+  { name: "Sentry", role: "Détection des erreurs techniques (messages d'erreur, sans contenu saisi)", location: "États-Unis" },
 ];
 
 export default function DpaPage() {

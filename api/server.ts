@@ -6,8 +6,16 @@ import crypto from "crypto";
 import Stripe from "stripe";
 import { clerkClient, verifyToken } from "@clerk/clerk-sdk-node";
 import dotenv from "dotenv";
+import * as Sentry from "@sentry/node";
 dotenv.config({ path: ".env.local" });
 dotenv.config();
+
+// Alertes d’erreur : actives seulement si SENTRY_DSN est défini (Render).
+// Aucune donnée personnelle envoyée (pas d’IP, pas de corps de requête).
+const sentryEnabled = Boolean(process.env.SENTRY_DSN);
+if (sentryEnabled) {
+  Sentry.init({ dsn: process.env.SENTRY_DSN, environment: process.env.SENTRY_ENVIRONMENT || "production", sendDefaultPii: false, tracesSampleRate: 0 });
+}
 import { query } from "../apps/web/server/db.js";
 import RiskEngineV4 from "../src/core/engine/risk-engine.server.js";
 import { BRANDING_DDL, getBranding, sanitizeBranding, saveBranding } from "./branding.js";
@@ -69,6 +77,7 @@ const json = (res: any, data: any, status = 200) => {
 const notFound = (res: any) => json(res, { error: "Not found" }, 404);
 const error = (res: any, err: any) => {
   console.error(err);
+  if (sentryEnabled) Sentry.captureException(err, { tags: { method: res?._method, path: String(res?._path || "").split("?")[0] } });
   json(res, { error: "Internal error" }, 500);
 };
 
@@ -434,6 +443,7 @@ const sendRevisionReminders = async (now: Date = new Date()) => {
       emailsSent += 1;
     } catch (err) {
       console.error("[cron reminders]", orgId, err);
+      if (sentryEnabled) Sentry.captureException(err, { tags: { path: "/api/cron/revision-reminders" } });
       failures.push(orgId);
     }
   }
@@ -764,6 +774,7 @@ createServer(async (req, res) => {
         await handleStripeEvent(event);
       } catch (err) {
         console.error("[Stripe] Webhook handling failed", err);
+        if (sentryEnabled) Sentry.captureException(err, { tags: { path: "/api/webhooks/stripe" } });
         return json(res, { error: "Webhook handling failed" }, 500);
       }
       return json(res, { received: true });

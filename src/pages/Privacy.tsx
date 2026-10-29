@@ -37,6 +37,7 @@ export default function PrivacyPage() {
           <li><strong>Vercel</strong> — hébergement de l'interface du Site.</li>
           <li><strong>Stripe</strong> — traitement des paiements et de la facturation.</li>
           <li><strong>Resend</strong> — envoi des emails transactionnels (invitations, rappels).</li>
+          <li><strong>Sentry</strong> — détection des erreurs techniques (messages d'erreur et page concernée, sans contenu saisi ni adresse IP).</li>
         </ul>
         <p>Chacun de ces prestataires agit en tant que sous-traitant au sens du RGPD et n'utilise vos données que pour exécuter les services qui lui sont confiés.</p>
         <p>

@@ -96,6 +96,17 @@ flowchart TB
   4. Tester : onglet Actions → « Rappels de révision DUERP » → Run workflow.
 - **Tant que ce n'est pas configuré :** la tâche s'arrête sans erreur et aucun rappel n'est envoyé.
 
+### 🚨 Alertes d'erreur (Sentry)
+- **Ce que c'est :** Sentry reçoit les plantages de l'interface (avec un écran « Une erreur inattendue est survenue » côté utilisateur) et les erreurs du serveur (erreurs 500, échec du webhook Stripe, échec d'envoi d'un rappel), et prévient par email.
+- **À configurer une fois :**
+  1. Créer un compte gratuit sur sentry.io, puis deux projets : « React » (interface) et « Node.js » (serveur). Chacun donne une clé « DSN ».
+  2. Vercel → Settings → Environment Variables : `VITE_SENTRY_DSN` = DSN du projet React, puis redéployer.
+  3. Render → Environment : `SENTRY_DSN` = DSN du projet Node.js.
+  4. Dans Sentry, vérifier que les alertes email sont activées (Alerts → règle par défaut « nouveau problème »).
+- **Données envoyées :** messages d'erreur et page concernée uniquement, sans IP, sans contenu saisi, sans enregistrement de session. Sentry (États-Unis) figure dans la liste des sous-traitants (politique de confidentialité et accord de traitement).
+- **Coût :** gratuit jusqu'à 5 000 erreurs/mois.
+- **Tant que ce n'est pas configuré :** rien n'est envoyé, l'écran d'erreur fonctionne quand même.
+
 ### 🔍 API SIRENE (INSEE)
 - **Ce que c'est :** la recherche d'entreprise par SIRET/SIREN utilise le répertoire officiel des entreprises françaises. Gratuit, public, rien à gérer de ton côté.
 
