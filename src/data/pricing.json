@@ -48,9 +48,10 @@
       "maxEstablishments": -1,
       "bullets": [
         "Établissements & unités illimités",
-        "Multi-clients (jusqu'à 50 DUERP actifs)",
+        "Portefeuille clients (jusqu'à 50 clients)",
+        "Suivi des révisions annuelles par client",
         "Export XLSX & PDF par client",
-        "Historique complet + preuves légales",
+        "Historique complet des versions",
         "Support prioritaire dédié",
         "Accès bêta aux nouvelles fonctionnalités"
       ],

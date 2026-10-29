@@ -21,7 +21,7 @@ export default function TermsPage() {
         <ul className="list-disc pl-5 space-y-1">
           <li><strong>Starter</strong> — 39 € HT/mois : 1 établissement, 5 unités de travail, inventaire des risques illimité, plan d'action et export PDF.</li>
           <li><strong>PME</strong> — 89 € HT/mois : jusqu'à 5 établissements, 20 unités de travail, export XLSX, rappels automatiques, historique des versions.</li>
-          <li><strong>Consultants</strong> — 199 € HT/mois : établissements et unités illimités, multi-clients, export XLSX et PDF par client, support prioritaire.</li>
+          <li><strong>Consultants</strong> — 199 € HT/mois : établissements et unités illimités, portefeuille de 50 clients maximum, export XLSX et PDF par client, support prioritaire.</li>
         </ul>
         <p>L'abonnement annuel bénéficie d'une remise équivalant à deux mois offerts. Le détail à jour des offres et de leurs tarifs est disponible sur la page <a className="text-blue-600 hover:underline" href="/pricing">Tarifs</a>.</p>
       </Section>

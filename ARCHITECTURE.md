@@ -87,6 +87,15 @@ flowchart TB
 - **Où le gérer :** [resend.com/emails](https://resend.com/emails)
 - **Coût :** gratuit jusqu'à 3 000 emails/mois.
 
+### ⏰ Rappels automatiques de révision (GitHub Actions)
+- **Ce que c'est :** chaque matin, une tâche GitHub (`.github/workflows/revision-reminders.yml`) appelle le serveur, qui envoie un email aux abonnés dont un DUERP arrive à sa révision annuelle (30 jours avant l'échéance, puis une fois l'échéance dépassée). L'échéance est calculée à partir de la dernière version enregistrée + 12 mois. Un même rappel n'est jamais envoyé deux fois (table `reminder_log`).
+- **À configurer une fois :**
+  1. Choisir un secret long et aléatoire.
+  2. Render → Environment : ajouter `CRON_SECRET` avec ce secret.
+  3. GitHub → dépôt → Settings → Secrets and variables → Actions : ajouter `CRON_SECRET` (même valeur) et `KAIJOS_API_URL` (`https://kaijos-api.onrender.com`).
+  4. Tester : onglet Actions → « Rappels de révision DUERP » → Run workflow.
+- **Tant que ce n'est pas configuré :** la tâche s'arrête sans erreur et aucun rappel n'est envoyé.
+
 ### 🔍 API SIRENE (INSEE)
 - **Ce que c'est :** la recherche d'entreprise par SIRET/SIREN utilise le répertoire officiel des entreprises françaises. Gratuit, public, rien à gérer de ton côté.
 

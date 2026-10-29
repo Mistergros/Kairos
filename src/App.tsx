@@ -2,7 +2,9 @@ import { BrowserRouter, Routes, Route, NavLink, Navigate } from "react-router-do
 import { useMemo, useState, useEffect, type ReactNode } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { Menu, X, HelpCircle } from "lucide-react";
-import { LayoutDashboard, Building2, ShieldCheck, ListChecks, Download, Clock3, CreditCard, UserCircle, Database } from "lucide-react";
+import { LayoutDashboard, Building2, ShieldCheck, ListChecks, Download, Clock3, CreditCard, UserCircle, Database, Briefcase } from "lucide-react";
+import { Clients } from "./pages/Clients";
+import { usePlan } from "./hooks/usePlan";
 import { Dashboard } from "./pages/Dashboard";
 import { Units } from "./pages/Units";
 import { Inventory } from "./pages/Inventory";
@@ -92,7 +94,10 @@ function DashboardRoutes() {
     setOrgId,
     loadFromSupabase,
     syncStatus,
+    saveError,
+    dismissSaveError,
   } = useDuerpStore();
+  const plan = usePlan();
 
   const { user } = useUser();
 
@@ -120,9 +125,13 @@ function DashboardRoutes() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { restart: restartTour } = useTourControls();
   const isAdmin = useIsAdmin();
+  const baseNavItems =
+    plan.planId === "consultants"
+      ? [navItems[0], { path: "/clients", label: "Portefeuille clients", icon: Briefcase }, ...navItems.slice(1)]
+      : navItems;
   const visibleNavItems = isAdmin
-    ? [...navItems, { path: "/back-office", label: "Back-office", icon: Database }]
-    : navItems;
+    ? [...baseNavItems, { path: "/back-office", label: "Back-office", icon: Database }]
+    : baseNavItems;
 
   const SidebarContent = () => (
     <div className="px-5 py-6 h-full flex flex-col">
@@ -213,8 +222,20 @@ function DashboardRoutes() {
         <Onboarding />
         <ProductTour establishmentsCount={establishments.length} />
         <div className="px-4 py-6 md:px-8">
+          {saveError && (
+            <div role="alert" className="mb-4 flex items-start justify-between gap-3 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800">
+              <span>
+                {saveError}{" "}
+                <a href="/pricing" className="font-semibold underline">Voir les offres</a>
+              </span>
+              <button onClick={dismissSaveError} className="text-rose-600 hover:text-rose-800" aria-label="Fermer le message">
+                <X size={16} />
+              </button>
+            </div>
+          )}
           <Routes>
             <Route path="/" element={<Dashboard />} />
+            <Route path="/clients" element={<Clients />} />
             <Route path="/units" element={<Units />} />
             <Route path="/inventory" element={<Inventory />} />
             <Route path="/action-plan" element={<ActionPlan />} />

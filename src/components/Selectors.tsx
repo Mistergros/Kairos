@@ -32,7 +32,7 @@ export const ContextSelectors = ({
         >
           {establishments.map((e) => (
             <option key={e.id} value={e.id}>
-              {e.name}
+              {e.clientName ? `${e.clientName} — ${e.name}` : e.name}
             </option>
           ))}
         </select>

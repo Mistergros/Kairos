@@ -67,7 +67,9 @@ export const Units = () => {
   const reachedUnitLimit = plan.maxWorkUnits !== -1 && workUnits.length >= plan.maxWorkUnits;
   const reachedEstabLimit = plan.maxEstablishments !== -1 && establishments.length >= plan.maxEstablishments;
 
-  const [establishmentForm, setEstablishmentForm] = useState({ name: "", sector: "", codeNaf: "", address: "" });
+  const isConsultant = plan.planId === "consultants";
+  const knownClients = Array.from(new Set(establishments.map((e) => e.clientName).filter(Boolean) as string[])).sort();
+  const [establishmentForm, setEstablishmentForm] = useState({ name: "", sector: "", codeNaf: "", address: "", clientName: "" });
   const [unitForm, setUnitForm] = useState({ name: "", description: "", headcount: 0 });
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
   const [customExtra, setCustomExtra] = useState<string>("");
@@ -96,8 +98,10 @@ export const Units = () => {
       sector: establishmentForm.sector,
       codeNaf: establishmentForm.codeNaf,
       address: establishmentForm.address,
+      clientName: isConsultant ? establishmentForm.clientName.trim() || undefined : undefined,
     });
-    setEstablishmentForm({ name: "", sector: "", codeNaf: "", address: "" });
+    // Le client est souvent le même pour plusieurs établissements saisis à la suite.
+    setEstablishmentForm((v) => ({ name: "", sector: "", codeNaf: "", address: "", clientName: v.clientName }));
   };
 
   const onCreateUnit = async () => {
@@ -278,6 +282,7 @@ export const Units = () => {
               <div className="flex items-center justify-between gap-3">
                 <div className="space-y-1">
                   <p className="text-base font-semibold text-slate">{e.name}</p>
+                  {isConsultant && e.clientName && <p className="text-xs font-medium text-kairos">Client : {e.clientName}</p>}
                   <p className="text-sm text-slate/60">{e.address || "Adresse à compléter"}</p>
                   <p className="text-xs text-slate/60">{e.codeNaf ? `NAF ${e.codeNaf}` : <span className="text-amber-600 font-medium">NAF à renseigner</span>}</p>
                 </div>
@@ -323,6 +328,22 @@ export const Units = () => {
               value={establishmentForm.address}
               onChange={(e) => setEstablishmentForm((v) => ({ ...v, address: e.target.value }))}
             />
+            {isConsultant && (
+              <>
+                <input
+                  id="establishment-client"
+                  list="known-clients"
+                  className="md:col-span-2 rounded-lg border border-slate/20 px-3 py-2"
+                  placeholder="Client (ex. Boulangerie Martin) — laissez vide si l'établissement est son propre client"
+                  title="Entreprise cliente à laquelle appartient cet établissement"
+                  value={establishmentForm.clientName}
+                  onChange={(e) => setEstablishmentForm((v) => ({ ...v, clientName: e.target.value }))}
+                />
+                <datalist id="known-clients">
+                  {knownClients.map((c) => <option key={c} value={c} />)}
+                </datalist>
+              </>
+            )}
           </div>
           {reachedEstabLimit && (
             <p className="mt-2 rounded-xl bg-amber-50 border border-amber-200 px-3 py-2 text-xs text-amber-700">

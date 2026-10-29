@@ -98,7 +98,7 @@ function Hero() {
         <div>
           <h1 className="text-4xl md:text-5xl font-extrabold text-white leading-tight">
             Le DUERP de votre entreprise,{" "}
-            <span className="text-kairos">conforme et à jour.</span>
+            <span className="text-kairos">complet et à jour.</span>
           </h1>
 
           <p className="mt-6 text-lg text-gray-300 leading-relaxed">
@@ -107,10 +107,10 @@ function Hero() {
 
           <div className="mt-4 space-y-2">
             {[
-              "Conforme art. R.4121-1 du Code du travail",
+              "Structuré selon l’art. R.4121-1 du Code du travail",
               "Pré-remplissage automatique par code NAF",
+              "Chaque risque relié à sa source officielle",
               "Plan d’action avec responsables et échéances",
-              "Export PDF légal en un clic",
             ].map((t) => (
               <div key={t} className="flex items-center gap-2 text-sm text-white">
                 <span className="h-4 w-4 rounded-full bg-lime flex items-center justify-center text-white text-[10px] font-bold shrink-0">✓</span>
@@ -221,16 +221,22 @@ function ValueProps() {
       desc: "Saisissez votre code NAF et Kaijos charge automatiquement les risques typiques de votre activité. Vous validez, vous n’inventez pas.",
     },
     {
+      icon: <IconDoc className="h-6 w-6" />,
+      color: "bg-amber-500",
+      title: "Des sources vérifiables",
+      desc: "Chaque risque proposé renvoie au document officiel qui le justifie (INRS, Code du travail). Vous savez d’où vient chaque ligne.",
+    },
+    {
       icon: <IconAct className="h-6 w-6" />,
       color: "bg-[#0ea5e9]",
       title: "Plan d’action intégré",
-      desc: "Chaque risque génère une action. Assignez un responsable, fixez une échéance, recevez un rappel. Tout dans le même outil.",
+      desc: "Chaque risque génère une action. Assignez un responsable, fixez une échéance, suivez l’avancement sur un planning.",
     },
     {
       icon: <IconTrack className="h-6 w-6" />,
       color: "bg-emerald-500",
-      title: "Export PDF légal en 1 clic",
-      desc: "Le document est mis en page selon les exigences de l’art. R.4121-1 du Code du travail. Prêt à signer, prêt à archiver.",
+      title: "PDF prêt à signer, versions archivées",
+      desc: "Le document reprend les éléments attendus par l’art. R.4121-1 du Code du travail. Chaque version est conservée dans l’historique.",
     },
   ];
   return (
@@ -243,7 +249,7 @@ function ValueProps() {
             Tout ce qu’il faut pour être conforme — rien de superflu.
           </p>
         </div>
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 gap-8">
           {features.map((f) => (
             <div key={f.title} className="rounded-[24px] bg-white p-8 shadow-sm hover:shadow-md transition border border-slate-100">
               <div className={`inline-flex h-12 w-12 items-center justify-center rounded-2xl text-white ${f.color} mb-5`}>
@@ -261,6 +267,10 @@ function ValueProps() {
 
 /* ------------------------------------------------------------
    CAS PRATIQUES — données
+   Ne décrire ici que ce que l'application fait réellement : les risques
+   cités existent dans config/risks/, la table des matières reprend les
+   sections de src/services/printService.ts. Pas de chiffres de résultats
+   inventés (temps gagné, % d'incidents) tant qu'on n'a pas de vrais clients.
 ------------------------------------------------------------ */
 type UseCase = {
   id: string;
@@ -268,184 +278,99 @@ type UseCase = {
   accent: string;
   headline: string;
   sub: string;
-  kpis: { label: string; value: string }[];
+  risks: string[];
   bullets: string[];
-  case: {
-    org: string;
-    size: string;
-    context: string;
-    beforeAfter: { before: string; after: string }[];
-  };
   duerp: {
     title: string;
-    highlights: string[];
     toc: string[];
-    downloadUrl: string;
   };
-  ctaLabel: string;
 };
+
+// Structure réelle du PDF généré (printService.ts), commune à tous les secteurs.
+const DUERP_TOC = [
+  "Page de garde : établissement, NAF, effectif",
+  "Inventaire des risques par unité de travail (G × F × M, score, priorité)",
+  "Mesures existantes et mesures proposées",
+  "Plan d'action : responsable, échéance, statut",
+  "Bloc signatures employeur",
+];
 
 const USE_CASES: UseCase[] = [
   {
     id: "btp",
     label: "BTP",
     accent: "bg-amber-600",
-    headline: "Chantiers : plus de prévention, moins de papier.",
-    sub: "DUERP par lot et phase, coactivité, EPI et consignations.",
-    kpis: [
-      { label: "Temps MAJ DUERP", value: "-60%" },
-      { label: "Non-conformités", value: "-35%" },
-      { label: "Taux d’actions closes", value: "+45%" },
+    headline: "Chantiers et ateliers du bâtiment",
+    sub: "Les risques typiques du secteur sont proposés dès la saisie du code NAF.",
+    risks: [
+      "Chute de hauteur",
+      "Chute d'objets",
+      "Manutention manuelle",
+      "Bruit",
+      "Vibrations",
+      "Silice cristalline",
+      "Coactivité et coordination",
+      "Risque routier",
     ],
     bullets: [
-      "Bibliothèque risques BTP (travaux en hauteur, levage, tranchées…)",
-      "Plan d’action par chantier avec rappels",
-      "Export PDF par chantier / entreprise intervenante",
-      "Suivi EPI & autorisations (SPS, consignation, permis feu)",
+      "Une unité de travail par équipe, métier ou chantier",
+      "Cotation gravité × fréquence × maîtrise, priorités calculées",
+      "Plan d'action avec responsable et échéance, vue planning",
+      "Export PDF prêt à signer et export Excel",
     ],
-    case: {
-      org: "Entreprise Générale « BâtiOuest » (exemple illustratif)",
-      size: "PME — 95 salariés, 8 chantiers actifs",
-      context:
-        "Plan d’actions éclaté (Excel/email), mises à jour DUERP irrégulières, difficultés à tracer les EPI.",
-      beforeAfter: [
-        { before: "MAJ DUERP chantier : 2 h / mois", after: "35 min / mois (-70%)" },
-        { before: "Oublis d’autorisation feu récurrents", after: "Rappel automatique par email" },
-        { before: "Exports hétérogènes", after: "PDF standardisé par chantier (SPS-ready)" },
-      ],
-    },
-    duerp: {
-      title: "DUERP — Chantier « Rénovation Lycée M. »",
-      highlights: [
-        "Risques par phase : démolition, échafaudage, électricité",
-        "Traçabilité EPI et consignations",
-        "Actions priorisées (gravité × probabilité × maitrise)",
-      ],
-      toc: [
-        "1. Présentation du chantier",
-        "2. Unités de travail & coactivité",
-        "3. Inventaire des risques (par phase)",
-        "4. Évaluation & hiérarchisation",
-        "5. Plan d’actions (responsables/échéances)",
-        "6. Suivi et preuves",
-        "7. Synthèse employeur",
-      ],
-      downloadUrl: "/samples/duerp-btp-exemple.pdf",
-    },
-    ctaLabel: "Voir le cas BTP",
+    duerp: { title: "DUERP — Entreprise de gros œuvre (exemple)", toc: DUERP_TOC },
   },
   {
     id: "industrie",
     label: "Industrie",
     accent: "bg-indigo-600",
-    headline: "Ateliers & lignes : sécurité rythmée par la prod.",
-    sub: "Risques machines, chimiques, ATEX et consignations.",
-    kpis: [
-      { label: "Incidents mineurs", value: "-28%" },
-      { label: "MAJ par unité", value: "15 min" },
-      { label: "Actions critiques", value: "x2 détectées" },
+    headline: "Ateliers, lignes de production, entrepôts",
+    sub: "Machines, produits chimiques, circulation interne : l'inventaire part des risques du secteur.",
+    risks: [
+      "Machines et outils",
+      "Risque chimique",
+      "Agents CMR",
+      "Atmosphères explosives (ATEX)",
+      "Circulation interne (chariots)",
+      "Espaces confinés",
+      "Bruit",
+      "Manutention manuelle",
     ],
     bullets: [
-      "Matrices risques machines (ISO 12100) et produits (FDS)",
-      "Rôles & responsabilités par poste / équipe",
-      "Détection d’incohérences (procédures manquantes)",
-      "Exports prêts inspection + CSE",
+      "Chaque risque renvoie à sa source officielle (INRS, Code du travail)",
+      "Plusieurs établissements dans le même compte (offre PME)",
+      "Rapport PDF multi-sites consolidé",
+      "Historique des versions du document",
     ],
-    case: {
-      org: "Atelier « MétalTech » (exemple illustratif)",
-      size: "ETI — 420 salariés, 3 sites",
-      context: "Historique AT, dispersion des FDS, DUERP peu lu en comité.",
-      beforeAfter: [
-        { before: "Consolidation multi-sites manuelle", after: "Tableau de bord global automatique" },
-        { before: "FDS peu consultées", after: "Liens FDS contextualisés dans les fiches risques" },
-        { before: "Peu d’actions clôturées", after: "+52% d’actions closes / trimestre" },
-      ],
-    },
-    duerp: {
-      title: "DUERP — Atelier d’usinage & traitement de surface",
-      highlights: [
-        "Cartographie risques machines (presses, CN)",
-        "Risque chimique lié aux bains (FDS liées)",
-        "Planification consignations",
-      ],
-      toc: [
-        "1. Présentation établissement",
-        "2. Unités de travail & postes",
-        "3. Inventaire risques machines & chimiques",
-        "4. Mesures existantes & résidu",
-        "5. Programme d’actions (ATEX, consignations)",
-        "6. Indicateurs & suivi",
-        "7. Compte-rendu CSE",
-      ],
-      downloadUrl: "/samples/duerp-industrie-exemple.pdf",
-    },
-    ctaLabel: "Voir le cas Industrie",
+    duerp: { title: "DUERP — Atelier d'usinage (exemple)", toc: DUERP_TOC },
   },
   {
     id: "services",
     label: "Services",
     accent: "bg-emerald-600",
-    headline: "Bureaux & équipes terrain : simple, partout.",
-    sub: "RPS, TMS, déplacements, prestataires.",
-    kpis: [
-      { label: "Temps d’onboarding", value: "-50%" },
-      { label: "Taux complétude DUERP", value: "98%" },
-      { label: "Conformité audits", value: "+100%" },
+    headline: "Bureaux, commerces et équipes terrain",
+    sub: "Risques psychosociaux, travail sur écran, déplacements : rien n'est oublié.",
+    risks: [
+      "Risques psychosociaux",
+      "Travail sur écran",
+      "Troubles musculo-squelettiques",
+      "Risque routier",
+      "Travail isolé",
+      "Agression, incivilités",
+      "Incendie",
+      "Éclairage",
     ],
     bullets: [
-      "Trames RPS/TMS prêtes à l’emploi",
-      "Gestion multi-sites & multi-équipes",
-      "Portail actions avec rappels automatiques",
-      "Exports PDF propres pour clients / audits",
+      "Pré-remplissage à partir du SIRET ou du code NAF",
+      "Questions simples pour affiner la cotation de chaque risque",
+      "Responsables et échéances pour chaque action",
+      "Résumé exécutif d'une page pour la direction",
     ],
-    case: {
-      org: "Société « Servia+ » (exemple illustratif)",
-      size: "PME — 130 salariés, 4 directions",
-      context: "RPS non structurés, mobilité pro mal couverte.",
-      beforeAfter: [
-        { before: "RPS traités hors DUERP", after: "Intégration grille RPS + plan d’actions dédié" },
-        { before: "Déplacements non évalués", after: "Modèle TMS & risque routier activé" },
-        { before: "Zéro rappel d’échéance", after: "Rappels automatiques + propriétaires nommés" },
-      ],
-    },
-    duerp: {
-      title: "DUERP — Siège & équipes terrain",
-      highlights: [
-        "RPS modélisés (charge, autonomie, soutien)",
-        "Risque routier & travail isolé",
-        "Plan d’action lisible par direction",
-      ],
-      toc: [
-        "1. Contexte & organisation",
-        "2. Unités & métiers",
-        "3. Risques RPS / TMS / déplacements",
-        "4. Mesures & lacunes",
-        "5. Actions priorisées par direction",
-        "6. Indicateurs trimestriels",
-        "7. Synthèse",
-      ],
-      downloadUrl: "/samples/duerp-services-exemple.pdf",
-    },
-    ctaLabel: "Voir le cas Services",
+    duerp: { title: "DUERP — Siège et équipes terrain (exemple)", toc: DUERP_TOC },
   },
-  // ... (santé, retail, collectivités — garde si tu veux)
 ];
 
-/* ============================================================
-   CAS PRATIQUES — version compacte, harmonisée + icônes
-   Remplace ton composant UseCasesCompact par celui-ci
-   (Réutilise le type UseCase et la constante USE_CASES existants)
-============================================================ */
-
 /* Icônes légères (inline SVG) */
-function IconSwitch(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" {...props}>
-      <path d="M7 7h10a4 4 0 0 1 0 8H7a4 4 0 0 1 0-8Z" stroke="currentColor" strokeWidth="1.8"/>
-      <circle cx="9" cy="11" r="3" stroke="currentColor" strokeWidth="1.8"/>
-    </svg>
-  );
-}
 function IconDoc(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" {...props}>
@@ -493,9 +418,9 @@ export function UseCasesCompact({ data }: { data?: UseCase[] }) {
 
         {/* Titre */}
         <div className="text-center mb-12">
-          <span className="inline-block rounded-full bg-kairos/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-kairos mb-4">Scénarios types</span>
-          <h2 className="text-4xl font-extrabold text-ink">Ce que Kaijos change, secteur par secteur</h2>
-          <p className="mt-4 text-lg text-slate-500 max-w-2xl mx-auto">Exemples illustratifs — contexte type, résultats attendus et extraits du DUERP généré.</p>
+          <span className="inline-block rounded-full bg-kairos/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-kairos mb-4">Par secteur</span>
+          <h2 className="text-4xl font-extrabold text-ink">Les risques de votre métier, déjà listés</h2>
+          <p className="mt-4 text-lg text-slate-500 max-w-2xl mx-auto">Quelques-uns des risques proposés automatiquement selon votre activité, et le document que vous obtenez.</p>
         </div>
 
         {/* Onglets */}
@@ -518,59 +443,35 @@ export function UseCasesCompact({ data }: { data?: UseCase[] }) {
         {/* Contenu — 2 colonnes */}
         <div className="grid md:grid-cols-2 gap-8">
 
-          {/* Colonne gauche : contexte + avant/après */}
+          {/* Colonne gauche : contexte + risques pré-remplis */}
           <div className="space-y-6">
-            {/* Contexte */}
             <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6">
               <div className="flex items-center gap-3 mb-4">
                 <span className={`rounded-full border px-3 py-1 text-xs font-bold ${accentBtn}`}>{current.label}</span>
                 <h3 className="font-bold text-ink text-lg">{current.headline}</h3>
               </div>
-              <p className="text-xs text-slate-400 mb-1">{current.case.org} — {current.case.size}</p>
-              <p className="text-slate-600 leading-relaxed">{current.case.context}</p>
+              <p className="text-slate-600 leading-relaxed">{current.sub}</p>
             </div>
 
-            {/* KPIs */}
-            <div className="grid grid-cols-3 gap-4">
-              {current.kpis.map((k) => (
-                <div key={k.label} className="rounded-xl bg-ink text-white p-4 text-center">
-                  <p className="text-2xl font-extrabold text-kairos">{k.value}</p>
-                  <p className="text-xs text-slate-400 mt-1 leading-tight">{k.label}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* Avant → Après */}
             <div className="rounded-2xl border border-slate-200 bg-white p-6">
-              <h4 className="font-bold text-ink mb-4 flex items-center gap-2">
-                <IconSwitch className="h-4 w-4 text-kairos" /> Avant / Après Kaijos
-              </h4>
-              <div className="space-y-3">
-                {current.case.beforeAfter.slice(0, 3).map((x, i) => (
-                  <div key={i} className="grid grid-cols-2 gap-3 text-sm">
-                    <div className="rounded-lg bg-red-50 border border-red-100 px-3 py-2">
-                      <p className="text-[10px] font-bold uppercase text-red-400 mb-1">Avant</p>
-                      <p className="text-slate-600">{x.before}</p>
-                    </div>
-                    <div className="rounded-lg bg-green-50 border border-green-100 px-3 py-2">
-                      <p className="text-[10px] font-bold uppercase text-green-500 mb-1">Après</p>
-                      <p className="text-slate-700 font-medium">{x.after}</p>
-                    </div>
-                  </div>
+              <h4 className="font-bold text-ink mb-4">Exemples de risques pré-remplis</h4>
+              <div className="flex flex-wrap gap-2">
+                {current.risks.map((r) => (
+                  <span key={r} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm text-slate-700">{r}</span>
                 ))}
               </div>
+              <p className="mt-4 text-xs text-slate-400">Vous ajoutez, retirez ou ajustez chaque risque : l'évaluation reste la vôtre.</p>
             </div>
           </div>
 
           {/* Colonne droite : ce que Kaijos gère + aperçu DUERP */}
           <div className="space-y-6">
-            {/* Points clés */}
             <div className="rounded-2xl border border-slate-200 bg-white p-6">
               <h4 className="font-bold text-ink mb-4 flex items-center gap-2">
-                <IconStarList className="h-4 w-4 text-kairos" /> Ce que Kaijos gère pour ce secteur
+                <IconStarList className="h-4 w-4 text-kairos" /> Ce que vous faites dans Kaijos
               </h4>
               <ul className="space-y-2.5">
-                {current.bullets.slice(0, 4).map((b) => (
+                {current.bullets.map((b) => (
                   <li key={b} className="flex items-start gap-3 text-sm text-slate-600">
                     <span className="mt-0.5 h-5 w-5 shrink-0 rounded-full bg-kairos/10 text-kairos flex items-center justify-center text-[10px] font-bold">✓</span>
                     {b}
@@ -579,7 +480,6 @@ export function UseCasesCompact({ data }: { data?: UseCase[] }) {
               </ul>
             </div>
 
-            {/* Aperçu DUERP */}
             <div className="rounded-2xl border border-slate-200 overflow-hidden">
               <div className="bg-ink px-5 py-4 flex items-center justify-between">
                 <div>
@@ -589,19 +489,10 @@ export function UseCasesCompact({ data }: { data?: UseCase[] }) {
                 <IconDoc className="h-6 w-6 text-slate-400" />
               </div>
               <div className="bg-white p-5">
-                <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-3">Points couverts</p>
-                <ul className="space-y-2 mb-4">
-                  {current.duerp.highlights.map((h) => (
-                    <li key={h} className="flex items-start gap-2 text-sm text-slate-600">
-                      <span className="mt-1 h-1.5 w-1.5 rounded-full bg-kairos shrink-0" />
-                      {h}
-                    </li>
-                  ))}
-                </ul>
-                <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-2">Table des matières</p>
-                <ol className="space-y-1">
-                  {current.duerp.toc.slice(0, 5).map((t) => (
-                    <li key={t} className="text-xs text-slate-500">{t}</li>
+                <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-2">Contenu du PDF</p>
+                <ol className="space-y-1 list-decimal list-inside">
+                  {current.duerp.toc.map((t) => (
+                    <li key={t} className="text-sm text-slate-600">{t}</li>
                   ))}
                 </ol>
               </div>
@@ -620,8 +511,8 @@ export function UseCasesCompact({ data }: { data?: UseCase[] }) {
 
 function Steps() {
   const steps = [
-    { n: "01", title: "Décrivez votre entreprise", desc: "Renseignez votre code NAF, vos établissements et vos unités de travail. 2 minutes chrono." },
-    { n: "02", title: "Validez l’inventaire des risques", desc: "Kaijos pré-remplit les risques. Répondez à 4 questions par risque pour affiner la cotation." },
+    { n: "01", title: "Décrivez votre entreprise", desc: "Renseignez votre SIRET ou votre code NAF, vos établissements et vos unités de travail." },
+    { n: "02", title: "Validez l’inventaire des risques", desc: "Kaijos pré-remplit les risques. Répondez à quelques questions par risque pour affiner la cotation." },
     { n: "03", title: "Pilotez et exportez", desc: "Suivez votre plan d’action, assignez des responsables, téléchargez le PDF légal prêt à signer." },
   ];
   return (
@@ -669,7 +560,7 @@ const PRICING_PLANS = [
     priceMonthly: 89,
     priceYearly: 890,
     tagline: "Pour les PME et équipes HSE internes",
-    bullets: ["Jusqu'à 5 établissements", "20 unités de travail", "Export XLSX par responsable", "Rappels révision annuelle", "Historique des versions"],
+    bullets: ["Jusqu'à 5 établissements", "20 unités de travail", "Export XLSX par responsable", "Rapport PDF multi-sites", "Historique des versions"],
     badge: "RECOMMANDÉ",
     recommended: true,
   },
@@ -679,7 +570,7 @@ const PRICING_PLANS = [
     priceMonthly: 199,
     priceYearly: 1990,
     tagline: "Pour cabinets RH / HSE multi-clients",
-    bullets: ["Établissements & unités illimités", "Multi-clients (50 DUERP actifs)", "Export XLSX & PDF par client", "Support prioritaire dédié"],
+    bullets: ["Établissements & unités illimités", "Portefeuille clients (jusqu'à 50 clients)", "Suivi des révisions annuelles par client", "Export XLSX & PDF par client"],
     badge: "CABINET",
     recommended: false,
   },

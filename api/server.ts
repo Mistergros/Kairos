@@ -34,6 +34,8 @@ const CLERK_SECRET_KEY = process.env.CLERK_SECRET_KEY;
 const clerkEnabled = Boolean(CLERK_SECRET_KEY);
 const RESEND_API_KEY = process.env.RESEND_API_KEY || "";
 const FROM_EMAIL = process.env.FROM_EMAIL || "noreply@kaijos.com";
+// Secret partagé avec la tâche planifiée GitHub Actions des rappels de révision.
+const CRON_SECRET = process.env.CRON_SECRET || "";
 
 // Les emails sortants (invites, rappels) interpolent des champs fournis par
 // l'utilisateur dans du HTML envoyé à un tiers réel — échapper systématiquement
@@ -246,24 +248,236 @@ const handleStripeEvent = async (event: Stripe.Event) => {
 // the old company_unit/unit_risk_assessment/corrective_action routes (dead:
 // nothing in src/ ever called them) and the direct browser->Supabase writes.
 
+// Même migration que duerp_pro_spec/db/schema.sql, appliquée une fois au
+// premier accès : la base Neon de production n'est pas re-bootstrappée à
+// chaque déploiement, sans ça la colonne client_name n'y existerait pas.
+let establishmentsSchemaReady: Promise<unknown> | null = null;
+const ensureEstablishmentsSchema = () => {
+  if (!establishmentsSchemaReady) {
+    establishmentsSchemaReady = query(`ALTER TABLE establishments ADD COLUMN IF NOT EXISTS client_name TEXT`).catch((err) => {
+      establishmentsSchemaReady = null; // réessaie au prochain appel
+      throw err;
+    });
+  }
+  return establishmentsSchemaReady;
+};
+
 const listEstablishmentsDb = async (orgId: string) => {
+  await ensureEstablishmentsSchema();
   const res = await query(
-    `SELECT id, name, siren, siret, code_naf, sector, address, headcount FROM establishments WHERE org_id=$1 ORDER BY name`,
+    `SELECT id, name, siren, siret, code_naf, sector, address, headcount, client_name FROM establishments WHERE org_id=$1 ORDER BY name`,
     [orgId]
   );
   return res.rows;
 };
 const upsertEstablishmentDb = async (orgId: string, e: any) => {
+  await ensureEstablishmentsSchema();
+  const clientName = typeof e.clientName === "string" && e.clientName.trim() ? e.clientName.trim().slice(0, 200) : null;
   const res = await query(
-    `INSERT INTO establishments (id, org_id, name, siren, siret, code_naf, sector, address, headcount)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
+    `INSERT INTO establishments (id, org_id, name, siren, siret, code_naf, sector, address, headcount, client_name)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
      ON CONFLICT (id) DO UPDATE SET name=EXCLUDED.name, siren=EXCLUDED.siren, siret=EXCLUDED.siret,
-       code_naf=EXCLUDED.code_naf, sector=EXCLUDED.sector, address=EXCLUDED.address, headcount=EXCLUDED.headcount
+       code_naf=EXCLUDED.code_naf, sector=EXCLUDED.sector, address=EXCLUDED.address, headcount=EXCLUDED.headcount,
+       client_name=EXCLUDED.client_name
      WHERE establishments.org_id = $2
      RETURNING *`,
-    [e.id, orgId, e.name, e.siren ?? null, e.siret ?? null, e.codeNaf ?? null, e.sector ?? null, e.address ?? null, e.headcount ?? null]
+    [e.id, orgId, e.name, e.siren ?? null, e.siret ?? null, e.codeNaf ?? null, e.sector ?? null, e.address ?? null, e.headcount ?? null, clientName]
   );
   return res.rows[0];
+};
+
+// --- Rappels automatiques de révision annuelle ---
+// Même règle que src/utils/revision.ts : échéance = dernière version + 12 mois,
+// rappel 30 jours avant puis une fois l'échéance dépassée. reminder_log garde
+// une trace par (établissement, type, échéance) pour ne jamais envoyer deux
+// fois le même rappel, même si la tâche quotidienne est relancée.
+const REVISION_MONTHS = 12;
+const REVISION_WARNING_DAYS = 30;
+
+let reminderSchemaReady: Promise<unknown> | null = null;
+const ensureReminderSchema = () => {
+  if (!reminderSchemaReady) {
+    reminderSchemaReady = query(
+      `CREATE TABLE IF NOT EXISTS reminder_log (
+         establishment_id TEXT NOT NULL,
+         kind TEXT NOT NULL,
+         due_date DATE NOT NULL,
+         sent_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+         PRIMARY KEY (establishment_id, kind, due_date)
+       )`
+    ).catch((err) => {
+      reminderSchemaReady = null;
+      throw err;
+    });
+  }
+  return reminderSchemaReady;
+};
+
+type DueEstablishment = { id: string; name: string; clientName: string | null; dueDate: string; kind: "soon" | "overdue" };
+
+const reminderEmailHtml = (items: DueEstablishment[]) => {
+  const appUrl = process.env.APP_URL || "http://localhost:5173";
+  const rows = items
+    .map((i) => {
+      const label = i.clientName ? `${escapeHtml(i.clientName)} — ${escapeHtml(i.name)}` : escapeHtml(i.name);
+      const when = new Date(i.dueDate).toLocaleDateString("fr-FR", { day: "2-digit", month: "long", year: "numeric" });
+      const state = i.kind === "overdue" ? `<strong style="color:#be123c">échéance dépassée (${when})</strong>` : `à réviser avant le ${when}`;
+      return `<li style="margin-bottom:6px">${label} : ${state}</li>`;
+    })
+    .join("");
+  return `
+    <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto">
+      <div style="background:linear-gradient(135deg,#5B61F6,#00B3FF);padding:28px 32px;border-radius:12px 12px 0 0">
+        <h1 style="color:#fff;margin:0;font-size:20px">Kaijos — Révision DUERP</h1>
+      </div>
+      <div style="background:#f9fafb;padding:28px 32px;border-radius:0 0 12px 12px;border:1px solid #e5e7eb">
+        <p style="font-size:15px;color:#1e293b">Bonjour,</p>
+        <p style="font-size:15px;color:#1e293b">Les DUERP suivants arrivent à leur date de révision annuelle :</p>
+        <ul style="font-size:15px;color:#1e293b;padding-left:20px">${rows}</ul>
+        <p style="font-size:14px;color:#64748b">
+          La mise à jour est obligatoire au moins chaque année dans les entreprises d'au moins 11 salariés
+          (art. R.4121-2 du Code du travail), et à chaque changement important dans toutes les entreprises.
+          Enregistrer une nouvelle version dans Kaijos vaut révision.
+        </p>
+        <a href="${appUrl}/versions"
+           style="display:inline-block;margin-top:16px;background:#5B61F6;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:bold">
+          Ouvrir Kaijos →
+        </a>
+        <p style="margin-top:24px;font-size:12px;color:#94a3b8">Kaijos — rappel automatique lié à votre abonnement.</p>
+      </div>
+    </div>`;
+};
+
+const sendRevisionReminders = async (now: Date = new Date()) => {
+  await ensureReminderSchema();
+  const rows = (
+    await query(
+      `SELECT e.org_id, e.id, e.name, e.client_name, MAX(v.created_at) AS last_version
+         FROM establishments e
+         JOIN duerp_versions v ON v.establishment_id = e.id
+        GROUP BY e.org_id, e.id, e.name, e.client_name`
+    )
+  ).rows as { org_id: string; id: string; name: string; client_name: string | null; last_version: string }[];
+
+  const byOrg = new Map<string, DueEstablishment[]>();
+  for (const row of rows) {
+    const due = new Date(row.last_version);
+    due.setMonth(due.getMonth() + REVISION_MONTHS);
+    const msLeft = due.getTime() - now.getTime();
+    if (msLeft > REVISION_WARNING_DAYS * 86_400_000) continue;
+    const item: DueEstablishment = {
+      id: row.id,
+      name: row.name,
+      clientName: row.client_name,
+      dueDate: due.toISOString().slice(0, 10),
+      kind: msLeft < 0 ? "overdue" : "soon",
+    };
+    const already = await query(
+      `SELECT 1 FROM reminder_log WHERE establishment_id=$1 AND kind=$2 AND due_date=$3`,
+      [item.id, item.kind, item.dueDate]
+    );
+    if (already.rowCount) continue;
+    byOrg.set(row.org_id, [...(byOrg.get(row.org_id) || []), item]);
+  }
+
+  let emailsSent = 0;
+  let skippedInactive = 0;
+  const failures: string[] = [];
+  for (const [orgId, items] of byOrg) {
+    try {
+      const plan = await getUserPlan(orgId);
+      if (!plan.active) {
+        skippedInactive += 1;
+        continue;
+      }
+      const user = await clerkClient.users.getUser(orgId);
+      const to = user.emailAddresses?.[0]?.emailAddress;
+      if (!to) continue;
+      const resendRes = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${RESEND_API_KEY}`, "Content-Type": "application/json" },
+        body: JSON.stringify({
+          from: FROM_EMAIL,
+          to: [to],
+          subject: items.length === 1 ? `[Kaijos] Révision DUERP — ${items[0].clientName || items[0].name}` : `[Kaijos] ${items.length} DUERP à réviser`,
+          html: reminderEmailHtml(items),
+        }),
+      });
+      if (!resendRes.ok) throw new Error(`Resend ${resendRes.status}: ${await resendRes.text().catch(() => "")}`);
+      for (const item of items) {
+        await query(
+          `INSERT INTO reminder_log (establishment_id, kind, due_date) VALUES ($1,$2,$3) ON CONFLICT DO NOTHING`,
+          [item.id, item.kind, item.dueDate]
+        );
+      }
+      emailsSent += 1;
+    } catch (err) {
+      console.error("[cron reminders]", orgId, err);
+      failures.push(orgId);
+    }
+  }
+  return { establishmentsChecked: rows.length, emailsSent, skippedInactive, failures: failures.length };
+};
+
+// --- Abonnement et limites d'offre, vérifiés côté serveur ---
+// Avant, seul le front les appliquait : un compte Clerk sans abonnement, ou un
+// Starter, pouvait écrire sans limite en appelant l'API directement. Garder
+// ces valeurs alignées sur PLAN_CONFIG (src/hooks/usePlan.ts).
+const PLAN_LIMITS: Record<string, { maxEstablishments: number; maxClients: number }> = {
+  starter: { maxEstablishments: 1, maxClients: -1 },
+  pme: { maxEstablishments: 5, maxClients: -1 },
+  consultants: { maxEstablishments: -1, maxClients: 50 },
+};
+type UserPlan = { planId: string; active: boolean };
+const planCache = new Map<string, { plan: UserPlan; expires: number }>();
+const getUserPlan = async (userId: string): Promise<UserPlan> => {
+  if (!clerkEnabled) return { planId: "consultants", active: true }; // dev local sans Clerk
+  const cached = planCache.get(userId);
+  if (cached && cached.expires > Date.now()) return cached.plan;
+  const user = await clerkClient.users.getUser(userId);
+  const md = (user.publicMetadata || {}) as Record<string, any>;
+  const rawPlan = String(md.planId || "starter").toLowerCase();
+  const plan: UserPlan = {
+    planId: PLAN_LIMITS[rawPlan] ? rawPlan : "starter",
+    active: md.subscriptionStatus === "active",
+  };
+  // Un abonnement inactif n'est pas mis en cache : l'accès doit s'ouvrir dès
+  // que le webhook Stripe a activé le compte, sans attendre l'expiration.
+  if (plan.active) planCache.set(userId, { plan, expires: Date.now() + 60_000 });
+  return plan;
+};
+
+// Renvoie un message d'erreur si l'écriture doit être refusée, null sinon.
+const checkWriteAllowed = async (orgId: string): Promise<string | null> => {
+  const plan = await getUserPlan(orgId);
+  if (!plan.active) return "Abonnement inactif : vos données restent consultables, mais la modification nécessite un abonnement actif.";
+  return null;
+};
+
+const checkEstablishmentLimits = async (orgId: string, e: any): Promise<string | null> => {
+  const plan = await getUserPlan(orgId);
+  const limits = PLAN_LIMITS[plan.planId];
+  const existing = (
+    await query(`SELECT id, client_name FROM establishments WHERE org_id=$1`, [orgId])
+  ).rows as { id: string; client_name: string | null }[];
+  const isNew = !existing.some((row) => row.id === e.id);
+  if (isNew && limits.maxEstablishments !== -1 && existing.length >= limits.maxEstablishments) {
+    return `Votre offre permet ${limits.maxEstablishments} établissement${limits.maxEstablishments > 1 ? "s" : ""} au maximum.`;
+  }
+  if (limits.maxClients !== -1) {
+    // Un établissement sans client renseigné compte comme un client à part entière.
+    const clientKey = (row: { id: string; client_name: string | null }) => row.client_name?.trim().toLowerCase() || `#${row.id}`;
+    const next = existing.filter((row) => row.id !== e.id);
+    next.push({ id: e.id, client_name: typeof e.clientName === "string" ? e.clientName : null });
+    const before = new Set(existing.map(clientKey)).size;
+    const after = new Set(next.map(clientKey)).size;
+    // On ne bloque que ce qui ajoute un client : un compte déjà au-delà (ex.
+    // ancien plan) peut toujours modifier ses établissements existants.
+    if (after > limits.maxClients && after > before) {
+      return `Votre offre permet ${limits.maxClients} clients au maximum.`;
+    }
+  }
+  return null;
 };
 const deleteEstablishmentDb = async (orgId: string, id: string) => {
   await query(`DELETE FROM establishments WHERE id=$1 AND org_id=$2`, [id, orgId]);
@@ -629,10 +843,16 @@ createServer(async (req, res) => {
     if (basePath === "/api/establishments" || basePath.startsWith("/api/establishments/")) {
       const orgId = await getClerkOrgId(req);
       if (!orgId) return json(res, { error: "Unauthorized" }, 401);
+      if (req.method !== "GET") {
+        const denied = await checkWriteAllowed(orgId);
+        if (denied) return json(res, { error: denied }, 402);
+      }
       if (req.method === "GET") return json(res, await listEstablishmentsDb(orgId));
       if (req.method === "POST") {
         const body = await readBody(req).catch(() => null);
         if (!body?.id || !body?.name) return json(res, { error: "Bad Request" }, 400);
+        const overLimit = await checkEstablishmentLimits(orgId, body);
+        if (overLimit) return json(res, { error: overLimit }, 403);
         return json(res, await upsertEstablishmentDb(orgId, body), 201);
       }
       if (req.method === "DELETE") {
@@ -644,6 +864,10 @@ createServer(async (req, res) => {
     if (basePath === "/api/work-units" || basePath.startsWith("/api/work-units/")) {
       const orgId = await getClerkOrgId(req);
       if (!orgId) return json(res, { error: "Unauthorized" }, 401);
+      if (req.method !== "GET") {
+        const denied = await checkWriteAllowed(orgId);
+        if (denied) return json(res, { error: denied }, 402);
+      }
       if (req.method === "GET") return json(res, await listWorkUnitsDb(orgId));
       if (req.method === "POST") {
         const body = await readBody(req).catch(() => null);
@@ -659,6 +883,10 @@ createServer(async (req, res) => {
     if (basePath === "/api/assessments" || basePath.startsWith("/api/assessments/")) {
       const orgId = await getClerkOrgId(req);
       if (!orgId) return json(res, { error: "Unauthorized" }, 401);
+      if (req.method !== "GET") {
+        const denied = await checkWriteAllowed(orgId);
+        if (denied) return json(res, { error: denied }, 402);
+      }
       if (req.method === "GET") return json(res, await listAssessmentsDb(orgId));
       if (req.method === "POST") {
         const body = await readBody(req).catch(() => null);
@@ -674,6 +902,10 @@ createServer(async (req, res) => {
     if (basePath === "/api/actions" || basePath.startsWith("/api/actions/")) {
       const orgId = await getClerkOrgId(req);
       if (!orgId) return json(res, { error: "Unauthorized" }, 401);
+      if (req.method !== "GET") {
+        const denied = await checkWriteAllowed(orgId);
+        if (denied) return json(res, { error: denied }, 402);
+      }
       if (req.method === "GET") return json(res, await listActionsDb(orgId));
       if (req.method === "POST") {
         const body = await readBody(req).catch(() => null);
@@ -689,6 +921,10 @@ createServer(async (req, res) => {
     if (basePath === "/api/versions") {
       const orgId = await getClerkOrgId(req);
       if (!orgId) return json(res, { error: "Unauthorized" }, 401);
+      if (req.method !== "GET") {
+        const denied = await checkWriteAllowed(orgId);
+        if (denied) return json(res, { error: denied }, 402);
+      }
       if (req.method === "GET") return json(res, await listVersionsDb(orgId));
       if (req.method === "POST") {
         const body = await readBody(req).catch(() => null);
@@ -946,6 +1182,20 @@ createServer(async (req, res) => {
         console.error("[reminders]", e);
         return json(res, { error: "Envoi échoué" }, 502);
       }
+    }
+
+    // ── RAPPELS AUTOMATIQUES DE RÉVISION ─────────────────────────────────────
+    // Appelée chaque jour par .github/workflows/revision-reminders.yml. Protégée
+    // par CRON_SECRET (et non par Clerk) puisqu'aucun utilisateur n'est derrière.
+    if (req.method === "POST" && basePath === "/api/cron/revision-reminders") {
+      if (!CRON_SECRET) return json(res, { error: "CRON_SECRET non configuré" }, 503);
+      const header = String(req.headers["authorization"] || "");
+      const expected = `Bearer ${CRON_SECRET}`;
+      const valid =
+        header.length === expected.length && crypto.timingSafeEqual(Buffer.from(header), Buffer.from(expected));
+      if (!valid) return json(res, { error: "Unauthorized" }, 401);
+      if (!RESEND_API_KEY || !clerkEnabled) return json(res, { error: "Email ou Clerk non configuré" }, 503);
+      return json(res, await sendRevisionReminders());
     }
 
     notFound(res);

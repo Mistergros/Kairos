@@ -11,6 +11,7 @@ export function dbToEstablishment(row: any): Establishment {
     sector: row.sector,
     address: row.address,
     headcount: row.headcount,
+    clientName: row.client_name || undefined,
   };
 }
 

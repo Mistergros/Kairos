@@ -48,7 +48,11 @@ interface DUERPState {
   setSelectedEstablishment: (id: string) => void;
   setSelectedWorkUnit: (id: string) => void;
   addEstablishment: (payload: Establishment) => void;
+  updateEstablishment: (id: string, patch: Partial<Establishment>) => void;
   removeEstablishment: (id: string) => void;
+  // Message du dernier refus d'enregistrement côté serveur (voir sync()).
+  saveError: string | null;
+  dismissSaveError: () => void;
   addWorkUnit: (payload: WorkUnit) => void;
   removeWorkUnit: (id: string) => void;
   addHazard: (payload: Hazard) => void;
@@ -73,8 +77,27 @@ interface DUERPState {
   loadDemoData: () => void;
 }
 
-const sync = (fn: () => void) => {
-  try { fn(); } catch { /* fire-and-forget, never crash */ }
+// Le serveur renvoie {"error": "..."} ; apiClient le transmet tel quel dans
+// le message de l'Error.
+const readApiError = (err: unknown) => {
+  const raw = err instanceof Error ? err.message : String(err);
+  try {
+    const parsed = JSON.parse(raw);
+    if (typeof parsed?.error === "string") return parsed.error;
+  } catch { /* pas du JSON */ }
+  return "La dernière modification n'a pas pu être enregistrée. Vérifiez votre connexion et réessayez.";
+};
+
+// Fire-and-forget, mais pas silencieux : si le serveur refuse l'écriture
+// (abonnement inactif, limite d'offre atteinte), l'utilisateur doit le voir,
+// sinon la donnée disparaît au prochain rechargement sans explication.
+const sync = (fn: () => unknown) => {
+  try {
+    const result = fn();
+    if (result && typeof (result as Promise<unknown>).catch === "function") {
+      (result as Promise<unknown>).catch((err) => useDuerpStore.setState({ saveError: readApiError(err) }));
+    }
+  } catch { /* never crash */ }
 };
 
 export const useDuerpStore = create<DUERPState>()(
@@ -155,6 +178,18 @@ export const useDuerpStore = create<DUERPState>()(
         const { orgId } = get();
         if (orgId) sync(() => upsertEstablishment(orgId, payload));
       },
+
+      updateEstablishment: (id, patch) => {
+        const current = get().establishments.find((e) => e.id === id);
+        if (!current) return;
+        const next = { ...current, ...patch };
+        set((state) => ({ establishments: state.establishments.map((e) => (e.id === id ? next : e)) }));
+        const { orgId } = get();
+        if (orgId) sync(() => upsertEstablishment(orgId, next));
+      },
+
+      saveError: null,
+      dismissSaveError: () => set({ saveError: null }),
 
       removeEstablishment: (id) => {
         const state = get();

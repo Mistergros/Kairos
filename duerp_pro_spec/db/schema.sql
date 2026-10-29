@@ -25,6 +25,9 @@ CREATE TABLE IF NOT EXISTS establishments (
   address TEXT,
   headcount INT
 );
+-- Migration offre Consultants : regroupe les établissements par client final.
+-- NULL = l'établissement est son propre client (cas des offres Starter/PME).
+ALTER TABLE establishments ADD COLUMN IF NOT EXISTS client_name TEXT;
 CREATE INDEX IF NOT EXISTS idx_establishments_org ON establishments(org_id);
 
 CREATE TABLE IF NOT EXISTS work_units (
@@ -104,3 +107,13 @@ CREATE TABLE IF NOT EXISTS duerp_versions (
 -- Migration pour les bases deja creees avant l'ajout de l'archivage complet (snapshot).
 ALTER TABLE duerp_versions ADD COLUMN IF NOT EXISTS snapshot JSONB;
 CREATE INDEX IF NOT EXISTS idx_versions_org ON duerp_versions(org_id);
+
+-- Rappels automatiques de révision annuelle (api/server.ts, sendRevisionReminders) :
+-- un rappel par (établissement, type, échéance), jamais envoyé deux fois.
+CREATE TABLE IF NOT EXISTS reminder_log (
+  establishment_id TEXT NOT NULL,
+  kind TEXT NOT NULL,
+  due_date DATE NOT NULL,
+  sent_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (establishment_id, kind, due_date)
+);
