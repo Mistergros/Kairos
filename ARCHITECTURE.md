@@ -103,7 +103,7 @@ flowchart TB
   2. Vercel → Settings → Environment Variables : `VITE_SENTRY_DSN` = DSN du projet React, puis redéployer.
   3. Render → Environment : `SENTRY_DSN` = DSN du projet Node.js.
   4. Dans Sentry, vérifier que les alertes email sont activées (Alerts → règle par défaut « nouveau problème »).
-- **Données envoyées :** messages d'erreur et page concernée uniquement, sans IP, sans contenu saisi, sans enregistrement de session. Sentry (États-Unis) figure dans la liste des sous-traitants (politique de confidentialité et accord de traitement).
+- **Données envoyées :** messages d'erreur et page concernée uniquement, sans IP, sans contenu saisi, sans enregistrement de session. Sentry (données stockées dans l'Union européenne, Francfort ; organisation `milante-consulting`) figure dans la liste des sous-traitants (politique de confidentialité et accord de traitement).
 - **Coût :** gratuit jusqu'à 5 000 erreurs/mois.
 - **Tant que ce n'est pas configuré :** rien n'est envoyé, l'écran d'erreur fonctionne quand même.
 
