@@ -11,13 +11,30 @@ export type Branding = {
   email?: string;
   website?: string;
   color?: string;
-  logo?: { dataUrl: string; width: number; height: number } | null;
+  logo?: Logo | null;
   hideKaijos?: boolean;
 };
 
 // ~300 Ko d'image une fois décodée : largement assez pour un logo de 600 px,
 // le navigateur le redimensionne avant envoi.
 export const MAX_LOGO_DATA_URL = 400_000;
+
+export type Logo = { dataUrl: string; width: number; height: number };
+
+// Logo PNG/JPEG seulement (jsPDF ne sait pas intégrer de SVG ; un data URL
+// arbitraire pourrait aussi porter autre chose qu'une image). Sert à la marque
+// du cabinet et au logo de chaque établissement (limite plus basse pour ce
+// dernier, car il est renvoyé avec la liste des établissements).
+export const sanitizeLogo = (logo: any, maxLength = MAX_LOGO_DATA_URL): { logo: Logo | null } | { error: string } => {
+  if (!logo) return { logo: null };
+  const dataUrl = typeof logo.dataUrl === "string" ? logo.dataUrl : "";
+  if (!/^data:image\/(png|jpeg);base64,[A-Za-z0-9+/=]+$/.test(dataUrl)) return { error: "Le logo doit être une image PNG ou JPEG." };
+  if (dataUrl.length > maxLength) return { error: `Le logo est trop lourd (${Math.round((maxLength * 0.75) / 1000)} Ko maximum).` };
+  const width = Number(logo.width);
+  const height = Number(logo.height);
+  if (!(width > 0 && height > 0 && width <= 4000 && height <= 4000)) return { error: "Dimensions du logo invalides." };
+  return { logo: { dataUrl, width: Math.round(width), height: Math.round(height) } };
+};
 
 export const BRANDING_DDL = `CREATE TABLE IF NOT EXISTS org_branding (
   org_id TEXT PRIMARY KEY,
@@ -45,16 +62,9 @@ export const sanitizeBranding = (input: any): { branding: Branding } | { error: 
     hideKaijos: input?.hideKaijos === true,
     logo: null,
   };
-  const logo = input?.logo;
-  if (logo) {
-    const dataUrl = typeof logo.dataUrl === "string" ? logo.dataUrl : "";
-    if (!/^data:image\/(png|jpeg);base64,[A-Za-z0-9+/=]+$/.test(dataUrl)) return { error: "Le logo doit être une image PNG ou JPEG." };
-    if (dataUrl.length > MAX_LOGO_DATA_URL) return { error: "Le logo est trop lourd (300 Ko maximum)." };
-    const width = Number(logo.width);
-    const height = Number(logo.height);
-    if (!(width > 0 && height > 0 && width <= 4000 && height <= 4000)) return { error: "Dimensions du logo invalides." };
-    out.logo = { dataUrl, width: Math.round(width), height: Math.round(height) };
-  }
+  const logo = sanitizeLogo(input?.logo);
+  if ("error" in logo) return { error: logo.error };
+  out.logo = logo.logo;
   return { branding: out };
 };
 

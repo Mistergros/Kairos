@@ -3,7 +3,8 @@ import { Card } from "../components/Card";
 import { useDuerpStore } from "../state/store";
 import { searchCompanies } from "../utils/api";
 import { uid } from "../utils/uid";
-import type { WorkUnit } from "../types";
+import type { Establishment, WorkUnit } from "../types";
+import { ESTABLISHMENT_LOGO, prepareLogo } from "../services/brandingService";
 import { usePlan } from "../hooks/usePlan";
 
 const PRIMARY_FEATURE_OPTIONS: { key: string; label: string; description: string }[] = [
@@ -53,6 +54,7 @@ export const Units = () => {
     establishments,
     workUnits,
     addEstablishment,
+    updateEstablishment,
     addWorkUnit,
     removeEstablishment,
     removeWorkUnit,
@@ -281,14 +283,18 @@ export const Units = () => {
                   <span>Code NAF manquant — renseignez-le pour améliorer la pertinence de l'analyse des risques.</span>
                 </div>
               )}
-              <div className="flex items-center justify-between gap-3">
-                <div className="space-y-1">
+              <div className="flex flex-wrap items-start gap-3">
+                <EstablishmentLogo
+                  logo={e.logo}
+                  onChange={(logo) => updateEstablishment(e.id, { logo })}
+                />
+                <div className="min-w-0 flex-1 space-y-1">
                   <p className="text-base font-semibold text-slate">{e.name}</p>
                   {isConsultant && e.clientName && <p className="text-xs font-medium text-kairos">Client : {e.clientName}</p>}
                   <p className="text-sm text-slate/60">{e.address || "Adresse à compléter"}</p>
                   <p className="text-xs text-slate/60">{e.codeNaf ? `NAF ${e.codeNaf}` : <span className="text-amber-600 font-medium">NAF à renseigner</span>}</p>
                 </div>
-                <div className="flex flex-col items-end gap-2 text-right">
+                <div className="flex w-full items-center justify-between gap-2 sm:w-auto sm:flex-col sm:items-end sm:text-right">
                   <span className="pill bg-ocean/10 text-ocean-700">{e.sector || "Secteur"}</span>
                   <button className="text-xs text-sunset hover:underline" onClick={(e2) => { e2.stopPropagation(); if (window.confirm(`Supprimer l'établissement "${e.name}" et toutes ses données ?`)) removeEstablishmentAndReset(e.id); }}>
                     Supprimer
@@ -505,6 +511,43 @@ export const Units = () => {
           </button>
         </div>
       </Card>
+    </div>
+  );
+};
+
+// Logo de l’entreprise évaluée, repris en couverture de son PDF.
+const EstablishmentLogo = ({ logo, onChange }: { logo: Establishment["logo"]; onChange: (logo: Establishment["logo"]) => void }) => {
+  const [error, setError] = useState<string | null>(null);
+  const onFile = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    event.target.value = "";
+    if (!file) return;
+    try {
+      onChange(await prepareLogo(file, ESTABLISHMENT_LOGO));
+      setError(null);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Logo illisible.");
+    }
+  };
+  return (
+    <div className="flex w-20 shrink-0 flex-col items-center gap-1 text-center">
+      <label
+        className="flex h-14 w-20 cursor-pointer items-center justify-center overflow-hidden rounded-lg border border-dashed border-slate/30 bg-white hover:border-kairos"
+        title="Logo de l’entreprise, affiché en couverture du PDF (PNG, JPEG, SVG ou WebP)"
+      >
+        {logo?.dataUrl ? (
+          <img src={logo.dataUrl} alt="Logo de l’entreprise" className="max-h-12 max-w-[4.5rem] object-contain" />
+        ) : (
+          <span className="px-1 text-[10px] leading-tight text-slate/50">Ajouter un logo</span>
+        )}
+        <input type="file" accept="image/png,image/jpeg,image/svg+xml,image/webp" className="hidden" onChange={onFile} />
+      </label>
+      {logo && (
+        <button type="button" className="text-[10px] text-red-500 hover:underline" onClick={() => onChange(null)}>
+          Retirer
+        </button>
+      )}
+      {error && <span className="text-[10px] leading-tight text-rose-600">{error}</span>}
     </div>
   );
 };

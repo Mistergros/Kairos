@@ -18,7 +18,7 @@ if (sentryEnabled) {
 }
 import { query } from "../apps/web/server/db.js";
 import RiskEngineV4 from "../src/core/engine/risk-engine.server.js";
-import { BRANDING_DDL, getBranding, sanitizeBranding, saveBranding } from "./branding.js";
+import { BRANDING_DDL, getBranding, sanitizeBranding, sanitizeLogo, saveBranding } from "./branding.js";
 import { checkEstablishmentLimits as checkEstablishmentLimitsWith, recordSlots as recordSlotsWith, SLOT_LOG_DDL } from "./slots.js";
 
 const PORT = Number(process.env.API_PORT || 8787);
@@ -272,6 +272,7 @@ const ensureEstablishmentsSchema = () => {
   if (!establishmentsSchemaReady) {
     establishmentsSchemaReady = (async () => {
       await query(`ALTER TABLE establishments ADD COLUMN IF NOT EXISTS client_name TEXT`);
+      await query(`ALTER TABLE establishments ADD COLUMN IF NOT EXISTS logo JSONB`);
       await query(SLOT_LOG_DDL);
     })().catch((err) => {
       establishmentsSchemaReady = null; // réessaie au prochain appel
@@ -295,23 +296,27 @@ const ensureBrandingSchema = () => {
 const listEstablishmentsDb = async (orgId: string) => {
   await ensureEstablishmentsSchema();
   const res = await query(
-    `SELECT id, name, siren, siret, code_naf, sector, address, headcount, client_name FROM establishments WHERE org_id=$1 ORDER BY name`,
+    `SELECT id, name, siren, siret, code_naf, sector, address, headcount, client_name, logo FROM establishments WHERE org_id=$1 ORDER BY name`,
     [orgId]
   );
   return res.rows;
 };
-const upsertEstablishmentDb = async (orgId: string, e: any) => {
+// Logo de l’entreprise évaluée (couverture du PDF) : 150 Ko maximum, car il
+// est renvoyé avec la liste des établissements à chaque chargement.
+const MAX_ESTABLISHMENT_LOGO = 200_000;
+
+const upsertEstablishmentDb = async (orgId: string, e: any, logo: unknown) => {
   await ensureEstablishmentsSchema();
   const clientName = typeof e.clientName === "string" && e.clientName.trim() ? e.clientName.trim().slice(0, 200) : null;
   const res = await query(
-    `INSERT INTO establishments (id, org_id, name, siren, siret, code_naf, sector, address, headcount, client_name)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
+    `INSERT INTO establishments (id, org_id, name, siren, siret, code_naf, sector, address, headcount, client_name, logo)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
      ON CONFLICT (id) DO UPDATE SET name=EXCLUDED.name, siren=EXCLUDED.siren, siret=EXCLUDED.siret,
        code_naf=EXCLUDED.code_naf, sector=EXCLUDED.sector, address=EXCLUDED.address, headcount=EXCLUDED.headcount,
-       client_name=EXCLUDED.client_name
+       client_name=EXCLUDED.client_name, logo=EXCLUDED.logo
      WHERE establishments.org_id = $2
      RETURNING *`,
-    [e.id, orgId, e.name, e.siren ?? null, e.siret ?? null, e.codeNaf ?? null, e.sector ?? null, e.address ?? null, e.headcount ?? null, clientName]
+    [e.id, orgId, e.name, e.siren ?? null, e.siret ?? null, e.codeNaf ?? null, e.sector ?? null, e.address ?? null, e.headcount ?? null, clientName, logo ? JSON.stringify(logo) : null]
   );
   return res.rows[0];
 };
@@ -881,9 +886,11 @@ createServer(async (req, res) => {
       if (req.method === "POST") {
         const body = await readBody(req).catch(() => null);
         if (!body?.id || !body?.name) return json(res, { error: "Bad Request" }, 400);
+        const logo = sanitizeLogo(body.logo, MAX_ESTABLISHMENT_LOGO);
+        if ("error" in logo) return json(res, { error: logo.error }, 400);
         const overLimit = await checkEstablishmentLimits(orgId, body);
         if (overLimit) return json(res, { error: overLimit }, 403);
-        const saved = await upsertEstablishmentDb(orgId, body);
+        const saved = await upsertEstablishmentDb(orgId, body, logo.logo);
         await recordSlots(orgId, body);
         return json(res, saved, 201);
       }

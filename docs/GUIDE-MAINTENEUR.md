@@ -6,7 +6,7 @@ Documents complémentaires :
 - [`ARCHITECTURE.md`](../ARCHITECTURE.md) : les services externes expliqués simplement, avec leur coût et leur configuration pas à pas.
 - [`REFERENTIELS.md`](../REFERENTIELS.md) : d'où viennent les risques, les questions et les mesures proposés, et comment ils sont sourcés.
 
-> Dernière mise à jour : 29 octobre 2026 (commit `66c9beb`). Voir la section « Tenir ce guide à jour » en fin de document.
+> Dernière mise à jour : 31 octobre 2026. Voir la section « Tenir ce guide à jour » en fin de document.
 
 ---
 
@@ -122,7 +122,7 @@ Il n'y a pas d'outil de migration. Le serveur applique au premier appel des migr
 
 | Fonction (`api/server.ts`) | Effet |
 |---|---|
-| `ensureEstablishmentsSchema` | Ajoute la colonne `establishments.client_name` et crée `slot_log` (quotas) |
+| `ensureEstablishmentsSchema` | Ajoute les colonnes `establishments.client_name` et `establishments.logo` (JSONB), et crée `slot_log` (quotas) |
 | `ensureReminderSchema` | Crée `reminder_log` : un même rappel n'est jamais envoyé deux fois |
 | `ensureBrandingSchema` | Crée `org_branding` : marque cabinet, une ligne par compte |
 
@@ -186,6 +186,20 @@ Toutes les offres sont annuelles. Variables : `STRIPE_PRICE_ID_STARTER_ANNUAL`, 
 **Ajouter une activité :** créez `config/naf/<CODE>-<libelle>.json` avec `code`, `label`, `risks_priority` et `risks_mandatory`, puis lancez `npm run config:validate`.
 
 ---
+
+## 9 bis. Documents PDF
+
+Les PDF sont générés dans le navigateur par `src/services/printService.ts` (jsPDF + jspdf-autotable) :
+- **DUERP complet** (`printDuerpDocument`, A4 portrait). Il comprend : couverture, sommaire, synthèse, méthode d’évaluation, unités de travail, inventaire par unité, plan d’action, validation et historique des versions. Les numéros du sommaire sont écrits en dernier, une fois les pages connues.
+- **Résumé TPE** (`printDuerpSimplified`) et **rapport multi-sites** (`printDuerpMultiSites`).
+
+Deux logos peuvent apparaître :
+- celui de l’**entreprise évaluée** (`establishments.logo`, réglé sur la fiche établissement, 400 px et 200 000 caractères au maximum) ;
+- celui du **cabinet** (`org_branding`, offre Pro uniquement).
+
+Les deux passent par `sanitizeLogo` (`api/branding.ts`) côté serveur et par `prepareLogo` (`src/services/brandingService.ts`) côté navigateur.
+
+La page « Méthode » décrit l’échelle de cotation de `src/pages/Inventory.tsx` et les seuils de `src/utils/score.ts` : **mettre la page à jour si l’un des deux change.** Les polices standard de jsPDF ne couvrent pas tous les caractères Unicode : éviter les flèches et les symboles hors Latin-1 dans les textes du PDF.
 
 ## 10. Tests et intégration continue
 

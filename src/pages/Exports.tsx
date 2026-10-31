@@ -97,7 +97,7 @@ export const Exports = () => {
   };
 
   const handlePrintPdf = () => {
-    printDuerpDocument({ establishment, workUnits: estabWorkUnits, assessments: estabAssessments, actions: estabActions, branding: pdfBranding });
+    printDuerpDocument({ establishment, workUnits: estabWorkUnits, assessments: estabAssessments, actions: estabActions, branding: pdfBranding, versions });
   };
 
   const handlePrintSimplified = () => {

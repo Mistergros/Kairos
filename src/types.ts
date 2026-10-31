@@ -12,6 +12,8 @@ export interface Establishment {
   headcount?: number;
   /** Offre Pro (id "consultants") : client final auquel appartient l'établissement. */
   clientName?: string;
+  /** Logo de l’entreprise évaluée, en couverture du PDF. */
+  logo?: { dataUrl: string; width: number; height: number } | null;
 }
 
 export interface WorkUnit {

@@ -45,20 +45,22 @@ export const saveBranding = async (branding: Branding): Promise<Branding> => {
   return saved;
 };
 
-const MAX_LOGO_SIDE = 600;
-const MAX_LOGO_DATA_URL = 400_000; // même limite que le serveur
+// Limites alignées sur le serveur : marque cabinet 600 px / 400 000 caractères,
+// logo d’établissement 400 px / 200 000 (api/branding.ts, api/server.ts).
+export const CABINET_LOGO = { maxSide: 600, maxLength: 400_000 };
+export const ESTABLISHMENT_LOGO = { maxSide: 400, maxLength: 200_000 };
 
 // Redimensionne le logo (600 px max) et le convertit en PNG, ou en JPEG s'il
 // reste trop lourd : jsPDF n'intègre que PNG/JPEG, et SVG/WebP passent ainsi.
-export const prepareLogo = (file: File): Promise<NonNullable<Branding["logo"]>> =>
+export const prepareLogo = (file: File, limits = CABINET_LOGO): Promise<NonNullable<Branding["logo"]>> =>
   new Promise((resolve, reject) => {
     const url = URL.createObjectURL(file);
     const img = new Image();
     img.onload = () => {
       URL.revokeObjectURL(url);
-      const ratio = Math.min(1, MAX_LOGO_SIDE / Math.max(img.naturalWidth || 1, img.naturalHeight || 1));
-      const width = Math.max(1, Math.round((img.naturalWidth || MAX_LOGO_SIDE) * ratio));
-      const height = Math.max(1, Math.round((img.naturalHeight || MAX_LOGO_SIDE) * ratio));
+      const ratio = Math.min(1, limits.maxSide / Math.max(img.naturalWidth || 1, img.naturalHeight || 1));
+      const width = Math.max(1, Math.round((img.naturalWidth || limits.maxSide) * ratio));
+      const height = Math.max(1, Math.round((img.naturalHeight || limits.maxSide) * ratio));
       const canvas = document.createElement("canvas");
       canvas.width = width;
       canvas.height = height;
@@ -66,14 +68,14 @@ export const prepareLogo = (file: File): Promise<NonNullable<Branding["logo"]>> 
       if (!ctx) return reject(new Error("Impossible de lire l'image."));
       ctx.drawImage(img, 0, 0, width, height);
       let dataUrl = canvas.toDataURL("image/png");
-      if (dataUrl.length > MAX_LOGO_DATA_URL) {
+      if (dataUrl.length > limits.maxLength) {
         // JPEG n'a pas de transparence : fond blanc, comme la page du PDF.
         ctx.globalCompositeOperation = "destination-over";
         ctx.fillStyle = "#ffffff";
         ctx.fillRect(0, 0, width, height);
         dataUrl = canvas.toDataURL("image/jpeg", 0.85);
       }
-      if (dataUrl.length > MAX_LOGO_DATA_URL) return reject(new Error("Le logo est trop lourd, essayez une image plus simple."));
+      if (dataUrl.length > limits.maxLength) return reject(new Error("Le logo est trop lourd, essayez une image plus simple."));
       resolve({ dataUrl, width, height });
     };
     img.onerror = () => {
