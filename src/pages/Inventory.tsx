@@ -349,13 +349,13 @@ export const Inventory = () => {
         corner={
           <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto">
             <div className="text-sm text-slate/60">
-              Unité: <span className="font-semibold text-slate-800">{currentUnit?.name || "Non selectionnee"}</span>
+              Unité: <span className="font-semibold text-slate-800">{currentUnit?.name || "Non sélectionnée"}</span>
               {currentUnit?.activity ? ` - Activité: ${currentUnit.activity}` : ""}
             </div>
             <input
               className="w-full rounded-xl border border-slate/20 px-3 py-2 text-sm sm:w-auto"
               placeholder="Recherche..."
-              title="Filtrer par texte (risque ou categorie)"
+              title="Filtrer par texte (risque ou catégorie)"
               value={filters.search}
               onChange={(e: ChangeEvent<HTMLInputElement>) => setFilters((f) => ({ ...f, search: e.target.value }))}
             />
@@ -364,10 +364,10 @@ export const Inventory = () => {
       >
         <div className="mb-2 flex flex-wrap items-center gap-3 text-xs text-slate/70">
           <span className="rounded-full bg-slate/10 px-3 py-1 font-semibold text-slate-800">
-            NAF etablissement : {currentEstablishment?.codeNaf || sectorInput || "Non renseigne"}
+            NAF établissement : {currentEstablishment?.codeNaf || sectorInput || "Non renseigné"}
           </span>
           <span className="rounded-full bg-slate/10 px-3 py-1">
-            Activité unité : {currentUnit?.activity || "Non renseignee"}
+            Activité unité : {currentUnit?.activity || "Non renseignée"}
           </span>
         </div>
 
@@ -410,7 +410,7 @@ export const Inventory = () => {
         )}
 
         <div className="mb-3 rounded-xl bg-slate/5 px-3 py-2 text-xs text-slate/70">
-          Astuce : 1) Saisissez le code NAF/secteur puis « Pré-remplir » pour charger les risques de votre secteur. 2) Ajustez G/F/P
+          Astuce : 1) Saisissez le code NAF/secteur puis « Pré-remplir » pour charger les risques de votre secteur. 2) Ajustez G/F/M
           ou utilisez le questionnaire de pondération. 3) Supprimez les risques non pertinents.
         </div>
 
@@ -428,7 +428,7 @@ export const Inventory = () => {
             <input
               className="rounded-xl border border-slate/20 px-3 py-2 text-sm"
               placeholder="Code NAF ou secteur (ex: 62.01Z, BTP...)"
-              title="Saisissez un code NAF ou un secteur, puis cliquez sur Pre-remplir"
+              title="Saisissez un code NAF ou un secteur, puis cliquez sur Pré-remplir"
               value={sectorInput}
               onChange={(e: ChangeEvent<HTMLInputElement>) => setSectorInput(e.target.value)}
             />
@@ -455,9 +455,9 @@ export const Inventory = () => {
             className="rounded-xl border border-slate/20 bg-white px-3 py-2 text-sm"
             value={filters.category}
             onChange={(e: ChangeEvent<HTMLSelectElement>) => setFilters((f) => ({ ...f, category: e.target.value }))}
-            title="Filtrer par categorie de risque"
+            title="Filtrer par catégorie de risque"
           >
-            <option value="">Categorie</option>
+            <option value="">Catégorie</option>
             {categories.map((c) => (
               <option key={c} value={c}>
                 {c}
@@ -470,9 +470,9 @@ export const Inventory = () => {
             onChange={(e: ChangeEvent<HTMLSelectElement>) =>
               setFilters((f) => ({ ...f, priority: e.target.value ? (Number(e.target.value) as Priority) : undefined }))
             }
-            title="Filtrer par priorite (P1 critique -> P4 surveiller)"
+            title="Filtrer par priorité (P1 critique à P4 à surveiller)"
           >
-            <option value="">Priorite</option>
+            <option value="">Priorité</option>
             <option value="1">P1</option>
             <option value="2">P2</option>
             <option value="3">P3</option>
@@ -810,11 +810,11 @@ export const Inventory = () => {
       )}
 
       <Card
-        title="Ajouter un risque depuis la bibliotheque"
-        subtitle="Filtrer par categorie, choisir le risque, coter G/F/P et proposer des mesures"
+        title="Ajouter un risque depuis la bibliothèque"
+        subtitle="Filtrer par catégorie, choisir le risque, coter G/F/M et proposer des mesures"
       >
         <p className="text-xs text-slate/60">
-          Sources : INRS (catalogue generique), OPPBTP / CARSAT / ANACT selon le secteur selectionne.
+          Sources : INRS (catalogue générique), OPPBTP / CARSAT / ANACT selon le secteur sélectionné.
         </p>
         <div className="mt-3 flex flex-wrap items-center gap-3 text-sm">
           <label className="inline-flex items-center gap-2">
@@ -863,7 +863,7 @@ export const Inventory = () => {
             <div className="mt-3 grid grid-cols-3 gap-2 text-sm">
               {(["gravity", "frequency", "control"] as const).map((field) => (
                 <label key={field} className="text-slate/70">
-                  {field === "gravity" ? "G" : field === "frequency" ? "F" : "P"}
+                  {field === "gravity" ? "G" : field === "frequency" ? "F" : "M"}
                   <input
                     type="number"
                     className="mt-1 w-full rounded-xl border border-slate/20 px-3 py-2"
@@ -917,7 +917,7 @@ export const Inventory = () => {
             <div className="grid grid-cols-3 gap-2 text-sm md:col-span-3">
               {(["gravity", "frequency", "control"] as const).map((field) => (
                 <label key={field} className="text-slate/70">
-                  {field === "gravity" ? "G" : field === "frequency" ? "F" : "P"}
+                  {field === "gravity" ? "G" : field === "frequency" ? "F" : "M"}
                   <input
                     type="number"
                     className="mt-1 w-full rounded-xl border border-slate/20 px-3 py-2"
@@ -940,7 +940,7 @@ export const Inventory = () => {
             />
           </label>
           <label className="text-sm">
-            <span className="block text-slate/70">Mesures a proposer</span>
+            <span className="block text-slate/70">Mesures à proposer</span>
             <textarea
               className="mt-1 w-full rounded-xl border border-slate/20 bg-white px-3 py-2"
               rows={3}
@@ -961,9 +961,9 @@ export const Inventory = () => {
           <button
             className="text-sm text-ocean hover:underline"
             onClick={() => navigate("/duerp-results")}
-            title="Visualiser la synthese DUERP"
+            title="Visualiser la synthèse DUERP"
           >
-            Voir la synthese DUERP
+            Voir la synthèse DUERP
           </button>
         </div>
       </Card>

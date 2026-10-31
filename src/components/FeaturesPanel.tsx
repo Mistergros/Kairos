@@ -54,7 +54,7 @@ export function FeaturesPanel({ nafCode = "47", unity = "Magasin", onResult }: F
         setPayload(withMeta);
         onResult?.(withMeta);
       } catch (err) {
-        setError("Echec de l'appel API");
+        setError("Échec de l'appel au serveur");
       } finally {
         setLoading(false);
       }

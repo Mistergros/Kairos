@@ -230,9 +230,9 @@ export const Units = () => {
 
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-      <Card title="Etablissements" subtitle="Raison sociale, NAF/secteur, coordonnees">
+      <Card title="Établissements" subtitle="Raison sociale, NAF/secteur, coordonnées">
         <div className="mb-3 rounded-xl bg-slate/5 px-3 py-2 text-xs text-slate/70">
-          Astuce : cherchez l'entreprise (SIREN/SIRET ou nom) pour preremplir les champs. Vous pouvez ensuite modifier le secteur/NAF avant d'enregistrer.
+          Astuce : cherchez l'entreprise (SIREN/SIRET ou nom) pour pré-remplir les champs. Vous pouvez ensuite modifier le secteur/NAF avant d'enregistrer.
         </div>
         <div className="mb-4 rounded-2xl border border-slate/10 bg-white p-4 shadow-sm">
           <p className="text-sm font-semibold text-slate">Recherche d'entreprise (SIREN/SIRET ou nom)</p>
@@ -240,7 +240,7 @@ export const Units = () => {
             <input
               className="flex-1 rounded-lg border border-slate/20 px-3 py-2"
               placeholder="Ex: 552100554 ou 'Societe Exemple'"
-              title="Tapez un SIREN/SIRET ou un nom (mini 3 caracteres)"
+              title="Tapez un SIREN/SIRET ou un nom (3 caractères minimum)"
               value={companyQuery}
               onChange={(e) => setCompanyQuery(e.target.value)}
             />
@@ -248,7 +248,7 @@ export const Units = () => {
               className="rounded-xl bg-ocean px-4 py-2 text-sm font-semibold text-white shadow-lg disabled:opacity-60"
               onClick={onSearchCompanies}
               disabled={companyLoading || companyQuery.length < 3}
-              title="Recherche une entreprise pour pre-remplir nom/adresse/NAF"
+              title="Recherche une entreprise pour pré-remplir nom/adresse/NAF"
             >
               {companyLoading ? "Recherche..." : "Rechercher"}
             </button>
@@ -261,7 +261,7 @@ export const Units = () => {
                   key={hit.id}
                   className="cursor-pointer rounded-xl border border-slate/10 bg-slate/5 p-2 hover:bg-slate/10"
                   onClick={() => onSelectCompany(hit)}
-                  title="Cliquer pour remplir le formulaire etablissement"
+                  title="Cliquer pour remplir le formulaire établissement"
                 >
                   <p className="text-sm font-semibold text-slate">{hit.name}</p>
                   <p className="text-xs text-slate/60">
@@ -339,19 +339,19 @@ Il disparaîtra de vos listes, mais son DUERP et toutes ses versions restent con
         )}
 
         <div className="mt-6 rounded-2xl bg-slate/5 p-4">
-          <p className="mb-2 font-semibold text-slate">Nouvel etablissement</p>
+          <p className="mb-2 font-semibold text-slate">Nouvel établissement</p>
           <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
             <input
               className="rounded-lg border border-slate/20 px-3 py-2"
               placeholder="Nom"
-              title="Nom de l'etablissement"
+              title="Nom de l'établissement"
               value={establishmentForm.name}
               onChange={(e) => setEstablishmentForm((v) => ({ ...v, name: e.target.value }))}
             />
             <input
               className="rounded-lg border border-slate/20 px-3 py-2"
               placeholder="Secteur"
-              title="Secteur d'activite (libelle libre)"
+              title="Secteur d'activité (libellé libre)"
               value={establishmentForm.sector}
               onChange={(e) => setEstablishmentForm((v) => ({ ...v, sector: e.target.value }))}
             />
@@ -405,16 +405,16 @@ Il disparaîtra de vos listes, mais son DUERP et toutes ses versions restent con
             onClick={onCreateEstablishment}
             disabled={reachedEstabLimit}
             className="mt-3 rounded-xl bg-ink px-4 py-2 text-sm font-semibold text-white shadow-lg disabled:opacity-40 disabled:cursor-not-allowed"
-            title="Ajouter l'etablissement"
+            title="Ajouter l'établissement"
           >
             Ajouter
           </button>
         </div>
       </Card>
 
-      <Card title="Unites de travail" subtitle="Repartir par atelier/equipe/poste pour suivre les risques">
+      <Card title="Unités de travail" subtitle="Répartir par atelier, équipe ou poste pour suivre les risques">
         <div className="mb-3 rounded-xl bg-slate/5 px-3 py-2 text-xs text-slate/70">
-          Astuce : creez plusieurs unites (bureaux, atelier, chantier, etc.). Chaque unite aura son inventaire de risques dedie.
+          Astuce : créez plusieurs unités (bureaux, atelier, chantier, etc.). Chaque unité aura son propre inventaire de risques.
         </div>
         <div className="space-y-3">
           {workUnits
@@ -426,7 +426,7 @@ Il disparaîtra de vos listes, mais son DUERP et toutes ses versions restent con
                     <p className="font-semibold text-slate">{w.name}</p>
                     <p className="text-xs text-slate/60">
                       {w.activity ? `Activité : ${w.activity}` : "Activité non renseignée"} •{" "}
-                      {w.description || "Description a completer (activites, metiers)"}
+                      {w.description || "Description à compléter (activités, métiers)"}
                     </p>
                     {w.features && w.features.length ? (
                       <div className="mt-1 flex flex-wrap gap-1">
@@ -452,12 +452,12 @@ Il disparaîtra de vos listes, mais son DUERP et toutes ses versions restent con
             ))}
         </div>
         <div className="mt-6 rounded-2xl bg-slate/5 p-4">
-          <p className="mb-2 font-semibold text-slate">Nouvelle unite</p>
+          <p className="mb-2 font-semibold text-slate">Nouvelle unité</p>
           <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
             <input
               className="rounded-lg border border-slate/20 px-3 py-2"
               placeholder="Nom"
-              title="Nom de l'unite de travail"
+              title="Nom de l'unité de travail"
               value={unitForm.name}
               onChange={(e) => setUnitForm((v) => ({ ...v, name: e.target.value }))}
             />
@@ -465,26 +465,26 @@ Il disparaîtra de vos listes, mais son DUERP et toutes ses versions restent con
               type="number"
               className="rounded-lg border border-slate/20 px-3 py-2"
               placeholder="Effectif"
-              title="Nombre de personnes dans cette unite"
+              title="Nombre de personnes dans cette unité"
               value={unitForm.headcount}
               onChange={(e) => setUnitForm((v) => ({ ...v, headcount: Number(e.target.value) }))}
             />
             <textarea
               className="md:col-span-2 rounded-lg border border-slate/20 px-3 py-2"
-              placeholder="Description (activite, zone, horaires, taches)"
-              title="Decrivez brievement les activites, horaires, metiers"
+              placeholder="Description (activité, zone, horaires, tâches)"
+              title="Décrivez brièvement les activités, horaires, métiers"
               value={unitForm.description}
               onChange={(e) => setUnitForm((v) => ({ ...v, description: e.target.value }))}
             />
           </div>
           <div className="mt-3 space-y-2">
-            <p className="text-sm font-semibold text-slate-700">Activite / gabarit</p>
+            <p className="text-sm font-semibold text-slate-700">Activité / gabarit</p>
             <select
               className="w-full rounded-lg border border-slate/20 px-3 py-2"
               value={activity}
               onChange={(e) => onSelectActivity(e.target.value)}
             >
-              <option value="">Choisir une activite</option>
+              <option value="">Choisir une activité</option>
               {ACTIVITY_OPTIONS.map((opt) => (
                 <option key={opt.key} value={opt.key}>
                   {opt.label}
@@ -493,7 +493,7 @@ Il disparaîtra de vos listes, mais son DUERP et toutes ses versions restent con
             </select>
           </div>
           <div className="mt-3 space-y-2">
-            <p className="text-sm font-semibold text-slate-700">Facteurs / Activite</p>
+            <p className="text-sm font-semibold text-slate-700">Facteurs / activité</p>
             <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
               {visibleOptions.map((opt) => (
                 <label
@@ -519,7 +519,7 @@ Il disparaîtra de vos listes, mais son DUERP et toutes ses versions restent con
                 value={customExtra}
                 onChange={(e) => onAddExtraFeature(e.target.value)}
               >
-                <option value="">Ajouter un facteur supplementaire</option>
+                <option value="">Ajouter un facteur supplémentaire</option>
                 {EXTRA_FEATURE_OPTIONS.filter((opt) => !selectedFeatures.includes(opt.key)).map((opt) => (
                   <option key={opt.key} value={opt.key}>
                     {opt.label}
@@ -538,9 +538,9 @@ Il disparaîtra de vos listes, mais son DUERP et toutes ses versions restent con
             onClick={onCreateUnit}
             disabled={loadingHazards || reachedUnitLimit}
             className="mt-3 rounded-xl bg-ocean px-4 py-2 text-sm font-semibold text-white shadow-lg disabled:opacity-40 disabled:cursor-not-allowed"
-            title="Ajouter l'unite et pré-remplir l'inventaire de risques"
+            title="Ajouter l'unité et pré-remplir l'inventaire de risques"
           >
-            {loadingHazards ? "Analyse en cours..." : "Ajouter l'unite"}
+            {loadingHazards ? "Analyse en cours..." : "Ajouter l'unité"}
           </button>
         </div>
       </Card>

@@ -214,11 +214,11 @@ export const Dashboard = () => {
   const onboardingDone = hasEstablishment && hasUnit && hasAssessments && hasOwners;
 
   const onboardingSteps = [
-    { label: "Créer un établissement", done: hasEstablishment, path: "/unites", hint: "Renseignez votre raison sociale, code NAF et adresse." },
-    { label: "Créer une unité de travail", done: hasUnit, path: "/unites", hint: "Découpez l'entreprise par atelier, équipe ou poste." },
-    { label: "Lancer l'analyse automatique", done: hasAssessments, path: "/inventaire", hint: "Cliquez sur « Pré-remplir » dans l'inventaire pour générer les risques." },
-    { label: "Valider l'inventaire des risques", done: hasAssessments && assessments.some(a => a.updatedAt !== a.createdAt), path: "/inventaire", hint: "Ajustez les scores G/F/P et supprimez les risques non pertinents." },
-    { label: "Affecter les actions à des responsables", done: hasOwners, path: "/plan", hint: "Dans « Par responsable », assignez chaque action à une personne." },
+    { label: "Créer un établissement", done: hasEstablishment, path: "/units", hint: "Renseignez votre raison sociale, code NAF et adresse." },
+    { label: "Créer une unité de travail", done: hasUnit, path: "/units", hint: "Découpez l'entreprise par atelier, équipe ou poste." },
+    { label: "Lancer l'analyse automatique", done: hasAssessments, path: "/inventory", hint: "Cliquez sur « Pré-remplir » dans l'inventaire pour générer les risques." },
+    { label: "Valider l'inventaire des risques", done: hasAssessments && assessments.some(a => a.updatedAt !== a.createdAt), path: "/inventory", hint: "Ajustez les cotations G/F/M et supprimez les risques non pertinents." },
+    { label: "Affecter les actions à des responsables", done: hasOwners, path: "/action-plan", hint: "Dans le plan d'action, renseignez le responsable de chaque action." },
   ];
 
   return (

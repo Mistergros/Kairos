@@ -50,7 +50,7 @@ export const Exports = () => {
   );
 
   const exportCsv = () => {
-    const header = "Unite;Categorie;Risque;G;F;M;Score;Priorite;Mesures existantes;Mesures proposees";
+    const header = "Unité;Catégorie;Risque;G;F;M;Score;Priorité;Mesures existantes;Mesures proposées";
     const lines = estabAssessments.map((a) =>
       [
         estabWorkUnits.find((u) => u.id === a.workUnitId)?.name || a.workUnitId,
@@ -70,7 +70,7 @@ export const Exports = () => {
   };
 
   const exportActions = () => {
-    const header = "Action;Description;Responsable;Echeance;Statut;Priorite;Risque lie";
+    const header = "Action;Description;Responsable;Échéance;Statut;Priorité;Risque lié";
     const lines = estabActions.map((a) => {
       const linked = a.assessmentId ? estabAssessments.find((as) => as.id === a.assessmentId) : undefined;
       return [

@@ -16,7 +16,7 @@ export default function SignUpPage() {
             <br /> avec un accompagnement guide.
           </h1>
           <p className="mt-4 text-base text-slate-300">
-            Creez votre compte pour activer votre abonnement et lancer votre premier DUERP.
+            Créez votre compte et construisez gratuitement votre premier DUERP.
           </p>
           <div className="mt-6">
             <a href="/landing" className="text-sm text-slate-300 underline hover:text-white">

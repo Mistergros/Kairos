@@ -11,7 +11,7 @@ export default function SignInPage() {
             <br /> la suite en moins de 2 minutes.
           </h1>
           <p className="mt-4 text-base text-slate-300">
-            Connectez-vous pour retrouver vos etablissements, vos plans d'action et vos exports.
+            Connectez-vous pour retrouver vos établissements, vos plans d'action et vos exports.
           </p>
           <div className="mt-6">
             <a href="/landing" className="text-sm text-slate-300 underline hover:text-white">

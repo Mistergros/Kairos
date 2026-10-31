@@ -88,7 +88,7 @@ export default function AccountPage() {
       window.location.href = data.url;
     } catch (err) {
       console.error(err);
-      setError("Impossible d'ouvrir le portail client. Reessayez.");
+      setError("Impossible d'ouvrir le portail client. Réessayez.");
     } finally {
       setLoading(false);
     }
@@ -100,11 +100,11 @@ export default function AccountPage() {
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
             <h1 className="text-3xl font-semibold">Mon compte</h1>
-            <p className="mt-2 text-slate-600">Gerez votre abonnement et vos informations de facturation.</p>
+            <p className="mt-2 text-slate-600">Gérez votre abonnement et vos informations de facturation.</p>
           </div>
           <div className="flex items-center gap-4">
             <a href="/" className="text-sm font-semibold text-blue-600 hover:underline">
-              Retour a l'application
+              Retour à l'application
             </a>
             <button
               type="button"
@@ -139,7 +139,7 @@ export default function AccountPage() {
           <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
             <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Facturation</p>
             <p className="mt-3 text-sm text-slate-600">
-              Mettez a jour votre moyen de paiement, vos factures et votre abonnement.
+              Mettez à jour votre moyen de paiement, vos factures et votre abonnement.
             </p>
             <button
               type="button"
