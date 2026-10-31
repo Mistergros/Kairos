@@ -567,7 +567,7 @@ const PRICING_PLANS = [
     priceMonthly: null,
     priceYearly: 490,
     annualOnly: true,
-    tagline: "Pour les PME et équipes HSE internes",
+    tagline: "Pour les PME multi-sites, gérées par un responsable",
     bullets: ["Jusqu'à 5 établissements", "20 unités de travail", "Export XLSX par responsable", "Rapport PDF multi-sites", "Historique des versions"],
     badge: "RECOMMANDÉ",
     recommended: true,
