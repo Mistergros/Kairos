@@ -34,6 +34,20 @@ const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET;
 const STRIPE_SUCCESS_URL = process.env.STRIPE_SUCCESS_URL || "http://localhost:5173/landing?checkout=success";
 const STRIPE_CANCEL_URL = process.env.STRIPE_CANCEL_URL || "http://localhost:5173/landing?checkout=cancel";
 const STRIPE_PORTAL_RETURN_URL = process.env.STRIPE_PORTAL_RETURN_URL || "http://localhost:5173/mon-compte";
+
+// Adresse de retour proposée par le navigateur (après paiement, portail) :
+// acceptée seulement sur une origine de l'application, sinon l'adresse par
+// défaut. Évite un lien piégé qui renverrait vers un site tiers via Stripe.
+const safeReturnUrl = (candidate: unknown, fallback: string) => {
+  if (typeof candidate !== "string") return fallback;
+  try {
+    const origin = new URL(candidate).origin;
+    const allowed = [...ALLOWED_ORIGINS, process.env.APP_URL ? new URL(process.env.APP_URL).origin : null].filter(Boolean);
+    return allowed.includes(origin) ? candidate : fallback;
+  } catch {
+    return fallback;
+  }
+};
 const STRIPE_PRICE_ID_STARTER          = process.env.STRIPE_PRICE_ID_STARTER;
 const STRIPE_PRICE_ID_STARTER_ANNUAL   = process.env.STRIPE_PRICE_ID_STARTER_ANNUAL;
 const STRIPE_PRICE_ID_PME              = process.env.STRIPE_PRICE_ID_PME;
@@ -315,6 +329,15 @@ const ensureBrandingSchema = () => {
   }
   return brandingSchemaReady;
 };
+
+// Un élément ne peut être rattaché qu'à un parent du même compte (sinon un
+// identifiant d'un autre compte pouvait être visé, sans lecture possible).
+const ownsRow = async (table: "establishments" | "work_units" | "assessments", id: unknown, orgId: string) => {
+  if (typeof id !== "string" || !id) return false;
+  const res = await query(`SELECT 1 FROM ${table} WHERE id=$1 AND org_id=$2`, [id, orgId]);
+  return res.rows.length > 0;
+};
+const notYours = (res: any) => json(res, { error: "Élément parent introuvable dans votre compte. Rechargez la page." }, 409);
 
 const listEstablishmentsDb = async (orgId: string) => {
   await ensureEstablishmentsSchema();
@@ -751,6 +774,10 @@ const getClerkOrgId = async (req: any): Promise<string | null> => {
     const payload = await verifyToken(token, { secretKey: CLERK_SECRET_KEY });
     const orgId = payload.sub;
     if (!orgId) return null;
+    if (clerkOrgCache.size > 5_000) {
+      const now = Date.now();
+      for (const [key, entry] of clerkOrgCache) if (entry.expires <= now) clerkOrgCache.delete(key);
+    }
     clerkOrgCache.set(token, { orgId, expires: Date.now() + 60_000 });
     return orgId;
   } catch {
@@ -857,8 +884,8 @@ createServer(async (req, res) => {
       // carte au compte Clerk d'un tiers. Un visiteur pas encore inscrit n'a pas
       // de jeton : clerkUserId reste undefined, le checkout se fait par email.
       const clerkUserId = (await getClerkOrgId(req)) || undefined;
-      const successUrl = typeof body?.successUrl === "string" ? body.successUrl : STRIPE_SUCCESS_URL;
-      const cancelUrl = typeof body?.cancelUrl === "string" ? body.cancelUrl : STRIPE_CANCEL_URL;
+      const successUrl = safeReturnUrl(body?.successUrl, STRIPE_SUCCESS_URL);
+      const cancelUrl = safeReturnUrl(body?.cancelUrl, STRIPE_CANCEL_URL);
       let customerId: string | undefined;
 
       if (clerkUserId && clerkEnabled) {
@@ -969,7 +996,7 @@ createServer(async (req, res) => {
       const metadata = (user.publicMetadata || {}) as Record<string, any>;
       const customerId = typeof metadata.stripeCustomerId === "string" ? metadata.stripeCustomerId : null;
       if (!customerId) return json(res, { error: "Stripe customer not linked" }, 400);
-      const returnUrl = typeof body?.returnUrl === "string" ? body.returnUrl : STRIPE_PORTAL_RETURN_URL;
+      const returnUrl = safeReturnUrl(body?.returnUrl, STRIPE_PORTAL_RETURN_URL);
       const session = await stripe.billingPortal.sessions.create({ customer: customerId, return_url: returnUrl });
       return json(res, { url: session.url });
     }
@@ -1022,6 +1049,7 @@ createServer(async (req, res) => {
       if (req.method === "POST") {
         const body = await readBody(req).catch(() => null);
         if (!body?.id || !body?.name || !body?.establishmentId) return json(res, { error: "Bad Request" }, 400);
+        if (!(await ownsRow("establishments", body.establishmentId, orgId))) return notYours(res);
         // Nombre d'unités de l'offre (jusqu'ici contrôlé seulement dans le navigateur).
         const plan = await getUserPlan(orgId);
         const max = PLAN_LIMITS[plan.planId]?.maxWorkUnits ?? -1;
@@ -1053,6 +1081,7 @@ createServer(async (req, res) => {
       if (req.method === "POST") {
         const body = await readBody(req).catch(() => null);
         if (!body?.id || !body?.workUnitId) return json(res, { error: "Bad Request" }, 400);
+        if (!(await ownsRow("work_units", body.workUnitId, orgId))) return notYours(res);
         return json(res, await upsertAssessmentDb(orgId, body), 201);
       }
       if (req.method === "DELETE") {
@@ -1068,6 +1097,8 @@ createServer(async (req, res) => {
       if (req.method === "POST") {
         const body = await readBody(req).catch(() => null);
         if (!body?.id || !body?.title) return json(res, { error: "Bad Request" }, 400);
+        if (body.establishmentId && !(await ownsRow("establishments", body.establishmentId, orgId))) return notYours(res);
+        if (body.assessmentId && !(await ownsRow("assessments", body.assessmentId, orgId))) return notYours(res);
         return json(res, await upsertActionDb(orgId, body), 201);
       }
       if (req.method === "DELETE") {
@@ -1083,6 +1114,7 @@ createServer(async (req, res) => {
       if (req.method === "POST") {
         const body = await readBody(req).catch(() => null);
         if (!body?.id || !body?.establishmentId || !body?.label) return json(res, { error: "Bad Request" }, 400);
+        if (!(await ownsRow("establishments", body.establishmentId, orgId))) return notYours(res);
         return json(res, await upsertVersionDb(orgId, body), 201);
       }
     }
