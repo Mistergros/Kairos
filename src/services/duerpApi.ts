@@ -1,15 +1,16 @@
 import { apiGet } from "../utils/apiClient";
+import { getAuthToken } from "../utils/authToken";
 
 const API_BASE = import.meta.env.VITE_DUERP_API_BASE || "http://localhost:8787";
-const API_TOKEN = import.meta.env.VITE_DUERP_API_TOKEN;
-const TENANT_ID = import.meta.env.VITE_DUERP_TENANT_ID;
 
+// Le moteur de risques s'appelle avec la session du compte connecté. L'ancien
+// jeton VITE_DUERP_API_TOKEN était intégré au code du site, donc public.
 async function http<T>(path: string, init?: RequestInit): Promise<T> {
+  const token = await getAuthToken();
   const res = await fetch(`${API_BASE}${path}`, {
     headers: {
       "Content-Type": "application/json",
-      ...(API_TOKEN ? { Authorization: `Bearer ${API_TOKEN}` } : {}),
-      ...(TENANT_ID ? { "X-Tenant-Id": TENANT_ID } : {}),
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...(init?.headers || {}),
     },
     ...init,
@@ -37,8 +38,7 @@ export type AdminConfigBundle = {
 export const duerpApi = {
   evaluateV4: (payload: Record<string, any>) =>
     http<any>("/api/evaluate", { method: "POST", body: JSON.stringify(payload) }),
-  // Session Clerk réelle (pas le jeton API_TOKEN_* partagé ci-dessus, exposé
-  // à tout client) — voir le gate côté serveur dans api/server.ts.
+  // Réservé à l'administrateur (VITE_ADMIN_EMAIL), vérifié côté serveur.
   getAdminConfig: () => apiGet<AdminConfigBundle>("/api/admin/config"),
 };
 

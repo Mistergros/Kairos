@@ -718,7 +718,9 @@ const authorize = (req: any): { ok: boolean; role?: Role; tenant?: string | null
     }
   }
 
-  if (!anyTokenConfigured) return { ok: true, role: "admin", tenant: null }; // aucune protection configuree
+  // Sans jeton configuré : ouvert en local sans Clerk (développement), fermé en
+  // production (les routes du moteur exigent alors une session Clerk).
+  if (!anyTokenConfigured) return clerkEnabled ? { ok: false } : { ok: true, role: "admin", tenant: null };
   if (!header || typeof header !== "string") return { ok: false };
   if (!header.startsWith("Bearer ")) return { ok: false };
   const provided = header.slice("Bearer ".length).trim();
@@ -1086,8 +1088,10 @@ createServer(async (req, res) => {
     }
 
     if (req.method === "POST" && basePath === "/api/evaluate") {
-      if (!auth.ok || !requiresRole(auth.role, "contrib")) return json(res, { error: "Unauthorized" }, 401);
-      const tenantId = getTenant(req, auth.tenant);
+      // Compte connecté (session Clerk) ou jeton de service API_TOKEN_* (scripts).
+      const sessionUser = clerkEnabled ? await getClerkOrgId(req) : null;
+      if (!sessionUser && (!auth.ok || !requiresRole(auth.role, "contrib"))) return json(res, { error: "Unauthorized" }, 401);
+      const tenantId = getTenant(req, auth.tenant) || sessionUser;
       if (requireTenant && !tenantId) return json(res, { error: "Tenant required" }, 400);
       const body = await readBody(req).catch(() => null);
       if (!body) return json(res, { error: "Bad Request" }, 400);
@@ -1102,8 +1106,9 @@ createServer(async (req, res) => {
     }
 
     if (req.method === "POST" && basePath === "/api/compliance") {
-      if (!auth.ok || !requiresRole(auth.role, "contrib")) return json(res, { error: "Unauthorized" }, 401);
-      const tenantId = getTenant(req, auth.tenant);
+      const sessionUser = clerkEnabled ? await getClerkOrgId(req) : null;
+      if (!sessionUser && (!auth.ok || !requiresRole(auth.role, "contrib"))) return json(res, { error: "Unauthorized" }, 401);
+      const tenantId = getTenant(req, auth.tenant) || sessionUser;
       if (requireTenant && !tenantId) return json(res, { error: "Tenant required" }, 400);
       const body = await readBody(req).catch(() => null);
       if (!body) return json(res, { error: "Bad Request" }, 400);

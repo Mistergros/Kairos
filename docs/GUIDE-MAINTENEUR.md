@@ -182,7 +182,7 @@ Toutes les offres sont annuelles. Variables : `STRIPE_PRICE_ID_STARTER_ANNUAL`, 
 ## 8. Authentification et sécurité
 
 - **Routes de données** (établissements, unités, évaluations, actions, versions, marque) : jeton de session Clerk vérifié côté serveur (`getClerkOrgId`). Son `sub` donne le périmètre `org_id`.
-- **Routes catalogue** (`/api/evaluate`, `/api/compliance`…) : jetons statiques `API_TOKEN_*` ou JWT `API_JWT_SECRET`. Sans aucun jeton configuré, elles sont ouvertes.
+- **Routes du moteur** (`/api/evaluate`, `/api/compliance`) : session Clerk du compte connecté, ou jeton de service `API_TOKEN_*` / JWT `API_JWT_SECRET` pour des scripts. Aucun jeton ne doit être intégré au site : une variable `VITE_` est publique. Sans jeton configuré, ces routes sont ouvertes seulement en local sans Clerk.
 - **CORS** : `API_ALLOWED_ORIGINS`, liste séparée par des virgules. Une origine absente reçoit une erreur 403.
 - **Limite de requêtes** : `API_RATE_LIMIT` requêtes par minute et par adresse IP pour les visiteurs, 10 fois plus pour une requête qui porte un jeton. Le webhook Stripe et la tâche planifiée ne sont pas limités. Au-delà, réponse 429.
 - **Cron** : `POST /api/cron/revision-reminders` exige `Authorization: Bearer $CRON_SECRET`, comparé en temps constant.
