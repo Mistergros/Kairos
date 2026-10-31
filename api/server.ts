@@ -77,6 +77,11 @@ const json = (res: any, data: any, status = 200) => {
 const notFound = (res: any) => json(res, { error: "Not found" }, 404);
 const error = (res: any, err: any) => {
   console.error(err);
+  // Clé étrangère (Postgres 23503) : l'élément parent (établissement, unité,
+  // risque) n'est pas enregistré. Message lisible plutôt qu'« Internal error ».
+  if (err?.code === "23503") {
+    return json(res, { error: "Enregistrement refusé : l'élément auquel il se rattache n'est pas encore enregistré. Rechargez la page puis réessayez." }, 409);
+  }
   if (sentryEnabled) Sentry.captureException(err, { tags: { method: res?._method, path: String(res?._path || "").split("?")[0] } });
   json(res, { error: "Internal error" }, 500);
 };

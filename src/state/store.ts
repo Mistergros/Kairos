@@ -91,13 +91,19 @@ const readApiError = (err: unknown) => {
 // Fire-and-forget, mais pas silencieux : si le serveur refuse l'écriture
 // (abonnement inactif, limite d'offre atteinte), l'utilisateur doit le voir,
 // sinon la donnée disparaît au prochain rechargement sans explication.
+// Les écritures partent une par une, dans l'ordre où elles ont été faites. En
+// parallèle, une action pouvait arriver au serveur avant le risque auquel elle
+// est rattachée (clé étrangère) : refus « Internal error » et action perdue
+// côté serveur, typiquement pendant un pré-remplissage.
+let syncQueue: Promise<void> = Promise.resolve();
 const sync = (fn: () => unknown) => {
-  try {
-    const result = fn();
-    if (result && typeof (result as Promise<unknown>).catch === "function") {
-      (result as Promise<unknown>).catch((err) => useDuerpStore.setState({ saveError: readApiError(err) }));
+  syncQueue = syncQueue.then(async () => {
+    try {
+      await fn();
+    } catch (err) {
+      useDuerpStore.setState({ saveError: readApiError(err) });
     }
-  } catch { /* never crash */ }
+  });
 };
 
 export const useDuerpStore = create<DUERPState>()(

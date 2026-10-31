@@ -785,82 +785,316 @@ export function printDuerpSimplified(data: PrintData): void {
 }
 
 // ── RAPPORT MULTI-SITES ─────────────────────────────────────────────────────
+// Même présentation que le DUERP complet : couverture, sommaire, synthèse
+// comparée des sites, puis une partie par site (inventaire et actions en retard).
 export function printDuerpMultiSites(data: MultiSiteData): void {
   const { establishments, workUnits, assessments, actions, branding } = data;
-  const doc = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
+  const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
   const pageW = doc.internal.pageSize.getWidth();
+  const pageH = doc.internal.pageSize.getHeight();
+  const contentW = pageW - MARGIN * 2;
   const today = new Date().toLocaleDateString("fr-FR", { day: "2-digit", month: "long", year: "numeric" });
   const theme = brandTheme(branding);
-  const BLUE = theme.color;
+  const cabinet = branding && hasCabinetBlock(branding) ? branding : null;
+  const toc: { title: string; page: number }[] = [];
+  const lastTableY = () => (doc as any).lastAutoTable.finalY as number;
+  const isLate = (a: ActionItem) => a.status !== "DONE" && Boolean(a.dueDate || a.endDate) && new Date(a.dueDate || a.endDate!) < new Date();
+  const tableBase = {
+    theme: "plain" as const,
+    margin: { left: MARGIN, right: MARGIN, top: 24, bottom: 18 },
+    styles: { font: "helvetica", fontSize: 8, textColor: INK, cellPadding: { top: 2.2, bottom: 2.2, left: 2, right: 2 }, lineColor: LINE, lineWidth: { bottom: 0.2 } },
+    headStyles: { fillColor: lighten(theme.color, 0.88), textColor: INK, fontStyle: "bold" as const, fontSize: 7.5, lineWidth: 0 },
+  };
+  const priorityCell = (p: number) => ({ fillColor: PRIORITY_COLORS[p], textColor: [255, 255, 255] as RGB });
 
-  // Page de garde
-  doc.setFillColor(...BLUE);
-  doc.rect(0, 0, pageW, 28, "F");
-  doc.setTextColor(...theme.onColor);
-  doc.setFontSize(16);
+  const sites = establishments.map((e) => {
+    const units = workUnits.filter((u) => u.establishmentId === e.id);
+    const risks = assessments
+      .filter((a) => units.some((u) => u.id === a.workUnitId))
+      .sort((a, b) => a.priority - b.priority || b.score - a.score);
+    const acts = actions.filter((a) => a.establishmentId === e.id);
+    const done = acts.filter((a) => a.status === "DONE").length;
+    return {
+      e,
+      units,
+      risks,
+      acts,
+      p1: risks.filter((a) => a.priority === 1).length,
+      p2: risks.filter((a) => a.priority === 2).length,
+      late: acts.filter(isLate).length,
+      progress: acts.length ? Math.round((done / acts.length) * 100) : null,
+      unitName: (id: string) => units.find((u) => u.id === id)?.name || "—",
+    };
+  });
+  const allRisks = sites.flatMap((s) => s.risks.map((r) => ({ r, s })));
+  const clients = Array.from(new Set(establishments.map((e) => e.clientName).filter(Boolean)));
+
+  // ── Couverture ──
+  doc.setFillColor(...theme.color);
+  doc.rect(0, 0, pageW, 8, "F");
+  if (cabinet?.logo) drawLogo(doc, cabinet.logo, pageW - MARGIN, 22, 50, 22, "right");
+  let y = 92;
   doc.setFont("helvetica", "bold");
-  doc.text("RAPPORT DUERP MULTI-SITES", pageW / 2, 12, { align: "center" });
-  doc.setFontSize(10);
+  doc.setFontSize(9);
+  doc.setTextColor(...theme.color);
+  doc.text("DOCUMENT UNIQUE D'ÉVALUATION DES RISQUES PROFESSIONNELS", MARGIN, y);
+  y += 12;
+  doc.setFontSize(28);
+  doc.setTextColor(...INK);
+  doc.text("Rapport multi-sites", MARGIN, y);
+  y += 11;
   doc.setFont("helvetica", "normal");
-  doc.text(`${establishments.length} établissements  •  Édité le ${today}`, pageW / 2, 21, { align: "center" });
-
-  // Synthèse par établissement
-  const synthRows = establishments.map((e) => {
-    const units = workUnits.filter((u) => u.establishmentId === e.id);
-    const estabAssessments = assessments.filter((a) => units.some((u) => u.id === a.workUnitId));
-    const estabActions = actions.filter((a) => a.establishmentId === e.id);
-    const p1 = estabAssessments.filter((a) => a.priority === 1).length;
-    const late = estabActions.filter((a) => a.status === "LATE").length;
-    const done = estabActions.filter((a) => a.status === "DONE").length;
-    const progress = estabActions.length ? `${Math.round((done / estabActions.length) * 100)}%` : "—";
-    return [e.name, e.codeNaf || "—", String(units.length), String(estabAssessments.length), String(p1), String(late), progress];
-  });
-
-  const synthStart = branding && hasCabinetBlock(branding) ? drawCabinetBlock(doc, branding, 14, 36, pageW - 28) + 4 : 34;
+  doc.setFontSize(13);
+  doc.setTextColor(...MUTED);
+  if (clients.length === 1) {
+    doc.text(clients[0]!, MARGIN, y);
+    y += 8;
+  }
+  doc.setFontSize(11);
+  doc.text(`${establishments.length} établissements · Édition du ${today}`, MARGIN, y + 2);
   autoTable(doc, {
-    startY: synthStart,
-    head: [["Établissement", "NAF", "Unités", "Risques", "P1", "Actions retard", "Avancement"]],
-    body: synthRows,
-    theme: "striped",
-    headStyles: { fillColor: BLUE, textColor: theme.onColor, fontStyle: "bold", fontSize: 9 },
-    bodyStyles: { fontSize: 9 },
-    margin: { left: 14, right: 14 },
+    ...tableBase,
+    startY: y + 14,
+    head: [["Établissement", "NAF", "Risques", "P1"]],
+    body: sites.map((s) => [s.e.name, s.e.codeNaf || "—", String(s.risks.length), String(s.p1)]),
+    styles: { ...tableBase.styles, fontSize: 9 },
+    columnStyles: { 0: { cellWidth: contentW - 75, fontStyle: "bold" }, 1: { cellWidth: 30 }, 2: { cellWidth: 25, halign: "center" }, 3: { cellWidth: 20, halign: "center" } },
+    alternateRowStyles: { fillColor: SOFT },
   });
+  const by = pageH - 58;
+  doc.setDrawColor(...LINE);
+  doc.setLineWidth(0.3);
+  doc.line(MARGIN, by - 6, pageW - MARGIN, by - 6);
+  if (cabinet) {
+    drawCabinetBlock(doc, cabinet, MARGIN, by, contentW * 0.62);
+  } else {
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(...MUTED);
+    doc.text("Réalisé avec Kaijos", MARGIN, by);
+  }
+  doc.setFontSize(7.5);
+  doc.setTextColor(...MUTED);
+  doc.text(doc.splitTextToSize("Synthèse des documents uniques des établissements (art. R.4121-1 du Code du travail). Chaque établissement conserve son propre DUERP.", contentW * 0.34), pageW - MARGIN, by, { align: "right" });
+  doc.setFillColor(...theme.color);
+  doc.rect(0, pageH - 8, pageW, 8, "F");
 
-  // Une section par établissement
-  establishments.forEach((e) => {
+  // ── Sommaire (rempli à la fin) ──
+  doc.addPage();
+  const tocPage = doc.getNumberOfPages();
+  const newSection = (title: string) => {
     doc.addPage();
-    drawPageBand(doc, theme, `${e.name}  —  NAF ${e.codeNaf || "—"}  —  Effectif : ${e.headcount ?? "—"}`, 16);
+    toc.push({ title, page: doc.getNumberOfPages() });
+    return sectionTitle(doc, theme, toc.length, title, 34);
+  };
 
-    const units = workUnits.filter((u) => u.establishmentId === e.id);
-    const estabAssessments = assessments.filter((a) => units.some((u) => u.id === a.workUnitId));
-    const estabActions = actions.filter((a) => a.establishmentId === e.id);
-
+  // ── Synthèse tous sites ──
+  y = newSection("Synthèse des sites");
+  const count = (p: number) => allRisks.filter(({ r }) => r.priority === p).length;
+  const cards: [string, string, RGB][] = [
+    [String(establishments.length), "établissements", INK],
+    [String(allRisks.length), "risques évalués", INK],
+    [String(count(1)), "priorité 1 (critique)", PRIORITY_COLORS[1]],
+    [String(sites.reduce((n, s) => n + s.late, 0)), "actions en retard", PRIORITY_COLORS[2]],
+  ];
+  const cardW = (contentW - 9) / 4;
+  cards.forEach(([value, label, color], i) => {
+    const x = MARGIN + i * (cardW + 3);
+    doc.setFillColor(...SOFT);
+    doc.roundedRect(x, y, cardW, 24, 2, 2, "F");
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(18);
+    doc.setTextColor(...color);
+    doc.text(value, x + 5, y + 12);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(7.5);
+    doc.setTextColor(...MUTED);
+    doc.text(label, x + 5, y + 19);
+  });
+  y += 34;
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(10);
+  doc.setTextColor(...INK);
+  doc.text("Comparaison des établissements", MARGIN, y);
+  autoTable(doc, {
+    ...tableBase,
+    startY: y + 3,
+    head: [["Établissement", "Unités", "Risques", "P1", "P2", "Actions en retard", "Avancement"]],
+    body: sites.map((s) => [s.e.name, String(s.units.length), String(s.risks.length), String(s.p1), String(s.p2), String(s.late), s.progress === null ? "—" : `${s.progress} %`]),
+    columnStyles: {
+      0: { cellWidth: contentW - 112, fontStyle: "bold" },
+      1: { cellWidth: 15, halign: "center" },
+      2: { cellWidth: 17, halign: "center" },
+      3: { cellWidth: 13, halign: "center", fontStyle: "bold" },
+      4: { cellWidth: 13, halign: "center", fontStyle: "bold" },
+      5: { cellWidth: 27, halign: "center" },
+      6: { cellWidth: 27, halign: "center" },
+    },
+    didParseCell: (h) => {
+      if (h.section !== "body") return;
+      const s = sites[h.row.index];
+      if (h.column.index === 3 && s.p1) h.cell.styles.textColor = PRIORITY_COLORS[1];
+      if (h.column.index === 4 && s.p2) h.cell.styles.textColor = PRIORITY_COLORS[2];
+      if (h.column.index === 5 && s.late) {
+        h.cell.styles.textColor = PRIORITY_COLORS[1];
+        h.cell.styles.fontStyle = "bold";
+      }
+    },
+  });
+  y = lastTableY() + 10;
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(10);
+  doc.setTextColor(...INK);
+  doc.text("Répartition des risques par priorité, tous sites", MARGIN, y);
+  y += 5;
+  let bx = MARGIN;
+  [1, 2, 3, 4].forEach((p) => {
+    const w = allRisks.length ? (count(p) / allRisks.length) * contentW : 0;
+    if (w > 0) {
+      doc.setFillColor(...PRIORITY_COLORS[p]);
+      doc.rect(bx, y, w, 6, "F");
+      bx += w;
+    }
+  });
+  if (!allRisks.length) {
+    doc.setFillColor(...LINE);
+    doc.rect(MARGIN, y, contentW, 6, "F");
+  }
+  y += 11;
+  [1, 2, 3, 4].forEach((p, i) => {
+    const x = MARGIN + i * (contentW / 4);
+    doc.setFillColor(...PRIORITY_COLORS[p]);
+    doc.circle(x + 1.5, y - 1.2, 1.5, "F");
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(8);
+    doc.setTextColor(...INK);
+    doc.text(`P${p} ${PRIORITY_NAMES[p]} : ${count(p)}`, x + 5, y);
+  });
+  y += 10;
+  const top = allRisks.filter(({ r }) => r.priority <= 2).sort((a, b) => a.r.priority - b.r.priority || b.r.score - a.r.score).slice(0, 12);
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(10);
+  doc.setTextColor(...INK);
+  doc.text("Risques prioritaires, tous sites", MARGIN, y);
+  if (top.length) {
     autoTable(doc, {
-      startY: 20,
-      head: [["Unité", "Risque", "G", "F", "M", "Score", "Prio", "Mesure proposée"]],
-      body: estabAssessments.map((a) => [
-        units.find((u) => u.id === a.workUnitId)?.name || "—",
-        a.riskLabel,
-        String(a.gravity), String(a.frequency), String(a.control),
-        Math.round(a.score).toString(),
-        `P${a.priority}`,
-        a.proposedMeasures || "—",
-      ]),
-      theme: "striped",
-      headStyles: { fillColor: BLUE, textColor: theme.onColor, fontSize: 7, fontStyle: "bold" },
-      bodyStyles: { fontSize: 7 },
-      margin: { left: 14, right: 14 },
+      ...tableBase,
+      startY: y + 3,
+      head: [["Priorité", "Établissement", "Unité", "Risque"]],
+      body: top.map(({ r, s }) => [`P${r.priority}`, s.e.name, s.unitName(r.workUnitId), r.riskLabel]),
+      columnStyles: { 0: { cellWidth: 16, halign: "center", fontStyle: "bold" }, 1: { cellWidth: 45 }, 2: { cellWidth: 35 }, 3: { cellWidth: contentW - 96, fontStyle: "bold" } },
+      didParseCell: (h) => {
+        if (h.section === "body" && h.column.index === 0) Object.assign(h.cell.styles, priorityCell(top[h.row.index].r.priority));
+      },
     });
+  } else {
+    paragraph(doc, "Aucun risque de priorité 1 ou 2 n'a été identifié.", y + 6, contentW, 9, MUTED);
+  }
+
+  // ── Une partie par établissement ──
+  sites.forEach((s) => {
+    y = newSection(s.e.name);
+    const logoW = drawLogo(doc, s.e.logo, pageW - MARGIN, 24, 36, 14, "right");
+    const facts = [
+      s.e.clientName && s.e.clientName !== s.e.name ? `Client : ${s.e.clientName}` : "",
+      s.e.codeNaf ? `NAF ${s.e.codeNaf}` : "",
+      s.e.headcount ? `${s.e.headcount} salariés` : "",
+      s.e.address || "",
+    ].filter(Boolean).join("  ·  ");
+    if (facts) y = paragraph(doc, facts, y - 2, contentW - (logoW ? logoW + 6 : 0), 8.5, MUTED) + 2;
+    [
+      [String(s.risks.length), "risques"],
+      [String(s.p1), "P1"],
+      [String(s.p2), "P2"],
+      [String(s.late), "actions en retard"],
+      [s.progress === null ? "—" : `${s.progress} %`, "avancement"],
+    ].forEach(([value, label], i) => {
+      const x = MARGIN + i * (contentW / 5);
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(13);
+      doc.setTextColor(...(i === 1 && s.p1 ? PRIORITY_COLORS[1] : i === 3 && s.late ? PRIORITY_COLORS[1] : INK));
+      doc.text(value, x, y + 4);
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(7.5);
+      doc.setTextColor(...MUTED);
+      doc.text(label, x, y + 9);
+    });
+    y += 17;
+    if (s.risks.length) {
+      autoTable(doc, {
+        ...tableBase,
+        startY: y,
+        head: [["Unité", "Risque", "Score", "Priorité", "Mesures à mettre en œuvre"]],
+        body: s.risks.map((r) => [s.unitName(r.workUnitId), r.riskLabel, String(Math.round(r.score)), `P${r.priority}`, r.proposedMeasures || "—"]),
+        styles: { ...tableBase.styles, fontSize: 7.5 },
+        columnStyles: { 0: { cellWidth: 28 }, 1: { cellWidth: 50, fontStyle: "bold" }, 2: { cellWidth: 13, halign: "center" }, 3: { cellWidth: 15, halign: "center", fontStyle: "bold" }, 4: { cellWidth: contentW - 106 } },
+        didParseCell: (h) => {
+          if (h.section === "body" && h.column.index === 3) Object.assign(h.cell.styles, priorityCell(s.risks[h.row.index].priority));
+        },
+      });
+      y = lastTableY() + 8;
+    } else {
+      y = paragraph(doc, "Aucun risque évalué pour cet établissement.", y, contentW, 9, MUTED) + 4;
+    }
+    const lateActs = s.acts.filter(isLate);
+    if (lateActs.length) {
+      if (y > pageH - 45) {
+        doc.addPage();
+        y = 30;
+      }
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(10);
+      doc.setTextColor(...PRIORITY_COLORS[1]);
+      doc.text("Actions en retard", MARGIN, y);
+      autoTable(doc, {
+        ...tableBase,
+        startY: y + 3,
+        head: [["Action", "Responsable", "Échéance", "Statut"]],
+        body: lateActs.map((a) => [a.title, a.owner || "À désigner", formatDate(a.dueDate || a.endDate), STATUS_LABELS[a.status] || a.status]),
+        columnStyles: { 0: { cellWidth: contentW - 85, fontStyle: "bold" }, 1: { cellWidth: 35 }, 2: { cellWidth: 22, halign: "center", textColor: PRIORITY_COLORS[1] }, 3: { cellWidth: 28 } },
+      });
+    }
   });
 
-  // Pied de page
-  const totalPages = (doc.internal as any).getNumberOfPages();
-  for (let i = 1; i <= totalPages; i++) {
+  // ── Sommaire ──
+  doc.setPage(tocPage);
+  let ty = sectionTitle(doc, theme, 0, "Sommaire", 34) + 4;
+  toc.forEach((entry, i) => {
+    if (ty > pageH - 25) return; // très nombreux sites : le sommaire s'arrête en bas de page
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(10);
+    doc.setTextColor(...theme.color);
+    doc.text(String(i + 1).padStart(2, "0"), MARGIN, ty);
+    doc.setTextColor(...INK);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(11);
+    const title = doc.splitTextToSize(entry.title, contentW - 30)[0];
+    doc.text(title, MARGIN + 10, ty);
+    doc.text(String(entry.page), pageW - MARGIN, ty, { align: "right" });
+    doc.setDrawColor(...LINE);
+    doc.setLineDashPattern([0.6, 1.2], 0);
+    doc.line(MARGIN + 12 + doc.getTextWidth(title), ty - 0.8, pageW - MARGIN - 8, ty - 0.8);
+    doc.setLineDashPattern([], 0);
+    ty += 10;
+  });
+
+  // ── En-têtes et pieds de page ──
+  const total = doc.getNumberOfPages();
+  for (let i = 2; i <= total; i++) {
     doc.setPage(i);
-    doc.setFontSize(7);
-    doc.setTextColor(150, 150, 150);
-    doc.text(`${theme.footerBrand} — Rapport multi-sites — ${today} — Page ${i}/${totalPages}`, pageW / 2, (doc.internal.pageSize.getHeight()) - 5, { align: "center" });
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(7.5);
+    doc.setTextColor(...MUTED);
+    doc.text("DUERP — Rapport multi-sites", MARGIN, 13);
+    if (theme.name) doc.text(theme.name, pageW - MARGIN, 13, { align: "right" });
+    doc.setDrawColor(...theme.color);
+    doc.setLineWidth(0.4);
+    doc.line(MARGIN, 15.5, pageW - MARGIN, 15.5);
+    doc.setDrawColor(...LINE);
+    doc.setLineWidth(0.2);
+    doc.line(MARGIN, pageH - 12, pageW - MARGIN, pageH - 12);
+    doc.text(`${theme.footerBrand} — Édité le ${today}`, MARGIN, pageH - 7);
+    doc.text(`Page ${i} / ${total}`, pageW - MARGIN, pageH - 7, { align: "right" });
   }
 
   doc.save(`DUERP_multi_sites_${new Date().getFullYear()}.pdf`);

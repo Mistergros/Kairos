@@ -239,7 +239,9 @@ function DashboardRoutes() {
             <div role="alert" className="mb-4 flex items-start justify-between gap-3 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800">
               <span>
                 {saveError}{" "}
-                <a href="/pricing" className="font-semibold underline">Voir les offres</a>
+                {/offre|abonne/i.test(saveError) && (
+                  <a href="/pricing" className="font-semibold underline">Voir les offres</a>
+                )}
               </span>
               <button onClick={dismissSaveError} className="text-rose-600 hover:text-rose-800" aria-label="Fermer le message">
                 <X size={16} />
