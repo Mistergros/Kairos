@@ -1,4 +1,5 @@
 import { useUser } from "@clerk/clerk-react";
+import { useWorkspaceStore } from "../state/workspace";
 
 // "free" (Découverte) = compte connecté sans abonnement actif : il construit
 // son DUERP, seul le téléchargement (PDF, CSV, XLSX) demande un abonnement.
@@ -12,6 +13,7 @@ export type PlanLimits = {
   canExportXLSX: boolean;
   canSeeFullHistory: boolean;
   canBrandDocuments: boolean; // PDF à la marque du cabinet
+  maxMembers: number;         // places, propriétaire compris (Pro : + places achetées)
   label: string;
 };
 
@@ -25,6 +27,7 @@ export const PLAN_CONFIG: Record<PlanId, PlanLimits> = {
     canExportXLSX: false,
     canSeeFullHistory: false,
     canBrandDocuments: false,
+    maxMembers: 1,
     label: "Découverte",
   },
   starter: {
@@ -35,6 +38,7 @@ export const PLAN_CONFIG: Record<PlanId, PlanLimits> = {
     canExportXLSX: false,
     canSeeFullHistory: false,
     canBrandDocuments: false,
+    maxMembers: 2,
     label: "Essentiel",
   },
   pme: {
@@ -45,6 +49,7 @@ export const PLAN_CONFIG: Record<PlanId, PlanLimits> = {
     canExportXLSX: true,
     canSeeFullHistory: true,
     canBrandDocuments: false,
+    maxMembers: 10,
     label: "PME",
   },
   consultants: {
@@ -55,6 +60,7 @@ export const PLAN_CONFIG: Record<PlanId, PlanLimits> = {
     canExportXLSX: true,
     canSeeFullHistory: true,
     canBrandDocuments: true,
+    maxMembers: 5,
     label: "Pro",
   },
 };
@@ -66,8 +72,14 @@ const demoPlan = import.meta.env.VITE_DEMO_PLAN as PlanId | undefined;
 
 export function usePlan(): PlanLimits {
   const { user } = useUser();
+  const current = useWorkspaceStore((s) => s.current);
 
   if (bypassAuth) return PLAN_CONFIG[demoPlan && PLAN_CONFIG[demoPlan] ? demoPlan : "consultants"];
+
+  // Dans l'espace d'un autre (membre ou client invité), l'offre du titulaire s'applique.
+  if (current && current.role !== "owner") {
+    return current.active ? PLAN_CONFIG[current.planId] ?? PLAN_CONFIG.starter : PLAN_CONFIG.free;
+  }
 
   const metadata = (user?.publicMetadata || {}) as Record<string, unknown>;
   if (metadata.subscriptionStatus !== "active") return PLAN_CONFIG.free;

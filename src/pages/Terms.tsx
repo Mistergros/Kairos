@@ -50,6 +50,14 @@ export default function TermsPage() {
           Le passage à une formule inférieure prend effet à la date de renouvellement, sans remboursement de la période en cours.
         </p>
         <p>
+          Chaque formule comprend un nombre d'utilisateurs, titulaire compris : 2 pour Essentiel, 10 pour PME, 5 pour Pro.
+          En formule Pro, le client peut ajouter des membres supplémentaires, facturés à l'année selon un tarif dégressif
+          (290 € HT par membre du 6e au 10e, 240 € HT du 11e au 20e, 190 € HT au-delà) ; chaque membre supplémentaire ajoute
+          5 dossiers clients. Un ajout est facturé le jour même au prorata de la période restante ; un retrait donne lieu à un
+          avoir au prorata, imputé sur les factures suivantes. Les clients invités par un abonné Pro à consulter ou compléter
+          leur propre dossier n'ont pas besoin d'abonnement ; l'abonné reste responsable des accès qu'il accorde.
+        </p>
+        <p>
           À la fin de l'abonnement, le compte repasse en formule Découverte : les données restent consultables et exportables
           au format JSON, mais le téléchargement des documents n'est plus disponible.
         </p>

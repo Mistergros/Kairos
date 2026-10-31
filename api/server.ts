@@ -21,6 +21,10 @@ import RiskEngineV4 from "../src/core/engine/risk-engine.server.js";
 import { isPaidPlan, planIdFromPrice as planIdFromPriceWith, planRank } from "./plans.js";
 import { BRANDING_DDL, getBranding, sanitizeBranding, sanitizeLogo, saveBranding } from "./branding.js";
 import { checkEstablishmentLimits as checkEstablishmentLimitsWith, recordSlots as recordSlotsWith, SLOT_LOG_DDL } from "./slots.js";
+import {
+  acceptInvitation, canEditEstablishmentData, clientCapacity, createInvitation, isMember, listJoinedWorkspaces, listTeam,
+  memberCapacity, resolveAccess, seatsUsed, visibleEstablishments, WORKSPACE_DDL, INCLUDED_MEMBERS, type Access,
+} from "./workspaces.js";
 
 const PORT = Number(process.env.API_PORT || 8787);
 const engineV4 = new RiskEngineV4(path.join(process.cwd(), "config"));
@@ -54,6 +58,9 @@ const STRIPE_PRICE_ID_PME              = process.env.STRIPE_PRICE_ID_PME;
 const STRIPE_PRICE_ID_PME_ANNUAL       = process.env.STRIPE_PRICE_ID_PME_ANNUAL;
 const STRIPE_PRICE_ID_CONSULTANTS      = process.env.STRIPE_PRICE_ID_CONSULTANTS;
 const STRIPE_PRICE_ID_CONSULTANTS_ANNUAL = process.env.STRIPE_PRICE_ID_CONSULTANTS_ANNUAL;
+// Membre supplémentaire de l'offre Pro : tarif annuel par paliers dégressifs
+// (« graduated » dans Stripe), la quantité = nombre de places achetées.
+const STRIPE_PRICE_ID_EXTRA_MEMBER = process.env.STRIPE_PRICE_ID_EXTRA_MEMBER;
 const stripe = STRIPE_SECRET_KEY ? new Stripe(STRIPE_SECRET_KEY, { apiVersion: "2023-10-16" }) : null;
 const CLERK_SECRET_KEY = process.env.CLERK_SECRET_KEY;
 const clerkEnabled = Boolean(CLERK_SECRET_KEY);
@@ -79,7 +86,7 @@ const json = (res: any, data: any, status = 200) => {
   res.writeHead(status, {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": originHeader || "*",
-    "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Tenant-Id",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Tenant-Id, X-Workspace-Id",
     "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
   });
   const duration = (res as any)._start ? Date.now() - (res as any)._start : undefined;
@@ -122,6 +129,12 @@ const PLAN_PRICES = {
   consultants: [STRIPE_PRICE_ID_CONSULTANTS_ANNUAL, STRIPE_PRICE_ID_CONSULTANTS],
 };
 const planIdFromPrice = (priceId?: string | null) => planIdFromPriceWith(priceId, PLAN_PRICES);
+// Un abonnement Pro peut avoir deux lignes (offre + membres supplémentaires) :
+// l'ordre des lignes n'est pas garanti, on cherche chacune par son tarif.
+const planItemOf = (subscription: Stripe.Subscription) =>
+  subscription.items?.data?.find((i) => planIdFromPrice(i.price?.id)) || null;
+const seatItemOf = (subscription: Stripe.Subscription) =>
+  (STRIPE_PRICE_ID_EXTRA_MEMBER && subscription.items?.data?.find((i) => i.price?.id === STRIPE_PRICE_ID_EXTRA_MEMBER)) || null;
 const PLAN_NAMES: Record<string, string> = { starter: "Essentiel", pme: "PME", consultants: "Pro" };
 
 const readRawBody = async (req: any) =>
@@ -229,8 +242,22 @@ const handleStripeSubscriptionEvent = async (subscription: Stripe.Subscription, 
   };
   if (customerId) patch.stripeCustomerId = customerId;
   // Changement d'offre (page Tarifs ou portail Stripe) : le tarif fait foi.
-  const planFromPrice = planIdFromPrice(subscription.items?.data?.[0]?.price?.id);
+  const planFromPrice = planIdFromPrice(planItemOf(subscription)?.price?.id);
   if (planFromPrice && eventType !== "customer.subscription.deleted") patch.planId = planFromPrice;
+  const seatItem = seatItemOf(subscription);
+  patch.extraSeats = eventType === "customer.subscription.deleted" ? 0 : seatItem?.quantity || 0;
+  // Les membres supplémentaires n'existent qu'en Pro : en sortant du Pro, la
+  // ligne est retirée (avoir au prorata) pour ne pas continuer à la facturer.
+  if (stripe && seatItem && planFromPrice && planFromPrice !== "consultants" && eventType !== "customer.subscription.deleted") {
+    try {
+      await stripe.subscriptionItems.del(seatItem.id, { proration_behavior: "create_prorations" });
+      patch.extraSeats = 0;
+    } catch (err) {
+      // Déjà retirée (événement rejoué) ou refus Stripe : l'offre est quand même mise à jour.
+      console.error("[Stripe] Retrait des membres supplémentaires impossible", err);
+      if (sentryEnabled) Sentry.captureException(err, { tags: { path: "/api/webhooks/stripe" } });
+    }
+  }
   await mergePublicMetadata(clerkUserId, patch);
   planCache.delete(clerkUserId);
 };
@@ -339,11 +366,51 @@ const ownsRow = async (table: "establishments" | "work_units" | "assessments", i
 };
 const notYours = (res: any) => json(res, { error: "Élément parent introuvable dans votre compte. Rechargez la page." }, 409);
 
-const listEstablishmentsDb = async (orgId: string) => {
+// Espaces partagés (api/workspaces.ts) : tables des membres, des invités et des
+// invitations, et « modifié par » sur les unités, risques et actions.
+let collabSchemaReady: Promise<unknown> | null = null;
+const ensureCollabSchema = () => {
+  if (!collabSchemaReady) {
+    collabSchemaReady = (async () => {
+      for (const ddl of WORKSPACE_DDL) await query(ddl);
+      for (const table of ["work_units", "assessments", "actions"]) {
+        await query(`ALTER TABLE ${table} ADD COLUMN IF NOT EXISTS updated_by TEXT`);
+      }
+    })().catch((err) => {
+      collabSchemaReady = null;
+      throw err;
+    });
+  }
+  return collabSchemaReady;
+};
+
+// Établissement auquel se rattache un élément existant ; undefined s'il n'existe
+// pas encore (création). Sert à vérifier les droits d'un invité de dossier.
+const establishmentOfRow = async (table: "work_units" | "assessments" | "actions", id: string, orgId: string) => {
+  const sql = {
+    work_units: `SELECT establishment_id AS est FROM work_units WHERE id=$1 AND org_id=$2`,
+    assessments: `SELECT w.establishment_id AS est FROM assessments a JOIN work_units w ON w.id = a.work_unit_id WHERE a.id=$1 AND a.org_id=$2`,
+    actions: `SELECT COALESCE(ac.establishment_id, w.establishment_id) AS est FROM actions ac
+                LEFT JOIN assessments a ON a.id = ac.assessment_id LEFT JOIN work_units w ON w.id = a.work_unit_id
+               WHERE ac.id=$1 AND ac.org_id=$2`,
+  }[table];
+  const res = await query(sql, [id, orgId]);
+  return res.rows.length ? ((res.rows[0].est as string | null) ?? null) : undefined;
+};
+const canTouchRow = async (access: Access, table: "work_units" | "assessments" | "actions", id: string) => {
+  if (isMember(access)) return true;
+  const est = await establishmentOfRow(table, id, access.workspaceId);
+  return est === undefined || canEditEstablishmentData(access, est);
+};
+const readOnlyRefusal = (res: any) =>
+  json(res, { error: "Votre accès à ce dossier est en lecture seule, ou ne permet pas cette modification." }, 403);
+
+const listEstablishmentsDb = async (orgId: string, only: string[] | null = null) => {
   await ensureEstablishmentsSchema();
   const res = await query(
-    `SELECT id, name, siren, siret, code_naf, sector, address, headcount, client_name, logo, archived_at FROM establishments WHERE org_id=$1 ORDER BY name`,
-    [orgId]
+    `SELECT id, name, siren, siret, code_naf, sector, address, headcount, client_name, logo, archived_at FROM establishments
+      WHERE org_id=$1 AND ($2::text[] IS NULL OR id = ANY($2::text[])) ORDER BY name`,
+    [orgId, only]
   );
   return res.rows;
 };
@@ -518,19 +585,21 @@ const PLAN_LIMITS: Record<string, { maxEstablishments: number; maxClients: numbe
   pme: { maxEstablishments: 5, maxClients: -1, maxWorkUnits: 20 },
   consultants: { maxEstablishments: -1, maxClients: 25, maxWorkUnits: -1 },
 };
-type UserPlan = { planId: string; active: boolean };
+type UserPlan = { planId: string; active: boolean; extraSeats: number };
 const planCache = new Map<string, { plan: UserPlan; expires: number }>();
 const getUserPlan = async (userId: string): Promise<UserPlan> => {
-  if (!clerkEnabled) return { planId: "consultants", active: true }; // dev local sans Clerk
+  if (!clerkEnabled) return { planId: "consultants", active: true, extraSeats: 0 }; // dev local sans Clerk
   const cached = planCache.get(userId);
   if (cached && cached.expires > Date.now()) return cached.plan;
   const user = await clerkClient.users.getUser(userId);
   const md = (user.publicMetadata || {}) as Record<string, any>;
   const active = md.subscriptionStatus === "active";
   const rawPlan = String(md.planId || "starter").toLowerCase();
+  const planId = !active ? "free" : PLAN_LIMITS[rawPlan] ? rawPlan : "starter";
   const plan: UserPlan = {
-    planId: !active ? "free" : PLAN_LIMITS[rawPlan] ? rawPlan : "starter",
+    planId,
     active,
+    extraSeats: planId === "consultants" ? Math.max(0, Math.floor(Number(md.extraSeats) || 0)) : 0,
   };
   // Un abonnement inactif n'est pas mis en cache : l'accès doit s'ouvrir dès
   // que le webhook Stripe a activé le compte, sans attendre l'expiration.
@@ -542,7 +611,10 @@ const getUserPlan = async (userId: string): Promise<UserPlan> => {
 const checkEstablishmentLimits = async (orgId: string, e: any): Promise<string | null> => {
   await ensureEstablishmentsSchema();
   const plan = await getUserPlan(orgId);
-  return checkEstablishmentLimitsWith(query, orgId, e, PLAN_LIMITS[plan.planId], plan.active);
+  const limits = PLAN_LIMITS[plan.planId];
+  // Offre Pro : chaque membre supplémentaire ajoute des dossiers clients.
+  const withSeats = { ...limits, maxClients: clientCapacity(limits.maxClients, plan.planId, plan.extraSeats) };
+  return checkEstablishmentLimitsWith(query, orgId, e, withSeats, plan.active);
 };
 const recordSlots = (orgId: string, e: any) => recordSlotsWith(query, orgId, e);
 // « Supprimer » archive : rien n'est effacé (conservation 40 ans), l'établissement
@@ -552,24 +624,25 @@ const deleteEstablishmentDb = async (orgId: string, id: string) => {
   await query(`UPDATE establishments SET archived_at = now() WHERE id=$1 AND org_id=$2 AND archived_at IS NULL`, [id, orgId]);
 };
 
-const listWorkUnitsDb = async (orgId: string) => {
+const listWorkUnitsDb = async (orgId: string, only: string[] | null = null) => {
   const res = await query(
-    `SELECT id, establishment_id, name, description, location, headcount, activity, features, tags, measurements FROM work_units WHERE org_id=$1 ORDER BY name`,
-    [orgId]
+    `SELECT id, establishment_id, name, description, location, headcount, activity, features, tags, measurements, updated_by FROM work_units
+      WHERE org_id=$1 AND ($2::text[] IS NULL OR establishment_id = ANY($2::text[])) ORDER BY name`,
+    [orgId, only]
   );
   return res.rows;
 };
-const upsertWorkUnitDb = async (orgId: string, u: any) => {
+const upsertWorkUnitDb = async (orgId: string, u: any, userId: string) => {
   const res = await query(
-    `INSERT INTO work_units (id, org_id, establishment_id, name, description, location, headcount, activity, features, tags, measurements)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
+    `INSERT INTO work_units (id, org_id, establishment_id, name, description, location, headcount, activity, features, tags, measurements, updated_by)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
      ON CONFLICT (id) DO UPDATE SET establishment_id=EXCLUDED.establishment_id, name=EXCLUDED.name, description=EXCLUDED.description,
        location=EXCLUDED.location, headcount=EXCLUDED.headcount, activity=EXCLUDED.activity, features=EXCLUDED.features,
-       tags=EXCLUDED.tags, measurements=EXCLUDED.measurements
+       tags=EXCLUDED.tags, measurements=EXCLUDED.measurements, updated_by=EXCLUDED.updated_by
      WHERE work_units.org_id = $2
      RETURNING *`,
     [u.id, orgId, u.establishmentId, u.name, u.description ?? null, u.location ?? null, u.headcount ?? null,
-     u.activity ?? null, u.features ?? [], u.tags ?? [], JSON.stringify(u.measurements ?? {})]
+     u.activity ?? null, u.features ?? [], u.tags ?? [], JSON.stringify(u.measurements ?? {}), userId]
   );
   return res.rows[0];
 };
@@ -577,31 +650,34 @@ const deleteWorkUnitDb = async (orgId: string, id: string) => {
   await query(`DELETE FROM work_units WHERE id=$1 AND org_id=$2`, [id, orgId]);
 };
 
-const listAssessmentsDb = async (orgId: string) => {
+const listAssessmentsDb = async (orgId: string, only: string[] | null = null) => {
   const res = await query(
     `SELECT id, work_unit_id, hazard_id, hazard_category, risk_label, damages, existing_measures, proposed_measures,
-            gravity, frequency, control, score, priority, created_at, updated_at, source, source_url
-     FROM assessments WHERE org_id=$1 ORDER BY created_at`,
-    [orgId]
+            gravity, frequency, control, score, priority, created_at, updated_at, source, source_url, updated_by
+     FROM assessments
+     WHERE org_id=$1 AND ($2::text[] IS NULL OR work_unit_id IN (SELECT id FROM work_units WHERE org_id=$1 AND establishment_id = ANY($2::text[])))
+     ORDER BY created_at`,
+    [orgId, only]
   );
   return res.rows;
 };
-const upsertAssessmentDb = async (orgId: string, a: any) => {
+const upsertAssessmentDb = async (orgId: string, a: any, userId: string) => {
   const res = await query(
     `INSERT INTO assessments (id, org_id, work_unit_id, hazard_id, hazard_category, risk_label, damages,
        existing_measures, proposed_measures, gravity, frequency, control, score, priority, created_at, updated_at,
-       source, source_url)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18)
+       source, source_url, updated_by)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19)
      ON CONFLICT (id) DO UPDATE SET work_unit_id=EXCLUDED.work_unit_id, hazard_id=EXCLUDED.hazard_id,
        hazard_category=EXCLUDED.hazard_category, risk_label=EXCLUDED.risk_label, damages=EXCLUDED.damages,
        existing_measures=EXCLUDED.existing_measures, proposed_measures=EXCLUDED.proposed_measures,
        gravity=EXCLUDED.gravity, frequency=EXCLUDED.frequency, control=EXCLUDED.control, score=EXCLUDED.score,
-       priority=EXCLUDED.priority, updated_at=EXCLUDED.updated_at, source=EXCLUDED.source, source_url=EXCLUDED.source_url
+       priority=EXCLUDED.priority, updated_at=EXCLUDED.updated_at, source=EXCLUDED.source, source_url=EXCLUDED.source_url,
+       updated_by=EXCLUDED.updated_by
      WHERE assessments.org_id = $2
      RETURNING *`,
     [a.id, orgId, a.workUnitId, a.hazardId ?? null, a.hazardCategory ?? null, a.riskLabel ?? null, a.damages ?? null,
      a.existingMeasures ?? null, a.proposedMeasures ?? null, a.gravity, a.frequency, a.control, a.score, a.priority,
-     a.createdAt ?? new Date().toISOString(), a.updatedAt ?? new Date().toISOString(), a.source ?? null, a.sourceUrl ?? null]
+     a.createdAt ?? new Date().toISOString(), a.updatedAt ?? new Date().toISOString(), a.source ?? null, a.sourceUrl ?? null, userId]
   );
   return res.rows[0];
 };
@@ -626,34 +702,39 @@ const ensureActionsSchema = () => {
   return actionsSchemaReady;
 };
 
-const listActionsDb = async (orgId: string) => {
+const listActionsDb = async (orgId: string, only: string[] | null = null) => {
   await ensureActionsSchema();
   const res = await query(
     `SELECT id, establishment_id, assessment_id, title, description, owner, start_date, due_date, end_date, how,
-            status, priority, cost, evidence_url, steps, created_at, resources, indicator
-     FROM actions WHERE org_id=$1 ORDER BY created_at`,
-    [orgId]
+            status, priority, cost, evidence_url, steps, created_at, resources, indicator, updated_by
+     FROM actions
+     WHERE org_id=$1 AND ($2::text[] IS NULL OR establishment_id = ANY($2::text[]) OR assessment_id IN (
+       SELECT a.id FROM assessments a JOIN work_units w ON w.id = a.work_unit_id
+        WHERE a.org_id=$1 AND w.establishment_id = ANY($2::text[])))
+     ORDER BY created_at`,
+    [orgId, only]
   );
   return res.rows;
 };
-const upsertActionDb = async (orgId: string, a: any) => {
+const upsertActionDb = async (orgId: string, a: any, userId: string) => {
   await ensureActionsSchema();
   const res = await query(
     `INSERT INTO actions (id, org_id, establishment_id, assessment_id, title, description, owner, start_date,
-       due_date, end_date, how, status, priority, cost, evidence_url, steps, created_at, resources, indicator)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19)
+       due_date, end_date, how, status, priority, cost, evidence_url, steps, created_at, resources, indicator, updated_by)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20)
      ON CONFLICT (id) DO UPDATE SET establishment_id=EXCLUDED.establishment_id, assessment_id=EXCLUDED.assessment_id,
        title=EXCLUDED.title, description=EXCLUDED.description, owner=EXCLUDED.owner, start_date=EXCLUDED.start_date,
        due_date=EXCLUDED.due_date, end_date=EXCLUDED.end_date, how=EXCLUDED.how, status=EXCLUDED.status,
        priority=EXCLUDED.priority, cost=EXCLUDED.cost, evidence_url=EXCLUDED.evidence_url, steps=EXCLUDED.steps,
-       resources=EXCLUDED.resources, indicator=EXCLUDED.indicator
+       resources=EXCLUDED.resources, indicator=EXCLUDED.indicator, updated_by=EXCLUDED.updated_by
      WHERE actions.org_id = $2
      RETURNING *`,
     [a.id, orgId, a.establishmentId ?? null, a.assessmentId ?? null, a.title, a.description ?? null, a.owner ?? null,
      a.startDate ?? null, a.dueDate ?? null, a.endDate ?? null, a.how ?? null, a.status ?? "TO_DO", a.priority ?? null,
      Number.isFinite(Number(a.cost)) && a.cost !== null && a.cost !== "" ? Number(a.cost) : null, a.evidenceUrl ?? null,
      JSON.stringify(a.steps ?? []), a.createdAt ?? new Date().toISOString(),
-     typeof a.resources === "string" ? a.resources.slice(0, 1000) : null, typeof a.indicator === "string" ? a.indicator.slice(0, 500) : null]
+     typeof a.resources === "string" ? a.resources.slice(0, 1000) : null, typeof a.indicator === "string" ? a.indicator.slice(0, 500) : null,
+     userId]
   );
   return res.rows[0];
 };
@@ -661,10 +742,11 @@ const deleteActionDb = async (orgId: string, id: string) => {
   await query(`DELETE FROM actions WHERE id=$1 AND org_id=$2`, [id, orgId]);
 };
 
-const listVersionsDb = async (orgId: string) => {
+const listVersionsDb = async (orgId: string, only: string[] | null = null) => {
   const res = await query(
-    `SELECT id, establishment_id, label, reason, hash, snapshot, created_at FROM duerp_versions WHERE org_id=$1 ORDER BY created_at DESC`,
-    [orgId]
+    `SELECT id, establishment_id, label, reason, hash, snapshot, created_at FROM duerp_versions
+      WHERE org_id=$1 AND ($2::text[] IS NULL OR establishment_id = ANY($2::text[])) ORDER BY created_at DESC`,
+    [orgId, only]
   );
   return res.rows;
 };
@@ -806,6 +888,35 @@ const getClerkOrgId = async (req: any): Promise<string | null> => {
     return null;
   }
 };
+
+// Espace demandé par le navigateur (en-tête X-Workspace-Id, par défaut celui de
+// l'utilisateur) et droits de l'utilisateur dessus (voir api/workspaces.ts).
+// access = null : connecté, mais sans accès à cet espace (retiré entre-temps).
+const getAccess = async (req: any): Promise<{ userId: string | null; access: Access | null }> => {
+  const userId = await getClerkOrgId(req);
+  if (!userId) return { userId: null, access: null };
+  await ensureCollabSchema();
+  const header = req.headers["x-workspace-id"];
+  const workspaceId = typeof header === "string" && header.trim() ? header.trim() : userId;
+  return { userId, access: await resolveAccess(query, userId, workspaceId) };
+};
+const noAccess = (res: any) =>
+  json(res, { error: "Vous n'avez plus accès à cet espace. Rechargez la page pour revenir au vôtre." }, 403);
+
+// Nom et adresse d'un utilisateur (liste de l'équipe, emails d'invitation).
+const userCache = new Map<string, { value: { name: string; email: string }; expires: number }>();
+const describeUser = async (userId: string) => {
+  const cached = userCache.get(userId);
+  if (cached && cached.expires > Date.now()) return cached.value;
+  const user = clerkEnabled ? await clerkClient.users.getUser(userId).catch(() => null) : null;
+  const email = user?.primaryEmailAddress?.emailAddress || user?.emailAddresses?.[0]?.emailAddress || "";
+  const value = { name: [user?.firstName, user?.lastName].filter(Boolean).join(" ") || email || "Utilisateur", email };
+  if (userCache.size > 2_000) userCache.clear();
+  userCache.set(userId, { value, expires: Date.now() + 5 * 60_000 });
+  return value;
+};
+// Nom affiché d'un espace : celui de son titulaire.
+const displayName = async (workspaceId: string) => `Espace de ${(await describeUser(workspaceId)).name}`;
 
 type RateBucket = { count: number; windowStart: number };
 const rateStore = new Map<string, RateBucket>();
@@ -968,7 +1079,7 @@ createServer(async (req, res) => {
       if ((!subscription || !["active", "trialing"].includes(subscription.status)) && typeof md.stripeCustomerId === "string") {
         subscription = (await stripe.subscriptions.list({ customer: md.stripeCustomerId, status: "active", limit: 1 })).data[0] || null;
       }
-      const item = subscription?.items.data[0];
+      const item = subscription ? planItemOf(subscription) : null;
       if (!subscription || !item) return json(res, { error: "Abonnement introuvable. Contactez le support." }, 404);
       const current = planIdFromPrice(item.price.id) || String(md.planId || "starter");
       if (planRank(target) <= planRank(current)) {
@@ -1023,30 +1134,283 @@ createServer(async (req, res) => {
       return json(res, { url: session.url });
     }
 
-    // Marque du cabinet sur les documents : lecture pour tout compte connecté
-    // (les PDF n'en tiennent compte qu'en offre Pro), écriture réservée au Pro.
+    // Marque du cabinet sur les documents : lecture pour quiconque a accès à
+    // l'espace (les PDF n'en tiennent compte qu'en offre Pro), écriture par le
+    // propriétaire de l'espace, en Pro.
     if (basePath === "/api/branding") {
-      const orgId = await getClerkOrgId(req);
-      if (!orgId) return json(res, { error: "Unauthorized" }, 401);
+      const { userId, access } = await getAccess(req);
+      if (!userId) return json(res, { error: "Unauthorized" }, 401);
+      if (!access) return noAccess(res);
       await ensureBrandingSchema();
-      if (req.method === "GET") return json(res, await getBranding(query, orgId));
+      if (req.method === "GET") return json(res, await getBranding(query, access.workspaceId));
       if (req.method === "POST") {
-        const plan = await getUserPlan(orgId);
+        if (access.role !== "owner") return json(res, { error: "Seul le titulaire de l'abonnement peut modifier la marque des documents." }, 403);
+        const plan = await getUserPlan(access.workspaceId);
         if (plan.planId !== "consultants") return json(res, { error: "La personnalisation des documents est incluse dans l'offre Pro." }, 403);
         const body = await readBody(req).catch(() => null);
         const result = sanitizeBranding(body);
         if ("error" in result) return json(res, { error: result.error }, 400);
-        await saveBranding(query, orgId, result.branding);
+        await saveBranding(query, access.workspaceId, result.branding);
         return json(res, result.branding);
       }
     }
 
+    // --- Espaces partagés : liste, équipe, invitations, places supplémentaires ---
+    if (req.method === "GET" && basePath === "/api/workspaces") {
+      const userId = await getClerkOrgId(req);
+      if (!userId) return json(res, { error: "Unauthorized" }, 401);
+      await ensureCollabSchema();
+      const own = await getUserPlan(userId);
+      const joined = await listJoinedWorkspaces(query, userId);
+      const others = await Promise.all(
+        joined.map(async (w) => {
+          const plan = await getUserPlan(w.workspaceId).catch(() => ({ planId: "free", active: false, extraSeats: 0 }));
+          return { id: w.workspaceId, name: await displayName(w.workspaceId), role: w.role, planId: plan.planId, active: plan.active, establishments: w.establishments };
+        })
+      );
+      return json(res, {
+        userId,
+        workspaces: [{ id: userId, name: "Mon espace", role: "owner", planId: own.planId, active: own.active, establishments: [] }, ...others],
+      });
+    }
+
+    if (req.method === "GET" && basePath === "/api/team") {
+      const { userId, access } = await getAccess(req);
+      if (!userId) return json(res, { error: "Unauthorized" }, 401);
+      if (!access) return noAccess(res);
+      if (!isMember(access)) return json(res, { error: "Réservé aux membres de l'espace." }, 403);
+      const plan = await getUserPlan(access.workspaceId);
+      const team = await listTeam(query, access.workspaceId);
+      const ids = [access.workspaceId, ...team.members.map((m: any) => m.user_id), ...team.guests.map((g: any) => g.user_id)];
+      const people = new Map(await Promise.all([...new Set(ids)].map(async (id) => [id, await describeUser(id)] as const)));
+      return json(res, {
+        role: access.role,
+        planId: plan.planId,
+        seats: {
+          used: await seatsUsed(query, access.workspaceId),
+          included: INCLUDED_MEMBERS[plan.planId] ?? 1,
+          extra: plan.extraSeats,
+          capacity: memberCapacity(plan.planId, plan.extraSeats),
+        },
+        owner: { userId: access.workspaceId, ...people.get(access.workspaceId) },
+        members: team.members.map((m: any) => ({ userId: m.user_id, role: m.role, since: m.created_at, ...people.get(m.user_id) })),
+        guests: team.guests.map((g: any) => ({
+          userId: g.user_id, establishmentId: g.establishment_id, establishmentName: g.establishment_name, role: g.role, since: g.created_at, ...people.get(g.user_id),
+        })),
+        invitations: team.invitations.map((i: any) => ({
+          id: i.id, email: i.email, kind: i.kind, role: i.role, establishmentId: i.establishment_id, createdAt: i.created_at, expiresAt: i.expires_at,
+        })),
+      });
+    }
+
+    if (req.method === "POST" && basePath === "/api/team/invite") {
+      const { userId, access } = await getAccess(req);
+      if (!userId) return json(res, { error: "Unauthorized" }, 401);
+      if (!access) return noAccess(res);
+      if (!isMember(access)) return json(res, { error: "Réservé aux membres de l'espace." }, 403);
+      const body = await readBody(req).catch(() => null);
+      const email = typeof body?.email === "string" ? body.email.trim().toLowerCase() : "";
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 200) return json(res, { error: "Adresse email invalide." }, 400);
+      const kind = body?.kind === "guest" ? "guest" : "member";
+      const plan = await getUserPlan(access.workspaceId);
+      if (!plan.active) return json(res, { error: "Le travail à plusieurs est inclus dans les offres payantes." }, 403);
+      // Envoi d'emails depuis noreply@kaijos.com : limité pour empêcher le spam.
+      const sentToday = await query(
+        `SELECT count(*)::int AS n FROM workspace_invitations WHERE workspace_id=$1 AND created_at > now() - interval '1 day'`,
+        [access.workspaceId]
+      ).then((r) => Number(r.rows[0]?.n || 0));
+      if (sentToday >= 30) return json(res, { error: "Limite de 30 invitations par jour atteinte." }, 429);
+
+      let role: "editor" | "contrib" | "viewer" = "editor";
+      let establishmentId: string | null = null;
+      let establishmentName = "";
+      if (kind === "member") {
+        if (access.role !== "owner") return json(res, { error: "Seul le titulaire de l'abonnement peut ajouter des membres." }, 403);
+        const capacity = memberCapacity(plan.planId, plan.extraSeats);
+        if ((await seatsUsed(query, access.workspaceId)) >= capacity) {
+          return json(res, {
+            error: plan.planId === "consultants"
+              ? `Les ${capacity} places de votre offre sont occupées. Ajoutez une place dans « Mon compte », ou retirez un membre.`
+              : `Votre offre comprend ${capacity} membre${capacity > 1 ? "s" : ""}, propriétaire compris. Passez à l'offre supérieure pour en ajouter.`,
+          }, 403);
+        }
+      } else {
+        if (plan.planId !== "consultants") return json(res, { error: "L'accès d'un client à son dossier est inclus dans l'offre Pro." }, 403);
+        role = body?.role === "contrib" ? "contrib" : "viewer";
+        establishmentId = typeof body?.establishmentId === "string" ? body.establishmentId : null;
+        const est = establishmentId
+          ? (await query(`SELECT name, client_name FROM establishments WHERE id=$1 AND org_id=$2 AND archived_at IS NULL`, [establishmentId, access.workspaceId])).rows[0]
+          : null;
+        if (!est) return json(res, { error: "Choisissez le dossier auquel donner accès." }, 400);
+        establishmentName = est.client_name ? `${est.client_name} — ${est.name}` : est.name;
+      }
+      const inviter = await describeUser(userId);
+      const self = await clerkClient.users.getUser(userId).catch(() => null);
+      if (self?.emailAddresses?.some((e) => e.emailAddress.toLowerCase() === email)) {
+        return json(res, { error: "Vous ne pouvez pas vous inviter vous-même." }, 400);
+      }
+      const token = await createInvitation(query, { workspaceId: access.workspaceId, email, kind, role, establishmentId, createdBy: userId });
+      const link = `${process.env.APP_URL || "http://localhost:5173"}/invitation?token=${encodeURIComponent(token)}`;
+      if (RESEND_API_KEY) {
+        const what = kind === "member"
+          ? "à rejoindre son espace Kaijos, l'outil qu'il utilise pour les documents uniques d'évaluation des risques"
+          : `à ${role === "contrib" ? "compléter" : "consulter"} le document unique d'évaluation des risques de <strong>${escapeHtml(establishmentName)}</strong> sur Kaijos`;
+        const html = `
+          <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto">
+            <div style="background:linear-gradient(135deg,#5B61F6,#00B3FF);padding:28px 32px;border-radius:12px 12px 0 0">
+              <h1 style="color:#fff;margin:0;font-size:20px">Invitation Kaijos</h1>
+            </div>
+            <div style="background:#f9fafb;padding:28px 32px;border-radius:0 0 12px 12px;border:1px solid #e5e7eb">
+              <p style="font-size:15px;color:#1e293b">Bonjour,</p>
+              <p style="font-size:15px;color:#1e293b"><strong>${escapeHtml(inviter.name)}</strong> vous invite ${what}.</p>
+              <a href="${link}"
+                 style="display:inline-block;margin-top:16px;background:#5B61F6;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:bold">
+                Accepter l'invitation →
+              </a>
+              <p style="margin-top:20px;font-size:13px;color:#64748b">
+                Connectez-vous ou créez votre compte avec cette adresse (${escapeHtml(email)}) : l'invitation n'est valable que pour elle,
+                pendant 14 jours. L'accès est gratuit pour vous.
+              </p>
+              <p style="margin-top:16px;font-size:12px;color:#94a3b8">
+                Vous recevez cet email parce que ${escapeHtml(inviter.name)} a saisi votre adresse dans Kaijos.
+                Si vous ne connaissez pas cette personne, ignorez simplement ce message.
+              </p>
+            </div>
+          </div>`;
+        const sent = await fetch("https://api.resend.com/emails", {
+          method: "POST",
+          headers: { Authorization: `Bearer ${RESEND_API_KEY}`, "Content-Type": "application/json" },
+          body: JSON.stringify({ from: FROM_EMAIL, to: [email], subject: `[Kaijos] ${inviter.name} vous invite sur Kaijos`, html }),
+        }).catch((e) => { console.error("[invites] email error:", e); return null; });
+        if (!sent?.ok) console.error("[invites] Resend refused", sent?.status);
+      }
+      return json(res, { ok: true });
+    }
+
+    if (req.method === "POST" && basePath === "/api/team/revoke") {
+      const { userId, access } = await getAccess(req);
+      if (!userId) return json(res, { error: "Unauthorized" }, 401);
+      if (!access) return noAccess(res);
+      if (!isMember(access)) return json(res, { error: "Réservé aux membres de l'espace." }, 403);
+      const body = await readBody(req).catch(() => null);
+      // Les invitations de membre sont gérées par le titulaire ; celles des clients, par tout membre.
+      await query(
+        `UPDATE workspace_invitations SET revoked_at=now()
+          WHERE id=$1 AND workspace_id=$2 AND accepted_at IS NULL AND ($3 OR kind='guest')`,
+        [String(body?.id || ""), access.workspaceId, access.role === "owner"]
+      );
+      return json(res, { ok: true });
+    }
+
+    // Retirer un membre, l'accès d'un client à un dossier, ou quitter un espace.
+    if (req.method === "POST" && basePath === "/api/team/remove") {
+      const { userId, access } = await getAccess(req);
+      if (!userId) return json(res, { error: "Unauthorized" }, 401);
+      if (!access) return noAccess(res);
+      const body = await readBody(req).catch(() => null);
+      const target = typeof body?.userId === "string" ? body.userId : "";
+      const establishmentId = typeof body?.establishmentId === "string" ? body.establishmentId : null;
+      if (!target || target === access.workspaceId) return json(res, { error: "Bad Request" }, 400);
+      const leaving = target === userId;
+      if (establishmentId) {
+        if (!leaving && !isMember(access)) return json(res, { error: "Réservé aux membres de l'espace." }, 403);
+        await query(`DELETE FROM establishment_guests WHERE workspace_id=$1 AND establishment_id=$2 AND user_id=$3`, [access.workspaceId, establishmentId, target]);
+      } else {
+        if (!leaving && access.role !== "owner") return json(res, { error: "Seul le titulaire de l'abonnement peut retirer un membre." }, 403);
+        await query(`DELETE FROM workspace_members WHERE workspace_id=$1 AND user_id=$2`, [access.workspaceId, target]);
+        if (leaving) await query(`DELETE FROM establishment_guests WHERE workspace_id=$1 AND user_id=$2`, [access.workspaceId, target]);
+      }
+      return json(res, { ok: true });
+    }
+
+    if (req.method === "POST" && basePath === "/api/invitations/accept") {
+      const userId = await getClerkOrgId(req);
+      if (!userId) return json(res, { error: "Unauthorized" }, 401);
+      await ensureCollabSchema();
+      const body = await readBody(req).catch(() => null);
+      const token = typeof body?.token === "string" ? body.token : "";
+      if (!token) return json(res, { error: "Lien d'invitation incomplet." }, 400);
+      const user = await clerkClient.users.getUser(userId);
+      const verified = (user.emailAddresses || []).filter((e) => e.verification?.status === "verified").map((e) => e.emailAddress);
+      const result = await acceptInvitation(query, token, userId, verified);
+      if ("error" in result) return json(res, { error: result.error }, result.status);
+      return json(res, { ok: true, workspaceId: result.workspaceId, kind: result.kind, name: await displayName(result.workspaceId) });
+    }
+
+    // Places supplémentaires de l'offre Pro : la ligne « membre supplémentaire »
+    // de l'abonnement change de quantité. Un ajout est facturé tout de suite au
+    // prorata de la période restante ; un retrait donne un avoir sur la prochaine
+    // facture. /preview renvoie le montant exact avant confirmation.
+    if (req.method === "POST" && (basePath === "/api/seats" || basePath === "/api/seats/preview")) {
+      if (!stripe || !clerkEnabled) return json(res, { error: "Paiement non configuré" }, 500);
+      if (!STRIPE_PRICE_ID_EXTRA_MEMBER) return json(res, { error: "Tarif des membres supplémentaires non configuré." }, 500);
+      const userId = await getClerkOrgId(req);
+      if (!userId) return json(res, { error: "Unauthorized" }, 401);
+      await ensureCollabSchema();
+      const body = await readBody(req).catch(() => null);
+      const extraSeats = Math.floor(Number(body?.extraSeats));
+      if (!Number.isFinite(extraSeats) || extraSeats < 0 || extraSeats > 200) return json(res, { error: "Nombre de places invalide." }, 400);
+      const plan = await getUserPlan(userId);
+      if (plan.planId !== "consultants") return json(res, { error: "Les membres supplémentaires sont proposés avec l'offre Pro." }, 403);
+      const used = await seatsUsed(query, userId);
+      if (memberCapacity("consultants", extraSeats) < used) {
+        return json(res, { error: `${used} places sont occupées (membres et invitations en attente) : retirez d'abord des membres.` }, 400);
+      }
+      const user = await clerkClient.users.getUser(userId);
+      const md = (user.publicMetadata || {}) as Record<string, any>;
+      let subscription: Stripe.Subscription | null = null;
+      if (typeof md.stripeSubscriptionId === "string") subscription = await stripe.subscriptions.retrieve(md.stripeSubscriptionId).catch(() => null);
+      if ((!subscription || !["active", "trialing"].includes(subscription.status)) && typeof md.stripeCustomerId === "string") {
+        subscription = (await stripe.subscriptions.list({ customer: md.stripeCustomerId, status: "active", limit: 1 })).data[0] || null;
+      }
+      if (!subscription) return json(res, { error: "Abonnement introuvable. Contactez le support." }, 404);
+      const seatItem = seatItemOf(subscription);
+      const current = seatItem?.quantity || 0;
+      if (extraSeats === current) return json(res, { amountDue: 0, currency: "eur", extraSeats, current });
+      const adding = extraSeats > current;
+      const items: Stripe.SubscriptionUpdateParams.Item[] = seatItem
+        ? extraSeats === 0 ? [{ id: seatItem.id, deleted: true }] : [{ id: seatItem.id, quantity: extraSeats }]
+        : [{ price: STRIPE_PRICE_ID_EXTRA_MEMBER, quantity: extraSeats }];
+      const prorationDate = Math.floor(Date.now() / 1000);
+      try {
+        if (basePath === "/api/seats/preview") {
+          const upcoming = await stripe.invoices.retrieveUpcoming({
+            customer: typeof subscription.customer === "string" ? subscription.customer : subscription.customer.id,
+            subscription: subscription.id,
+            subscription_items: items,
+            subscription_proration_behavior: adding ? "always_invoice" : "create_prorations",
+            subscription_proration_date: prorationDate,
+          });
+          // Ajout : montant facturé maintenant. Retrait : avoir (somme négative des lignes de prorata).
+          const prorations = upcoming.lines.data.filter((l) => l.proration).reduce((sum, l) => sum + l.amount, 0);
+          return json(res, { amountDue: adding ? upcoming.amount_due : prorations, currency: upcoming.currency, extraSeats, current });
+        }
+        await stripe.subscriptions.update(subscription.id, {
+          items,
+          proration_behavior: adding ? "always_invoice" : "create_prorations",
+          proration_date: prorationDate,
+          payment_behavior: "error_if_incomplete",
+        });
+      } catch (err: any) {
+        if (String(err?.type || "").startsWith("Stripe")) return json(res, { error: `La modification a échoué : ${err.message}` }, 402);
+        throw err;
+      }
+      await mergePublicMetadata(userId, { extraSeats });
+      planCache.delete(userId);
+      return json(res, { ok: true, extraSeats });
+    }
+
     // --- App data: establishments / work-units / assessments / actions / versions ---
-    // All scoped to the real signed-in Clerk user (see getClerkOrgId above).
+    // Données de l'espace demandé (en-tête X-Workspace-Id, par défaut celui de
+    // l'utilisateur), filtrées et protégées selon ses droits (voir getAccess).
     if (basePath === "/api/establishments" || basePath.startsWith("/api/establishments/")) {
-      const orgId = await getClerkOrgId(req);
-      if (!orgId) return json(res, { error: "Unauthorized" }, 401);
-      if (req.method === "GET") return json(res, await listEstablishmentsDb(orgId));
+      const { userId, access } = await getAccess(req);
+      if (!userId) return json(res, { error: "Unauthorized" }, 401);
+      if (!access) return noAccess(res);
+      const orgId = access.workspaceId;
+      if (req.method === "GET") return json(res, await listEstablishmentsDb(orgId, visibleEstablishments(access)));
+      // Créer, modifier ou archiver un établissement : membres de l'espace.
+      if (!isMember(access)) return readOnlyRefusal(res);
       if (req.method === "POST") {
         const body = await readBody(req).catch(() => null);
         if (!body?.id || !body?.name) return json(res, { error: "Bad Request" }, 400);
@@ -1065,13 +1429,16 @@ createServer(async (req, res) => {
       }
     }
     if (basePath === "/api/work-units" || basePath.startsWith("/api/work-units/")) {
-      const orgId = await getClerkOrgId(req);
-      if (!orgId) return json(res, { error: "Unauthorized" }, 401);
-      if (req.method === "GET") return json(res, await listWorkUnitsDb(orgId));
+      const { userId, access } = await getAccess(req);
+      if (!userId) return json(res, { error: "Unauthorized" }, 401);
+      if (!access) return noAccess(res);
+      const orgId = access.workspaceId;
+      if (req.method === "GET") return json(res, await listWorkUnitsDb(orgId, visibleEstablishments(access)));
       if (req.method === "POST") {
         const body = await readBody(req).catch(() => null);
         if (!body?.id || !body?.name || !body?.establishmentId) return json(res, { error: "Bad Request" }, 400);
         if (!(await ownsRow("establishments", body.establishmentId, orgId))) return notYours(res);
+        if (!canEditEstablishmentData(access, body.establishmentId) || !(await canTouchRow(access, "work_units", body.id))) return readOnlyRefusal(res);
         // Nombre d'unités de l'offre (jusqu'ici contrôlé seulement dans le navigateur).
         const plan = await getUserPlan(orgId);
         const max = PLAN_LIMITS[plan.planId]?.maxWorkUnits ?? -1;
@@ -1088,52 +1455,68 @@ createServer(async (req, res) => {
             return json(res, { error: `Votre offre permet ${max} unités de travail au maximum.${plan.active ? "" : " Abonnez-vous pour en ajouter davantage."}` }, 403);
           }
         }
-        return json(res, await upsertWorkUnitDb(orgId, body), 201);
+        return json(res, await upsertWorkUnitDb(orgId, body, userId), 201);
       }
       if (req.method === "DELETE") {
         const id = decodeURIComponent(basePath.replace("/api/work-units/", ""));
+        if (!(await canTouchRow(access, "work_units", id))) return readOnlyRefusal(res);
         await deleteWorkUnitDb(orgId, id);
         return json(res, { ok: true });
       }
     }
     if (basePath === "/api/assessments" || basePath.startsWith("/api/assessments/")) {
-      const orgId = await getClerkOrgId(req);
-      if (!orgId) return json(res, { error: "Unauthorized" }, 401);
-      if (req.method === "GET") return json(res, await listAssessmentsDb(orgId));
+      const { userId, access } = await getAccess(req);
+      if (!userId) return json(res, { error: "Unauthorized" }, 401);
+      if (!access) return noAccess(res);
+      const orgId = access.workspaceId;
+      if (req.method === "GET") return json(res, await listAssessmentsDb(orgId, visibleEstablishments(access)));
       if (req.method === "POST") {
         const body = await readBody(req).catch(() => null);
         if (!body?.id || !body?.workUnitId) return json(res, { error: "Bad Request" }, 400);
         if (!(await ownsRow("work_units", body.workUnitId, orgId))) return notYours(res);
-        return json(res, await upsertAssessmentDb(orgId, body), 201);
+        if (!(await canTouchRow(access, "work_units", body.workUnitId)) || !(await canTouchRow(access, "assessments", body.id))) return readOnlyRefusal(res);
+        return json(res, await upsertAssessmentDb(orgId, body, userId), 201);
       }
       if (req.method === "DELETE") {
         const id = decodeURIComponent(basePath.replace("/api/assessments/", ""));
+        if (!(await canTouchRow(access, "assessments", id))) return readOnlyRefusal(res);
         await deleteAssessmentDb(orgId, id);
         return json(res, { ok: true });
       }
     }
     if (basePath === "/api/actions" || basePath.startsWith("/api/actions/")) {
-      const orgId = await getClerkOrgId(req);
-      if (!orgId) return json(res, { error: "Unauthorized" }, 401);
-      if (req.method === "GET") return json(res, await listActionsDb(orgId));
+      const { userId, access } = await getAccess(req);
+      if (!userId) return json(res, { error: "Unauthorized" }, 401);
+      if (!access) return noAccess(res);
+      const orgId = access.workspaceId;
+      if (req.method === "GET") return json(res, await listActionsDb(orgId, visibleEstablishments(access)));
       if (req.method === "POST") {
         const body = await readBody(req).catch(() => null);
         if (!body?.id || !body?.title) return json(res, { error: "Bad Request" }, 400);
         if (body.establishmentId && !(await ownsRow("establishments", body.establishmentId, orgId))) return notYours(res);
         if (body.assessmentId && !(await ownsRow("assessments", body.assessmentId, orgId))) return notYours(res);
-        return json(res, await upsertActionDb(orgId, body), 201);
+        if (!isMember(access)) {
+          const target = body.establishmentId || (body.assessmentId ? await establishmentOfRow("assessments", body.assessmentId, orgId) : null);
+          if (!canEditEstablishmentData(access, target) || !(await canTouchRow(access, "actions", body.id))) return readOnlyRefusal(res);
+        }
+        return json(res, await upsertActionDb(orgId, body, userId), 201);
       }
       if (req.method === "DELETE") {
         const id = decodeURIComponent(basePath.replace("/api/actions/", ""));
+        if (!(await canTouchRow(access, "actions", id))) return readOnlyRefusal(res);
         await deleteActionDb(orgId, id);
         return json(res, { ok: true });
       }
     }
     if (basePath === "/api/versions") {
-      const orgId = await getClerkOrgId(req);
-      if (!orgId) return json(res, { error: "Unauthorized" }, 401);
-      if (req.method === "GET") return json(res, await listVersionsDb(orgId));
+      const { userId, access } = await getAccess(req);
+      if (!userId) return json(res, { error: "Unauthorized" }, 401);
+      if (!access) return noAccess(res);
+      const orgId = access.workspaceId;
+      if (req.method === "GET") return json(res, await listVersionsDb(orgId, visibleEstablishments(access)));
       if (req.method === "POST") {
+        // Une version vaut validation du document : réservée aux membres de l'espace.
+        if (!isMember(access)) return readOnlyRefusal(res);
         const body = await readBody(req).catch(() => null);
         if (!body?.id || !body?.establishmentId || !body?.label) return json(res, { error: "Bad Request" }, 400);
         if (!(await ownsRow("establishments", body.establishmentId, orgId))) return notYours(res);
@@ -1245,108 +1628,6 @@ createServer(async (req, res) => {
       } catch (err) {
         return error(res, err);
       }
-    }
-
-    // ── COLLABORATEURS ──────────────────────────────────────────────────────
-    // Toutes ces routes exigent une vraie session Clerk : l'identité de
-    // l'appelant (orgId) vient du jeton vérifié, jamais d'un champ envoyé
-    // par le client (sinon n'importe qui peut lister/créer/révoquer les
-    // invitations d'un autre utilisateur, ou faire envoyer un email arbitraire).
-    if (req.method === "GET" && basePath === "/api/invites") {
-      const orgId = await getClerkOrgId(req);
-      if (!orgId) return json(res, { error: "Unauthorized" }, 401);
-      try {
-        const rows = await query(
-          "SELECT id, invitee_email, role, status, created_at FROM invitations WHERE owner_clerk_id = $1 ORDER BY created_at DESC",
-          [orgId]
-        ).catch(() => ({ rows: [] as any[] }));
-        return json(res, { invites: rows.rows });
-      } catch {
-        return json(res, { invites: [] });
-      }
-    }
-
-    if (req.method === "POST" && basePath === "/api/invites") {
-      const orgId = await getClerkOrgId(req);
-      if (!orgId) return json(res, { error: "Unauthorized" }, 401);
-      const body = await readBody(req).catch(() => null);
-      const inviteeEmail = typeof body?.email === "string" ? body.email.trim().toLowerCase() : "";
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inviteeEmail) || inviteeEmail.length > 200) return json(res, { error: "Adresse email invalide." }, 400);
-      // Ouverte à tout compte, cette route permettait d'envoyer depuis
-      // noreply@kaijos.com des emails à n'importe qui, avec un texte choisi :
-      // réservée aux abonnés, limitée à 20 par jour, expéditeur tiré du compte.
-      const plan = await getUserPlan(orgId);
-      if (!plan.active) return json(res, { error: "L'invitation de collaborateurs est réservée aux abonnés." }, 403);
-      const sentToday = await query(
-        "SELECT count(*)::int AS n FROM invitations WHERE owner_clerk_id = $1 AND created_at > now() - interval '1 day'",
-        [orgId]
-      ).then((r) => Number(r.rows[0]?.n || 0)).catch(() => 0);
-      if (sentToday >= 20) return json(res, { error: "Limite de 20 invitations par jour atteinte." }, 429);
-      const inviter = await clerkClient.users.getUser(orgId).catch(() => null);
-      const ownerName = [inviter?.firstName, inviter?.lastName].filter(Boolean).join(" ") || inviter?.emailAddresses?.[0]?.emailAddress || "Un utilisateur";
-      const establishmentName = typeof body.establishmentName === "string" ? body.establishmentName.slice(0, 120) : "";
-      body.email = inviteeEmail;
-
-      // Persist in DB
-      try {
-        await query(
-          `INSERT INTO invitations (id, owner_clerk_id, invitee_email, role, status, created_at)
-           VALUES (gen_random_uuid(), $1, $2, $3, 'pending', NOW())
-           ON CONFLICT (owner_clerk_id, invitee_email) DO UPDATE SET status = 'pending', role = $3`,
-          [orgId, body.email.toLowerCase(), body.role || "viewer"]
-        );
-      } catch (dbErr) {
-        console.warn("[invites] DB unavailable, email-only fallback:", dbErr);
-      }
-
-      // Send invitation email if Resend configured
-      if (RESEND_API_KEY) {
-        const appUrl = process.env.APP_URL || "http://localhost:5173";
-        const html = `
-          <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto">
-            <div style="background:linear-gradient(135deg,#5B61F6,#00B3FF);padding:28px 32px;border-radius:12px 12px 0 0">
-              <h1 style="color:#fff;margin:0;font-size:20px">Invitation Kaijos</h1>
-            </div>
-            <div style="background:#f9fafb;padding:28px 32px;border-radius:0 0 12px 12px;border:1px solid #e5e7eb">
-              <p style="font-size:15px;color:#1e293b">Bonjour,</p>
-              <p style="font-size:15px;color:#1e293b">
-                <strong>${escapeHtml(ownerName)}</strong> vous invite à créer votre compte Kaijos, l'outil qu'il utilise
-                pour le document unique d'évaluation des risques${establishmentName ? ` de <strong>${escapeHtml(establishmentName)}</strong>` : ""}.
-              </p>
-              <a href="${appUrl}/sign-up"
-                 style="display:inline-block;margin-top:16px;background:#5B61F6;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:bold">
-                Créer mon compte →
-              </a>
-              <p style="margin-top:24px;font-size:12px;color:#94a3b8">
-                Vous recevez cet email parce que ${escapeHtml(ownerName)} a saisi votre adresse (${escapeHtml(body.email)}) dans Kaijos.
-                Si vous ne connaissez pas cette personne, ignorez simplement ce message.
-              </p>
-            </div>
-          </div>`;
-        await fetch("https://api.resend.com/emails", {
-          method: "POST",
-          headers: { "Authorization": `Bearer ${RESEND_API_KEY}`, "Content-Type": "application/json" },
-          body: JSON.stringify({
-            from: FROM_EMAIL,
-            to: [body.email],
-            subject: `[Kaijos] ${ownerName} vous invite sur Kaijos`,
-            html,
-          }),
-        }).catch((e) => console.error("[invites] email error:", e));
-      }
-      return json(res, { ok: true });
-    }
-
-    if (req.method === "POST" && basePath === "/api/invites/revoke") {
-      const orgId = await getClerkOrgId(req);
-      if (!orgId) return json(res, { error: "Unauthorized" }, 401);
-      const body = await readBody(req).catch(() => null);
-      if (!body?.email) return json(res, { error: "Bad Request" }, 400);
-      await query(
-        "DELETE FROM invitations WHERE owner_clerk_id = $1 AND invitee_email = $2",
-        [orgId, body.email.toLowerCase()]
-      ).catch(() => null);
-      return json(res, { ok: true });
     }
 
     // ── RAPPEL RÉVISION ANNUELLE ─────────────────────────────────────────────

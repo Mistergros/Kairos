@@ -77,7 +77,8 @@ flowchart TB
 - **Si ça casse :** personne ne peut se connecter au site — vérifier le statut sur le dashboard Clerk et que les clés dans les variables d'environnement (§5) sont toujours valides.
 
 ### 💳 Stripe — les paiements
-- **Ce que c'est :** encaisse les abonnements (Essentiel 149 €/an, PME 490 €/an, Pro 1 990 €/an).
+- **Ce que c'est :** encaisse les abonnements (Essentiel 149 €/an, PME 490 €/an, Pro 1 990 €/an) et, en Pro, les membres supplémentaires (290 €, 240 € puis 190 € par membre et par an).
+- **À créer une fois, en mode test puis en mode réel :** un produit « Membre supplémentaire Kaijos Pro » avec un tarif annuel **par paliers progressifs** (graduated) : 290 € de 1 à 5, 240 € de 6 à 15, 190 € à partir de 16. Copier son identifiant `price_…` dans la variable `STRIPE_PRICE_ID_EXTRA_MEMBER` sur Render.
 - **Où le gérer :** [dashboard.stripe.com](https://dashboard.stripe.com) — factures, clients, remboursements, passage en mode réel (aujourd'hui : clés de **test**, aucun vrai paiement encaissé).
 - **Coût :** pas d'abonnement, juste une commission par transaction réussie (autour de 1,5% + 0,25€ en France, à vérifier sur leur site).
 - **Important avant le vrai lancement :** basculer des clés de test vers les clés live, et configurer le webhook Stripe pour qu'il pointe vers Render en production.

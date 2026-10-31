@@ -24,7 +24,9 @@ import SupportPage from "./pages/Support";
 import { ContextSelectors } from "./components/Selectors";
 import { Onboarding } from "./components/Onboarding";
 import { ProductTour, useTourControls } from "./components/ProductTour";
-import { useDuerpStore } from "./state/store";
+import { setReadOnlyMode, useDuerpStore } from "./state/store";
+import { canEditCurrentWorkspace, switchWorkspace, useWorkspaceStore } from "./state/workspace";
+import InvitationPage from "./pages/Invitation";
 import { DuerpResults } from "./pages/DuerpResults";
 import { BackOffice } from "./pages/BackOffice";
 
@@ -78,6 +80,10 @@ function RequireSignedIn({ children }: { children: ReactNode }) {
   let pendingPlan: string | null = null;
   try { pendingPlan = localStorage.getItem("kaijos_pending_plan"); } catch {}
   if (pendingPlan) return <Navigate to={`/landing?startCheckout=${encodeURIComponent(pendingPlan)}`} replace />;
+  // Invitation ouverte avant la connexion (voir pages/Invitation) : on la reprend.
+  let pendingInvite: string | null = null;
+  try { pendingInvite = localStorage.getItem("kaijos_pending_invite"); } catch {}
+  if (pendingInvite) return <Navigate to={`/invitation?token=${encodeURIComponent(pendingInvite)}`} replace />;
   return <>{children}</>;
 }
 
@@ -108,12 +114,32 @@ function DashboardRoutes() {
 
   const { user } = useUser();
 
-  // Déclenche le sync Supabase dès que l'identité Clerk est disponible
+  const loadWorkspaces = useWorkspaceStore((s) => s.load);
+  const workspaces = useWorkspaceStore((s) => s.workspaces);
+  const currentWorkspace = useWorkspaceStore((s) => s.current);
+  const readOnly = !canEditCurrentWorkspace(currentWorkspace);
+
+  // Dès que l'identité Clerk est disponible : choix de l'espace (le sien, ou
+  // celui où l'utilisateur a été invité), puis chargement de ses données.
   useEffect(() => {
     if (!user?.id) return;
-    setOrgId(user.id);
-    loadFromSupabase(user.id);
+    let cancelled = false;
+    loadWorkspaces(user.id).then((ws) => {
+      if (cancelled) return;
+      // Données locales rangées par espace et par utilisateur : un invité ne
+      // retrouve jamais celles d'un autre compte du même navigateur.
+      const key = ws.id === user.id ? user.id : `${ws.id}:${user.id}`;
+      setOrgId(key);
+      loadFromSupabase(key);
+    });
+    return () => {
+      cancelled = true;
+    };
   }, [user?.id]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    setReadOnlyMode(readOnly);
+  }, [readOnly]);
 
   const lastUpdate = useMemo(() => {
     const timestamps: number[] = [];
@@ -212,7 +238,30 @@ function DashboardRoutes() {
               {syncStatus === "syncing" && <span className="ml-2 text-ocean animate-pulse">● Sync…</span>}
               {syncStatus === "error" && <span className="ml-2 text-amber-500" title="Données locales — reconnexion en attente">● Hors ligne</span>}
             </p>
-            {plan.planId === "free" && (
+            {currentWorkspace && currentWorkspace.role !== "owner" && (
+              <p className="text-xs font-medium text-kairos">
+                {currentWorkspace.name}
+                {currentWorkspace.role === "guest" && (readOnly ? " · consultation seule" : " · vous pouvez compléter ce dossier")}
+              </p>
+            )}
+            {workspaces.length > 1 && user?.id && (
+              <label className="mt-1 flex items-center gap-2 text-xs text-slate/70">
+                <span>Espace :</span>
+                <select
+                  id="workspace-switcher"
+                  value={currentWorkspace?.id}
+                  onChange={(e) => switchWorkspace(user.id, e.target.value)}
+                  className="rounded-lg border border-slate/20 bg-white px-2 py-1 text-xs"
+                >
+                  {workspaces.map((w) => (
+                    <option key={w.id} value={w.id}>
+                      {w.role === "guest" ? `${w.name} (${w.establishments.map((e) => e.name).join(", ")})` : w.name}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            )}
+            {plan.planId === "free" && (!currentWorkspace || currentWorkspace.role === "owner") && (
               <p className="text-xs text-slate/70">
                 Offre Découverte : construisez votre DUERP gratuitement.{" "}
                 <NavLink to="/pricing" className="font-semibold text-kairos hover:underline">Débloquer le téléchargement</NavLink>
@@ -284,6 +333,7 @@ export default function App() {
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/cgv" element={<TermsPage />} />
         <Route path="/dpa" element={<DpaPage />} />
+        <Route path="/invitation" element={<InvitationPage />} />
         <Route path="/support" element={<SupportPage />} />
         <Route
           path="/mon-compte"

@@ -141,3 +141,46 @@ CREATE TABLE IF NOT EXISTS org_branding (
   data JSONB NOT NULL,
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+
+-- Espaces partagés (api/workspaces.ts) : l'espace porte l'identifiant de son
+-- titulaire (= org_id des données). Membres : tous les dossiers ; invités : un
+-- établissement. Migration appliquée par ensureCollabSchema (api/server.ts).
+CREATE TABLE IF NOT EXISTS workspace_members (
+  workspace_id TEXT NOT NULL,
+  user_id TEXT NOT NULL,
+  role TEXT NOT NULL DEFAULT 'editor',
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (workspace_id, user_id)
+);
+CREATE INDEX IF NOT EXISTS workspace_members_user_idx ON workspace_members (user_id);
+
+CREATE TABLE IF NOT EXISTS establishment_guests (
+  workspace_id TEXT NOT NULL,
+  establishment_id TEXT NOT NULL,
+  user_id TEXT NOT NULL,
+  role TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (establishment_id, user_id)
+);
+CREATE INDEX IF NOT EXISTS establishment_guests_user_idx ON establishment_guests (user_id);
+
+CREATE TABLE IF NOT EXISTS workspace_invitations (
+  id TEXT PRIMARY KEY,
+  workspace_id TEXT NOT NULL,
+  email TEXT NOT NULL,
+  kind TEXT NOT NULL,
+  role TEXT NOT NULL,
+  establishment_id TEXT,
+  token_hash TEXT NOT NULL UNIQUE,
+  created_by TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  expires_at TIMESTAMPTZ NOT NULL,
+  accepted_by TEXT,
+  accepted_at TIMESTAMPTZ,
+  revoked_at TIMESTAMPTZ
+);
+CREATE INDEX IF NOT EXISTS workspace_invitations_ws_idx ON workspace_invitations (workspace_id);
+
+ALTER TABLE work_units ADD COLUMN IF NOT EXISTS updated_by TEXT;
+ALTER TABLE assessments ADD COLUMN IF NOT EXISTS updated_by TEXT;
+ALTER TABLE actions ADD COLUMN IF NOT EXISTS updated_by TEXT;

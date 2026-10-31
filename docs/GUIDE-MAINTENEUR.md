@@ -6,7 +6,7 @@ Documents complémentaires :
 - [`ARCHITECTURE.md`](../ARCHITECTURE.md) : les services externes expliqués simplement, avec leur coût et leur configuration pas à pas.
 - [`REFERENTIELS.md`](../REFERENTIELS.md) : d'où viennent les risques, les questions et les mesures proposés, et comment ils sont sourcés.
 
-> Dernière mise à jour : 31 octobre 2026. Voir la section « Tenir ce guide à jour » en fin de document.
+> Dernière mise à jour : 31 octobre 2026 (espaces partagés). Voir la section « Tenir ce guide à jour » en fin de document.
 
 ---
 
@@ -74,12 +74,16 @@ api/
   server.ts          Toute l'API : routes, auth Clerk, Stripe, webhook, cron, migrations au démarrage
   slots.ts           Quotas d'établissements et de clients sur 12 mois glissants
   branding.ts        Marque du cabinet sur les PDF (offre Pro) : nettoyage et stockage
+  workspaces.ts      Espaces partagés : membres, invités d'un dossier, invitations, places (voir §8 bis)
 apps/web/server/db.ts Pool Postgres (DATABASE_URL) utilisé par l'API
 src/
   main.tsx           Point d'entrée : Clerk, Sentry, écran d'erreur
   App.tsx            Routes, garde « connecté », menu, bandeaux
   pages/             Un fichier par écran (Landing, Pricing, Units, Inventory, ActionPlan, Exports, Clients…)
   state/store.ts     Store Zustand persistant (clé localStorage `kaijos-duerp-v1`), synchronisé avec l'API
+  state/workspace.ts Espaces accessibles et espace actif (en-tête X-Workspace-Id, utils/workspace.ts)
+  components/TeamCard.tsx  Bloc « Équipe » de Mon compte : membres, accès clients, places supplémentaires
+  pages/Invitation.tsx     Acceptation d'une invitation reçue par email
   repos/             Appels API par entité (établissements, unités, évaluations, actions, versions)
   services/          Pré-remplissage, catalogue d'actions, génération PDF (printService), marque cabinet
   hooks/usePlan.ts   Offre courante et droits (export, XLSX, marque…) lus dans Clerk
@@ -126,6 +130,7 @@ Il n'y a pas d'outil de migration. Le serveur applique au premier appel des migr
 | `ensureReminderSchema` | Crée `reminder_log` : un même rappel n'est jamais envoyé deux fois |
 | `ensureBrandingSchema` | Crée `org_branding` : marque cabinet, une ligne par compte |
 | `ensureActionsSchema` | Ajoute `actions.resources` et `actions.indicator` (programme annuel de prévention) |
+| `ensureCollabSchema` | Crée `workspace_members`, `establishment_guests` et `workspace_invitations` (`WORKSPACE_DDL`, `api/workspaces.ts`), et ajoute `updated_by` aux unités, risques et actions. Appelée par `getAccess`, donc par toutes les routes de données |
 
 **Règle :** toute route qui lit une colonne ajoutée par une migration doit appeler la fonction `ensure…` correspondante avant sa requête, même si une autre route le fait déjà. En production, personne n'a peut-être encore appelé cette autre route. C'est exactement ce qui a cassé la route des rappels le 29/10/2026 (correctif `66c9beb`).
 
@@ -138,7 +143,7 @@ Les versions enregistrent l’établissement à leur date (`snapshot.establishme
 
 Toute nouvelle table ou colonne doit être ajoutée à deux endroits : dans une fonction `ensure…` et dans `duerp_pro_spec/db/schema.sql`.
 
-Toutes les données applicatives sont rattachées à `org_id`, qui est l'identifiant de l'utilisateur Clerk (`sub` du jeton). Chaque requête SQL doit filtrer sur `org_id`.
+Toutes les données applicatives sont rattachées à `org_id`, qui est l'identifiant de l'**espace** : celui de l'utilisateur Clerk qui en est titulaire. Chaque requête SQL doit filtrer sur `org_id`, et, pour un invité de dossier, sur ses établissements (voir §8 bis). L'ancienne table `invitations` n'est plus utilisée.
 
 Sauvegardes : Neon (offre Launch) garde 7 jours d'historique, réglage « History window ». La branche `production` doit être protégée (Settings → General → Protect this branch).
 
@@ -157,10 +162,13 @@ Changer une limite ou un prix demande de modifier **tous** ces fichiers :
 
 Pensez aussi aux CGV (`src/pages/Terms.tsx`) si l'offre change.
 
+Le nombre de membres par offre (2, 10, 5) est dans `INCLUDED_MEMBERS` (`api/workspaces.ts`) et `maxMembers` (`PLAN_CONFIG`). Les paliers des membres supplémentaires (290, 240, 190 €) sont dans le tarif Stripe, `EXTRA_MEMBER_TIERS` (`src/components/TeamCard.tsx`), `pricing.json`, la page d'accueil et les CGV.
+
 ### Ce que vérifie le serveur
 
 - **Établissements et clients**, dans `api/slots.ts`, sur 12 mois glissants. Un établissement supprimé, ou un client supprimé ou renommé, continue de compter 12 mois. Une marge de 10 % (au moins 1) est tolérée, et recréer le même SIRET ne consomme pas de place. Testé par `npm run test:slots`.
-- **Marque cabinet** : l'écriture (`POST /api/branding`) est réservée à l'offre `consultants`.
+- **Marque cabinet** : l'écriture (`POST /api/branding`) est réservée au titulaire d'une offre `consultants`.
+- **Membres** : places de l'offre, titulaire et invitations en attente compris (`seatsUsed`). En Pro, chaque place achetée ajoute un membre et 5 dossiers clients (`clientCapacity`). Testé par `npm run test:workspaces`.
 - **Téléchargement** : bloqué côté interface pour l'offre Découverte (`canExportDocuments`). Les PDF sont générés dans le navigateur. C'est un frein commercial, pas une protection forte.
 
 ### Flux de paiement
@@ -176,7 +184,20 @@ Pensez aussi aux CGV (`src/pages/Terms.tsx`) si l'offre change.
 - **Mise à jour du compte** : le webhook `customer.subscription.updated` déduit l'offre du tarif de l'abonnement (`api/plans.ts`), quel que soit le chemin suivi.
 - **Pas de doublon** : `/api/checkout-sessions` refuse (409) un utilisateur qui a déjà un abonnement actif.
 
-Toutes les offres sont annuelles. Variables : `STRIPE_PRICE_ID_STARTER_ANNUAL`, `STRIPE_PRICE_ID_PME_ANNUAL` et `STRIPE_PRICE_ID_CONSULTANTS_ANNUAL`. L'offre Pro s'appelle toujours `CONSULTANTS` dans les variables. Le code promo `FONDATEUR` (−500 € à vie sur Pro, 20 utilisations) se gère uniquement dans Stripe.
+**Membres supplémentaires (Pro).** `POST /api/seats` (et `/api/seats/preview` pour le montant) change la quantité de la ligne « membre supplémentaire » de l'abonnement :
+- un ajout est facturé tout de suite au prorata (`always_invoice`) ;
+- un retrait crée un avoir (`create_prorations`), refusé si les places occupées dépassent la nouvelle capacité.
+
+Le webhook recopie la quantité dans `publicMetadata.extraSeats`. Si l'abonnement quitte le Pro, il retire la ligne. Un abonnement Pro peut donc avoir deux lignes : `planItemOf` et `seatItemOf` les retrouvent par leur tarif, jamais par leur position. Le portail Stripe ne sait pas changer d'offre sur un abonnement à deux lignes : un Pro avec des places achetées les retire d'abord, ou résilie.
+
+Créer le tarif dans Stripe : produit « Membre supplémentaire Kaijos Pro », tarif récurrent annuel, modèle **par paliers progressifs** (graduated). Paliers par unité :
+- de 1 à 5 : 290 € ;
+- de 6 à 15 : 240 € ;
+- 16 et plus : 190 €.
+
+Mettre son identifiant dans `STRIPE_PRICE_ID_EXTRA_MEMBER` (Render).
+
+Toutes les offres sont annuelles. Variables : `STRIPE_PRICE_ID_STARTER_ANNUAL`, `STRIPE_PRICE_ID_PME_ANNUAL`, `STRIPE_PRICE_ID_CONSULTANTS_ANNUAL` et `STRIPE_PRICE_ID_EXTRA_MEMBER`. L'offre Pro s'appelle toujours `CONSULTANTS` dans les variables. Le code promo `FONDATEUR` (−500 € à vie sur Pro, 20 utilisations) se gère uniquement dans Stripe.
 
 ---
 
@@ -190,7 +211,28 @@ Toutes les offres sont annuelles. Variables : `STRIPE_PRICE_ID_STARTER_ANNUAL`, 
 - **Limite de requêtes** : `API_RATE_LIMIT` requêtes par minute et par adresse IP pour les visiteurs, 10 fois plus pour une requête qui porte un jeton. Le webhook Stripe et la tâche planifiée ne sont pas limités. Au-delà, réponse 429.
 - **Cron** : `POST /api/cron/revision-reminders` exige `Authorization: Bearer $CRON_SECRET`, comparé en temps constant.
 - **Données reçues** : la marque cabinet n'accepte qu'un logo PNG ou JPEG de 400 Ko maximum, une couleur hexadécimale et des champs bornés (`sanitizeBranding`).
+- **Espace demandé** : l'en-tête `X-Workspace-Id` ne donne aucun droit à lui seul. `getAccess` vérifie l'appartenance à chaque requête (voir §8 bis).
 - **RGPD** : `npm run duerp:erase-user` efface les données d'un utilisateur. Les sous-traitants sont listés dans `src/pages/Privacy.tsx` et `src/pages/Dpa.tsx` : tenir les deux listes alignées à chaque nouveau prestataire.
+
+---
+
+## 8 bis. Espaces partagés
+
+Plusieurs personnes peuvent travailler sur les mêmes dossiers (`api/workspaces.ts`) :
+- **Espace** : identifiant = celui de son titulaire, qui paie l'abonnement. L'offre de l'espace est la sienne (`getUserPlan(workspaceId)`). Les données existantes n'ont pas eu à migrer.
+- **Membre** (`workspace_members`, rôle `editor`) : voit et modifie tous les dossiers, crée des versions. Occupe une place.
+- **Invité d'un dossier** (`establishment_guests`, rôles `contrib` ou `viewer`) : voit un seul établissement, le complète (`contrib`) ou le consulte (`viewer`). Il ne crée ni n'archive d'établissement et n'enregistre pas de version. Offre Pro uniquement, gratuit, sans limite. N'occupe pas de place.
+- **Titulaire** : seul à ajouter ou retirer des membres, acheter des places et modifier la marque cabinet.
+
+Côté serveur, `getAccess(req)` lit `X-Workspace-Id` (par défaut l'espace de l'utilisateur) et renvoie ses droits. Les listes sont filtrées par `visibleEstablishments` et les écritures vérifiées par `canEditEstablishmentData` et `canTouchRow`, sur l'élément existant comme sur sa nouvelle cible. Chaque unité, risque et action enregistre `updated_by`, l'identifiant de son dernier auteur.
+
+**Invitations** (`/api/team/invite`, 30 par jour et par espace) : un lien `/invitation?token=…` valable 14 jours. Seule l'empreinte SHA-256 du jeton est stockée. L'invitation ne s'accepte (`/api/invitations/accept`) qu'avec un compte dont une adresse **vérifiée** est celle invitée. Une invitation de membre en attente réserve sa place.
+
+Routes : `GET /api/workspaces`, `GET /api/team`, `POST /api/team/invite`, `POST /api/team/revoke`, `POST /api/team/remove` (aussi pour quitter un espace), `POST /api/invitations/accept`, `POST /api/seats` et `/api/seats/preview`.
+
+Côté navigateur, l'espace actif est choisi au chargement (`state/workspace.ts`) et envoyé par `apiClient`. Changer d'espace recharge la page. Les données locales sont rangées par espace et par utilisateur (`setOrgId`). Un invité en consultation seule qui modifie quelque chose voit le refus du serveur, puis l'écran est rechargé depuis le serveur.
+
+Pas d'édition en temps réel : si deux personnes modifient le même élément, la dernière enregistrée l'emporte.
 
 ---
 
@@ -229,9 +271,10 @@ La page « Méthode » décrit l’échelle de cotation de `src/pages/Inventory.
 | `npm run test:slots` | 14 scénarios de quotas sur un Postgres embarqué (PGlite) |
 | `npm run test:branding` | 12 scénarios de nettoyage et stockage de la marque cabinet |
 | `npm run test:plans` | Correspondance tarif → offre et ordre des offres |
+| `npm run test:workspaces` | 28 scénarios des espaces partagés : places, invitations, droits des membres et des invités |
 | `npm run build` | Build de production |
 
-La CI (`.github/workflows/ci.yml`) exécute ces cinq étapes à chaque push et pull request sur `master` et `staging`.
+La CI (`.github/workflows/ci.yml`) exécute ces étapes à chaque push et pull request sur `master` et `staging`.
 
 Pour vérifier les types de l'API (non couverte par `tsc -b`) :
 `npx tsc --noEmit --skipLibCheck --esModuleInterop --module nodenext --moduleResolution nodenext --target es2022 api/server.ts`.
@@ -247,7 +290,7 @@ Trois erreurs sont connues et sans effet : deux types Stripe et Clerk dans `serv
 
 ### Passage en production (à faire le jour du lancement)
 
-- **Stripe** : remplacer sur Render `STRIPE_SECRET_KEY` par la clé `sk_live_…`. Mettre les trois `STRIPE_PRICE_ID_*_ANNUAL` sur les tarifs du mode réel (les tarifs et coupons ne sont pas partagés entre modes). Créer le webhook en mode réel et mettre son secret dans `STRIPE_WEBHOOK_SECRET`.
+- **Stripe** : remplacer sur Render `STRIPE_SECRET_KEY` par la clé `sk_live_…`. Mettre les trois `STRIPE_PRICE_ID_*_ANNUAL` et `STRIPE_PRICE_ID_EXTRA_MEMBER` sur les tarifs du mode réel (les tarifs et coupons ne sont pas partagés entre modes). Créer le webhook en mode réel et mettre son secret dans `STRIPE_WEBHOOK_SECRET`.
 - **Clerk** : créer l'instance de production, ajouter chez OVH les CNAME demandés par Clerk, puis remplacer `VITE_CLERK_PUBLISHABLE_KEY` (Vercel) et `CLERK_SECRET_KEY` (Render). Les comptes de l'instance de développement ne sont pas repris.
 
 ---
@@ -275,7 +318,8 @@ Une variable `VITE_*` est intégrée au code à la compilation : après l'avoir 
 - **Données locales et comptes** : le store persistant porte `ownerId`. Les données d’un autre compte, ou d’origine inconnue, sont effacées à la connexion (`setOrgId`) et ne sont jamais envoyées au serveur. La déconnexion depuis « Mon compte » efface aussi les données locales. Avant ce correctif, un compte neuf récupérait les données du compte précédent sur le même navigateur.
 - **Données de démonstration** : les identifiants `demo-…` (exemple boulangerie) ne sont jamais envoyés au serveur (`src/services/supabaseSync.ts`).
 - **Requêtes** : 2 Mo maximum (`readBody`).
-- **Invitations** : réservées aux abonnés, 20 par jour, expéditeur pris dans le compte Clerk.
+- **Invitations** : réservées aux abonnés, 30 par jour et par espace, expéditeur pris dans le compte Clerk, et valables seulement pour l'adresse invitée (§8 bis). Avant le 31/10/2026, une invitation n'envoyait qu'un lien d'inscription et ne donnait accès à rien.
+- **Abonnement Pro à deux lignes** : ne jamais lire `subscription.items.data[0]` pour connaître l'offre (§7).
 - **Les écritures vers l’API doivent rester séquentielles.** `sync()` dans `src/state/store.ts` les met en file d’attente. En parallèle, une action pouvait arriver avant le risque auquel elle se rattache, et la clé étrangère était refusée. Le serveur répond désormais 409 avec un message clair sur ce cas (code Postgres 23503).
 - **Le serveur masque les erreurs Stripe** derrière `Internal error`. Le détail est dans les journaux Render.
 - **Stripe ne permet pas de modifier le montant d'un tarif** : il en crée un nouveau, avec un nouvel identifiant à reporter sur Render.

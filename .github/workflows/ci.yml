@@ -34,5 +34,8 @@ jobs:
       - name: Changement d'offre
         run: npm run test:plans
 
+      - name: Espaces partagés et droits d'accès
+        run: npm run test:workspaces
+
       - name: Build de production
         run: npm run build

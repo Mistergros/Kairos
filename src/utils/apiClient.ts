@@ -1,4 +1,5 @@
 import { getAuthToken } from "./authToken";
+import { workspaceHeader } from "./workspace";
 
 const API_BASE = import.meta.env.VITE_DUERP_API_BASE || "http://localhost:8787";
 
@@ -10,6 +11,7 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
+      ...workspaceHeader(),
       ...(init?.headers || {}),
     },
   });

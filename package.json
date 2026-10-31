@@ -21,7 +21,8 @@
     "test:api:integration": "tsx scripts/tests/api-integration.ts",
     "test:slots": "tsx scripts/tests/slots.ts",
     "test:branding": "tsx scripts/tests/branding.ts",
-    "test:plans": "tsx scripts/tests/plans.ts"
+    "test:plans": "tsx scripts/tests/plans.ts",
+    "test:workspaces": "tsx scripts/tests/workspaces.ts"
   },
   "engines": {
     "node": ">=18"

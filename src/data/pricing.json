@@ -13,6 +13,7 @@
       "bullets": [
         "1 établissement",
         "5 unités de travail",
+        "2 utilisateurs",
         "Inventaire des risques illimité",
         "Plan d'action & Gantt",
         "Export PDF prêt à signer",
@@ -27,12 +28,13 @@
       "priceMonthly": null,
       "priceYearly": 490,
       "annualOnly": true,
-      "tagline": "Pour les PME multi-sites, gérées par un responsable",
+      "tagline": "Pour les PME multi-sites, à plusieurs sur le même DUERP",
       "maxWorkUnits": 20,
       "maxEstablishments": 5,
       "bullets": [
         "Jusqu'à 5 établissements",
         "20 unités de travail",
+        "10 utilisateurs sur les mêmes dossiers",
         "Export XLSX par responsable",
         "Rapport PDF multi-sites",
         "Rappels automatiques (annuel légal)",
@@ -53,6 +55,8 @@
       "maxEstablishments": -1,
       "bullets": [
         "Portefeuille de 25 clients",
+        "5 membres inclus, puis 290 € par membre et par an, dégressif jusqu'à 190 € (+5 clients par membre)",
+        "Accès gratuit de vos clients à leur dossier",
         "Établissements & unités illimités",
         "PDF à la marque de votre cabinet (logo, couleur, coordonnées)",
         "Suivi des révisions annuelles par client",

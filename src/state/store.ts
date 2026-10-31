@@ -6,6 +6,7 @@ import { computePriority } from "../utils/score";
 import { uid } from "../utils/uid";
 import { makeActionForAssessment } from "../services/actionCatalogService";
 import { buildPrefillData } from "../services/prefillService";
+import { clearActiveWorkspace } from "../utils/workspace";
 import {
   loadAll, pushAll,
   upsertEstablishment, deleteEstablishment,
@@ -103,12 +104,21 @@ const readApiError = (err: unknown) => {
 // est rattachée (clé étrangère) : refus « Internal error » et action perdue
 // côté serveur, typiquement pendant un pré-remplissage.
 let syncQueue: Promise<void> = Promise.resolve();
+// Invité en consultation seule (voir state/workspace) : une modification faite
+// à l'écran est refusée par le serveur ; on recharge alors les données du
+// serveur pour que l'écran ne garde pas un état qui n'a pas été enregistré.
+let readOnlyMode = false;
+export const setReadOnlyMode = (value: boolean) => {
+  readOnlyMode = value;
+};
 const sync = (fn: () => unknown) => {
   syncQueue = syncQueue.then(async () => {
     try {
       await fn();
     } catch (err) {
       useDuerpStore.setState({ saveError: readApiError(err) });
+      const { orgId, loadFromSupabase } = useDuerpStore.getState();
+      if (readOnlyMode && orgId) await loadFromSupabase(orgId);
     }
   });
 };
@@ -154,7 +164,10 @@ export const useDuerpStore = create<DUERPState>()(
         if (get().ownerId !== id) set({ ...EMPTY_DATA, ownerId: id, orgId: id, saveError: null });
         else set({ orgId: id });
       },
-      resetLocalData: () => set({ ...EMPTY_DATA, ownerId: null, orgId: null, saveError: null }),
+      resetLocalData: () => {
+        clearActiveWorkspace();
+        set({ ...EMPTY_DATA, ownerId: null, orgId: null, saveError: null });
+      },
 
       loadFromSupabase: async (orgId) => {
         set({ syncStatus: "syncing" });
