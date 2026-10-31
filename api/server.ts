@@ -18,6 +18,7 @@ if (sentryEnabled) {
 }
 import { query } from "../apps/web/server/db.js";
 import RiskEngineV4 from "../src/core/engine/risk-engine.server.js";
+import { isPaidPlan, planIdFromPrice as planIdFromPriceWith, planRank } from "./plans.js";
 import { BRANDING_DDL, getBranding, sanitizeBranding, sanitizeLogo, saveBranding } from "./branding.js";
 import { checkEstablishmentLimits as checkEstablishmentLimitsWith, recordSlots as recordSlotsWith, SLOT_LOG_DDL } from "./slots.js";
 
@@ -99,6 +100,15 @@ const getStripePriceId = (planId?: string | null, billing?: string | null) => {
   // STRIPE_PRICE_ID_STARTER ne sert plus que de repli s'il n'est pas défini.
   return STRIPE_PRICE_ID_STARTER_ANNUAL || STRIPE_PRICE_ID_STARTER;
 };
+
+// Tarifs Stripe de chaque offre (annuel + ancien tarif de repli).
+const PLAN_PRICES = {
+  starter: [STRIPE_PRICE_ID_STARTER_ANNUAL, STRIPE_PRICE_ID_STARTER],
+  pme: [STRIPE_PRICE_ID_PME_ANNUAL, STRIPE_PRICE_ID_PME],
+  consultants: [STRIPE_PRICE_ID_CONSULTANTS_ANNUAL, STRIPE_PRICE_ID_CONSULTANTS],
+};
+const planIdFromPrice = (priceId?: string | null) => planIdFromPriceWith(priceId, PLAN_PRICES);
+const PLAN_NAMES: Record<string, string> = { starter: "Essentiel", pme: "PME", consultants: "Pro" };
 
 const readRawBody = async (req: any) =>
   new Promise<Buffer>((resolve, reject) => {
@@ -185,6 +195,7 @@ const handleStripeCheckoutCompleted = async (session: Stripe.Checkout.Session) =
   if (customerId) patch.stripeCustomerId = customerId;
   if (subscriptionId) patch.stripeSubscriptionId = subscriptionId;
   await mergePublicMetadata(clerkUserId, patch);
+  planCache.delete(clerkUserId);
 };
 
 const handleStripeSubscriptionEvent = async (subscription: Stripe.Subscription, eventType: string) => {
@@ -203,7 +214,11 @@ const handleStripeSubscriptionEvent = async (subscription: Stripe.Subscription, 
     lastStripeEvent: eventType,
   };
   if (customerId) patch.stripeCustomerId = customerId;
+  // Changement d'offre (page Tarifs ou portail Stripe) : le tarif fait foi.
+  const planFromPrice = planIdFromPrice(subscription.items?.data?.[0]?.price?.id);
+  if (planFromPrice && eventType !== "customer.subscription.deleted") patch.planId = planFromPrice;
   await mergePublicMetadata(clerkUserId, patch);
+  planCache.delete(clerkUserId);
 };
 
 const handleStripeInvoiceFailed = async (invoice: Stripe.Invoice) => {
@@ -827,8 +842,13 @@ createServer(async (req, res) => {
       let customerId: string | undefined;
 
       if (clerkUserId && clerkEnabled) {
+        const existing = await clerkClient.users.getUser(clerkUserId).catch(() => null);
+        if ((existing?.publicMetadata as any)?.subscriptionStatus === "active") {
+          // Un second paiement créerait un second abonnement (double facturation).
+          return json(res, { error: "Vous avez déjà un abonnement actif. Pour changer d'offre, utilisez les boutons de la page Tarifs." }, 409);
+        }
         try {
-          const user = await clerkClient.users.getUser(clerkUserId);
+          const user = existing || (await clerkClient.users.getUser(clerkUserId));
           const metadata = (user.publicMetadata || {}) as Record<string, any>;
           if (typeof metadata.stripeCustomerId === "string") {
             customerId = metadata.stripeCustomerId;
@@ -854,6 +874,65 @@ createServer(async (req, res) => {
       });
 
       return json(res, { url: session.url, id: session.id });
+    }
+
+    // Passage à une offre supérieure : l'abonnement existant change de tarif, la
+    // différence au prorata de la période restante est facturée tout de suite
+    // et la date de renouvellement ne bouge pas. Une offre inférieure se prend
+    // à l'échéance, depuis le portail Stripe. /preview renvoie le montant exact.
+    if (req.method === "POST" && (basePath === "/api/change-plan" || basePath === "/api/change-plan/preview")) {
+      if (!stripe || !clerkEnabled) return json(res, { error: "Paiement non configuré" }, 500);
+      const clerkUserId = await getClerkOrgId(req);
+      if (!clerkUserId) return json(res, { error: "Unauthorized" }, 401);
+      const body = await readBody(req).catch(() => null);
+      const target = body?.planId;
+      if (!isPaidPlan(target)) return json(res, { error: "Offre inconnue." }, 400);
+      const newPrice = getStripePriceId(target);
+      if (!newPrice) return json(res, { error: "Stripe price not configured" }, 500);
+      const user = await clerkClient.users.getUser(clerkUserId);
+      const md = (user.publicMetadata || {}) as Record<string, any>;
+      if (md.subscriptionStatus !== "active") return json(res, { error: "Aucun abonnement actif : choisissez une offre." }, 400);
+      let subscription: Stripe.Subscription | null = null;
+      if (typeof md.stripeSubscriptionId === "string") {
+        subscription = await stripe.subscriptions.retrieve(md.stripeSubscriptionId).catch(() => null);
+      }
+      if ((!subscription || !["active", "trialing"].includes(subscription.status)) && typeof md.stripeCustomerId === "string") {
+        subscription = (await stripe.subscriptions.list({ customer: md.stripeCustomerId, status: "active", limit: 1 })).data[0] || null;
+      }
+      const item = subscription?.items.data[0];
+      if (!subscription || !item) return json(res, { error: "Abonnement introuvable. Contactez le support." }, 404);
+      const current = planIdFromPrice(item.price.id) || String(md.planId || "starter");
+      if (planRank(target) <= planRank(current)) {
+        return json(res, { error: "Le passage à une offre inférieure se fait à l'échéance, depuis « Mon compte » → portail client." }, 400);
+      }
+      const prorationDate = Math.floor(Date.now() / 1000);
+      try {
+        if (basePath === "/api/change-plan/preview") {
+          const upcoming = await stripe.invoices.retrieveUpcoming({
+            customer: typeof subscription.customer === "string" ? subscription.customer : subscription.customer.id,
+            subscription: subscription.id,
+            subscription_items: [{ id: item.id, price: newPrice }],
+            subscription_proration_behavior: "always_invoice",
+            subscription_proration_date: prorationDate,
+          });
+          return json(res, { amountDue: upcoming.amount_due, currency: upcoming.currency, from: PLAN_NAMES[current] || current, to: PLAN_NAMES[target] });
+        }
+        await stripe.subscriptions.update(subscription.id, {
+          items: [{ id: item.id, price: newPrice }],
+          proration_behavior: "always_invoice",
+          proration_date: prorationDate,
+          payment_behavior: "error_if_incomplete",
+          metadata: { ...(subscription.metadata || {}), planId: target },
+        });
+      } catch (err: any) {
+        if (String(err?.type || "").startsWith("Stripe")) {
+          return json(res, { error: `Le changement d'offre a échoué : ${err.message}` }, 402);
+        }
+        throw err;
+      }
+      await mergePublicMetadata(clerkUserId, { planId: target, subscriptionStatus: "active" });
+      planCache.delete(clerkUserId);
+      return json(res, { ok: true, planId: target });
     }
 
     if (req.method === "POST" && basePath === "/api/customer-portal") {

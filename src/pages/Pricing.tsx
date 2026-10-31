@@ -7,6 +7,9 @@ import { apiErrorMessage, apiPost } from "../utils/apiClient";
 
 type Plan = typeof pricingData.plans[number];
 
+// Ordre des offres payantes, pour savoir si un abonné monte ou descend.
+const PLAN_ORDER = ["starter", "pme", "consultants"];
+
 const BADGE: Record<string, { label: string; color: string }> = {
   starter:     { label: "TPE",          color: "bg-slate/10 text-slate" },
   pme:         { label: "RECOMMANDÉ",   color: "bg-kairos text-white" },
@@ -14,13 +17,69 @@ const BADGE: Record<string, { label: string; color: string }> = {
 };
 
 export function Pricing() {
-  const { isSignedIn } = useUser();
+  const { isSignedIn, user } = useUser();
   const navigate = useNavigate();
   const currentPlan = usePlan();
   const [loading, setLoading] = useState<string | null>(null);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [showTermsHint, setShowTermsHint] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
+  const currentRank = PLAN_ORDER.indexOf(currentPlan.planId);
+
+  // Abonné : offre supérieure → changement immédiat au prorata (pas de second
+  // abonnement) ; offre inférieure → à l'échéance, via le portail Stripe.
+  const handleChoose = (planId: string) => {
+    if (currentRank === -1) return handleSubscribe(planId);
+    if (!acceptedTerms) {
+      setShowTermsHint(true);
+      return;
+    }
+    return PLAN_ORDER.indexOf(planId) > currentRank ? handleUpgrade(planId) : openPortal(planId);
+  };
+
+  const handleUpgrade = async (planId: string) => {
+    setLoading(planId);
+    setCheckoutError(null);
+    setNotice(null);
+    try {
+      const preview = await apiPost<{ amountDue: number; currency: string; from: string; to: string }>("/api/change-plan/preview", { planId });
+      const amount = (preview.amountDue / 100).toLocaleString("fr-FR", { style: "currency", currency: (preview.currency || "eur").toUpperCase() });
+      const ok = window.confirm(
+        `Passer de l'offre ${preview.from} à l'offre ${preview.to} ?
+
+${amount} seront prélevés maintenant : la différence de prix, au prorata de la période restante. Votre date de renouvellement ne change pas.`
+      );
+      if (!ok) return;
+      await apiPost("/api/change-plan", { planId });
+      await user?.reload();
+      setNotice(`C'est fait : vous êtes maintenant en offre ${preview.to}.`);
+    } catch (err) {
+      setCheckoutError(apiErrorMessage(err, "Le changement d'offre a échoué. Réessayez dans quelques secondes."));
+    } finally {
+      setLoading(null);
+    }
+  };
+
+  const openPortal = async (planId: string) => {
+    setLoading(planId);
+    setCheckoutError(null);
+    try {
+      const data = await apiPost<{ url?: string }>("/api/customer-portal", { returnUrl: window.location.href });
+      if (!data?.url) throw new Error("Portail indisponible.");
+      window.location.href = data.url;
+    } catch (err) {
+      setCheckoutError(apiErrorMessage(err, "Impossible d'ouvrir le portail de facturation. Réessayez."));
+      setLoading(null);
+    }
+  };
+
+  const buttonLabel = (plan: Plan, isCurrent: boolean) => {
+    if (isCurrent) return "Offre actuelle";
+    if (loading === plan.id) return "Un instant…";
+    if (currentRank === -1) return plan.cta;
+    return PLAN_ORDER.indexOf(plan.id) > currentRank ? `Passer à l'offre ${plan.name}` : "Changer à l'échéance";
+  };
 
   const handleSubscribe = async (planId: string) => {
     // Toutes les offres sont annuelles.
@@ -113,7 +172,7 @@ export function Pricing() {
               </ul>
 
               <button
-                onClick={() => handleSubscribe(plan.id)}
+                onClick={() => handleChoose(plan.id)}
                 disabled={isLoading || isCurrent}
                 className={`mt-7 w-full rounded-2xl py-3 text-sm font-bold transition disabled:opacity-50 disabled:cursor-default ${
                   isRecommended
@@ -121,7 +180,7 @@ export function Pricing() {
                     : "border-2 border-ink text-ink hover:bg-ink hover:text-white"
                 }`}
               >
-                {isCurrent ? "Offre actuelle" : isLoading ? "Redirection…" : plan.cta}
+                {buttonLabel(plan, isCurrent)}
               </button>
             </article>
           );
@@ -129,6 +188,11 @@ export function Pricing() {
       </div>
 
       <div className="flex flex-col items-center gap-2 pt-2">
+        {notice && (
+          <div className="w-full max-w-md rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-center text-sm text-emerald-800">
+            {notice}
+          </div>
+        )}
         {checkoutError && (
           <div className="w-full max-w-md rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-center text-sm text-rose-700">
             {checkoutError}
@@ -157,7 +221,7 @@ export function Pricing() {
           <p className="text-xs font-semibold text-rose-600">Coche cette case pour continuer.</p>
         )}
         <p className="text-center text-xs text-slate/50">
-          Résiliable à tout moment depuis votre espace compte — prend effet à la fin de l'année déjà payée, sans reconduction ensuite. Paiement sécurisé via Stripe.
+          Passage à une offre supérieure immédiat, différence facturée au prorata. Offre inférieure ou résiliation : depuis votre espace compte, à la fin de l'année déjà payée. Paiement sécurisé via Stripe.
         </p>
       </div>
       </div>

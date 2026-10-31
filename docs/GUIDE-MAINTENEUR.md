@@ -162,6 +162,12 @@ Pensez aussi aux CGV (`src/pages/Terms.tsx`) si l'offre change.
 3. Le webhook `POST /api/webhooks/stripe` (signature vérifiée) écrit `subscriptionStatus` et `planId` dans les `publicMetadata` de l'utilisateur Clerk.
 4. L'interface (`usePlan`) et le serveur (`getUserPlan`, cache de 60 s pour les abonnements actifs) lisent ces métadonnées.
 
+**Changement d'offre.**
+- **Vers une offre supérieure** : `POST /api/change-plan`. L'abonnement existant change de tarif, la différence au prorata est facturée immédiatement (`always_invoice`) et la date de renouvellement ne bouge pas. `POST /api/change-plan/preview` renvoie le montant avant confirmation.
+- **Vers une offre inférieure** : par le portail client Stripe, à la fin de la période. Le portail est à configurer dans Stripe : Paramètres → Billing → Portail client, avec les trois produits.
+- **Mise à jour du compte** : le webhook `customer.subscription.updated` déduit l'offre du tarif de l'abonnement (`api/plans.ts`), quel que soit le chemin suivi.
+- **Pas de doublon** : `/api/checkout-sessions` refuse (409) un utilisateur qui a déjà un abonnement actif.
+
 Toutes les offres sont annuelles. Variables : `STRIPE_PRICE_ID_STARTER_ANNUAL`, `STRIPE_PRICE_ID_PME_ANNUAL` et `STRIPE_PRICE_ID_CONSULTANTS_ANNUAL`. L'offre Pro s'appelle toujours `CONSULTANTS` dans les variables. Le code promo `FONDATEUR` (−500 € à vie sur Pro, 20 utilisations) se gère uniquement dans Stripe.
 
 ---
@@ -210,6 +216,7 @@ La page « Méthode » décrit l’échelle de cotation de `src/pages/Inventory.
 | `npm run config:validate` | Schémas JSON de `config/` et cohérence des profils NAF |
 | `npm run test:slots` | 14 scénarios de quotas sur un Postgres embarqué (PGlite) |
 | `npm run test:branding` | 12 scénarios de nettoyage et stockage de la marque cabinet |
+| `npm run test:plans` | Correspondance tarif → offre et ordre des offres |
 | `npm run build` | Build de production |
 
 La CI (`.github/workflows/ci.yml`) exécute ces cinq étapes à chaque push et pull request sur `master` et `staging`.

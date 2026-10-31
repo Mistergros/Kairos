@@ -45,6 +45,11 @@ export default function TermsPage() {
           L'abonnement est conclu pour une durée d'un an et se renouvelle tacitement pour une durée identique, sauf résiliation. La résiliation s'effectue à tout moment depuis l'espace « Mon compte » du Site, via le portail de gestion d'abonnement. Elle prend effet à la fin de la période en cours déjà payée ; aucun remboursement au prorata n'est effectué pour la période en cours, sauf disposition légale contraire.
         </p>
         <p>
+          Le client peut passer à tout moment à une formule supérieure : le changement est immédiat et la différence de prix,
+          calculée au prorata de la période restante, est facturée le jour même ; la date de renouvellement est inchangée.
+          Le passage à une formule inférieure prend effet à la date de renouvellement, sans remboursement de la période en cours.
+        </p>
+        <p>
           À la fin de l'abonnement, le compte repasse en formule Découverte : les données restent consultables et exportables
           au format JSON, mais le téléchargement des documents n'est plus disponible.
         </p>

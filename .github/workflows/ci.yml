@@ -31,5 +31,8 @@ jobs:
       - name: Marque du cabinet sur les documents
         run: npm run test:branding
 
+      - name: Changement d'offre
+        run: npm run test:plans
+
       - name: Build de production
         run: npm run build
