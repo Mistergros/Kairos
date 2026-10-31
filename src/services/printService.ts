@@ -9,6 +9,8 @@ interface PrintData {
   actions: ActionItem[];
   branding?: Branding;
   versions?: VersionEntry[];
+  /** Réimpression d'une version : date affichée à la place de la date du jour. */
+  asOf?: string;
 }
 
 interface MultiSiteData {
@@ -215,7 +217,7 @@ export function printDuerpDocument(data: PrintData): void {
   const pageW = doc.internal.pageSize.getWidth();
   const pageH = doc.internal.pageSize.getHeight();
   const contentW = pageW - MARGIN * 2;
-  const today = new Date().toLocaleDateString("fr-FR", { day: "2-digit", month: "long", year: "numeric" });
+  const today = new Date(data.asOf || Date.now()).toLocaleDateString("fr-FR", { day: "2-digit", month: "long", year: "numeric" });
   const theme = brandTheme(branding);
   const cabinet = branding && hasCabinetBlock(branding) ? branding : null;
   const estName = establishment?.name || "Établissement";

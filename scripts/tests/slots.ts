@@ -5,7 +5,7 @@ import { checkEstablishmentLimits, recordSlots, SLOT_LOG_DDL } from "../../api/s
 
 const db = new PGlite();
 const query = (t: string, p?: unknown[]) => db.query(t, p as any[]);
-await db.exec(`CREATE TABLE establishments (id TEXT PRIMARY KEY, org_id TEXT, name TEXT, siret TEXT, client_name TEXT);`);
+await db.exec(`CREATE TABLE establishments (id TEXT PRIMARY KEY, org_id TEXT, name TEXT, siret TEXT, client_name TEXT, archived_at TIMESTAMPTZ);`);
 await db.exec(SLOT_LOG_DDL);
 
 const ESSENTIEL = { maxEstablishments: 1, maxClients: -1 };
@@ -59,6 +59,16 @@ expect("Pro : modifier un client sans le renommer", await save("p1", { id: "c2",
 // --- Comptes existants avant la fonctionnalité (pas de slot_log) ---
 await query(`INSERT INTO establishments (id, org_id, name) VALUES ('old1','u9','old1')`);
 expect("Ancien compte : modifier son établissement", await save("u9", { id: "old1" }, ESSENTIEL), true);
+
+// --- Archivage (à la place de la suppression : conservation 40 ans) ---
+const archive = (id: string) => query(`UPDATE establishments SET archived_at = now() WHERE id=$1`, [id]);
+expect("Archivage : 1er établissement", await save("u10", { id: "a1", siret: "91111111100011" }, ESSENTIEL), true);
+await archive("a1");
+expect("Archivage : l'archivé libère la place instantanée (marge d'erreur)", await save("u10", { id: "a2", siret: "92222222200022" }, ESSENTIEL), true);
+await archive("a2");
+expect("Archivage : l'archivé compte toujours sur 12 mois", await save("u10", { id: "a3", siret: "93333333300033" }, ESSENTIEL), false);
+await query(`UPDATE establishments SET archived_at = NULL WHERE id='a2'`);
+expect("Archivage : restaurer ne prend pas de nouvelle place sur 12 mois", await checkEstablishmentLimits(query, "u10", { id: "a2", siret: "92222222200022" }, ESSENTIEL, true), true);
 
 console.log(fails ? `\n${fails} échec(s)` : "\nTous les scénarios passent");
 process.exit(fails ? 1 : 0);

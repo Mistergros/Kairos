@@ -13,6 +13,7 @@ export function dbToEstablishment(row: any): Establishment {
     headcount: row.headcount,
     clientName: row.client_name || undefined,
     logo: row.logo || null,
+    archivedAt: row.archived_at || null,
   };
 }
 

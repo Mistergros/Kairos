@@ -293,6 +293,9 @@ const ensureEstablishmentsSchema = () => {
     establishmentsSchemaReady = (async () => {
       await query(`ALTER TABLE establishments ADD COLUMN IF NOT EXISTS client_name TEXT`);
       await query(`ALTER TABLE establishments ADD COLUMN IF NOT EXISTS logo JSONB`);
+      // Archivage au lieu de suppression : le DUERP et ses versions doivent être
+      // conservés 40 ans (art. L.4121-3-1 du Code du travail).
+      await query(`ALTER TABLE establishments ADD COLUMN IF NOT EXISTS archived_at TIMESTAMPTZ`);
       await query(SLOT_LOG_DDL);
     })().catch((err) => {
       establishmentsSchemaReady = null; // réessaie au prochain appel
@@ -316,7 +319,7 @@ const ensureBrandingSchema = () => {
 const listEstablishmentsDb = async (orgId: string) => {
   await ensureEstablishmentsSchema();
   const res = await query(
-    `SELECT id, name, siren, siret, code_naf, sector, address, headcount, client_name, logo FROM establishments WHERE org_id=$1 ORDER BY name`,
+    `SELECT id, name, siren, siret, code_naf, sector, address, headcount, client_name, logo, archived_at FROM establishments WHERE org_id=$1 ORDER BY name`,
     [orgId]
   );
   return res.rows;
@@ -333,10 +336,12 @@ const upsertEstablishmentDb = async (orgId: string, e: any, logo: unknown) => {
      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
      ON CONFLICT (id) DO UPDATE SET name=EXCLUDED.name, siren=EXCLUDED.siren, siret=EXCLUDED.siret,
        code_naf=EXCLUDED.code_naf, sector=EXCLUDED.sector, address=EXCLUDED.address, headcount=EXCLUDED.headcount,
-       client_name=EXCLUDED.client_name, logo=EXCLUDED.logo
+       client_name=EXCLUDED.client_name, logo=EXCLUDED.logo,
+       -- archivedAt: null explicite = restauration ; sinon l'état d'archivage ne change pas.
+       archived_at=CASE WHEN $12::boolean THEN NULL ELSE establishments.archived_at END
      WHERE establishments.org_id = $2
      RETURNING *`,
-    [e.id, orgId, e.name, e.siren ?? null, e.siret ?? null, e.codeNaf ?? null, e.sector ?? null, e.address ?? null, e.headcount ?? null, clientName, logo ? JSON.stringify(logo) : null]
+    [e.id, orgId, e.name, e.siren ?? null, e.siret ?? null, e.codeNaf ?? null, e.sector ?? null, e.address ?? null, e.headcount ?? null, clientName, logo ? JSON.stringify(logo) : null, e.archivedAt === null]
   );
   return res.rows[0];
 };
@@ -414,6 +419,7 @@ const sendRevisionReminders = async (now: Date = new Date()) => {
       `SELECT e.org_id, e.id, e.name, e.client_name, MAX(v.created_at) AS last_version
          FROM establishments e
          JOIN duerp_versions v ON v.establishment_id = e.id
+        WHERE e.archived_at IS NULL
         GROUP BY e.org_id, e.id, e.name, e.client_name`
     )
   ).rows as { org_id: string; id: string; name: string; client_name: string | null; last_version: string }[];
@@ -516,8 +522,11 @@ const checkEstablishmentLimits = async (orgId: string, e: any): Promise<string |
   return checkEstablishmentLimitsWith(query, orgId, e, PLAN_LIMITS[plan.planId], plan.active);
 };
 const recordSlots = (orgId: string, e: any) => recordSlotsWith(query, orgId, e);
+// « Supprimer » archive : rien n'est effacé (conservation 40 ans), l'établissement
+// sort des listes, des quotas instantanés et des rappels, et peut être restauré.
 const deleteEstablishmentDb = async (orgId: string, id: string) => {
-  await query(`DELETE FROM establishments WHERE id=$1 AND org_id=$2`, [id, orgId]);
+  await ensureEstablishmentsSchema();
+  await query(`UPDATE establishments SET archived_at = now() WHERE id=$1 AND org_id=$2 AND archived_at IS NULL`, [id, orgId]);
 };
 
 const listWorkUnitsDb = async (orgId: string) => {
@@ -1015,7 +1024,14 @@ createServer(async (req, res) => {
         const plan = await getUserPlan(orgId);
         const max = PLAN_LIMITS[plan.planId]?.maxWorkUnits ?? -1;
         if (max !== -1) {
-          const units = (await query(`SELECT id FROM work_units WHERE org_id=$1`, [orgId])).rows as { id: string }[];
+          await ensureEstablishmentsSchema();
+          const units = (
+            await query(
+              `SELECT wu.id FROM work_units wu JOIN establishments e ON e.id = wu.establishment_id
+                WHERE wu.org_id=$1 AND e.archived_at IS NULL`,
+              [orgId]
+            )
+          ).rows as { id: string }[];
           if (!units.some((u) => u.id === body.id) && units.length >= max) {
             return json(res, { error: `Votre offre permet ${max} unités de travail au maximum.${plan.active ? "" : " Abonnez-vous pour en ajouter davantage."}` }, 403);
           }

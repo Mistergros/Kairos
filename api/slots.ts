@@ -65,7 +65,7 @@ export const checkEstablishmentLimits = async (
   active: boolean
 ): Promise<string | null> => {
   const existing = (
-    await query(`SELECT id, siret, client_name FROM establishments WHERE org_id=$1`, [orgId])
+    await query(`SELECT id, siret, client_name FROM establishments WHERE org_id=$1 AND archived_at IS NULL`, [orgId])
   ).rows as { id: string; siret: string | null; client_name: string | null }[];
   const isNew = !existing.some((row) => row.id === e.id);
   const upgradeHint = active ? "" : " Abonnez-vous pour en ajouter davantage.";
@@ -82,7 +82,7 @@ export const checkEstablishmentLimits = async (
     for (const s of await recentSlots(query, orgId, "establishment")) used.add(normalizeSiret(s.siret) || s.slot_key);
     const candidate = establishmentSlotKey({ id: e.id, siret: e.siret });
     if (!used.has(candidate) && used.size + 1 > withTolerance(limits.maxEstablishments)) {
-      return `Votre offre permet ${limits.maxEstablishments} établissement${plural} par période de 12 mois : un établissement supprimé continue de compter 12 mois.${upgradeHint}`;
+      return `Votre offre permet ${limits.maxEstablishments} établissement${plural} par période de 12 mois : un établissement archivé continue de compter 12 mois.${upgradeHint}`;
     }
   }
 

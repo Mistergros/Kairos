@@ -53,7 +53,10 @@ interface DUERPState {
   setSelectedWorkUnit: (id: string) => void;
   addEstablishment: (payload: Establishment) => void;
   updateEstablishment: (id: string, patch: Partial<Establishment>) => void;
+  /** Archive l'établissement (rien n'est effacé, voir api/server.ts). */
   removeEstablishment: (id: string) => void;
+  archivedEstablishments: Establishment[];
+  restoreEstablishment: (id: string) => void;
   // Message du dernier refus d'enregistrement côté serveur (voir sync()).
   saveError: string | null;
   dismissSaveError: () => void;
@@ -110,9 +113,25 @@ const sync = (fn: () => unknown) => {
   });
 };
 
+// Empreinte d'une version (16 caractères hexadécimaux, deux FNV-1a 32 bits) :
+// change dès qu'un risque, une unité ou une action change. Remplace un
+// btoa() qui plantait sur « œ », « — » ou « ’ » et ne gardait que le début du
+// texte (toutes les versions avaient presque la même empreinte).
+const fingerprint = (text: string) => {
+  let a = 0x811c9dc5;
+  let b = 0x01000193 ^ text.length;
+  for (let i = 0; i < text.length; i++) {
+    const c = text.charCodeAt(i);
+    a = Math.imul(a ^ c, 0x01000193) >>> 0;
+    b = Math.imul(b ^ c, 0x5bd1e995) >>> 0;
+  }
+  return a.toString(16).padStart(8, "0") + b.toString(16).padStart(8, "0");
+};
+
 // Données métier gardées dans le navigateur (localStorage).
 const EMPTY_DATA = {
   establishments: [] as Establishment[],
+  archivedEstablishments: [] as Establishment[],
   workUnits: [] as WorkUnit[],
   assessments: [] as Assessment[],
   actions: [] as ActionItem[],
@@ -152,15 +171,21 @@ export const useDuerpStore = create<DUERPState>()(
           const hasLocalData = state.establishments.length > 0;
 
           if (hasRemoteData) {
-            // Remote wins — hydrate store from Supabase
+            // Le serveur fait foi. Les établissements archivés sont rangés à part,
+            // avec leurs données hors des listes de travail (elles restent en base).
+            const active = remote.establishments.filter((e) => !e.archivedAt);
+            const activeIds = new Set(active.map((e) => e.id));
+            const workUnits = remote.workUnits.filter((u) => activeIds.has(u.establishmentId));
+            const unitIds = new Set(workUnits.map((u) => u.id));
             set({
-              establishments: remote.establishments,
-              workUnits: remote.workUnits,
-              assessments: remote.assessments,
-              actions: remote.actions,
+              establishments: active,
+              archivedEstablishments: remote.establishments.filter((e) => e.archivedAt),
+              workUnits,
+              assessments: remote.assessments.filter((a) => unitIds.has(a.workUnitId)),
+              actions: remote.actions.filter((a) => !a.establishmentId || activeIds.has(a.establishmentId)),
               versions: remote.versions,
-              selectedEstablishmentId: remote.establishments[0]?.id,
-              selectedWorkUnitId: remote.workUnits[0]?.id,
+              selectedEstablishmentId: active[0]?.id,
+              selectedWorkUnitId: workUnits.find((u) => u.establishmentId === active[0]?.id)?.id,
               syncStatus: "idle",
             });
           } else if (hasLocalData && state.ownerId === orgId) {
@@ -183,6 +208,7 @@ export const useDuerpStore = create<DUERPState>()(
       },
 
       establishments: [],
+      archivedEstablishments: [],
       workUnits: [],
       hazardLibrary: riskLibrary,
       assessments: [],
@@ -229,12 +255,31 @@ export const useDuerpStore = create<DUERPState>()(
         const assessmentIds = new Set(assessments.map((a) => a.id));
         const actions = state.actions.filter((a) => !a.assessmentId || assessmentIds.has(a.assessmentId));
         const establishments = state.establishments.filter((e) => e.id !== id);
+        const archived = state.establishments.find((e) => e.id === id);
         const selectedEstablishmentId = establishments[0]?.id;
         const selectedWorkUnitId = workUnits.find((w) => w.establishmentId === selectedEstablishmentId)?.id;
-        set({ establishments, workUnits, assessments, actions, selectedEstablishmentId, selectedWorkUnitId });
+        set({
+          establishments,
+          archivedEstablishments: archived && !archived.id.startsWith("demo-")
+            ? [...state.archivedEstablishments, { ...archived, archivedAt: new Date().toISOString() }]
+            : state.archivedEstablishments,
+          workUnits, assessments, actions, selectedEstablishmentId, selectedWorkUnitId,
+        });
 
         const { orgId } = get();
         if (orgId) sync(() => deleteEstablishment(orgId, id));
+      },
+
+      // Restaure un établissement archivé, puis recharge ses données depuis le serveur.
+      restoreEstablishment: (id) => {
+        const target = get().archivedEstablishments.find((e) => e.id === id);
+        const { orgId } = get();
+        if (!target || !orgId) return;
+        sync(async () => {
+          await upsertEstablishment(orgId, { ...target, archivedAt: null });
+          await get().loadFromSupabase(orgId);
+          set({ selectedEstablishmentId: id, selectedWorkUnitId: get().workUnits.find((u) => u.establishmentId === id)?.id });
+        });
       },
 
       addWorkUnit: (payload) => {
@@ -420,7 +465,9 @@ export const useDuerpStore = create<DUERPState>()(
 
       createVersion: (label, reason) => {
         const state = get();
-        const establishmentId = state.selectedEstablishmentId || state.establishments[0].id;
+        const establishmentId = state.selectedEstablishmentId || state.establishments[0]?.id;
+        if (!establishmentId) return;
+        const establishment = state.establishments.find((e) => e.id === establishmentId);
         const workUnits = state.workUnits.filter((u) => u.establishmentId === establishmentId);
         const workUnitIds = new Set(workUnits.map((u) => u.id));
         const assessments = state.assessments.filter((a) => workUnitIds.has(a.workUnitId));
@@ -433,12 +480,12 @@ export const useDuerpStore = create<DUERPState>()(
           establishmentId,
           label,
           reason,
-          hash: btoa(JSON.stringify(assessments)).slice(0, 18),
+          hash: fingerprint(JSON.stringify({ establishment, workUnits, assessments, actions })),
           createdAt: new Date().toISOString(),
           // Instantané complet et immuable : permet de reconstituer le DUERP tel qu'il
           // était à cette date (obligation légale), indépendamment des modifications
           // ultérieures des unités/risques/actions ou du catalogue.
-          snapshot: { workUnits, assessments, actions },
+          snapshot: { establishment, workUnits, assessments, actions },
         };
         set({ versions: [...state.versions, newVersion] });
         const { orgId } = get();
@@ -580,6 +627,7 @@ export const useDuerpStore = create<DUERPState>()(
       partialize: (state) => ({
         ownerId: state.ownerId,
         establishments: state.establishments,
+        archivedEstablishments: state.archivedEstablishments,
         workUnits: state.workUnits,
         hazardLibrary: state.hazardLibrary,
         assessments: state.assessments,

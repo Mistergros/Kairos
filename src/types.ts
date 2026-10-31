@@ -14,6 +14,8 @@ export interface Establishment {
   clientName?: string;
   /** Logo de l’entreprise évaluée, en couverture du PDF. */
   logo?: { dataUrl: string; width: number; height: number } | null;
+  /** Date d'archivage : l'établissement sort des listes mais reste conservé (40 ans). */
+  archivedAt?: string | null;
 }
 
 export interface WorkUnit {
@@ -84,6 +86,8 @@ export interface ActionItem {
 }
 
 export interface VersionSnapshot {
+  /** L'établissement tel qu'il était à la date de la version (versions récentes). */
+  establishment?: Establishment;
   workUnits: WorkUnit[];
   assessments: Assessment[];
   actions: ActionItem[];

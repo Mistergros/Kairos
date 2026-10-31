@@ -57,6 +57,8 @@ export const Units = () => {
     updateEstablishment,
     addWorkUnit,
     removeEstablishment,
+    archivedEstablishments,
+    restoreEstablishment,
     removeWorkUnit,
     selectedEstablishmentId,
     setSelectedEstablishment,
@@ -296,14 +298,45 @@ export const Units = () => {
                 </div>
                 <div className="flex w-full items-center justify-between gap-2 sm:w-auto sm:flex-col sm:items-end sm:text-right">
                   <span className="pill bg-ocean/10 text-ocean-700">{e.sector || "Secteur"}</span>
-                  <button className="text-xs text-sunset hover:underline" onClick={(e2) => { e2.stopPropagation(); if (window.confirm(`Supprimer l'établissement "${e.name}" et toutes ses données ?`)) removeEstablishmentAndReset(e.id); }}>
-                    Supprimer
+                  <button
+                    className="text-xs text-sunset hover:underline"
+                    title="L'établissement sort de vos listes ; son DUERP et ses versions restent conservés"
+                    onClick={(e2) => {
+                      e2.stopPropagation();
+                      if (window.confirm(`Archiver l'établissement « ${e.name} » ?
+
+Il disparaîtra de vos listes, mais son DUERP et toutes ses versions restent conservés (obligation légale de 40 ans) et consultables dans « Versions ». Vous pourrez le restaurer. Il continue de compter dans votre quota pendant 12 mois.`)) removeEstablishmentAndReset(e.id);
+                    }}
+                  >
+                    Archiver
                   </button>
                 </div>
               </div>
             </div>
           ))}
         </div>
+
+        {archivedEstablishments.length > 0 && (
+          <details className="mt-4 rounded-xl border border-slate/10 bg-white p-3 text-sm">
+            <summary className="cursor-pointer font-semibold text-slate">
+              Établissements archivés ({archivedEstablishments.length})
+            </summary>
+            <ul className="mt-2 space-y-2">
+              {archivedEstablishments.map((e) => (
+                <li key={e.id} className="flex flex-wrap items-center justify-between gap-2 rounded-lg bg-slate/5 px-3 py-2">
+                  <span className="min-w-0">
+                    <span className="font-medium text-slate">{e.name}</span>
+                    {e.archivedAt && <span className="ml-2 text-xs text-slate/50">archivé le {new Date(e.archivedAt).toLocaleDateString("fr-FR")}</span>}
+                  </span>
+                  <button className="text-xs font-semibold text-kairos hover:underline" onClick={() => restoreEstablishment(e.id)}>
+                    Restaurer
+                  </button>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-2 text-xs text-slate/50">Leurs versions restent consultables et réimprimables dans « Versions ».</p>
+          </details>
+        )}
 
         <div className="mt-6 rounded-2xl bg-slate/5 p-4">
           <p className="mb-2 font-semibold text-slate">Nouvel etablissement</p>

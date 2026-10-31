@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS establishments (
 -- NULL = l'établissement est son propre client (cas des offres Starter/PME).
 ALTER TABLE establishments ADD COLUMN IF NOT EXISTS client_name TEXT;
 ALTER TABLE establishments ADD COLUMN IF NOT EXISTS logo JSONB;
+ALTER TABLE establishments ADD COLUMN IF NOT EXISTS archived_at TIMESTAMPTZ;
 CREATE INDEX IF NOT EXISTS idx_establishments_org ON establishments(org_id);
 
 CREATE TABLE IF NOT EXISTS work_units (

@@ -122,11 +122,18 @@ Il n'y a pas d'outil de migration. Le serveur applique au premier appel des migr
 
 | Fonction (`api/server.ts`) | Effet |
 |---|---|
-| `ensureEstablishmentsSchema` | Ajoute les colonnes `establishments.client_name` et `establishments.logo` (JSONB), et crée `slot_log` (quotas) |
+| `ensureEstablishmentsSchema` | Ajoute les colonnes `establishments.client_name`, `establishments.logo` (JSONB) et `establishments.archived_at`, et crée `slot_log` (quotas) |
 | `ensureReminderSchema` | Crée `reminder_log` : un même rappel n'est jamais envoyé deux fois |
 | `ensureBrandingSchema` | Crée `org_branding` : marque cabinet, une ligne par compte |
 
 **Règle :** toute route qui lit une colonne ajoutée par une migration doit appeler la fonction `ensure…` correspondante avant sa requête, même si une autre route le fait déjà. En production, personne n'a peut-être encore appelé cette autre route. C'est exactement ce qui a cassé la route des rappels le 29/10/2026 (correctif `66c9beb`).
+
+**Archivage, jamais de suppression.** `DELETE /api/establishments/:id` renseigne `archived_at` et n’efface rien : le DUERP et ses versions doivent être conservés 40 ans (art. L.4121-3-1). Un établissement archivé :
+- sort des listes et des quotas instantanés, mais reste compté 12 mois dans `slot_log` ;
+- ne reçoit plus de rappels ;
+- peut être restauré en le renvoyant avec `archivedAt: null`.
+
+Les versions enregistrent l’établissement à leur date (`snapshot.establishment`) et se réimpriment depuis la page Versions (`printDuerpDocument` avec `asOf`).
 
 Toute nouvelle table ou colonne doit être ajoutée à deux endroits : dans une fonction `ensure…` et dans `duerp_pro_spec/db/schema.sql`.
 
