@@ -31,7 +31,11 @@ interface DUERPState {
   // Supabase
   orgId: string | null;
   syncStatus: "idle" | "syncing" | "error";
+  /** Compte auquel appartiennent les données gardées dans le navigateur. */
+  ownerId: string | null;
   setOrgId: (id: string) => void;
+  /** Efface les données locales (déconnexion). */
+  resetLocalData: () => void;
   loadFromSupabase: (orgId: string) => Promise<void>;
 
   // Data
@@ -106,13 +110,32 @@ const sync = (fn: () => unknown) => {
   });
 };
 
+// Données métier gardées dans le navigateur (localStorage).
+const EMPTY_DATA = {
+  establishments: [] as Establishment[],
+  workUnits: [] as WorkUnit[],
+  assessments: [] as Assessment[],
+  actions: [] as ActionItem[],
+  versions: [] as VersionEntry[],
+  selectedEstablishmentId: undefined as string | undefined,
+  selectedWorkUnitId: undefined as string | undefined,
+};
+
 export const useDuerpStore = create<DUERPState>()(
   persist(
     (set, get) => ({
       orgId: null,
       syncStatus: "idle",
 
-      setOrgId: (id) => set({ orgId: id }),
+      ownerId: null,
+      // Les données locales d'un autre compte (ou d'origine inconnue) ne sont
+      // jamais reprises : elles étaient sinon copiées dans le compte qui se
+      // connectait ensuite sur le même navigateur (fuite entre comptes).
+      setOrgId: (id) => {
+        if (get().ownerId !== id) set({ ...EMPTY_DATA, ownerId: id, orgId: id, saveError: null });
+        else set({ orgId: id });
+      },
+      resetLocalData: () => set({ ...EMPTY_DATA, ownerId: null, orgId: null, saveError: null }),
 
       loadFromSupabase: async (orgId) => {
         set({ syncStatus: "syncing" });
@@ -140,8 +163,9 @@ export const useDuerpStore = create<DUERPState>()(
               selectedWorkUnitId: remote.workUnits[0]?.id,
               syncStatus: "idle",
             });
-          } else if (hasLocalData) {
-            // Migration : localStorage → Supabase
+          } else if (hasLocalData && state.ownerId === orgId) {
+            // Données de ce même compte jamais arrivées au serveur : on les envoie
+            // (l'exemple de démonstration est filtré, voir supabaseSync).
             await pushAll(orgId, {
               establishments: state.establishments,
               workUnits: state.workUnits,
@@ -554,6 +578,7 @@ export const useDuerpStore = create<DUERPState>()(
     {
       name: "kaijos-duerp-v1",
       partialize: (state) => ({
+        ownerId: state.ownerId,
         establishments: state.establishments,
         workUnits: state.workUnits,
         hazardLibrary: state.hazardLibrary,

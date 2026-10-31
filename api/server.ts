@@ -483,11 +483,11 @@ const sendRevisionReminders = async (now: Date = new Date()) => {
 // Garder ces valeurs alignées sur PLAN_CONFIG (src/hooks/usePlan.ts).
 // "free" (Découverte) = compte sans abonnement actif : il peut construire son
 // DUERP sur un établissement, seul le téléchargement est payant (côté front).
-const PLAN_LIMITS: Record<string, { maxEstablishments: number; maxClients: number }> = {
-  free: { maxEstablishments: 1, maxClients: -1 },
-  starter: { maxEstablishments: 1, maxClients: -1 },
-  pme: { maxEstablishments: 5, maxClients: -1 },
-  consultants: { maxEstablishments: -1, maxClients: 25 },
+const PLAN_LIMITS: Record<string, { maxEstablishments: number; maxClients: number; maxWorkUnits: number }> = {
+  free: { maxEstablishments: 1, maxClients: -1, maxWorkUnits: 5 },
+  starter: { maxEstablishments: 1, maxClients: -1, maxWorkUnits: 5 },
+  pme: { maxEstablishments: 5, maxClients: -1, maxWorkUnits: 20 },
+  consultants: { maxEstablishments: -1, maxClients: 25, maxWorkUnits: -1 },
 };
 type UserPlan = { planId: string; active: boolean };
 const planCache = new Map<string, { plan: UserPlan; expires: number }>();
@@ -626,10 +626,19 @@ const upsertVersionDb = async (orgId: string, v: any) => {
   return res.rows[0];
 };
 
+// 2 Mo : assez pour un logo (400 Ko) ou une version complète de DUERP, et
+// borne la mémoire qu'une requête peut faire consommer au serveur.
+const MAX_BODY_BYTES = 2_000_000;
 const readBody = async (req: any) =>
   new Promise<any>((resolve, reject) => {
     let body = "";
-    req.on("data", (chunk: any) => (body += chunk));
+    req.on("data", (chunk: any) => {
+      body += chunk;
+      if (body.length > MAX_BODY_BYTES) {
+        reject(new Error("Body too large"));
+        req.destroy();
+      }
+    });
     req.on("end", () => {
       if (!body) return resolve(null);
       try {
@@ -1002,6 +1011,15 @@ createServer(async (req, res) => {
       if (req.method === "POST") {
         const body = await readBody(req).catch(() => null);
         if (!body?.id || !body?.name || !body?.establishmentId) return json(res, { error: "Bad Request" }, 400);
+        // Nombre d'unités de l'offre (jusqu'ici contrôlé seulement dans le navigateur).
+        const plan = await getUserPlan(orgId);
+        const max = PLAN_LIMITS[plan.planId]?.maxWorkUnits ?? -1;
+        if (max !== -1) {
+          const units = (await query(`SELECT id FROM work_units WHERE org_id=$1`, [orgId])).rows as { id: string }[];
+          if (!units.some((u) => u.id === body.id) && units.length >= max) {
+            return json(res, { error: `Votre offre permet ${max} unités de travail au maximum.${plan.active ? "" : " Abonnez-vous pour en ajouter davantage."}` }, 403);
+          }
+        }
         return json(res, await upsertWorkUnitDb(orgId, body), 201);
       }
       if (req.method === "DELETE") {
@@ -1177,7 +1195,22 @@ createServer(async (req, res) => {
       const orgId = await getClerkOrgId(req);
       if (!orgId) return json(res, { error: "Unauthorized" }, 401);
       const body = await readBody(req).catch(() => null);
-      if (!body?.email) return json(res, { error: "Bad Request" }, 400);
+      const inviteeEmail = typeof body?.email === "string" ? body.email.trim().toLowerCase() : "";
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inviteeEmail) || inviteeEmail.length > 200) return json(res, { error: "Adresse email invalide." }, 400);
+      // Ouverte à tout compte, cette route permettait d'envoyer depuis
+      // noreply@kaijos.com des emails à n'importe qui, avec un texte choisi :
+      // réservée aux abonnés, limitée à 20 par jour, expéditeur tiré du compte.
+      const plan = await getUserPlan(orgId);
+      if (!plan.active) return json(res, { error: "L'invitation de collaborateurs est réservée aux abonnés." }, 403);
+      const sentToday = await query(
+        "SELECT count(*)::int AS n FROM invitations WHERE owner_clerk_id = $1 AND created_at > now() - interval '1 day'",
+        [orgId]
+      ).then((r) => Number(r.rows[0]?.n || 0)).catch(() => 0);
+      if (sentToday >= 20) return json(res, { error: "Limite de 20 invitations par jour atteinte." }, 429);
+      const inviter = await clerkClient.users.getUser(orgId).catch(() => null);
+      const ownerName = [inviter?.firstName, inviter?.lastName].filter(Boolean).join(" ") || inviter?.emailAddresses?.[0]?.emailAddress || "Un utilisateur";
+      const establishmentName = typeof body.establishmentName === "string" ? body.establishmentName.slice(0, 120) : "";
+      body.email = inviteeEmail;
 
       // Persist in DB
       try {
@@ -1202,15 +1235,16 @@ createServer(async (req, res) => {
             <div style="background:#f9fafb;padding:28px 32px;border-radius:0 0 12px 12px;border:1px solid #e5e7eb">
               <p style="font-size:15px;color:#1e293b">Bonjour,</p>
               <p style="font-size:15px;color:#1e293b">
-                <strong>${escapeHtml(body.ownerName || "Un utilisateur")}</strong> vous invite à collaborer
-                sur le DUERP de <strong>${escapeHtml(body.establishmentName || "son établissement")}</strong> sur Kaijos.
+                <strong>${escapeHtml(ownerName)}</strong> vous invite à créer votre compte Kaijos, l'outil qu'il utilise
+                pour le document unique d'évaluation des risques${establishmentName ? ` de <strong>${escapeHtml(establishmentName)}</strong>` : ""}.
               </p>
               <a href="${appUrl}/sign-up"
                  style="display:inline-block;margin-top:16px;background:#5B61F6;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:bold">
                 Créer mon compte →
               </a>
               <p style="margin-top:24px;font-size:12px;color:#94a3b8">
-                Connectez-vous avec cette adresse email (${escapeHtml(body.email)}) pour accéder au projet partagé.
+                Vous recevez cet email parce que ${escapeHtml(ownerName)} a saisi votre adresse (${escapeHtml(body.email)}) dans Kaijos.
+                Si vous ne connaissez pas cette personne, ignorez simplement ce message.
               </p>
             </div>
           </div>`;
@@ -1220,7 +1254,7 @@ createServer(async (req, res) => {
           body: JSON.stringify({
             from: FROM_EMAIL,
             to: [body.email],
-            subject: `[Kaijos] Invitation à collaborer — ${body.establishmentName || "DUERP"}`,
+            subject: `[Kaijos] ${ownerName} vous invite sur Kaijos`,
             html,
           }),
         }).catch((e) => console.error("[invites] email error:", e));

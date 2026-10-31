@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useUser, useClerk } from "@clerk/clerk-react";
 import { useDuerpStore } from "../state/store";
 import { PLAN_CONFIG, type PlanId } from "../hooks/usePlan";
-import { apiGet, apiPost } from "../utils/apiClient";
+import { apiErrorMessage, apiGet, apiPost } from "../utils/apiClient";
 
 type Invite = { id: string; invitee_email: string; role: string; status: string; created_at: string };
 
@@ -11,7 +11,7 @@ export default function AccountPage() {
   const { user } = useUser();
   const { signOut } = useClerk();
   const navigate = useNavigate();
-  const { establishments, selectedEstablishmentId } = useDuerpStore();
+  const { establishments, selectedEstablishmentId, resetLocalData } = useDuerpStore();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -45,7 +45,6 @@ export default function AccountPage() {
     setInviteMsg(null);
     try {
       await apiPost("/api/invites", {
-        ownerName: user.fullName || user.primaryEmailAddress?.emailAddress,
         email: inviteEmail.trim(),
         role: inviteRole,
         establishmentName: currentEstablishment?.name || "",
@@ -54,8 +53,8 @@ export default function AccountPage() {
       setInviteEmail("");
       const updated = await apiGet<{ invites: Invite[] }>("/api/invites").catch(() => ({ invites: [] }));
       setInvites(updated.invites || []);
-    } catch {
-      setInviteMsg({ ok: false, text: "Erreur lors de l'envoi." });
+    } catch (err) {
+      setInviteMsg({ ok: false, text: apiErrorMessage(err, "Erreur lors de l'envoi.") });
     } finally {
       setInviteLoading(false);
     }
@@ -109,7 +108,7 @@ export default function AccountPage() {
             </a>
             <button
               type="button"
-              onClick={() => signOut(() => navigate("/landing"))}
+              onClick={() => { resetLocalData(); signOut(() => navigate("/landing")); }}
               className="text-sm font-semibold text-slate-500 hover:text-slate-700 hover:underline"
             >
               Se déconnecter

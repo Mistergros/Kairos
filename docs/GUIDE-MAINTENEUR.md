@@ -260,6 +260,10 @@ Une variable `VITE_*` est intégrée au code à la compilation : après l'avoir 
 - **Fins de ligne CRLF** dans la plupart des fichiers. Un script qui remplace du texte doit gérer `\r\n`.
 - **Migrations à la demande** : voir §6. Une route qui lit une nouvelle colonne doit appeler la fonction `ensure…` correspondante.
 - **Clé Stripe et tarifs de modes différents** : l'erreur `resource_missing` sur `line_items[0][price]` signifie que le `price_…` vient d'un autre mode (test ou réel) ou d'un autre bac à sable que la clé.
+- **Données locales et comptes** : le store persistant porte `ownerId`. Les données d’un autre compte, ou d’origine inconnue, sont effacées à la connexion (`setOrgId`) et ne sont jamais envoyées au serveur. La déconnexion depuis « Mon compte » efface aussi les données locales. Avant ce correctif, un compte neuf récupérait les données du compte précédent sur le même navigateur.
+- **Données de démonstration** : les identifiants `demo-…` (exemple boulangerie) ne sont jamais envoyés au serveur (`src/services/supabaseSync.ts`).
+- **Requêtes** : 2 Mo maximum (`readBody`).
+- **Invitations** : réservées aux abonnés, 20 par jour, expéditeur pris dans le compte Clerk.
 - **Les écritures vers l’API doivent rester séquentielles.** `sync()` dans `src/state/store.ts` les met en file d’attente. En parallèle, une action pouvait arriver avant le risque auquel elle se rattache, et la clé étrangère était refusée. Le serveur répond désormais 409 avec un message clair sur ce cas (code Postgres 23503).
 - **Le serveur masque les erreurs Stripe** derrière `Internal error`. Le détail est dans les journaux Render.
 - **Stripe ne permet pas de modifier le montant d'un tarif** : il en crée un nouveau, avec un nouvel identifiant à reporter sur Render.
