@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useUser, useClerk } from "@clerk/clerk-react";
 import { useDuerpStore } from "../state/store";
 import { PLAN_CONFIG, type PlanId } from "../hooks/usePlan";
@@ -67,10 +67,12 @@ export default function AccountPage() {
     setInvites((prev) => prev.filter((i) => i.invitee_email !== email));
   };
 
+  // Page ouverte à tous les comptes : sans abonnement actif, l'utilisateur est
+  // en offre Découverte (il doit pouvoir voir son offre et se déconnecter).
   const status = String((user?.publicMetadata as any)?.subscriptionStatus || "inactive");
-  if (status !== "active") return <Navigate to="/pricing" replace />;
   const rawPlanId = (user?.publicMetadata as any)?.planId as string | undefined;
-  const planLabel = rawPlanId && rawPlanId in PLAN_CONFIG ? PLAN_CONFIG[rawPlanId as PlanId].label : null;
+  const planLabel =
+    status === "active" && rawPlanId && rawPlanId in PLAN_CONFIG ? PLAN_CONFIG[rawPlanId as PlanId].label : null;
   const customerId = String((user?.publicMetadata as any)?.stripeCustomerId || "");
   const portalAvailable = Boolean(customerId);
 
@@ -118,8 +120,20 @@ export default function AccountPage() {
         <div className="mt-8 grid gap-6 md:grid-cols-2">
           <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6">
             <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Abonnement</p>
-            <div className="mt-4 text-lg font-semibold">{planLabel ? `Plan ${planLabel}` : "Aucun abonnement actif"}</div>
-            {planLabel && <div className="mt-2 text-sm text-slate-600">Statut : {status === "active" ? "Actif" : status === "canceled" ? "Résilié" : status === "past_due" ? "Paiement en retard" : status}</div>}
+            <div className="mt-4 text-lg font-semibold">{planLabel ? `Offre ${planLabel}` : "Offre Découverte (gratuite)"}</div>
+            {planLabel ? (
+              <div className="mt-2 text-sm text-slate-600">Statut : actif</div>
+            ) : (
+              <>
+                <div className="mt-2 text-sm text-slate-600">
+                  {status === "canceled" ? "Votre abonnement est terminé. " : status === "past_due" ? "Le dernier paiement a échoué. " : ""}
+                  Vous construisez votre DUERP gratuitement ; le téléchargement demande un abonnement.
+                </div>
+                <a href="/pricing" className="mt-4 inline-block rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700">
+                  Voir les offres
+                </a>
+              </>
+            )}
             {customerId && <div className="mt-2 text-xs text-slate-400">Client Stripe: {customerId}</div>}
           </div>
 
