@@ -171,6 +171,7 @@ Toutes les offres sont annuelles. Variables : `STRIPE_PRICE_ID_STARTER_ANNUAL`, 
 - **Routes de données** (établissements, unités, évaluations, actions, versions, marque) : jeton de session Clerk vérifié côté serveur (`getClerkOrgId`). Son `sub` donne le périmètre `org_id`.
 - **Routes catalogue** (`/api/evaluate`, `/api/compliance`…) : jetons statiques `API_TOKEN_*` ou JWT `API_JWT_SECRET`. Sans aucun jeton configuré, elles sont ouvertes.
 - **CORS** : `API_ALLOWED_ORIGINS`, liste séparée par des virgules. Une origine absente reçoit une erreur 403.
+- **Limite de requêtes** : `API_RATE_LIMIT` requêtes par minute et par adresse IP pour les visiteurs, 10 fois plus pour une requête qui porte un jeton. Le webhook Stripe et la tâche planifiée ne sont pas limités. Au-delà, réponse 429.
 - **Cron** : `POST /api/cron/revision-reminders` exige `Authorization: Bearer $CRON_SECRET`, comparé en temps constant.
 - **Données reçues** : la marque cabinet n'accepte qu'un logo PNG ou JPEG de 400 Ko maximum, une couleur hexadécimale et des champs bornés (`sanitizeBranding`).
 - **RGPD** : `npm run duerp:erase-user` efface les données d'un utilisateur. Les sous-traitants sont listés dans `src/pages/Privacy.tsx` et `src/pages/Dpa.tsx` : tenir les deux listes alignées à chaque nouveau prestataire.

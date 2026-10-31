@@ -21,6 +21,18 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   return (await res.json()) as T;
 }
 
+// Message lisible d’une erreur d’API : le serveur répond {"error": "…"}.
+export function apiErrorMessage(err: unknown, fallback: string) {
+  const raw = err instanceof Error ? err.message : "";
+  try {
+    const parsed = JSON.parse(raw);
+    if (typeof parsed?.error === "string") return parsed.error;
+  } catch {
+    // pas du JSON
+  }
+  return raw && raw.length < 200 && !raw.startsWith("<") ? raw : fallback;
+}
+
 export const apiGet = <T>(path: string) => request<T>(path);
 export const apiPost = <T>(path: string, body: unknown) => request<T>(path, { method: "POST", body: JSON.stringify(body) });
 export const apiDelete = (path: string) => request<{ ok: true }>(path, { method: "DELETE" });

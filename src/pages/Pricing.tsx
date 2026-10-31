@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "@clerk/clerk-react";
 import pricingData from "../data/pricing.json";
 import { usePlan } from "../hooks/usePlan";
-import { apiPost } from "../utils/apiClient";
+import { apiErrorMessage, apiPost } from "../utils/apiClient";
 
 type Plan = typeof pricingData.plans[number];
 
@@ -50,7 +50,7 @@ export function Pricing() {
       window.location.href = data.url;
     } catch (err) {
       console.error(err);
-      setCheckoutError(err instanceof Error ? err.message : "Impossible de démarrer le paiement. Réessayez dans quelques secondes.");
+      setCheckoutError(apiErrorMessage(err, "Impossible de démarrer le paiement. Réessayez dans quelques secondes."));
       setLoading(null);
     }
   };

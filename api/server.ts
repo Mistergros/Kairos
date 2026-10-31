@@ -727,9 +727,12 @@ type RateBucket = { count: number; windowStart: number };
 const rateStore = new Map<string, RateBucket>();
 const RATE_WINDOW_MS = 60_000;
 
-const rateLimited = (key: string) => {
-  if (!RATE_LIMIT || RATE_LIMIT <= 0) return false;
+const rateLimited = (key: string, limit: number) => {
+  if (!limit || limit <= 0) return false;
   const now = Date.now();
+  if (rateStore.size > 10_000) {
+    for (const [k, b] of rateStore) if (now - b.windowStart > RATE_WINDOW_MS) rateStore.delete(k);
+  }
   const bucket = rateStore.get(key) || { count: 0, windowStart: now };
   if (now - bucket.windowStart > RATE_WINDOW_MS) {
     bucket.count = 0;
@@ -737,7 +740,7 @@ const rateLimited = (key: string) => {
   }
   bucket.count += 1;
   rateStore.set(key, bucket);
-  return bucket.count > RATE_LIMIT;
+  return bucket.count > limit;
 };
 
 createServer(async (req, res) => {
@@ -766,8 +769,16 @@ createServer(async (req, res) => {
     const baseIdx = version === DEFAULT_API_VERSION && pathParts[0] !== DEFAULT_API_VERSION ? 0 : 1;
     const basePath = "/" + pathParts.slice(baseIdx).join("/");
 
-    const rateKey = req.headers["x-forwarded-for"]?.toString().split(",")[0]?.trim() || req.socket.remoteAddress || "unknown";
-    if (rateLimited(rateKey)) return json(res, { error: "Too Many Requests" }, 429);
+    // Limite par adresse IP. Un utilisateur connecté (jeton présent) enchaîne
+    // beaucoup d'écritures en travaillant normalement (un pré-remplissage = des
+    // dizaines de requêtes) : il a un quota 10 fois plus large. Le webhook Stripe
+    // et la tâche planifiée, appelés par des services externes, ne sont pas limités.
+    const ip = req.headers["x-forwarded-for"]?.toString().split(",")[0]?.trim() || req.socket.remoteAddress || "unknown";
+    const hasToken = String(req.headers["authorization"] || "").startsWith("Bearer ");
+    const exempt = basePath === "/api/webhooks/stripe" || basePath === "/api/cron/revision-reminders";
+    if (!exempt && rateLimited(hasToken ? `auth:${ip}` : ip, hasToken ? RATE_LIMIT * 10 : RATE_LIMIT)) {
+      return json(res, { error: "Trop de requêtes en peu de temps. Patientez une minute puis réessayez." }, 429);
+    }
 
     const auth = authorize(req);
 
