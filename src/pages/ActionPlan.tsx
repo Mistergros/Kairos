@@ -324,8 +324,28 @@ export const ActionPlan = () => {
     setForm({ title: "", description: "", owner: "", how: "", startDate: "", dueDate: "", endDate: "", assessmentId: "", priority: 3 });
   };
 
+  // Programme annuel de prévention (art. L.4121-3-1) : obligatoire dès 50 salariés.
+  const currentEstablishment = establishments.find((e) => e.id === selectedEstablishmentId) || establishments[0];
+  const programmeRequired = (currentEstablishment?.headcount ?? 0) >= 50;
+  const programmeIncomplete = programmeRequired
+    ? actions.filter(
+        (a) =>
+          a.status !== "DONE" &&
+          (!a.establishmentId || a.establishmentId === currentEstablishment?.id) &&
+          (!a.how || !a.indicator || a.cost === undefined || a.cost === null || !a.resources)
+      ).length
+    : 0;
+
   return (
     <div className="space-y-5">
+      {programmeRequired && (
+        <div className={`rounded-2xl border px-5 py-4 text-sm ${programmeIncomplete ? "border-amber-200 bg-amber-50 text-amber-800" : "border-emerald-200 bg-emerald-50 text-emerald-800"}`}>
+          <strong>Établissement de {currentEstablishment?.headcount} salariés : programme annuel de prévention obligatoire.</strong>{" "}
+          {programmeIncomplete
+            ? `Pour chaque mesure, précisez les conditions d'exécution, un indicateur de résultat, le coût estimé et les ressources (ouvrez l'action, onglet Planification). ${programmeIncomplete} action${programmeIncomplete > 1 ? "s" : ""} à compléter.`
+            : "Toutes les mesures en cours sont complètes ; le programme figure dans le PDF du DUERP."}
+        </div>
+      )}
       <Card
         title="Plan d'action"
         subtitle="Actions regroupées et priorisées"
@@ -818,12 +838,43 @@ export const ActionPlan = () => {
                                 />
                               </label>
                               <label className="block text-xs text-slate/60">
-                                Comment ? (optionnel)
+                                Conditions d'exécution (comment ?)
                                 <textarea
                                   className="mt-1 w-full rounded-lg border border-slate/20 px-2 py-1 text-sm"
-                                  placeholder="Approche, étapes clés"
+                                  placeholder="Approche, étapes clés, prestataire"
                                   value={a.how || ""}
                                   onChange={(e) => updateAction(a.id, { how: e.target.value })}
+                                />
+                              </label>
+                              {/* Programme annuel de prévention (obligatoire à partir de 50 salariés). */}
+                              <label className="block text-xs text-slate/60">
+                                Coût estimé (€ HT)
+                                <input
+                                  type="number"
+                                  min={0}
+                                  step={10}
+                                  className="mt-1 w-full rounded-lg border border-slate/20 px-2 py-1 text-sm"
+                                  placeholder="Ex. 1500"
+                                  value={a.cost ?? ""}
+                                  onChange={(e) => updateAction(a.id, { cost: e.target.value === "" ? undefined : Number(e.target.value) })}
+                                />
+                              </label>
+                              <label className="block text-xs text-slate/60">
+                                Ressources mobilisées
+                                <input
+                                  className="mt-1 w-full rounded-lg border border-slate/20 px-2 py-1 text-sm"
+                                  placeholder="Ex. service maintenance, CARSAT, budget investissement"
+                                  value={a.resources || ""}
+                                  onChange={(e) => updateAction(a.id, { resources: e.target.value })}
+                                />
+                              </label>
+                              <label className="block text-xs text-slate/60">
+                                Indicateur de résultat
+                                <input
+                                  className="mt-1 w-full rounded-lg border border-slate/20 px-2 py-1 text-sm"
+                                  placeholder="Ex. 0 accident de manutention sur 12 mois"
+                                  value={a.indicator || ""}
+                                  onChange={(e) => updateAction(a.id, { indicator: e.target.value })}
                                 />
                               </label>
                               <p className="text-xs text-slate/60">Priorité: P{a.priority}</p>

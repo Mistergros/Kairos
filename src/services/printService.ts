@@ -600,9 +600,80 @@ export function printDuerpDocument(data: PrintData): void {
   } else {
     paragraph(doc, "Aucune action n'est encore planifiée.", y + 2, contentW, 9, MUTED);
   }
+  let sectionEnd = plan.length ? lastTableY() : y + 10;
+
+  // ── 7 bis. Programme annuel de prévention (50 salariés et plus) ──
+  // Art. L.4121-3-1 : pour chaque mesure, conditions d'exécution, indicateur de
+  // résultat et coût estimé ; ressources mobilisables ; calendrier.
+  const programmeRequired = (establishment?.headcount ?? 0) >= 50;
+  if (programmeRequired) {
+    y = newSection("Programme annuel de prévention");
+    y = paragraph(
+      doc,
+      "Établissement d'au moins 50 salariés : programme annuel de prévention des risques professionnels et d'amélioration des conditions de travail (art. L.4121-3-1 du Code du travail), présenté au CSE.",
+      y,
+      contentW,
+      9,
+      MUTED
+    );
+    const programme = plan.filter((a) => a.status !== "DONE");
+    const incomplete = programme.filter((a) => !a.how || !a.indicator || a.cost === undefined || a.cost === null || !a.resources).length;
+    const total = programme.reduce((sum, a) => sum + (Number.isFinite(Number(a.cost)) ? Number(a.cost) : 0), 0);
+    const euros = (n: number) => `${Math.round(n).toLocaleString("fr-FR").replace(/[  ]/g, " ")} €`;
+    if (programme.length) {
+      autoTable(doc, {
+        ...tableBase,
+        startY: y + 1,
+        head: [["Prio.", "Mesure", "Conditions d'exécution", "Indicateur de résultat", "Coût estimé", "Ressources", "Calendrier"]],
+        body: programme.map((a) => [
+          `P${a.priority}`,
+          a.title,
+          a.how || "À préciser",
+          a.indicator || "À préciser",
+          a.cost === undefined || a.cost === null ? "À chiffrer" : euros(Number(a.cost)),
+          a.resources || "À préciser",
+          [a.startDate ? `du ${formatDate(a.startDate)}` : "", `au ${formatDate(a.dueDate || a.endDate)}`, a.owner ? `Resp. : ${a.owner}` : ""].filter(Boolean).join("\n"),
+        ]),
+        styles: { ...tableBase.styles, fontSize: 7 },
+        columnStyles: {
+          0: { cellWidth: 12, halign: "center", fontStyle: "bold" },
+          1: { cellWidth: 36, fontStyle: "bold" },
+          2: { cellWidth: 32 },
+          3: { cellWidth: 28 },
+          4: { cellWidth: 17, halign: "right" },
+          5: { cellWidth: 25 },
+          6: { cellWidth: contentW - 150 },
+        },
+        didParseCell: (h) => {
+          if (h.section !== "body") return;
+          const a = programme[h.row.index];
+          if (h.column.index === 0) {
+            h.cell.styles.fillColor = PRIORITY_COLORS[a.priority];
+            h.cell.styles.textColor = [255, 255, 255];
+          }
+          if (typeof h.cell.raw === "string" && /^À (préciser|chiffrer)$/.test(h.cell.raw)) {
+            h.cell.styles.textColor = PRIORITY_COLORS[2];
+            h.cell.styles.fontStyle = "italic";
+          }
+        },
+      });
+      y = lastTableY() + 7;
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(10);
+      doc.setTextColor(...INK);
+      doc.text(`Coût total estimé du programme : ${euros(total)} HT`, MARGIN, y);
+      y += 6;
+      if (incomplete) {
+        y = paragraph(doc, `${incomplete} mesure${incomplete > 1 ? "s" : ""} à compléter (conditions d'exécution, indicateur, coût ou ressources).`, y, contentW, 8.5, PRIORITY_COLORS[2]);
+      }
+      sectionEnd = y;
+    } else {
+      sectionEnd = paragraph(doc, "Toutes les actions du plan sont terminées : aucune mesure n'est planifiée pour l'année à venir.", y + 2, contentW, 9, MUTED);
+    }
+  }
 
   // ── 8. Validation et suivi ──
-  y = newSection("Validation et suivi", plan.length ? lastTableY() : y, 100);
+  y = newSection("Validation et suivi", sectionEnd, 100);
   y = paragraph(doc, "Le présent document a été établi et validé par l'employeur. Le cas échéant, il a été présenté au comité social et économique.", y, contentW, 9, MUTED);
   const boxes = ["L'employeur", "Représentant du CSE", cabinet?.name ? `Pour ${cabinet.name}` : "Personne ayant réalisé l'évaluation"];
   const boxW = (contentW - 8) / 3;

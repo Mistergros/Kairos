@@ -125,6 +125,7 @@ Il n'y a pas d'outil de migration. Le serveur applique au premier appel des migr
 | `ensureEstablishmentsSchema` | Ajoute les colonnes `establishments.client_name`, `establishments.logo` (JSONB) et `establishments.archived_at`, et crée `slot_log` (quotas) |
 | `ensureReminderSchema` | Crée `reminder_log` : un même rappel n'est jamais envoyé deux fois |
 | `ensureBrandingSchema` | Crée `org_branding` : marque cabinet, une ligne par compte |
+| `ensureActionsSchema` | Ajoute `actions.resources` et `actions.indicator` (programme annuel de prévention) |
 
 **Règle :** toute route qui lit une colonne ajoutée par une migration doit appeler la fonction `ensure…` correspondante avant sa requête, même si une autre route le fait déjà. En production, personne n'a peut-être encore appelé cette autre route. C'est exactement ce qui a cassé la route des rappels le 29/10/2026 (correctif `66c9beb`).
 
@@ -214,6 +215,8 @@ Deux logos peuvent apparaître :
 - celui du **cabinet** (`org_branding`, offre Pro uniquement).
 
 Les deux passent par `sanitizeLogo` (`api/branding.ts`) côté serveur et par `prepareLogo` (`src/services/brandingService.ts`) côté navigateur.
+
+**Programme annuel de prévention** (art. L.4121-3-1). Quand l’effectif de l’établissement (`establishments.headcount`, saisi sur la fiche) atteint 50, le PDF ajoute une partie « Programme annuel de prévention ». Pour chaque action non terminée, elle reprend : conditions d’exécution (`how`), indicateur de résultat (`indicator`), coût estimé (`cost`), ressources (`resources`) et calendrier, avec le coût total. Un bandeau du plan d’action signale les mesures incomplètes.
 
 La page « Méthode » décrit l’échelle de cotation de `src/pages/Inventory.tsx` et les seuils de `src/utils/score.ts` : **mettre la page à jour si l’un des deux change.** Les polices standard de jsPDF ne couvrent pas tous les caractères Unicode : éviter les flèches et les symboles hors Latin-1 dans les textes du PDF.
 

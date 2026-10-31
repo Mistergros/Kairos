@@ -609,29 +609,51 @@ const deleteAssessmentDb = async (orgId: string, id: string) => {
   await query(`DELETE FROM assessments WHERE id=$1 AND org_id=$2`, [id, orgId]);
 };
 
+// Programme annuel de prévention (art. L.4121-3-1, 50 salariés et plus) : pour
+// chaque mesure, ressources mobilisées et indicateur de résultat, en plus du
+// coût (cost), des conditions d'exécution (how) et du calendrier déjà présents.
+let actionsSchemaReady: Promise<unknown> | null = null;
+const ensureActionsSchema = () => {
+  if (!actionsSchemaReady) {
+    actionsSchemaReady = (async () => {
+      await query(`ALTER TABLE actions ADD COLUMN IF NOT EXISTS resources TEXT`);
+      await query(`ALTER TABLE actions ADD COLUMN IF NOT EXISTS indicator TEXT`);
+    })().catch((err) => {
+      actionsSchemaReady = null;
+      throw err;
+    });
+  }
+  return actionsSchemaReady;
+};
+
 const listActionsDb = async (orgId: string) => {
+  await ensureActionsSchema();
   const res = await query(
     `SELECT id, establishment_id, assessment_id, title, description, owner, start_date, due_date, end_date, how,
-            status, priority, cost, evidence_url, steps, created_at
+            status, priority, cost, evidence_url, steps, created_at, resources, indicator
      FROM actions WHERE org_id=$1 ORDER BY created_at`,
     [orgId]
   );
   return res.rows;
 };
 const upsertActionDb = async (orgId: string, a: any) => {
+  await ensureActionsSchema();
   const res = await query(
     `INSERT INTO actions (id, org_id, establishment_id, assessment_id, title, description, owner, start_date,
-       due_date, end_date, how, status, priority, cost, evidence_url, steps, created_at)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)
+       due_date, end_date, how, status, priority, cost, evidence_url, steps, created_at, resources, indicator)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19)
      ON CONFLICT (id) DO UPDATE SET establishment_id=EXCLUDED.establishment_id, assessment_id=EXCLUDED.assessment_id,
        title=EXCLUDED.title, description=EXCLUDED.description, owner=EXCLUDED.owner, start_date=EXCLUDED.start_date,
        due_date=EXCLUDED.due_date, end_date=EXCLUDED.end_date, how=EXCLUDED.how, status=EXCLUDED.status,
-       priority=EXCLUDED.priority, cost=EXCLUDED.cost, evidence_url=EXCLUDED.evidence_url, steps=EXCLUDED.steps
+       priority=EXCLUDED.priority, cost=EXCLUDED.cost, evidence_url=EXCLUDED.evidence_url, steps=EXCLUDED.steps,
+       resources=EXCLUDED.resources, indicator=EXCLUDED.indicator
      WHERE actions.org_id = $2
      RETURNING *`,
     [a.id, orgId, a.establishmentId ?? null, a.assessmentId ?? null, a.title, a.description ?? null, a.owner ?? null,
      a.startDate ?? null, a.dueDate ?? null, a.endDate ?? null, a.how ?? null, a.status ?? "TO_DO", a.priority ?? null,
-     a.cost ?? null, a.evidenceUrl ?? null, JSON.stringify(a.steps ?? []), a.createdAt ?? new Date().toISOString()]
+     Number.isFinite(Number(a.cost)) && a.cost !== null && a.cost !== "" ? Number(a.cost) : null, a.evidenceUrl ?? null,
+     JSON.stringify(a.steps ?? []), a.createdAt ?? new Date().toISOString(),
+     typeof a.resources === "string" ? a.resources.slice(0, 1000) : null, typeof a.indicator === "string" ? a.indicator.slice(0, 500) : null]
   );
   return res.rows[0];
 };

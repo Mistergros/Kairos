@@ -73,7 +73,7 @@ export const Units = () => {
 
   const isConsultant = plan.planId === "consultants";
   const knownClients = Array.from(new Set(establishments.map((e) => e.clientName).filter(Boolean) as string[])).sort();
-  const [establishmentForm, setEstablishmentForm] = useState({ name: "", sector: "", codeNaf: "", address: "", siret: "", clientName: "" });
+  const [establishmentForm, setEstablishmentForm] = useState({ name: "", sector: "", codeNaf: "", address: "", siret: "", clientName: "", headcount: "" });
   const [unitForm, setUnitForm] = useState({ name: "", description: "", headcount: 0 });
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
   const [customExtra, setCustomExtra] = useState<string>("");
@@ -103,10 +103,11 @@ export const Units = () => {
       codeNaf: establishmentForm.codeNaf,
       address: establishmentForm.address,
       siret: establishmentForm.siret.replace(/\D/g, "") || undefined,
+      headcount: Number(establishmentForm.headcount) > 0 ? Number(establishmentForm.headcount) : undefined,
       clientName: isConsultant ? establishmentForm.clientName.trim() || undefined : undefined,
     });
     // Le client est souvent le même pour plusieurs établissements saisis à la suite.
-    setEstablishmentForm((v) => ({ name: "", sector: "", codeNaf: "", address: "", siret: "", clientName: v.clientName }));
+    setEstablishmentForm((v) => ({ name: "", sector: "", codeNaf: "", address: "", siret: "", clientName: v.clientName, headcount: "" }));
   };
 
   const onCreateUnit = async () => {
@@ -295,6 +296,23 @@ export const Units = () => {
                   {isConsultant && e.clientName && <p className="text-xs font-medium text-kairos">Client : {e.clientName}</p>}
                   <p className="text-sm text-slate/60">{e.address || "Adresse à compléter"}</p>
                   <p className="text-xs text-slate/60">{e.codeNaf ? `NAF ${e.codeNaf}` : <span className="text-amber-600 font-medium">NAF à renseigner</span>}</p>
+                  {/* L'effectif conditionne les obligations : mise à jour annuelle dès 11, programme de prévention dès 50. */}
+                  <label className="flex items-center gap-1.5 text-xs text-slate/60">
+                    Effectif :
+                    <input
+                      key={`${e.id}-${e.headcount ?? ""}`}
+                      type="number"
+                      min={0}
+                      className="w-16 rounded border border-slate/20 px-1.5 py-0.5 text-xs"
+                      defaultValue={e.headcount ?? ""}
+                      placeholder="?"
+                      onBlur={(ev) => {
+                        const next = ev.target.value === "" ? undefined : Math.max(0, Math.round(Number(ev.target.value)));
+                        if (next !== e.headcount) updateEstablishment(e.id, { headcount: next });
+                      }}
+                    />
+                    salariés
+                  </label>
                 </div>
                 <div className="flex w-full items-center justify-between gap-2 sm:w-auto sm:flex-col sm:items-end sm:text-right">
                   <span className="pill bg-ocean/10 text-ocean-700">{e.sector || "Secteur"}</span>
@@ -361,6 +379,15 @@ Il disparaîtra de vos listes, mais son DUERP et toutes ses versions restent con
               title="Code NAF (ex: 62.01Z)"
               value={establishmentForm.codeNaf}
               onChange={(e) => setEstablishmentForm((v) => ({ ...v, codeNaf: e.target.value }))}
+            />
+            <input
+              type="number"
+              min={0}
+              className="rounded-lg border border-slate/20 px-3 py-2"
+              placeholder="Effectif (nombre de salariés)"
+              title="Mise à jour annuelle obligatoire dès 11 salariés, programme annuel de prévention dès 50"
+              value={establishmentForm.headcount}
+              onChange={(e) => setEstablishmentForm((v) => ({ ...v, headcount: e.target.value }))}
             />
             <input
               id="establishment-siret"

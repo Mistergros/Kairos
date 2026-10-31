@@ -79,7 +79,12 @@ export interface ActionItem {
   endDate?: string;
   how?: string;
   status: ActionStatus;
+  /** Coût estimé en euros (programme annuel de prévention). */
   cost?: number;
+  /** Ressources de l'entreprise mobilisées (programme annuel de prévention). */
+  resources?: string;
+  /** Indicateur de résultat (programme annuel de prévention). */
+  indicator?: string;
   evidenceUrl?: string;
   priority: Priority;
   createdAt: string;

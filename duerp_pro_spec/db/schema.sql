@@ -93,6 +93,8 @@ CREATE TABLE IF NOT EXISTS actions (
   steps JSONB DEFAULT '[]',
   created_at TIMESTAMPTZ
 );
+ALTER TABLE actions ADD COLUMN IF NOT EXISTS resources TEXT;
+ALTER TABLE actions ADD COLUMN IF NOT EXISTS indicator TEXT;
 CREATE INDEX IF NOT EXISTS idx_actions_org ON actions(org_id);
 CREATE INDEX IF NOT EXISTS idx_actions_establishment ON actions(establishment_id);
 
