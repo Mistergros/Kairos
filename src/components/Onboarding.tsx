@@ -25,7 +25,7 @@ const STEPS = [
     number: "4",
     icon: "📄",
     title: "Exportez le document officiel",
-    desc: "Téléchargez le DUERP conforme au Code du travail (art. R.4121-1). Plan d'action inclus.",
+    desc: "Téléchargez votre DUERP, structuré selon l'art. R.4121-1 du Code du travail. Plan d'action inclus.",
   },
 ];
 
@@ -57,7 +57,7 @@ export function Onboarding() {
         </button>
 
         <div className="bg-gradient-to-r from-[#5B61F6] to-[#00B3FF] px-8 py-7">
-          <h1 className="text-2xl font-bold text-white leading-tight pr-8">Votre DUERP conforme en quelques minutes</h1>
+          <h1 className="text-2xl font-bold text-white leading-tight pr-8">Votre DUERP en quelques minutes</h1>
           <p className="mt-2 text-sm text-white/75">
             Suivez les 4 étapes ci-dessous pour démarrer.
           </p>
